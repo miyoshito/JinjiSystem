@@ -10,7 +10,7 @@ import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatFormFieldModule, MatInputModule, MatRadioModule, MatTableModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatButtonModule, MatIconModule, MatMenuModule, MatListModule, MatExpansionModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginService } from './login/login.service';
 import { HomeComponent } from './home/home.component';
 import { AuthGuardService } from './guards/auth-guard.service';
@@ -29,6 +29,7 @@ import { CurriculumListComponent } from './curriculum/curriculum-list/curriculum
 import { CurriculumDetailsComponent } from './curriculum/curriculum-details/curriculum-details.component';
 import { CurriculumInsertComponent } from './curriculum/curriculum-insert/curriculum-insert.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { TokenInterceptorService } from './guards/token-interceptor.service';
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -88,9 +89,15 @@ export function tokenGetter() {
   exports:[
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptorService,
+      multi: true
+    },
     LoginService,
     AuthGuardService,
-    LoginGuardService
+    LoginGuardService,
+    TokenInterceptorService,
   ],
   bootstrap: [AppComponent]
 })

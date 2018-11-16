@@ -1,7 +1,10 @@
 package aimyamaguchi.co.jp.aimspringsql.authfilters;
 
+import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import com.auth0.jwt.JWT;
@@ -20,7 +23,10 @@ import org.springframework.stereotype.Component;
 import aimyamaguchi.co.jp.aimspringsql.security.Roles;
 import aimyamaguchi.co.jp.aimspringsql.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 
 @Component
 public class JwtTokenProvider {
@@ -30,84 +36,70 @@ public class JwtTokenProvider {
    * microservices environment, this key would be kept on a config-server.
    */
 
-  Algorithm kee = Algorithm.HMAC256("secret");
+  private String secretKey = "l_wQklvpsSPZYYBnGUoSfz1blDFScEZLrhUb_WRhShk";
 
+  private Key key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
   private long validityInMilliseconds = 3600000; // 1h
 
   @Autowired
   private UserDetailsServiceImpl myUserDetails;
 
+  @PostConstruct
+  protected void init() {
+    secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+  }
+
+  
 
   public String createToken(String username, Roles roles) {
-    Claims claims = Jwts.claims().setSubject(username);    
+    Claims claims = Jwts.claims().setSubject(username);
     //claims.put("auth", roles.stream().map(s -> new SimpleGrantedAuthority(s.getAuthority())).filter(Objects::nonNull).collect(Collectors.toList()));
     claims.put("auth", roles);
     Date now = new Date();
     Date validity = new Date(now.getTime() + validityInMilliseconds);
 
-    String token = JWT.create()
-      .withSubject(username)
-      .withIssuedAt(now)
-      .withExpiresAt(validity)
-      .sign(kee);  
-    return "Bearer "+token;  
-
-    /*String token = Jwts.builder()//
+    String token = Jwts.builder()//
         .setClaims(claims)//
         .setIssuedAt(now)//
         .setExpiration(validity)//
-        .signWith(kee)
+        .signWith(key)
         .compact();
     return "Bearer "+token;
-    */
   }
 
- public Authentication getAuthentication(String token) {    
+  public Authentication getAuthentication(String token) {
     UserDetails userDetails = myUserDetails.loadUserByUsername(getUsername(token));
     return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
   }
 
+  public String getUsername(String token) {
+    return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
+  }
+
   public String resolveToken(HttpServletRequest req) {
     String bearerToken = req.getHeader("Authorization");
-    System.out.println("token resolve token=>" +req.getHeader("Authorization"));
     if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
       return bearerToken.substring(7, bearerToken.length());
     }
     return null;
   }
 
-  public String getUsername(String token) {
-    //return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
-    return JWT.decode(token).getSubject();
-  }
-
-    /*public String getSubject(HttpServletRequest req){
+    public String getSubject(HttpServletRequest req){
       String token = resolveToken(req);
-
-      //Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJwt(token).getBody();
+      Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJwt(token).getBody();
       
       String subject = claims.getSubject();
       System.out.println(subject);
       return subject;
-    }*/
+    }
 
-    public boolean validateToken(String token) {
-      try {
-        JWTVerifier verifier = JWT.require(kee).build();
-        DecodedJWT jwt = verifier.verify(token);
-        //JWT.decode(token);
-        return true;
-      } catch (JWTDecodeException exception) {
-        throw new CustomException("Expired or invalid JWT token", HttpStatus.INTERNAL_SERVER_ERROR);
-      }
-    /*
+  public boolean validateToken(String token) {
     try {
       Jwts.parser().setSigningKey(key).parseClaimsJws(token);
       return true;
     } catch (JwtException | IllegalArgumentException e) {
       throw new CustomException("Expired or invalid JWT token", HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    */
   }
 
 }

@@ -1,8 +1,7 @@
-<app-header *ngIf="!header"></app-header>
+<app-header *ngIf="authenticated$"></app-header>
 <main>
     <div class="container">
-        <router-outlet></router-outlet>
+        <router-outlet (activate)="authValidate()" ></router-outlet>
     </div>
 </main>
 <app-footer></app-footer>
-

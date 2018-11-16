@@ -6,9 +6,6 @@
     <groupId>org.springframework</groupId>
     <artifactId>JinjiSystem</artifactId>
     <version>0.1.0</version>
-       <configuration>
-          <failOnMissingWebXml>false</failOnMissingWebXml>
-       </configuration>
     <packaging>pom</packaging>
 
     <modules>
