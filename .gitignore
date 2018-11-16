@@ -1,0 +1,5 @@
+#igoring libs/compiled folders
+frontend/note_modules
+frontend/target
+
+backend/target

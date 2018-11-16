@@ -1,6 +1,7 @@
 package aimyamaguchi.co.jp.aimspringsql.employee;
 
 import java.util.Enumeration;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -65,9 +66,11 @@ public class EmployeeService {
         } else {
             Long nextSeq = seq.findBySeqTablename("m_shain").getSeqValue();
             employee.setShainId(nextSeq.toString());
-            employee.setShainPassword("aim123456"); //pls change this soon            
-            employee.setShainRegisterDate(new Date());
-            //employee.setShainRegisteredBy(jwtTokenProvider.getSubject(reqs));
+            employee.setShainPassword("aim123456"); //pls change this soon   
+            Date dt = new Date();
+            employee.setShainRegisterDate(dt);
+            System.out.println(employee.getShainRegisterDate());
+           // employee.setShainRegisteredBy(jwtTokenProvider.getSubject(reqs));
             employeeRepository.save(employee);
         }        
     }

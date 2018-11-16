@@ -20,6 +20,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -108,10 +110,10 @@ public class EmployeeMaster implements UserDetails{
     private WorkAreaData shainArea;
 
 
-
     @Column(name="SHA_ENTRYDAY", nullable=false)
     private Date shainJoinedDate;
 
+    
     @Column(name="SHA_RETIREDAY")
     private Date shainRetiredDate;
 
