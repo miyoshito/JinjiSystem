@@ -1,0 +1,183 @@
+<form [formGroup]="employeeForm" (ngSubmit)="enviarDados()">
+<div class="row">
+  <div class="col-md-6">
+  <h3>社員マスタ編集画面</h3>
+  </div>
+  <div class="col-md-3"></div>
+  <div class="col-md-3 d-flex justify-content-end align-items-end">
+      <div class="custom-control custom-checkbox">
+          <input type="checkbox" formControlName="shainDeletedFlag" class="custom-control-input" id="customCheck1">
+          <label class="custom-control-label" for="customCheck1">退職フラグ</label>
+        </div>
+    </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <span>社員番号: </span>
+    <input type="text" formControlName="shainId" class="form-control form-control-sm" readonly>
+  </div>
+  <div class="col-md-3">
+    <span>氏名: </span>
+    <input type="text" formControlName="shainName" class="form-control form-control-sm">
+  </div>
+  <div class="col-md-3">
+    <span>フリガナ: </span>
+    <input type="text" formControlName="shainKana" class="form-control form-control-sm">
+  </div>
+  <div class="col-md-3">
+    <span>採用区分: </span>
+    <select class="custom-select custom-select-sm" formControlName="shainRecruit">
+      <option selected value="新卒">新卒</option>
+      <option value="キャリア">キャリア</option>
+    </select>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <span>生年月日</span>
+    <div>
+    <input type=date formControlName="shainBirthday" class="form-control form-control-sm" >
+  </div>    
+  </div>
+  <div class="col-md-6">
+    <div formGroupName="affiliation">
+    <span>所属</span>    
+    <select class="custom-select custom-select-sm" formControlName="id">
+      <option *ngFor="let item of affiliation" value="{{item.tid}}">{{item.tdesc}}</option>
+    </select>
+    </div>
+  </div>
+  <div class="col-md-3">
+      <div formGroupName="position">
+    <span>役職</span>
+      <select class="custom-select custom-select-sm" formControlName="id">
+          <option *ngFor="let item of position" value="{{item.tid}}">{{item.tdesc}}</option>
+      </select>
+      </div>
+  </div>
+</div>
+<div class="row">
+  <div class="d-flex p-2 align-items-center justify-content-center col-md-2">
+    <span>扶養: </span>
+    <div class="form-control-sm d-flex justify-content-end" style = "margin: 0px;">
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" id="supportRadioButton1" value ="false" class="custom-control-input" formControlName="shainSupport">
+        <label class="custom-control-label" for="supportRadioButton1">無</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" id="supportRadioButton2" value ="true" class="custom-control-input" formControlName="shainSupport">
+        <label class="custom-control-label" for="supportRadioButton2">有</label>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex align-items-center justify-content-center col-md-3">
+    <span>配偶者: </span>
+    <div class="form-control-sm d-flex justify-content-end" style = "margin: 0px;">
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" id="marriedRadioButton1" formControlName="shainMarried" value="false" class="custom-control-input">
+        <label class="custom-control-label" for="marriedRadioButton1">無</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" id="marriedRadioButton2" formControlName="shainMarried" value="true" class="custom-control-input">
+        <label class="custom-control-label" for="marriedRadioButton2">有</label>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex align-items-center justify-content-center col-md-3">
+    <span>性別: </span>
+    <div class="form-control-sm d-flex justify-content-center">
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" id="sexRadioButton1" value="男" formControlName="shainSex" class="custom-control-input">
+        <label class="custom-control-label" for="sexRadioButton1">男</label>
+      </div>
+      <div class="custom-control custom-radio custom-control-inline">
+        <input type="radio" id="sexRadioButton2" value="女" formControlName="shainSex" class="custom-control-input">
+        <label class="custom-control-label" for="sexRadioButton2">女</label>
+      </div>
+    </div>
+  </div>
+    <div class="d-flex align-items-center justify-content-center col-md-4"> 
+      <span>血液型: </span>
+    <div class="form-control-sm d-flex justify-content-center">
+      <select class="custom-select custom-select-sm" formControlName="shainBloodType">
+          <option *ngFor="let type of bloodType" value="{{type}}">{{type}}</option>
+      </select>
+    </div>
+    </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <span>電話番号(自宅)</span>
+    <input type="text" class="form-control form-control-sm" formControlName="shainHomePhoneNumber" >
+  </div>
+  <div class="col-md-3">
+    <span>電話番号(携帯)</span>
+    <input type="text" class="form-control form-control-sm" formControlName="shainMobilePhoneNumber">
+  </div>
+  <div class="col-md-3">
+    <span>メールアドレス</span>
+    <input type="text" class="form-control form-control-sm" formControlName="shainMail">
+  </div>
+  <div class="col-md-3">
+    <span>携帯メールアドレス</span>
+    <input type="text" class="form-control form-control-sm" formControlName="shainMobileMail">
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <span>郵便番号</span>
+    <input type="text" class="form-control form-control-sm" formControlName="shainPostalCode" >
+  </div>
+  <div class="col-md-2">
+    <span>勤務可能地域</span>
+    <div formGroupName="shainArea">
+    <select class="custom-select custom-select-sm" formControlName="id">
+      <option *ngFor="let cities of warea" value="{{cities.tid}}">{{cities.tdesc}}</option>
+    </select>
+    </div>
+  </div>
+  <div class="col-md-7">
+    <span>住所</span>
+    <input type="text" class="form-control form-control-sm" formControlName="shainAddress" >
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <span>車種</span>
+    <select class="custom-select custom-select-sm" formControlName="shainCarModel">
+      <option *ngFor="let cars of carModel" value="{{cars}}">{{cars}}</option>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <span>入社日</span>
+    <input type="date" class="form-control form-control-sm" formControlName="shainJoinedDate">
+  </div>
+  <div class="col-md-3">
+    <span>退社日</span>
+    <input type="date" class="form-control form-control-sm" formControlName="shainRetiredDate">
+  </div>
+  <div class="col-md-3">
+    <span>パスワード</span>
+  <div class="input-group input-group-sm">
+      <input type="password" class="form-control form-control-sm" aria-describedby="button-addon2" readonly formControlName="shainPassword">
+      <div class="input-group-append">
+        <button class="btn btn-outline-danger" type="button" id="button-addon2">リセット</button>
+      </div>
+  </div>
+  </div>
+</div>
+<div class="row" style="margin-top:20px;">
+  <div class="col-md-12">
+    <label for="exampleFormControlTextarea1">備考文</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" formControlName="shainNotes"></textarea>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 d-flex p-2 justify-content-around">
+  <button type="button" class="btn btn-primary" (click)="submitForm()">更新</button>
+  <button type="button" class="btn btn-primary" (click)="showalert()">削除</button>
+  <button type="button" class="btn btn-primary" (click)="showalert()">メニューへ戻る</button>
+</div>
+</div>
+</form>
+{{employeeForm.value | json}}

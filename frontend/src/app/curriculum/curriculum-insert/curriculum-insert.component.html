@@ -1,0 +1,124 @@
+<div class="row">
+  <div class="col-md-6">
+    <h3>職務経歴書編集画面</h3>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-3">
+    <span>社員番号: </span><span>userid of this resume</span>
+  </div>
+  <div class="col-md-3">
+    <span>氏名: </span><span>name of this resume</span>
+  </div>
+  <div class="col-md-3">
+    <span>フリガナ: </span><span>ktkn name of this resume</span>
+  </div>
+  <div class="col-md-3">
+    <span>採用区分: </span><span>some stuff idk what is</span>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <span>顧客名</span>
+    <input type="text" class="form-control form-control-sm">
+  </div>
+  <div class="col-md-4">
+    <span>業種</span>
+    <input type="text" class="form-control form-control-sm">
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8">
+    <span>対象業務</span>
+    <input type="text" class="form-control form-control-sm">
+  </div>
+  <div class="col-md-4">
+    <span>役割</span>
+    <input type="text" class="form-control form-control-sm" label="temporary">
+  </div>
+</div>
+{{selectedMakers | json}}
+<div class="row">
+  <div class="col-md-4">
+    <span>開発機種／メーカー</span>
+    <ng-select  [items]="maker$"
+                [multiple]="true"
+                [closeOnSelect]="true"
+                [hideSelected]="true"
+                bindLabel="tdesc"
+                bindValue="tid"
+                placeholder="何々を選択して下さい。"
+                [(ngModel)]="selectedMakers">
+        </ng-select>
+  </div>
+  <div class="col-md-4">
+    <span>OS</span>
+    <ng-select  [items]="os$"
+                [multiple]="true"
+                [closeOnSelect]="true"
+                [hideSelected]="true"
+                bindLabel="tdesc"
+                bindValue="tid"
+                placeholder="何々を選択して下さい。"
+                [(ngModel)]="selectedOs">
+        </ng-select>
+  </div>
+  <div class="col-md-4">
+    <span>DBMS</span>
+    <ng-select  [items]="dbms$"
+                [multiple]="true"
+                [closeOnSelect]="true"
+                [hideSelected]="true"
+                bindLabel="tdesc"
+                bindValue="tid"
+                placeholder="何々を選択して下さい。"
+                [(ngModel)]="selectedDbms">
+        </ng-select>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-4">
+    <span>言語</span>
+    <ng-select  [items]="lang$"
+                [multiple]="true"
+                [closeOnSelect]="true"
+                [hideSelected]="true"
+                bindLabel="tdesc"
+                bindValue="tid"
+                placeholder="何々を選択して下さい。"
+                [(ngModel)]="selectedLang">
+        </ng-select>
+  </div>
+  <div class="col-md-4">
+    <span>ツール</span>
+    <ng-select  [items]="tools$"
+                [multiple]="true"
+                [closeOnSelect]="true"
+                [hideSelected]="true"
+                bindLabel="tdesc"
+                bindValue="tid"
+                placeholder="何々を選択して下さい。"
+                [(ngModel)]="selectedTools">
+        </ng-select>
+  </div>
+  <div class="col-md-4">
+    <span>担当作業</span>
+    <ng-select  [items]="response$"
+                [multiple]="true"
+                [closeOnSelect]="true"
+                [hideSelected]="true"
+                bindLabel="tdesc"
+                bindValue="tid"
+                placeholder="何々を選択して下さい。"
+                [(ngModel)]="selectedResponse">
+        </ng-select>
+  </div>
+</div>
+
+
+
+

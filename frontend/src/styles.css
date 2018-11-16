@@ -1,0 +1,41 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+@import './assets/css/boxes.css';
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+
+.custom-radio .custom-control-input:checked~.custom-control-label::before,
+.custom-radio .custom-control-input:checked~.custom-control-label::after{
+    background-color: red;
+    border-radius: 50%;
+}
+.custom-checkbox .custom-control-input:checked~.custom-control-label::after{
+    background-color: red;
+    border-radius: 25%;
+}
+
+.row{
+    margin-top: 10px !important;
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+  }
+  
+  body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    flex: fill;
+  }
+  
+  header, footer{
+    flex: none;
+  }
+
+  
+ 
