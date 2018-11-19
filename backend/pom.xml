@@ -102,13 +102,6 @@
 			<artifactId>java-jwt</artifactId>
 			<version>3.4.1</version>
 		</dependency>
-			<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-tomcat</artifactId>
-			<scope>provided</scope>
-		</dependency>
-
-
 	</dependencies>
 
 	<build>
@@ -118,30 +111,25 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			
-			<plugin>
-		    <artifactId>maven-resources-plugin</artifactId>
-		    <executions>
-		        <execution>
-		            <id>copy-resources</id>
-		            <phase>validate</phase>
-		            <goals>
-		                <goal>copy-resources</goal>
-		            </goals>
-		            <configuration>
-		                <outputDirectory>${project.build.directory}/classes/resources/</outputDirectory>
-		                <resources>
-		                    <resource>
-		                        <directory>${project.parent.basedir}/frontend/src/</directory>
-		                    </resource>
-		                </resources>
-		            </configuration>
-		        </execution>
-		    </executions>
-		</plugin>
+				<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<executions>
+					<execution>
+					<id>copy-resources</id>
+					<phase>validate</phase>
+					<goals><goal>copy-resources</goal></goals>
+					<configuration>
+						<outputDirectory>${basedir}/target/classes/static</outputDirectory >
+						<resources>
+						<resource>
+							<directory>../frontend/dist/aimapp</directory >
+						</resource>
+						</resources>
+					</configuration>
+					</execution>
+				</executions>
+				</plugin>
+				
 		</plugins>
-		
-		
 	</build>
-
-
 </project>
