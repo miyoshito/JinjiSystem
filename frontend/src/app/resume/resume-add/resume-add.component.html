@@ -1,0 +1,103 @@
+<div class="row">
+  <div class="col-md-6">
+    <h3>社員マスタリスト画面</h3>
+  </div>
+</div>
+<!-- dados que vem do profile-->
+<div class="row">
+  <div class="col-md-3">
+    <span>Employee id</span>
+  </div>
+  <div class="col-md-3">
+    <span>Employee name</span>
+  </div>
+  <div class="col-md-3">
+    <span>Employee kana</span>
+  </div>
+  <div class="col-md-3">
+    <span>something</span>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4">
+    <span>Study Area</span>
+    <input type="text" class="form-control form-control-sm">
+  </div>
+  <div class="col-md-4">
+    <span>University Name</span>
+    <input type="text" class="form-control form-control-sm">
+  </div>
+  <div class="col-md-4">
+    <span>Graduation Date</span>
+    <input type="text" class="form-control form-control-sm">
+  </div>
+</div>
+
+<br />
+<h4>Attach graduation documents</h4>
+
+<div class="row">
+  <div class="col-md-4">
+    <input type="file" ng2FileSelect [uploader]="uploader" multiple /><br />
+  </div>
+</div>
+<br />
+<div class="box box-danger">
+  <div class="box-body">
+    <div class="col-md-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th width="50%">Name</th>
+            <th>Size</th>
+            <th>Progress</th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of uploader.queue">
+            <td><strong>{{ item?.file?.name }}</strong></td>
+            <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+            <td *ngIf="uploader.isHTML5">
+              <div class="progress" style="margin-bottom: 0;">
+                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+              </div>
+            </td>
+            <td class="text-center">
+              <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+              <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+              <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+            </td>
+            <td nowrap>
+              <button type="button" class="btn btn-success btn-sm" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                Upload
+              </button>
+              <button type="button" class="btn btn-warning btn-sm" (click)="item.cancel()" [disabled]="!item.isUploading">
+                Cancel
+              </button>
+              <button type="button" class="btn btn-danger btn-sm" (click)="item.remove()">
+                Remove
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div>
+        <div>
+          <div class="progress" style="">
+            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-3">
+    <button type="button" class="btn btn-success btn-sm">登録</button>  
+    <button type="button" class="btn btn-warning btn-sm">キャンセル</button>
+  </div>
+</div>

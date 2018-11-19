@@ -10,7 +10,7 @@ import { Employee } from 'src/app/interfaces/employee';
 })
 export class EmployeeListComponent implements OnInit {
 
-  displayedColumns = ['社員番号','社員氏名','','','']
+  displayedColumns = ['社員番号','社員氏名','社員カナ','所属','　']
   dataSource = new MatTableDataSource()
   employees: Employee[];
 

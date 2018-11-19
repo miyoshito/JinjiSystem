@@ -25,27 +25,22 @@ import io.jsonwebtoken.Jwts;
 @Component
 public class JwtTokenProvider {
 
-  /**
-   * THIS IS NOT A SECURE PRACTICE! For simplicity, we are storing a static key here. Ideally, in a
-   * microservices environment, this key would be kept on a config-server.
-   */
-
   Algorithm kee = Algorithm.HMAC256("secret");
 
-  private long validityInMilliseconds = 3600000; // 1h
+  private long validityInMilliseconds = 604800000; // 1h
 
   @Autowired
   private UserDetailsServiceImpl myUserDetails;
 
 
   public String createToken(String username, Roles roles) {
-    Claims claims = Jwts.claims().setSubject(username);    
+    //Claims claims = Jwts.claims().setSubject(username);
     //claims.put("auth", roles.stream().map(s -> new SimpleGrantedAuthority(s.getAuthority())).filter(Objects::nonNull).collect(Collectors.toList()));
-    claims.put("auth", roles);
+    //claims.put("auth", roles);
     Date now = new Date();
     Date validity = new Date(now.getTime() + validityInMilliseconds);
 
-    String token = JWT.create()
+      String token = JWT.create()
       .withSubject(username)
       .withIssuedAt(now)
       .withExpiresAt(validity)

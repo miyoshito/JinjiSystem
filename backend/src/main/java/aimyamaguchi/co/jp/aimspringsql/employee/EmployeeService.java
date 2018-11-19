@@ -60,6 +60,7 @@ public class EmployeeService {
             return false;            
         }
     }
+    
     public List<EmployeeMaster> returnAllEmployees(){
         return employeeRepository.findAll();
     }    

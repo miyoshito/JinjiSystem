@@ -32,6 +32,8 @@ import { CurriculumInsertComponent } from './curriculum/curriculum-insert/curric
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { TokenInterceptorService } from './guards/token-interceptor.service';
 import { EmployeeListComponent } from './admin/employee-list/employee-list.component';
+import { ResumeAddComponent } from './resume/resume-add/resume-add.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -57,7 +59,8 @@ export function tokenGetter() {
     CurriculumDetailsComponent,
     CurriculumInsertComponent,
     NotFoundComponent,
-    EmployeeListComponent
+    EmployeeListComponent,
+    ResumeAddComponent
   ],
   imports: [
     BrowserModule,
@@ -88,7 +91,8 @@ export function tokenGetter() {
     NgSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    FileUploadModule
   ],
   exports: [
   ],

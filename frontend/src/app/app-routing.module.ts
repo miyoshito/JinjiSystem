@@ -18,6 +18,7 @@ import { ResumeSearchComponent } from './resume/resume-search/resume-search.comp
 import { CurriculumInsertComponent } from './curriculum/curriculum-insert/curriculum-insert.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { EmployeeListComponent } from './admin/employee-list/employee-list.component';
+import { ResumeAddComponent } from './resume/resume-add/resume-add.component';
 
 const routes: Routes = [
   // Login routes
@@ -31,7 +32,7 @@ const routes: Routes = [
   {path: 'profile', children:[
     {path: '', component: ProfileComponent},
     {path: 'edit', component: NotFoundComponent}, // -> Edit em dados pessoais (telefone, e-mail e blablabla)
-    {path: 'resume/add', component: ResumeSearchComponent},
+    {path: 'resume/add', component: ResumeAddComponent},
     {path: 'resume/{id}/edit', component: ResumeSearchComponent},
     {path: 'curriculum/add', component: CurriculumInsertComponent},
     {path: 'curriculum/{id}/edit', component: ResumeSearchComponent},
