@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
-import { UrlSettings } from '../../url-settings'
+import { API_URL } from '../../url-settings'
 import { catchError } from 'rxjs/operators';
 import { TokenInterceptorService } from 'src/app/guards/token-interceptor.service';
 
-const url = 'http://192.168.10.120:8080'
+const url = API_URL
 @Injectable({
   providedIn: 'root'
 })

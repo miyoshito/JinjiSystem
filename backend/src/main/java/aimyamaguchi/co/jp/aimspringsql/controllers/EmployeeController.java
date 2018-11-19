@@ -39,7 +39,7 @@ public class EmployeeController {
     public ResponseEntity<String> addEmployee(@RequestBody EmployeeMaster employee, HttpServletRequest req){
         
     try {
-       // employeeService.validateRequest(req);
+        employeeService.validateRequest(req);
         employeeService.insertEmployee(employee, req);        
         return new ResponseEntity<>("OK", HttpStatus.CREATED);
     } catch (AuthenticationException e) {

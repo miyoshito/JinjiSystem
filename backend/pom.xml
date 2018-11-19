@@ -2,7 +2,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-		<groupId>aimyamaguchi.co.jp</groupId>
+
+	<groupId>aimyamaguchi.co.jp</groupId>
 	<artifactId>aimspringsql</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
@@ -18,7 +19,6 @@
 	</parent>
 
 	<properties>
-		<start-class>aimyamaguchi.co.jp.AimSpringJinjiSystemApplication</start-class>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
@@ -102,6 +102,8 @@
 			<artifactId>java-jwt</artifactId>
 			<version>3.4.1</version>
 		</dependency>
+
+
 	</dependencies>
 
 	<build>
@@ -111,25 +113,30 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			
-				<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<executions>
-					<execution>
-					<id>copy-resources</id>
-					<phase>validate</phase>
-					<goals><goal>copy-resources</goal></goals>
-					<configuration>
-						<outputDirectory>${basedir}/target/classes/static</outputDirectory >
-						<resources>
-						<resource>
-							<directory>../frontend/dist/aimapp</directory >
-						</resource>
-						</resources>
-					</configuration>
-					</execution>
-				</executions>
-				</plugin>
-				
+			<plugin>
+		    <artifactId>maven-resources-plugin</artifactId>
+		    <executions>
+		        <execution>
+		            <id>copy-resources</id>
+		            <phase>validate</phase>
+		            <goals>
+		                <goal>copy-resources</goal>
+		            </goals>
+		            <configuration>
+		                <outputDirectory>${project.build.directory}/classes/resources/</outputDirectory>
+		                <resources>
+		                    <resource>
+		                        <directory>${project.parent.basedir}/frontend/src/</directory>
+		                    </resource>
+		                </resources>
+		            </configuration>
+		        </execution>
+		    </executions>
+		</plugin>
 		</plugins>
+		
+		
 	</build>
+
+
 </project>
