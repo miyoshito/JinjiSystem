@@ -4,7 +4,9 @@ import { Observable } from 'rxjs';
 import { Data } from '../interfaces/data';
 import { map } from 'rxjs/operators';
 
-const url = 'http://192.168.10.120:8080'
+import { API_URL } from '../url-settings'
+
+const url = API_URL
 
 @Injectable({
   providedIn: 'root'

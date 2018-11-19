@@ -1,10 +1,10 @@
 {
   "name": "aimapp",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --proxy-config proxy.conf.json",
+    "build": "ng build --prod --base-href /jinji/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

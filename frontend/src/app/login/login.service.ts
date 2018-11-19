@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
 import { Observable, Subject, BehaviorSubject } from "rxjs";
-import { map, filter, catchError, mergeMap } from 'rxjs/operators';
+import { API_URL } from '../url-settings'
 import { User } from './login.interface'
-const url = 'http://192.168.10.120:8080'
+
+const url = API_URL
 @Injectable({
   providedIn: 'root'
 })
