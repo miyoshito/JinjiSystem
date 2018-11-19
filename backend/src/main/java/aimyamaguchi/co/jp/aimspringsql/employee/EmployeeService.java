@@ -3,6 +3,7 @@ package aimyamaguchi.co.jp.aimspringsql.employee;
 import java.util.Enumeration;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -58,6 +59,9 @@ public class EmployeeService {
         } catch (AuthenticationException e) {
             return false;            
         }
+    }
+    public List<EmployeeMaster> returnAllEmployees(){
+        return employeeRepository.findAll();
     }    
 
     public void insertEmployee(EmployeeMaster employee, HttpServletRequest reqs){

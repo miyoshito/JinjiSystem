@@ -41,11 +41,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
-        .cors().disable()
+        .cors()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and().authorizeRequests() 
                 .antMatchers("POST", "/api/login").permitAll()
-                .antMatchers("POST", "/api/adduser").permitAll()                
+                .antMatchers("POST", "/api/adduser").permitAll()
                 .anyRequest().authenticated()
         .and()
         .exceptionHandling().accessDeniedPage("/")
@@ -56,6 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
       web.ignoring()
+      .antMatchers("GET", "/**")                
       .antMatchers("GET",  "/api/employee-dependencies")
       .antMatchers("GET", "/api/getall")
       .antMatchers("POST", "/add-employee");

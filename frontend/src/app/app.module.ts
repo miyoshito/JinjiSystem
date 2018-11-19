@@ -8,7 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatFormFieldModule, MatInputModule, MatRadioModule, MatTableModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatButtonModule, MatIconModule, MatMenuModule, MatListModule, MatExpansionModule, MatDatepickerModule, MatNativeDateModule } from '@angular/material'
+import { MatFormFieldModule, MatInputModule, MatRadioModule, MatTableModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatButtonModule, MatIconModule, MatMenuModule, MatListModule, MatExpansionModule, MatDatepickerModule, MatNativeDateModule,
+MatPaginatorModule } from '@angular/material'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginService } from './login/login.service';
@@ -30,6 +31,7 @@ import { CurriculumDetailsComponent } from './curriculum/curriculum-details/curr
 import { CurriculumInsertComponent } from './curriculum/curriculum-insert/curriculum-insert.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { TokenInterceptorService } from './guards/token-interceptor.service';
+import { EmployeeListComponent } from './admin/employee-list/employee-list.component';
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -54,7 +56,8 @@ export function tokenGetter() {
     CurriculumListComponent,
     CurriculumDetailsComponent,
     CurriculumInsertComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    EmployeeListComponent
   ],
   imports: [
     BrowserModule,
@@ -78,15 +81,16 @@ export function tokenGetter() {
       config: {
         tokenGetter: tokenGetter,
         whitelistedDomains: ['localhost:8080'],
-        blacklistedRoutes: ['localhost:8080/api/auth']      
+        blacklistedRoutes: ['localhost:8080/api/auth']
       }
     }),
     MatRadioModule,
     NgSelectModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatPaginatorModule
   ],
-  exports:[
+  exports: [
   ],
   providers: [
     {

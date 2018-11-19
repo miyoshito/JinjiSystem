@@ -35,8 +35,7 @@ export class LoginComponent implements OnInit {
     
   }
 
-  login(){
-    
+  login(){    
     const form: User = this.loginform.value
     this.loginService.dologin(form).subscribe(val =>{
     if(val.status === 201) {
@@ -47,7 +46,7 @@ export class LoginComponent implements OnInit {
         console.log(val.headers)
         localStorage.setItem('name', val.headers.get('Displayname'))
         /******************* */
-        this.route.navigate(['home']).catch(err => console.log(err))
+        this.route.navigate(['profile']).catch(err => console.log(err))
       } else if (val.status === 401) {
         console.log('401 - unauthorized')
         this.httpStatus = val.status
@@ -55,6 +54,7 @@ export class LoginComponent implements OnInit {
       }
     }, err => {
       console.log(this.httpStatus)
+      console.log(err)
       alert('Username or Password incorrect, please try again.')
     })
     

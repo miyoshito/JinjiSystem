@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
     this.loggedUser = localStorage.getItem('name')
   }
   home(){
-    this.route.navigate(['home']);
+    this.route.navigate(['profile']);
   }
 
   logout() {

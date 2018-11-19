@@ -17,6 +17,7 @@ import { CurriculumDetailsComponent } from './curriculum/curriculum-details/curr
 import { ResumeSearchComponent } from './resume/resume-search/resume-search.component';
 import { CurriculumInsertComponent } from './curriculum/curriculum-insert/curriculum-insert.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
+import { EmployeeListComponent } from './admin/employee-list/employee-list.component';
 
 const routes: Routes = [
   // Login routes
@@ -40,6 +41,7 @@ const routes: Routes = [
   {path: 'admin',
     children:[
       {path: 'employee-master', component: EmployeeMasterComponent},
+      {path: 'employee-list', component: EmployeeListComponent},
       {path: 'systemsettings', component: AdminComponent}, //temp
         {path: 'resume', children:[
           {path: 'search', component: ResumeSearchComponent},

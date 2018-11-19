@@ -15,6 +15,9 @@ export class EmployeeMasterService {
   constructor(private _http: HttpClient,
               private interceptor: TokenInterceptorService) { }
 
+  getEmployeeList(): Observable<Employee[]>{
+    return this._http.get<Employee[]>(url+'/api/admin/employee-list')
+  }  
   
   emParam(): Observable<any>{
       return this._http.get<any>(url+'/api/employee-dependencies',{
@@ -28,7 +31,6 @@ export class EmployeeMasterService {
   }
 
   public insertShainAttempt(employee: Employee){
-
     console.log (localStorage.getItem('currentUser'))
     console.log('object sended to spring:')
     console.log(employee)
@@ -37,6 +39,6 @@ export class EmployeeMasterService {
       .subscribe(resp =>{
         console.log(resp)
         console.log(resp.headers)
-      })
+    })
   }
 }

@@ -15,8 +15,7 @@ export class LoginService {
     dologin(authuser: User): Observable<any> {
     return this._http.post<any>(url+'/api/login?username=' + authuser.username + '&password=' + authuser.password, null,
       {
-        observe: 'response',
-        headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8', 'Displayname': 'charset=utf-8' })
+        observe: 'response'
       });
   }
 

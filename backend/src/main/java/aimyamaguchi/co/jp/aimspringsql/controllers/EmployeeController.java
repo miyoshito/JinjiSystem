@@ -30,6 +30,11 @@ public class EmployeeController {
     @Autowired
     EmployeeRepository er;
 
+    @GetMapping("/admin/employee-list")
+    public List<EmployeeMaster> employeeList(){
+        return employeeService.returnAllEmployees();
+    }
+
     @PostMapping("/login")
     public ResponseEntity<String> doLogin(@RequestParam String username, @RequestParam String password){
         return employeeService.authenticationAttempt(username, password);
