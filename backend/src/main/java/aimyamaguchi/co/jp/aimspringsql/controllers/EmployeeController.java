@@ -22,7 +22,7 @@ import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeRepository;
 import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeService;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api")
 @CrossOrigin(origins  = "*")
 public class EmployeeController {
 
@@ -35,6 +35,11 @@ public class EmployeeController {
     @GetMapping("/admin/employee-list")
     public List<EmployeeMaster> employeeList(){
         return employeeService.returnAllEmployees();
+    }
+
+    @GetMapping("/getmyinfos")
+    public EmployeeMaster getMe(HttpServletRequest req){
+        return employeeService.findMe(req);
     }
 
     @PostMapping("/login")

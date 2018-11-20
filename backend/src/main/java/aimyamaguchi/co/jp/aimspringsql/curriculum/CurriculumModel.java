@@ -13,12 +13,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import aimyamaguchi.co.jp.aimspringsql.constants.DBMSData;
-import aimyamaguchi.co.jp.aimspringsql.constants.LANGData;
-import aimyamaguchi.co.jp.aimspringsql.constants.MAKERData;
-import aimyamaguchi.co.jp.aimspringsql.constants.OSData;
-import aimyamaguchi.co.jp.aimspringsql.constants.RESPONSEData;
-import aimyamaguchi.co.jp.aimspringsql.constants.TOOLSData;
 import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
 import lombok.Data;
 

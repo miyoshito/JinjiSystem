@@ -34,6 +34,8 @@ import { TokenInterceptorService } from './guards/token-interceptor.service';
 import { EmployeeListComponent } from './admin/employee-list/employee-list.component';
 import { ResumeAddComponent } from './resume/resume-add/resume-add.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { SkillMapComponent } from './skill-map/skill-map.component';
+import { SystemSettingsComponent } from './admin/system-settings/system-settings.component';
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -60,7 +62,9 @@ export function tokenGetter() {
     CurriculumInsertComponent,
     NotFoundComponent,
     EmployeeListComponent,
-    ResumeAddComponent
+    ResumeAddComponent,
+    SkillMapComponent,
+    SystemSettingsComponent
   ],
   imports: [
     BrowserModule,

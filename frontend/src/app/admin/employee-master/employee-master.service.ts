@@ -26,19 +26,20 @@ export class EmployeeMasterService {
     })
   }
 
-  showalert(){
-    alert('In development...')
-  }
-
   public insertShainAttempt(employee: Employee){
     console.log (localStorage.getItem('currentUser'))
     console.log('object sended to spring:')
     console.log(employee)
     return this._http.post<any>(url+'/api/add-employee', employee, {
       observe: 'response'})
-      .subscribe(resp =>{
-        console.log(resp)
-        console.log(resp.headers)
-    })
+      .subscribe(resp => {
+        if (resp.status === 201)
+        alert("Employee Inserted")
+    },
+    err => {
+      alert("Something bad happened !")
+      throw err
+    },
+    () => alert('THis has been completed even with errors...'))
   }
 }

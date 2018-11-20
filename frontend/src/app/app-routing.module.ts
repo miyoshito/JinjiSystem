@@ -19,10 +19,12 @@ import { CurriculumInsertComponent } from './curriculum/curriculum-insert/curric
 import { NotFoundComponent } from './errors/not-found/not-found.component';
 import { EmployeeListComponent } from './admin/employee-list/employee-list.component';
 import { ResumeAddComponent } from './resume/resume-add/resume-add.component';
+import { SkillMapComponent } from './skill-map/skill-map.component';
+import { SystemSettingsComponent } from './admin/system-settings/system-settings.component';
 
 const routes: Routes = [
   // Login routes
-  {path: '', redirectTo: 'login',pathMatch: 'full'},
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: '404', component: NotFoundComponent},
   
   {path: 'login', component: LoginComponent, canActivate:[LoginGuardService]},
@@ -43,18 +45,27 @@ const routes: Routes = [
     children:[
       {path: 'employee-master', component: EmployeeMasterComponent},
       {path: 'employee-list', component: EmployeeListComponent},
-      {path: 'systemsettings', component: AdminComponent}, //temp
+      {path: 'skillmap', component: SkillMapComponent},
+      {path: 'systemsettings', component: SystemSettingsComponent}, //temp
         {path: 'resume', children:[
           {path: 'search', component: ResumeSearchComponent},
           {path: 'list', component: ResumeListComponent},
-          {path: '{shainbangou}/{id}/details', component: ResumeDetailsComponent}
+          {path: '{shainbangou}/{id}/details', component: ResumeDetailsComponent},
         ]},
       {path: 'curriculum', children:[
           {path: 'add', component: CurriculumInsertComponent},
           {path: 'search', component: CurriculumSearchComponent},
           {path: 'list', component: CurriculumListComponent},
           {path: '{shainbangou}/{id}/details', component: CurriculumDetailsComponent},
-      ]}
+      ]},
+      {path: 'profile/:id', children:[
+        {path: '', component: ProfileComponent},
+        {path: 'edit', component: EmployeeMasterComponent},
+        {path: 'resume/add', component: ResumeAddComponent},
+        {path: 'resume/edit', component: ResumeAddComponent},
+        {path: 'curriculum/add', component: CurriculumInsertComponent},
+        {path: 'curriculum/edit', component: CurriculumInsertComponent}
+      ]},
   ]},
   //mapeando o direcionamento pra paginas inexistentes...
   {path: '**', redirectTo: '404' }

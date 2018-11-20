@@ -15,8 +15,6 @@ export class TokenInterceptorService implements HttpInterceptor{
 
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('intercepting requests...')
-    console.log(req.url)
     //gambiarra mt louca que precisa ser arrumada logo
     let request
     if (localStorage.getItem('currentUser') != null) {
@@ -27,8 +25,6 @@ export class TokenInterceptorService implements HttpInterceptor{
     })
     }
     else request = req.clone({})
-
-    console.log(request)
     return next.handle(request)
   }
 

@@ -1,4 +1,4 @@
-package aimyamaguchi.co.jp.aimspringsql.constants;
+package aimyamaguchi.co.jp.aimspringsql.employee;
 
 import java.util.List;
 import java.util.Optional;

@@ -24,6 +24,8 @@ export class EmployeeMasterComponent implements OnInit {
   warea: Data[] = []
   affiliation: Data[] = []
 
+  response$: Observable<any>
+
   carModel: string[] = ['自転車','トラック']
 
   params$: Observable<Data[]>
@@ -55,8 +57,14 @@ export class EmployeeMasterComponent implements OnInit {
 
   submitForm(){
     let employee: Employee = this.employeeForm.value
+    try {
     this.employeeService.insertShainAttempt(employee)
-  }
+    this.employeeForm.reset()
+    this.initializeForm()
+    } catch (err) {
+      throw err
+    }
+    }
 
 
 

@@ -4,39 +4,32 @@
   </div>
 </div>
 <mat-table #table [dataSource]="dataSource">
-  <ng-container matColumnDef=" ">
-      <mat-header-cell *matHeaderCellDef> Edit </mat-header-cell>
-      <mat-cell *matCellDef="let users">
-          <button type="button" class="btn btn-box-tool" (click)="getUserDetails(users.userid)"><i class="fas fa-edit"></i></button>
-      </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="社員番号">
+    <ng-container matColumnDef="社員番号">
       <mat-header-cell *matHeaderCellDef> 社員番号 </mat-header-cell>
-      <mat-cell *matCellDef="let users"> {{users.shainId}} </mat-cell>
+      <mat-cell *matCellDef="let employees"> {{employees.shainId}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="社員氏名">
     <mat-header-cell *matHeaderCellDef> 社員氏名 </mat-header-cell>
-    <mat-cell *matCellDef="let users"> {{users.shainName}} </mat-cell>
+    <mat-cell *matCellDef="let employees"> {{employees.shainName}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="社員カナ">
     <mat-header-cell *matHeaderCellDef> 社員カナ </mat-header-cell>
-    <mat-cell *matCellDef="let users"> {{users.shainKana}} </mat-cell>
+    <mat-cell *matCellDef="let employees"> {{employees.shainKana}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="所属">
     <mat-header-cell *matHeaderCellDef> 所属 </mat-header-cell>
-    <mat-cell *matCellDef="let users"> {{users?.affiliation?.desc}} </mat-cell>
+    <mat-cell *matCellDef="let employees"> {{employees?.affiliation?.desc}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="　">
     <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-    <mat-cell *matCellDef="let users"> <mat-icon class="ml-1">arrow_drop_down</mat-icon> </mat-cell>
+    <mat-cell *matCellDef="let employees"> <mat-icon class="ml-1">arrow_drop_down</mat-icon> </mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
-<mat-paginator [length]="users?.usersCount" [pageSize]="5" [pageSizeOptions]="[3, 5, 10]"></mat-paginator>
+<mat-paginator [length]="employees?.length" [pageSize]="5" [pageSizeOptions]="[3, 5, 10]"></mat-paginator>

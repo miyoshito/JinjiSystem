@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../guards/auth.service';
 import { BroadcastService } from '../broadcast.service';
 import { Observable } from 'rxjs';
+import { ProfileService } from '../profile/profile.service';
 
 @Component({
   selector: 'app-login',
@@ -21,10 +22,18 @@ export class LoginComponent implements OnInit {
   loggedUsername: Observable<String>
   isLoggedIn: boolean = false;
 
+  authFailed$: boolean
+  redirecting$: boolean;
+
   constructor(private fb: FormBuilder,
               private loginService: LoginService,
               private route: Router,
-              private broadcastService: BroadcastService) { }
+              private broadcastService: BroadcastService,
+              private profileService: ProfileService)
+              {
+                this.authFailed$ = false;
+                this.redirecting$ = false;
+               }
 
   ngOnInit() {
 
@@ -37,28 +46,20 @@ export class LoginComponent implements OnInit {
 
   login(){    
     const form: User = this.loginform.value
-    this.loginService.dologin(form).subscribe(val =>{
-    if(val.status === 201) {
-        console.log(val.headers.get('Authorization'))        
-        this.broadcastService.pushAuthentication(true)
-        localStorage.setItem('currentUser',val.headers.get('Authorization'))
-        /******************* */
-        console.log(val.headers)
-        localStorage.setItem('name', val.headers.get('Displayname'))
-        /******************* */
-        this.route.navigate(['profile']).catch(err => console.log(err))
-      } else if (val.status === 401) {
-        console.log('401 - unauthorized')
-        this.httpStatus = val.status
-        alert('Username or Password incorrect, please try again.')
-      }
-    }, err => {
-      console.log(this.httpStatus)
+    this.loginService.doLogin(form)
+    .subscribe(res => {
+        localStorage.setItem('currentUser', res.headers.get('Authorization'))
+        this.authFailed$ = false;
+        this.redirecting$ = true;
+        this.profileService.cacheUser();
+        setTimeout(() =>{
+          this.broadcastService.pushAuthentication(true);
+          this.route.navigate(['profile'])
+        },3000)
+    },
+    err => {
       console.log(err)
-      alert('Username or Password incorrect, please try again.')
+      this.authFailed$ = true
     })
-    
   }
-
-
 }

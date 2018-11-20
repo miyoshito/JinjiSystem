@@ -18,9 +18,13 @@ primary key(seq_tablename)
 @Table(name="m_sequences")
 public class Sequences {
 
-    @Id
+    @Id //evitando um NPE idiota do java...
+    @Column(name="_id")
+    private Long _id;
+
     @Column(name="seq_tablename")
     private String seqTablename;
+
     @Column(name="seq_value")
     private Long seqValue;
 

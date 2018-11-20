@@ -3,15 +3,9 @@ package aimyamaguchi.co.jp.aimspringsql.resume;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import aimyamaguchi.co.jp.aimspringsql.files.ResumeFileDetails;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
@@ -39,9 +33,26 @@ public class ResumeModel {
     @Column(name="LOG_REGISTERED")
     private Date insertDate;
 
-    @ManyToOne
+    @Column(name="LOG_INSERTEDBY")
+    private String insertedBy;
+
+
+
+    @OneToOne
     @JsonIgnore
     @JoinColumn(name="SHA_NO", nullable=false)
     private EmployeeMaster employee;
+
+    @OneToMany(mappedBy="resume")
+    private List<ResumeFileDetails> files;
+
+    @OneToMany(mappedBy="k_resume")
+    private List<Career> careers;
+
+    @OneToMany(mappedBy = "s_resume")
+    private List<Qualification> qualifications;
+
+    @OneToMany(mappedBy = "h_resume")
+    private List<Commendation> commendations;
 
 }

@@ -3,35 +3,19 @@ package aimyamaguchi.co.jp.aimspringsql.employee;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import aimyamaguchi.co.jp.aimspringsql.constants.AFFILIATIONData;
-import aimyamaguchi.co.jp.aimspringsql.constants.DataModel;
-import aimyamaguchi.co.jp.aimspringsql.constants.POSITIONData;
-import aimyamaguchi.co.jp.aimspringsql.constants.WorkAreaData;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.CurriculumModel;
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeModel;
 import aimyamaguchi.co.jp.aimspringsql.security.Roles;
@@ -127,9 +111,6 @@ public class EmployeeMaster implements UserDetails{
     @ManyToOne
     private Roles role;
 
-    //@Column(name="SHA_SOUMFLG", length=1)
-    //@Column(name="SHA_ADMINFLG", length=1)   
-
     @Column(name="SHA_NOTES", length=50)
     private String shainNotes;
 
@@ -142,8 +123,8 @@ public class EmployeeMaster implements UserDetails{
     @Column(name="SHA_DELETEFLG", length=1)
     private boolean shainDeletedFlag;
 
-    @OneToMany(mappedBy="employee")
-    private List<ResumeModel> resumes;
+    @OneToOne(mappedBy="employee")
+    private ResumeModel resume;
 
     @OneToMany(mappedBy = "employee")
     private List<CurriculumModel> curriculum;

@@ -38,15 +38,14 @@ public class EmployeeService {
     //login system
     public ResponseEntity<String> authenticationAttempt(String username, String password){
         EmployeeMaster user = employeeRepository.findByShainId(username);
+        HttpHeaders responseHeaders = new HttpHeaders();
         try {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        HttpHeaders responseHeaders = new HttpHeaders();
         responseHeaders.add("Authorization", jwtTokenProvider.createToken(username, user.getRole()));
-        System.out.println(user.getShainKana());
-        responseHeaders.add("Displayname", user.getShainName());
         return new ResponseEntity<>("", responseHeaders, HttpStatus.CREATED);
         } catch (AuthenticationException e) {
-            throw new CustomException("Invalid username/password", HttpStatus.UNPROCESSABLE_ENTITY);
+            return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
+            //throw new CustomException("Invalid username/password", HttpStatus.UNAUTHORIZED);
         }
     }
     //shain CRUD high level validation
@@ -59,6 +58,11 @@ public class EmployeeService {
         } catch (AuthenticationException e) {
             return false;            
         }
+    }
+
+    public EmployeeMaster findMe(HttpServletRequest req){
+        String userid = jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req));
+        return employeeRepository.findByShainId(userid);
     }
     
     public List<EmployeeMaster> returnAllEmployees(){
@@ -80,8 +84,4 @@ public class EmployeeService {
         }        
     }
 
-
-    public String gambiarra(String name){
-        return name;
-    }
 }

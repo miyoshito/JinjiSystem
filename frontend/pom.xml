@@ -14,7 +14,6 @@
                 <version>1.3</version>
 
                 <configuration>
-                    <failOnMissingWebXml>false</failOnMissingWebXml>
                     <nodeVersion>v10.8.0</nodeVersion>
                     <npmVersion>6.4.1</npmVersion>
                     <workingDirectory>./src</workingDirectory>
