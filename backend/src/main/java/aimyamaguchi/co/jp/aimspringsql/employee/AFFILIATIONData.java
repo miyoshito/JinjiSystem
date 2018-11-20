@@ -24,9 +24,9 @@ import lombok.Data;
 public class AFFILIATIONData{
     
     @Id
-    @Column(name="AFF_ID")
+    @Column(name="AFFILIATION_ID")
     private Long id;
-    @Column(name="AFF_DESC")
+    @Column(name="AFFILIATION_DESC")
     private String desc;
     @Column(name="ACTIVE")
     private boolean active;
