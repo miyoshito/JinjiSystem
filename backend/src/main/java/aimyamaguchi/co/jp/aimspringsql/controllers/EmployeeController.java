@@ -56,22 +56,7 @@ public class EmployeeController {
         return new ResponseEntity<>("OK", HttpStatus.CREATED);
     } catch (AuthenticationException e) {
         throw new CustomException("You don't have authorities for do this.", HttpStatus.UNAUTHORIZED);
+        }
     }
-    
-
-
-    //employeeService.save_test(employee);        
-
-        
-    }
-
-    @GetMapping("/userdetails")
-    public String temp(){
-        String teste = er.findByShainId("1").getShainName();
-        System.out.println(teste);
-        return teste;
-    }
-
-    
 
 }
