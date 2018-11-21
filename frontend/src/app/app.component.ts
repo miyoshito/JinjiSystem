@@ -12,7 +12,8 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 })
 export class AppComponent implements OnInit{
 
-  constructor(private broadcastService: BroadcastService){}
+  constructor(private broadcastService: BroadcastService,
+              private _route: Router){}
 
   authenticated$: boolean
   
@@ -26,7 +27,10 @@ export class AppComponent implements OnInit{
   authValidate(){
     if (localStorage.getItem('currentUser') != null) {
       this.broadcastService.pushAuthentication(true);
-    } else this.broadcastService.pushAuthentication(false);
+    } else {
+      this.broadcastService.pushAuthentication(false);
+      this._route.navigate(['login'])
+    }
   }
 
 }

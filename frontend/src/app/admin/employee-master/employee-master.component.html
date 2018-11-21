@@ -11,6 +11,11 @@
         </div>
     </div>
 </div>
+<div class="alert alert-success" role="alert" *ngIf="success$">
+  Success! User inserted. #temporary<br/>
+  Default password for new created accounts is "aim123456", remember to ask the employee<br/>
+  to change his password.
+</div>
 <div class="row">
   <div class="col-md-3">
     <span>社員番号: </span>
@@ -40,12 +45,22 @@
   </div>    
   </div>
   <div class="col-md-6">
-    <div formGroupName="affiliation">
-    <span>所属</span>    
-    <select class="custom-select custom-select-sm" formControlName="id">
+    <span>所属</span>
+    
+    <ng-select
+      [items]="affiliations$ | async"
+      [multiple]="true"
+      [closeOnSelect]="true"
+      [hideSelected]="true"
+      bindLabel="desc"
+      placeholder="..."      
+      formControlName="affiliation">
+    </ng-select>
+  
+    <!--<select class="custom-select custom-select-sm" formControlName="id">
       <option *ngFor="let item of affiliation" value="{{item.tid}}">{{item.tdesc}}</option>
     </select>
-    </div>
+    -->
   </div>
   <div class="col-md-3">
       <div formGroupName="position">
@@ -179,5 +194,4 @@
   <button type="button" class="btn btn-primary">メニューへ戻る</button>
 </div>
 </div>
-{{employeeForm.value | json}}
 </form>

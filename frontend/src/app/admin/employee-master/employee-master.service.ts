@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
-import { API_URL } from '../../url-settings'
+import { API_URL, PUBLIC_URL, ADMIN_URL } from '../../url-settings'
 import { catchError } from 'rxjs/operators';
 import { TokenInterceptorService } from 'src/app/guards/token-interceptor.service';
 
@@ -16,21 +16,19 @@ export class EmployeeMasterService {
               private interceptor: TokenInterceptorService) { }
 
   getEmployeeList(): Observable<Employee[]>{
-    return this._http.get<Employee[]>(url+'/api/admin/employee-list')
+    return this._http.get<Employee[]>(ADMIN_URL+'/employee-list')
   }  
   
-  emParam(): Observable<any>{
-      return this._http.get<any>(url+'/api/employee-dependencies',{
-        headers: new HttpHeaders(
-          { 'Content-Type': 'application/json; charset=utf-8','Authorization':localStorage.getItem('currentUser')})
-    })
+  getViewRendering(): Observable<any>{
+      return this._http.get<any>(PUBLIC_URL+'/employee-dependencies')
+  }
+
+  getAffiliations(): Observable<any>{
+      return this._http.get<any>(PUBLIC_URL+'/shozoku-list')
   }
 
   public insertShainAttempt(employee: Employee){
-    console.log (localStorage.getItem('currentUser'))
-    console.log('object sended to spring:')
-    console.log(employee)
-    return this._http.post<any>(url+'/api/add-employee', employee, {
+    return this._http.post<any>(ADMIN_URL+'/add-employee', employee, {
       observe: 'response'})
       .subscribe(resp => {
         if (resp.status === 201)
@@ -39,7 +37,6 @@ export class EmployeeMasterService {
     err => {
       alert("Something bad happened !")
       throw err
-    },
-    () => alert('THis has been completed even with errors...'))
-  }
+    }
+  )}
 }

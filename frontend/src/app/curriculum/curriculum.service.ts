@@ -4,23 +4,18 @@ import { Observable } from 'rxjs';
 import { Data } from '../interfaces/data';
 import { map } from 'rxjs/operators';
 
-import { API_URL } from '../url-settings'
-
-const url = API_URL
+import { PUBLIC_URL } from '../url-settings'
 
 @Injectable({
   providedIn: 'root'
 })
-export class CurriculumService {
-
-
-  
+export class CurriculumService {  
 
   constructor(private _http: HttpClient) { }
 
 
-  getPropertiesList(): Observable<Data[]>{
-    return this._http.get<Data[]>(url+'/api/getall')
+  getPropertiesList(): Observable<any[]>{
+    return this._http.get<any[]>(PUBLIC_URL+'/cv-params')
   }
 
 

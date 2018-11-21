@@ -36,6 +36,7 @@ import { ResumeAddComponent } from './resume/resume-add/resume-add.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { SkillMapComponent } from './skill-map/skill-map.component';
 import { SystemSettingsComponent } from './admin/system-settings/system-settings.component';
+import { SkillMapSearchComponent } from './admin/skill-map-search/skill-map-search.component';
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -64,7 +65,8 @@ export function tokenGetter() {
     EmployeeListComponent,
     ResumeAddComponent,
     SkillMapComponent,
-    SystemSettingsComponent
+    SystemSettingsComponent,
+    SkillMapSearchComponent
   ],
   imports: [
     BrowserModule,

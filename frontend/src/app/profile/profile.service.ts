@@ -22,8 +22,7 @@ export class ProfileService {
               private _authService: AuthService) { }
 
   public getLoggedInUserData(): Observable<Employee>{
-    console.log('getting...')
-    return this._http.get<any>(API_URL+'/api/getmyinfos') //considerando que o HttpInterceptor vai mandar meu token pro sistema.
+    return this._http.get<any>(API_URL+'/se/getmyinfos') //considerando que o HttpInterceptor vai mandar meu token pro sistema.
   }
 
   public cacheUser(){
