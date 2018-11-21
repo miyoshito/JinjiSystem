@@ -1,8 +1,14 @@
 package aimyamaguchi.co.jp.aimspringsql.controllers;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import aimyamaguchi.co.jp.aimspringsql.curriculum.CurriculumService;
+import aimyamaguchi.co.jp.aimspringsql.curriculum.INDUSTRYData;
+import aimyamaguchi.co.jp.aimspringsql.employee.AFFILIATIONData;
+import aimyamaguchi.co.jp.aimspringsql.employee.AffiliationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,19 +31,28 @@ public class ConstantsController {
     @Autowired
     private EmployeeParamInterface epi;
 
-    @GetMapping("/getall")
-    public List<DataModel> mkd(){
-        List<DataModel> lista = new ArrayList<>();
-        ci.getAll().forEach(value ->{
-            System.out.println(value);
-            lista.add(value);
-        });
-        return lista;
+    @Autowired
+    private AffiliationRepository ar;
+
+    @Autowired
+    private CurriculumService cv;
+
+    @GetMapping("/public/cv-params")
+    public Map<String,Object> getCvParams(){
+        return cv.generateCvMap();
     }
 
-    @GetMapping("/employee-dependencies")
+    @GetMapping("/public/employee-dependencies")
     public List<EmployeeParamModel> getEmployeeMenus(){
         return epi.getAll();
+    }
+
+    @GetMapping("/public/shozoku-list")
+    public List<AFFILIATIONData> getShozokuList(){ return ar.findAll();}
+
+    @GetMapping("/public/industry-list")
+    public List<INDUSTRYData> getIndustryList(){
+        return cv.industryList();
     }
     
     

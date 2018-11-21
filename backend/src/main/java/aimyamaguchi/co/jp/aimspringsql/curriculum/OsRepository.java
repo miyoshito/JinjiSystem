@@ -1,4 +1,6 @@
 package aimyamaguchi.co.jp.aimspringsql.curriculum;
 
-public interface OsRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface OsRepository extends JpaRepository<OSData, Long> {
 }

@@ -4,14 +4,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -56,9 +49,9 @@ public class EmployeeMaster implements UserDetails{
     @Column(name="SHA_SEX", length=1, nullable=false)
     private char shainSex; //selectable key (hardcoded)
 
-    @ManyToOne
-    @JoinColumn(name="SHA_AFFILIATION")
-    private AFFILIATIONData affiliation;
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name="SHA_SHOZOKU")
+    private List<AFFILIATIONData> affiliation;
 
     @ManyToOne
     @JoinColumn(name="SHA_POSITION")
@@ -88,7 +81,6 @@ public class EmployeeMaster implements UserDetails{
     @Column(name="SHA_ADDRESS", length=30, nullable=false)
     private String shainAddress;
 
-    //@Column(name="SHA_AVALIABLEAREA", length=30, nullable=false)
     @ManyToOne
     @JoinColumn(name="SHA_AVALIABLEAREA")
     private WorkAreaData shainArea;

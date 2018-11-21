@@ -80,7 +80,7 @@ public class EmployeeService {
             employee.setShainRegisterDate(dt);
             System.out.println(employee.getShainRegisterDate());
            // employee.setShainRegisteredBy(jwtTokenProvider.getSubject(reqs));
-            employeeRepository.save(employee);
+            employeeRepository.saveAndFlush(employee);
         }        
     }
 

@@ -31,7 +31,7 @@ public class AFFILIATIONData{
     @Column(name="ACTIVE")
     private boolean active;
     
-    @OneToMany(mappedBy="affiliation")
+    @ManyToMany(mappedBy="affiliation")
     @JsonIgnore
     private List<EmployeeMaster> employee;
     

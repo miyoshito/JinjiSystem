@@ -29,9 +29,9 @@ public class CurriculumModel {
 
     private String customer; //(isso pode ser um m2m no futuro)
 
-    private String industry; //selectable?
-
-    private String targetbusiness;
+    @ManyToOne
+    @JoinColumn(name="CV_INDUSTRY")
+    private INDUSTRYData industry;
 
     @ManyToMany
     @JoinTable(name="CV_MAKER")
@@ -47,7 +47,7 @@ public class CurriculumModel {
     
     @ManyToMany
     @JoinTable(name="CV_RESPONSE")
-    private List<RESPONSEData> responseData;
+    private List<DUTYData> responseData;
     
     @ManyToMany
     @JoinTable(name="CV_LANG")

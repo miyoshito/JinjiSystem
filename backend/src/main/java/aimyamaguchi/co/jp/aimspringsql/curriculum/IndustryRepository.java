@@ -1,4 +1,7 @@
 package aimyamaguchi.co.jp.aimspringsql.curriculum;
 
-public interface IndustryRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface IndustryRepository extends JpaRepository<INDUSTRYData, Long> {
+
 }

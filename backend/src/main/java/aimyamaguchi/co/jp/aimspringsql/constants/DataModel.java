@@ -27,13 +27,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DataModel {
 
-    private String tname;
+    private String name;
 
-    private int tid;
+    private int id;
     @Id
     private String tdesc;
 
     private boolean active;
-    
 
 }

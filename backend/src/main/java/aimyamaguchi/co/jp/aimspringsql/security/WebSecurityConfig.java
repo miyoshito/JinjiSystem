@@ -43,8 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
         .and().authorizeRequests() 
-                .antMatchers("POST", "/api/login").permitAll()
-                .antMatchers("POST", "/api/adduser").permitAll()
+                .antMatchers("POST", "/api/auth/**").permitAll()
                 .anyRequest().authenticated()
         .and()
         .exceptionHandling().accessDeniedPage("/")
@@ -55,10 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
       web.ignoring()
-      .antMatchers("GET", "/**")                
-      .antMatchers("GET",  "/api/employee-dependencies")
-      .antMatchers("GET", "/api/getall")
-      .antMatchers("POST", "/add-employee");
+      .antMatchers("GET", "/api/public/**");
     }
 
 }

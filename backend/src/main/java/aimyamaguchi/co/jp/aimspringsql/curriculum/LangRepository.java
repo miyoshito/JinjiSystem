@@ -1,4 +1,6 @@
 package aimyamaguchi.co.jp.aimspringsql.curriculum;
 
-public interface LangRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface LangRepository extends JpaRepository<LANGData, Long> {
 }

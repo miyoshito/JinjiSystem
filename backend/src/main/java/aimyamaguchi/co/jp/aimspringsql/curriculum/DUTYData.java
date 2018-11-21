@@ -18,7 +18,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="[M_RESPONSE]", schema="[dbo]")
-public class RESPONSEData {
+public class DUTYData {
     
     @Id
     @Column(name="RESPONSE_ID")

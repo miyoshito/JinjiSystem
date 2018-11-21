@@ -57,10 +57,10 @@ public class JwtTokenProvider {
     */
   }
 
- public Authentication getAuthentication(String token) {    
-    UserDetails userDetails = myUserDetails.loadUserByUsername(getUsername(token));
-    return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-  }
+    public Authentication getAuthentication(String token) {
+        UserDetails userDetails = myUserDetails.loadUserByUsername(getUsername(token));
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
 
   public String resolveToken(HttpServletRequest req) {
     String bearerToken = req.getHeader("Authorization");
@@ -89,7 +89,10 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
       try {
         JWTVerifier verifier = JWT.require(kee).build();
+
         DecodedJWT jwt = verifier.verify(token);
+
+          System.out.println(jwt);
         //JWT.decode(token);
         return true;
       } catch (JWTDecodeException exception) {

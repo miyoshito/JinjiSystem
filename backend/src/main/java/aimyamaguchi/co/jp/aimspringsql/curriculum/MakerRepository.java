@@ -1,4 +1,6 @@
 package aimyamaguchi.co.jp.aimspringsql.curriculum;
 
-public interface MakerRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface MakerRepository extends JpaRepository<MAKERData, Long> {
 }
