@@ -37,6 +37,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { SkillMapComponent } from './skill-map/skill-map.component';
 import { SystemSettingsComponent } from './admin/system-settings/system-settings.component';
 import { SkillMapSearchComponent } from './admin/skill-map-search/skill-map-search.component';
+import { ValidatorsComponent } from './validators/validators.component';
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -66,7 +67,8 @@ export function tokenGetter() {
     ResumeAddComponent,
     SkillMapComponent,
     SystemSettingsComponent,
-    SkillMapSearchComponent
+    SkillMapSearchComponent,
+    ValidatorsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-<div *ngIf="loggedUser$ | async; let user">
+<div *ngIf="profileSelected$ | async let user">
   <div class="row">
     <div class="col-md-6">
       <h3>Profile Screen</h3>
@@ -63,10 +63,10 @@
     <div class="flex-fill col-md-9">
       <div class="box box-danger">
         <div class="box-header">
-          <span>職務経歴書</span>
+          <span>※職務経歴書※</span>
         </div>
         <div class="box-body box-profile">
-          <div *ngIf="user.curriculum[0] == null" >
+          <div *ngIf="user.curriculum[0] == null">
             <span> No CV found, click here to insert a new one</span>
           </div>
           <div *ngIf="user.curriculum[0] != null" class="d-flex">
@@ -86,24 +86,24 @@
                 <tr *ngFor="let cv of user.curriculum">
                   <td>{{cv.customer}}</td>
                   <td>{{cv.industry}}</td>
-                  <td>{{cv.targetbusiness}}</td>                  
+                  <td>{{cv.targetbusiness}}</td>
                   <td>
-                    <ng-container *ngFor="let maker of cv.makerData">{{maker.desc}}<br/> </ng-container>
+                    <ng-container *ngFor="let maker of cv.makerData">{{maker.desc}}<br /> </ng-container>
                   </td>
                   <td>
-                    <ng-container *ngFor="let dbms of cv.dbmsData">{{dbms.desc}}<br/></ng-container>/
-                    <ng-container *ngFor="let os of cv.osData">{{os.desc}}<br/></ng-container>
+                    <ng-container *ngFor="let dbms of cv.dbmsData">{{dbms.desc}}<br /></ng-container>/
+                    <ng-container *ngFor="let os of cv.osData">{{os.desc}}<br /></ng-container>
                   </td>
                   <td>
-                      <ng-container *ngFor="let lang of cv.langData">{{lang.desc}}<br/></ng-container>/
-                      <ng-container *ngFor="let tools of cv.toolsData">{{tools.desc}}<br/></ng-container>
+                    <ng-container *ngFor="let lang of cv.langData">{{lang.desc}}<br /></ng-container>/
+                    <ng-container *ngFor="let tools of cv.toolsData">{{tools.desc}}<br /></ng-container>
                   </td>
                   <td>
-                      <ng-container *ngFor="let res of cv.responseData">{{res.desc}}<br/></ng-container>
+                    <ng-container *ngFor="let res of cv.responseData">{{res.desc}}<br /></ng-container>
                   </td>
                   <td>
-                    {{cv.startperiod | slice:0:10}} <br/>~<br/> {{cv.endperiod | slice:0:10}} <br/>
-                     (何ヶ月)
+                    {{cv.startperiod | slice:0:10}} <br />~<br /> {{cv.endperiod | slice:0:10}} <br />
+                    (何ヶ月)
                   </td>
                   <td>
                     <mat-icon>create</mat-icon>
@@ -113,14 +113,14 @@
             </table>
           </div>
           <a routerLink="/profile/curriculum/add" routerLinkActive="active">
-          <button type=button class="btn btn-sm btn-outline-primary" style="float:right">職務経歴を追加する</button>
+            <button type=button class="btn btn-sm btn-outline-primary" style="float:right">職務経歴を追加する</button>
           </a>
-        </div>          
+        </div>
       </div>
 
       <div class="box box-danger">
         <div class="box-header">
-          <span>保有資格</span>
+          <span>※保有資格※</span>
         </div>
         <div class="box-body">
           <table class="table table-bordered">
@@ -134,7 +134,9 @@
             </tbody>
           </table>
           <br />
-          <span>経歴</span>
+          <div class="alert alert-danger">
+          <span>※経歴※</span>
+          </div>
           <table class="table table-bordered">
             <thead>
               <th style="width: 10%">年</th>
@@ -155,46 +157,63 @@
             </tbody>
           </table>
           <br />
-          <span>資格</span>
-          <table class="table table-bordered">
-            <thead>
-              <th style="width: 10%">年</th>
-              <th style="width: 10%">月</th>
-              <th style="width: 80%">資格名</th>
-            </thead>
-            <tbody>
-              <tr>
-                <td>2018</td>
-                <td>11</td>
-                <td>基本情報技術者試験　合格</td>
-              </tr>
-              <tr>
-                <td>2018</td>
-                <td>11</td>
-                <td>応用情報技術者試験　合格</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="box box-danger">
+            <div class="box-header">
+              <span>※資格※</span>
+            </div>
+            <div class="box-body">
+              <table class="table table-bordered">
+                <thead>
+                  <th style="width: 10%">年</th>
+                  <th style="width: 10%">月</th>
+                  <th style="width: 80%">資格名</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>2018</td>
+                    <td>11</td>
+                    <td>基本情報技術者試験　合格</td>
+                  </tr>
+                  <tr>
+                    <td>2018</td>
+                    <td>11</td>
+                    <td>応用情報技術者試験　合格</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
           <br />
-          <span>表彰</span>
-          <table class="table table-bordered">
-            <thead>
-              <th style="width: 10%">年</th>
-              <th style="width: 10%">月</th>
-              <th style="width: 80%">内容</th>
-            </thead>
-            <tbody>
-              <tr>
-                <td></td>
-                <td></td>
-                <td>無し</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="box box-danger">
+            <div class="box-header">
+              <span>※表彰※</span>
+            </div>
+            <div class="box-body">
+              <table class="table table-bordered">
+                <thead>
+                  <th style="width: 10%">年</th>
+                  <th style="width: 10%">月</th>
+                  <th style="width: 80%">内容</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td>無し</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <br />
+            <div *ngIf="admin$">
+              <a [routerLink]="['/admin/profile/',shainid,'resume','add']" routerLinkActive="router-link-active">
+                <button type=button class="btn btn-sm btn-outline-primary" style="float:right">履歴書を登録する</button>
+              </a>
+            </div>
+          </div>
+
+
         </div>
-
-
       </div>
     </div>
   </div>
-</div>

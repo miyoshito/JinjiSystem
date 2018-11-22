@@ -3,30 +3,37 @@ import { Data } from "./data";
 export interface Employee {
     shainId: number
     shainPassword: string
-    shainName: string,
+    shainName: string
+    role: Roles
     shainRecruit: string
-    shainKana: string,
+    shainKana: string
     shainBirthday: Date
-    shainBloodType: string,
-    shainSex: string,
+    shainBloodType: string
+    shainSex: string
     position: Data //yaku-interface
-    shainSupport: boolean,
-    shainMarried: boolean,
-    shainHomePhoneNumber: string,
-    shainMobilePhoneNumber: string,
-    shainMail: string,
-    shainMobileMail: string,
-    shainPostalCode: string,
-    shainAddress: string,
-    shainArea: Data, //area-interface
+    shainSupport: boolean
+    shainMarried: boolean
+    shainHomePhoneNumber: string
+    shainMobilePhoneNumber: string
+    shainMail: string
+    shainMobileMail: string
+    shainPostalCode: string
+    shainAddress: string
+    shainArea: Data //area-interface
     shainJoinedDate: Date
-    shainRetiredDate: Date,
+    shainRetiredDate: Date
     shainActive: boolean,
     shainCarModel: string,
     shainNotes: string,
     shainRegisterDate: Date,
     shainRegisteredBy: string,
     shainDeletedFlag: boolean,
+}
+
+export interface Roles{
+    roleid: number
+    authority: string
+    roledesc: string
 }
 
 export class Employee {
@@ -56,7 +63,8 @@ export class Employee {
         shainNotes: string,
         shainRegisterDate: Date,
         shainRegisteredBy: string,
-        shainDeletedFlag: boolean
+        shainDeletedFlag: boolean,
+        role: Roles
         ){
 
             this.shainId = shainId
@@ -85,5 +93,6 @@ export class Employee {
             this.shainRegisterDate= shainRegisterDate,
             this.shainRegisteredBy= shainRegisteredBy,
             this.shainDeletedFlag= shainDeletedFlag
+            this.role = role
         }
 }

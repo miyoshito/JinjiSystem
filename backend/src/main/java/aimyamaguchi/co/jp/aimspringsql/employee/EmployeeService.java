@@ -60,6 +60,10 @@ public class EmployeeService {
         }
     }
 
+    public EmployeeMaster getProfile(String id){
+        return employeeRepository.findByShainId(id);
+    }
+
     public EmployeeMaster findMe(HttpServletRequest req){
         String userid = jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req));
         return employeeRepository.findByShainId(userid);

@@ -23,18 +23,21 @@
   </div>
   <div class="col-md-3">
     <span>氏名: </span>
-    <input type="text" formControlName="shainName" class="form-control form-control-sm">
+    <input type="text" formControlName="shainName" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submitted && f.shainName.errors }">
+    <div *ngIf="submitted && f.shainName.errors"><small class="errormsg">必須</small></div>
   </div>
   <div class="col-md-3">
     <span>フリガナ: </span>
-    <input type="text" formControlName="shainKana" class="form-control form-control-sm">
+    <input type="text" formControlName="shainKana" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submitted && f.shainKana.errors }">
+    <div *ngIf="submitted && f.shainKana.errors"><small class="errormsg">必須</small></div>
   </div>
   <div class="col-md-3">
     <span>採用区分: </span>
-    <select class="custom-select custom-select-sm" formControlName="shainRecruit">
+    <select class="custom-select custom-select-sm" formControlName="shainRecruit" [ngClass]="{ 'is-invalid': submitted && f.shainRecruit.errors }">
       <option selected value="新卒">新卒</option>
       <option value="キャリア">キャリア</option>
     </select>
+    <div *ngIf="submitted && f.shainRecruit.errors"><small class="errormsg">必須</small></div>
   </div>
 </div>
 <div class="row">
@@ -45,8 +48,7 @@
   </div>    
   </div>
   <div class="col-md-6">
-    <span>所属</span>
-    
+    <span>所属</span>    
     <ng-select
       [items]="affiliations$ | async"
       [multiple]="true"
@@ -56,7 +58,7 @@
       placeholder="..."      
       formControlName="affiliation">
     </ng-select>
-  
+    <div *ngIf="submitted && f.affiliation.errors"><small class="errormsg">必須</small></div>
     <!--<select class="custom-select custom-select-sm" formControlName="id">
       <option *ngFor="let item of affiliation" value="{{item.tid}}">{{item.tdesc}}</option>
     </select>
@@ -65,6 +67,7 @@
   <div class="col-md-3">
       <div formGroupName="position">
     <span>役職</span>
+    <!-- VALIDAR ISSO AQUI DE ALGUM JEITO DEPOIS...-->
       <select class="custom-select custom-select-sm" formControlName="id">
           <option *ngFor="let item of position" value="{{item.tid}}">{{item.tdesc}}</option>
       </select>
@@ -72,8 +75,8 @@
   </div>
 </div>
 <div class="row">
-  <div class="d-flex p-2 align-items-center justify-content-center col-md-2">
-    <span>扶養: </span>
+  <div class="d-flex p-2 align-items-center justify-content-center col-md-3">
+    <span [ngClass]="{ 'errormsg': submitted && f.shainSupport.errors }">扶養: </span>
     <div class="form-control-sm d-flex justify-content-end" style = "margin: 0px;">
       <div class="custom-control custom-radio custom-control-inline">
         <input type="radio" id="supportRadioButton1" value ="false" class="custom-control-input" formControlName="shainSupport">
@@ -84,9 +87,11 @@
         <label class="custom-control-label" for="supportRadioButton2">有</label>
       </div>
     </div>
+    <div *ngIf="submitted && f.shainSupport.errors"><small class="errormsg">必須</small></div>
   </div>
+
   <div class="d-flex align-items-center justify-content-center col-md-3">
-    <span>配偶者: </span>
+    <span [ngClass]="{ 'errormsg': submitted && f.shainMarried.errors }">配偶者: </span>
     <div class="form-control-sm d-flex justify-content-end" style = "margin: 0px;">
       <div class="custom-control custom-radio custom-control-inline">
         <input type="radio" id="marriedRadioButton1" formControlName="shainMarried" value="false" class="custom-control-input">
@@ -97,9 +102,11 @@
         <label class="custom-control-label" for="marriedRadioButton2">有</label>
       </div>
     </div>
+    <div *ngIf="submitted && f.shainMarried.errors"><small class="errormsg">必須</small></div>
   </div>
+
   <div class="d-flex align-items-center justify-content-center col-md-3">
-    <span>性別: </span>
+    <span [ngClass]="{ 'errormsg': submitted && f.shainSex.errors }">性別: </span>
     <div class="form-control-sm d-flex justify-content-center">
       <div class="custom-control custom-radio custom-control-inline">
         <input type="radio" id="sexRadioButton1" value="男" formControlName="shainSex" class="custom-control-input">
@@ -110,16 +117,19 @@
         <label class="custom-control-label" for="sexRadioButton2">女</label>
       </div>
     </div>
+    <div *ngIf="submitted && f.shainSex.errors"><small class="errormsg">必須</small></div>
   </div>
-    <div class="d-flex align-items-center justify-content-center col-md-4"> 
-      <span>血液型: </span>
-    <div class="form-control-sm d-flex justify-content-center">
-      <select class="custom-select custom-select-sm" formControlName="shainBloodType">
-          <option *ngFor="let type of bloodType" value="{{type}}">{{type}}</option>
-      </select>
-    </div>
-    </div>
+
+  <div class="d-flex align-items-center justify-content-center col-md-3"> 
+    <span>血液型: </span>
+  <div class="form-control-sm d-flex justify-content-center" >
+    <select class="custom-select custom-select-sm" formControlName="shainBloodType" [ngClass]="{ 'is-invalid': submitted && f.shainMarried.errors }">
+        <option *ngFor="let type of bloodType" value="{{type}}">{{type}}</option>
+    </select>
+  </div>
+  </div>
 </div>
+
 <div class="row">
   <div class="col-md-3">
     <span>電話番号(自宅)</span>
@@ -149,8 +159,10 @@
     <select class="custom-select custom-select-sm" formControlName="id">
       <option *ngFor="let cities of warea" value="{{cities.tid}}">{{cities.tdesc}}</option>
     </select>
+    <!--<div *ngIf="submitted && f.shainName.errors"><small class="errormsg">必須</small></div>-->
     </div>
   </div>
+
   <div class="col-md-7">
     <span>住所</span>
     <input type="text" class="form-control form-control-sm" formControlName="shainAddress" >
@@ -165,7 +177,8 @@
   </div>
   <div class="col-md-3">
     <span>入社日</span>
-    <input type="date" class="form-control form-control-sm" formControlName="shainJoinedDate">
+    <input type="date" class="form-control form-control-sm" formControlName="shainJoinedDate" [ngClass]="{ 'is-invalid': submitted && f.shainJoinedDate.errors }">
+    <div *ngIf="submitted && f.shainJoinedDate.errors"><small class="errormsg">必須</small></div>
   </div>
   <div class="col-md-3">
     <span>退社日</span>
@@ -191,7 +204,6 @@
   <div class="col-md-12 d-flex p-2 justify-content-around">
   <button type="submit" class="btn btn-primary">更新</button>
   <button type="button" class="btn btn-primary">削除</button>
-  <button type="button" class="btn btn-primary">メニューへ戻る</button>
 </div>
 </div>
 </form>

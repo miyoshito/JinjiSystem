@@ -45,13 +45,14 @@ export class LoginComponent implements OnInit {
   }
 
   login(){    
+    if(localStorage.getItem('currentUser') != null){localStorage.removeItem('currentUser')}
     const form: User = this.loginform.value
-    this.loginService.doLogin(form)
+    this.loginService.doLogin(form)    
     .subscribe(res => {
         localStorage.setItem('currentUser', res.headers.get('Authorization'))
         this.authFailed$ = false;
         this.redirecting$ = true;
-        this.profileService.cacheUser();
+        this.profileService.cacheUser(); // -> isso aqui ja me traz as infos da pessoa logada pra buildar o perfil (tenho a auth_role)
         setTimeout(() =>{
           this.broadcastService.pushAuthentication(true);
           this.route.navigate(['profile'])

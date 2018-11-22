@@ -6,10 +6,9 @@
     </button>    
     <!-- fill-remaining-space pusha os botoes pra direita-->
     <span class="example-fill-remaining-space"></span>
-
+<div *ngIf="isAdmin">
     <span fxShow.lt-md="false" fxShow.gt-sm="true">
 
-<div *ngIf="!isAdmin$">
         <button mat-button [matMenuTriggerFor]="curriculum">
             <mat-icon class="ml-1">work</mat-icon>
             職務経歴書
@@ -88,16 +87,18 @@
             </button>
         </a>
         </mat-menu>
-</div>
+
     </span>
+</div>
     <span class="spacer"></span>
     <button mat-button [matMenuTriggerFor]="menu" fxShow.lt-md="false" fxShow.gt-sm="true">
         
-        <div *ngIf="loggedUser$ | async; let user">
-        <mat-icon>face</mat-icon>
-        <span class="ml-2">{{user.shainName}}</span>
+        <ng-container *ngIf="loggedUser$ | async; let user" class="d-flex">
+        <mat-icon>face</mat-icon>        
+        <span class="ml-1">{{user.shainName}}</span>
         <mat-icon class="ml-1">arrow_drop_down</mat-icon>
-        </div>
+        </ng-container>
+        
         
     </button>
     <mat-menu #menu="matMenu" overlapTrigger="false">

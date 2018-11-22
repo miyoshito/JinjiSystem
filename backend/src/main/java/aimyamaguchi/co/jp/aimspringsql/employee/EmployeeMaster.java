@@ -46,8 +46,8 @@ public class EmployeeMaster implements UserDetails{
     @Column(name="SHA_BLOOD", length=5)
     private String shainBloodType; //selectable key (hardcoded)
 
-    @Column(name="SHA_SEX", length=1, nullable=false)
-    private char shainSex; //selectable key (hardcoded)
+    @Column(name="SHA_SEX", length=5, nullable=false)
+    private String shainSex; //selectable key (hardcoded)
 
     @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(name="SHA_SHOZOKU")
@@ -57,10 +57,10 @@ public class EmployeeMaster implements UserDetails{
     @JoinColumn(name="SHA_POSITION")
     private POSITIONData position;
     
-    @Column(name="SHA_SUPPORT", length=1, nullable=false)
+    @Column(name="SHA_SUPPORT", nullable=false)
     private boolean shainSupport;
 
-    @Column(name="SHA_MARRIED", length=1, nullable=false)
+    @Column(name="SHA_MARRIED", nullable=false)
     private boolean shainMarried;
 
     @Column(name="SHA_HOMEPHONENUMBER", length=13)
@@ -112,7 +112,7 @@ public class EmployeeMaster implements UserDetails{
     @Column(name="SHA_RESISTER", length=10)
     private String shainRegisteredBy; //userid
 
-    @Column(name="SHA_DELETEFLG", length=1)
+    @Column(name="SHA_DELETEFLG")
     private boolean shainDeletedFlag;
 
     @OneToOne(mappedBy="employee")

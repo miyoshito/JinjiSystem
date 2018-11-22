@@ -19,17 +19,30 @@ export class HeaderComponent implements OnInit {
 
     loggedUser$: Observable<Employee>
     isLoggedIn$: Observable<boolean>
+    authorities$: Observable<String>
+    isAdmin: boolean
+
+    subs: Subscription
 
     constructor(private loginService: LoginService,
                 private route: Router,
                 private _broadcastService: BroadcastService,
-                private _profileService: ProfileService) {}
+                private _profileService: ProfileService) {
+
+                  this.isAdmin = false
+                }
 
   ngOnInit() {
     //in case of page refresh, this will be loaded anyway since header loads in every single page.
     if(!this.loggedUser$){
       this._profileService.cacheUser()
     }
+    this._broadcastService.userAuthorization$.subscribe(auth =>{
+      if (auth == 'ADMIN' || auth == 'SOUMU'){
+        console.log('check if is admin or soumu...')
+        this.isAdmin = true
+      } else this.isAdmin = false
+    })
     this.isLoggedIn$ = this._broadcastService.userAuthenticated$  
     this.loggedUser$ = this._profileService.cachedUser$
   }

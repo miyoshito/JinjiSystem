@@ -42,9 +42,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .cors()
                 .and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and().authorizeRequests() 
+        .and().authorizeRequests()
+                .antMatchers("/login").permitAll()
                 .antMatchers("POST", "/api/auth/**").permitAll()
-                .anyRequest().authenticated()
+                .antMatchers("/api/admin/**").authenticated()
+                .antMatchers("/api/se/**").authenticated()
         .and()
         .exceptionHandling().accessDeniedPage("/")
         .and()
@@ -54,7 +56,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
       web.ignoring()
-      .antMatchers("GET", "/api/public/**");
+      .antMatchers("GET", "/api/public/**")
+      .antMatchers("/resources/**");
     }
 
 }

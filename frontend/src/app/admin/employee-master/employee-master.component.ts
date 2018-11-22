@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { EmployeeMasterService } from './employee-master.service';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
@@ -23,6 +23,8 @@ export class EmployeeMasterComponent implements OnInit {
   position: Data[] = []
   warea: Data[] = []
   affiliation: affiliation[] = []
+
+  submitted: boolean
   
 
   response$: Observable<any>
@@ -63,40 +65,46 @@ export class EmployeeMasterComponent implements OnInit {
 
   submitForm(){
     let employee: Employee = this.employeeForm.value
+    this.submitted = true
+    if (this.employeeForm.invalid) {
+      return;
+    }
     try {
     this.employeeService.insertShainAttempt(employee)
     this.employeeForm.reset()
     this.success$ = true
+    this.employeeForm.reset();
     this.initializeForm()
     } catch (err) {
       throw err
     }
-    }
+  }
 
+  get f(){ return this.employeeForm.controls }
 
 
   initializeForm(){
     this.employeeForm = this.fb.group({
       shainId: [''],
       shainPassword: [''],
-      shainName: [''],
-      shainRecruit: [''],
-      shainKana: [''],
+      shainName: ['', Validators.required],
+      shainRecruit: ['', Validators.required],
+      shainKana: ['', Validators.required],
       shainBirthday: [''],
       shainBloodType: [''],
-      shainSex: [''],
+      shainSex: ['', Validators.required],
       position: this.fb.group ({id: []}),
-      affiliation: [],
-      shainSupport: false,
-      shainMarried: false,
+      affiliation: ['', Validators.required],
+      shainSupport: [null, Validators.required],
+      shainMarried: [null, Validators.required],
       shainHomePhoneNumber: [''],
       shainMobilePhoneNumber: [''],
       shainMail: [''],
       shainMobileMail: [''],
       shainPostalCode: [''],
       shainAddress: [''],
-      shainArea: this.fb.group ({id: []}),
-      shainJoinedDate: [''],
+      shainArea: this.fb.group ({id:[]}),
+      shainJoinedDate: ['', Validators.required],
       shainRetiredDate: [''],
       shainActive: true,
       shainCarModel: [''],

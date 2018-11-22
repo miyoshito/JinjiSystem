@@ -21,6 +21,7 @@ export class BroadcastService {
   }
   
   pushAuthorization(auth: string){
+    console.log('broadcasting the authority =>'+auth)
     this._UserAuthorizations.next(auth)    
   }
 

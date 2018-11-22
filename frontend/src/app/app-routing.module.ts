@@ -34,8 +34,6 @@ const routes: Routes = [
   {path: 'profile', children:[
     {path: '', component: ProfileComponent},
     {path: 'edit', component: NotFoundComponent}, // -> Edit em dados pessoais (telefone, e-mail e blablabla)
-    {path: 'resume/add', component: ResumeAddComponent},
-    {path: 'resume/{id}/edit', component: ResumeSearchComponent},
     {path: 'curriculum/add', component: CurriculumInsertComponent},
     {path: 'curriculum/{id}/edit', component: ResumeSearchComponent},
   ]},
@@ -48,6 +46,7 @@ const routes: Routes = [
       {path: 'skillmap', component: SkillMapComponent},
       {path: 'systemsettings', component: SystemSettingsComponent}, //temp
         {path: 'resume', children:[
+          {path: 'add', component: ResumeAddComponent},
           {path: 'search', component: ResumeSearchComponent},
           {path: 'list', component: ResumeListComponent},
           {path: '{shainbangou}/{id}/details', component: ResumeDetailsComponent},
@@ -61,6 +60,7 @@ const routes: Routes = [
       {path: 'profile/:id', children:[
         {path: '', component: ProfileComponent},
         {path: 'edit', component: EmployeeMasterComponent},
+        {path: 'resume', component: ResumeListComponent},
         {path: 'resume/add', component: ResumeAddComponent},
         {path: 'resume/edit', component: ResumeAddComponent},
         {path: 'curriculum/add', component: CurriculumInsertComponent},
