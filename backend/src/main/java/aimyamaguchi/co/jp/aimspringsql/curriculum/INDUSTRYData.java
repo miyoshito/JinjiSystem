@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @Entity
-@Table(name="M_GYOUMU")
+@Table(name="[M_GYOUMU]",schema ="[dbo]")
 @Data
 public class INDUSTRYData {
 
@@ -17,14 +17,10 @@ public class INDUSTRYData {
     @Column(name="INDUSTRY_TYPE_ID")
     private Long id;
     @Column(name="INDUSTRY_TYPE_DESC")
-    private String desc;
+    private String tdesc;
     @Column(name="ACTIVE")
     private boolean active;
 
     @OneToMany(mappedBy = "industry")
     private List<INDCLASSIFICATIONData> classification;
-
-    @OneToMany(mappedBy="industry")
-    @JsonIgnore
-    private List<CurriculumModel> curriculum;
 }

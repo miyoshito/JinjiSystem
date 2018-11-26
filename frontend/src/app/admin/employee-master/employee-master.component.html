@@ -19,21 +19,21 @@
 <div class="row">
   <div class="col-md-3">
     <span>社員番号: </span>
-    <input type="text" formControlName="shainId" class="form-control form-control-sm" readonly>
+    <input type="text" formControlName="shainId" class="form-control " readonly>
   </div>
   <div class="col-md-3">
     <span>氏名: </span>
-    <input type="text" formControlName="shainName" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submitted && f.shainName.errors }">
+    <input type="text" formControlName="shainName" class="form-control " [ngClass]="{ 'is-invalid': submitted && f.shainName.errors }">
     <div *ngIf="submitted && f.shainName.errors"><small class="errormsg">必須</small></div>
   </div>
   <div class="col-md-3">
     <span>フリガナ: </span>
-    <input type="text" formControlName="shainKana" class="form-control form-control-sm" [ngClass]="{ 'is-invalid': submitted && f.shainKana.errors }">
+    <input type="text" formControlName="shainKana" class="form-control " [ngClass]="{ 'is-invalid': submitted && f.shainKana.errors }">
     <div *ngIf="submitted && f.shainKana.errors"><small class="errormsg">必須</small></div>
   </div>
   <div class="col-md-3">
     <span>採用区分: </span>
-    <select class="custom-select custom-select-sm" formControlName="shainRecruit" [ngClass]="{ 'is-invalid': submitted && f.shainRecruit.errors }">
+    <select class="custom-select" formControlName="shainRecruit" [ngClass]="{ 'is-invalid': submitted && f.shainRecruit.errors }">
       <option selected value="新卒">新卒</option>
       <option value="キャリア">キャリア</option>
     </select>
@@ -44,7 +44,7 @@
   <div class="col-md-3">
     <span>生年月日</span>
     <div>
-    <input type=date formControlName="shainBirthday" class="form-control form-control-sm" >
+    <input type=date formControlName="shainBirthday" class="form-control " >
   </div>    
   </div>
   <div class="col-md-6">
@@ -68,16 +68,15 @@
       <div formGroupName="position">
     <span>役職</span>
     <!-- VALIDAR ISSO AQUI DE ALGUM JEITO DEPOIS...-->
-      <select class="custom-select custom-select-sm" formControlName="id">
+      <select class="custom-select" formControlName="id">
           <option *ngFor="let item of position" value="{{item.tid}}">{{item.tdesc}}</option>
       </select>
       </div>
   </div>
 </div>
 <div class="row">
-  <div class="d-flex p-2 align-items-center justify-content-center col-md-3">
-    <span [ngClass]="{ 'errormsg': submitted && f.shainSupport.errors }">扶養: </span>
-    <div class="form-control-sm d-flex justify-content-end" style = "margin: 0px;">
+  <div class="d-flex p-2 align-items-center justify-content-center col">
+    <span [ngClass]="{ 'errormsg': submitted && f.shainSupport.errors }">扶養:  &nbsp; </span>
       <div class="custom-control custom-radio custom-control-inline">
         <input type="radio" id="supportRadioButton1" value ="false" class="custom-control-input" formControlName="shainSupport">
         <label class="custom-control-label" for="supportRadioButton1">無</label>
@@ -86,13 +85,12 @@
         <input type="radio" id="supportRadioButton2" value ="true" class="custom-control-input" formControlName="shainSupport">
         <label class="custom-control-label" for="supportRadioButton2">有</label>
       </div>
-    </div>
     <div *ngIf="submitted && f.shainSupport.errors"><small class="errormsg">必須</small></div>
   </div>
 
-  <div class="d-flex align-items-center justify-content-center col-md-3">
-    <span [ngClass]="{ 'errormsg': submitted && f.shainMarried.errors }">配偶者: </span>
-    <div class="form-control-sm d-flex justify-content-end" style = "margin: 0px;">
+  <div class="d-flex align-items-center justify-content-center col">
+    <span [ngClass]="{ 'errormsg': submitted && f.shainMarried.errors }">配偶者:  &nbsp; </span>
+    
       <div class="custom-control custom-radio custom-control-inline">
         <input type="radio" id="marriedRadioButton1" formControlName="shainMarried" value="false" class="custom-control-input">
         <label class="custom-control-label" for="marriedRadioButton1">無</label>
@@ -101,13 +99,13 @@
         <input type="radio" id="marriedRadioButton2" formControlName="shainMarried" value="true" class="custom-control-input">
         <label class="custom-control-label" for="marriedRadioButton2">有</label>
       </div>
-    </div>
+    
     <div *ngIf="submitted && f.shainMarried.errors"><small class="errormsg">必須</small></div>
   </div>
 
-  <div class="d-flex align-items-center justify-content-center col-md-3">
-    <span [ngClass]="{ 'errormsg': submitted && f.shainSex.errors }">性別: </span>
-    <div class="form-control-sm d-flex justify-content-center">
+  <div class="d-flex align-items-center justify-content-center col">
+    <span [ngClass]="{ 'errormsg': submitted && f.shainSex.errors }">性別:  &nbsp;</span>
+    
       <div class="custom-control custom-radio custom-control-inline">
         <input type="radio" id="sexRadioButton1" value="男" formControlName="shainSex" class="custom-control-input">
         <label class="custom-control-label" for="sexRadioButton1">男</label>
@@ -116,47 +114,50 @@
         <input type="radio" id="sexRadioButton2" value="女" formControlName="shainSex" class="custom-control-input">
         <label class="custom-control-label" for="sexRadioButton2">女</label>
       </div>
-    </div>
+    
     <div *ngIf="submitted && f.shainSex.errors"><small class="errormsg">必須</small></div>
   </div>
 
-  <div class="d-flex align-items-center justify-content-center col-md-3"> 
-    <span>血液型: </span>
-  <div class="form-control-sm d-flex justify-content-center" >
-    <select class="custom-select custom-select-sm" formControlName="shainBloodType" [ngClass]="{ 'is-invalid': submitted && f.shainMarried.errors }">
+  <div class="d-flex justify-content-end col-md-4"> 
+    <div class="d-flex p-2 align-items-center justify-content-center">
+    <span >血液型: &nbsp;</span>
+  </div>
+  <div class="d-flex p-2 align-items-center justify-content-end col-md-9" style="float: right">
+    <select class="custom-select" formControlName="shainBloodType" [ngClass]="{ 'is-invalid': submitted && f.shainMarried.errors }">
         <option *ngFor="let type of bloodType" value="{{type}}">{{type}}</option>
-    </select>
+    </select>  
   </div>
   </div>
+
 </div>
 
 <div class="row">
   <div class="col-md-3">
     <span>電話番号(自宅)</span>
-    <input type="text" class="form-control form-control-sm" formControlName="shainHomePhoneNumber" >
+    <input type="text" class="form-control " formControlName="shainHomePhoneNumber" >
   </div>
   <div class="col-md-3">
     <span>電話番号(携帯)</span>
-    <input type="text" class="form-control form-control-sm" formControlName="shainMobilePhoneNumber">
+    <input type="text" class="form-control " formControlName="shainMobilePhoneNumber">
   </div>
   <div class="col-md-3">
     <span>メールアドレス</span>
-    <input type="text" class="form-control form-control-sm" formControlName="shainMail">
+    <input type="text" class="form-control " formControlName="shainMail">
   </div>
   <div class="col-md-3">
     <span>携帯メールアドレス</span>
-    <input type="text" class="form-control form-control-sm" formControlName="shainMobileMail">
+    <input type="text" class="form-control " formControlName="shainMobileMail">
   </div>
 </div>
 <div class="row">
   <div class="col-md-3">
     <span>郵便番号</span>
-    <input type="text" class="form-control form-control-sm" formControlName="shainPostalCode" >
+    <input type="text" class="form-control " formControlName="shainPostalCode" >
   </div>
   <div class="col-md-2">
     <span>勤務可能地域</span>
     <div formGroupName="shainArea">
-    <select class="custom-select custom-select-sm" formControlName="id">
+    <select class="custom-select" formControlName="id">
       <option *ngFor="let cities of warea" value="{{cities.tid}}">{{cities.tdesc}}</option>
     </select>
     <!--<div *ngIf="submitted && f.shainName.errors"><small class="errormsg">必須</small></div>-->
@@ -165,29 +166,29 @@
 
   <div class="col-md-7">
     <span>住所</span>
-    <input type="text" class="form-control form-control-sm" formControlName="shainAddress" >
+    <input type="text" class="form-control " formControlName="shainAddress" >
   </div>
 </div>
 <div class="row">
   <div class="col-md-3">
     <span>車種</span>
-    <select class="custom-select custom-select-sm" formControlName="shainCarModel">
+    <select class="custom-select" formControlName="shainCarModel">
       <option *ngFor="let cars of carModel" value="{{cars}}">{{cars}}</option>
     </select>
   </div>
   <div class="col-md-3">
     <span>入社日</span>
-    <input type="date" class="form-control form-control-sm" formControlName="shainJoinedDate" [ngClass]="{ 'is-invalid': submitted && f.shainJoinedDate.errors }">
+    <input type="date" class="form-control " formControlName="shainJoinedDate" [ngClass]="{ 'is-invalid': submitted && f.shainJoinedDate.errors }">
     <div *ngIf="submitted && f.shainJoinedDate.errors"><small class="errormsg">必須</small></div>
   </div>
   <div class="col-md-3">
     <span>退社日</span>
-    <input type="date" class="form-control form-control-sm" formControlName="shainRetiredDate">
+    <input type="date" class="form-control " formControlName="shainRetiredDate">
   </div>
   <div class="col-md-3">
     <span>パスワード</span>
-  <div class="input-group input-group-sm">
-      <input type="password" class="form-control form-control-sm" aria-describedby="button-addon2" readonly formControlName="shainPassword">
+  <div class="input-group">
+      <input type="password" class="form-control " aria-describedby="button-addon2" readonly formControlName="shainPassword">
       <div class="input-group-append">
         <button class="btn btn-outline-danger" type="button" id="button-addon2">リセット</button>
       </div>

@@ -45,12 +45,13 @@ const routes: Routes = [
       {path: 'employee-list', component: EmployeeListComponent},
       {path: 'skillmap', component: SkillMapComponent},
       {path: 'systemsettings', component: SystemSettingsComponent}, //temp
-        {path: 'resume', children:[
+      //resumes...
+      {path: 'resume', children:[
           {path: 'add', component: ResumeAddComponent},
           {path: 'search', component: ResumeSearchComponent},
           {path: 'list', component: ResumeListComponent},
           {path: '{shainbangou}/{id}/details', component: ResumeDetailsComponent},
-        ]},
+      ]},
       {path: 'curriculum', children:[
           {path: 'add', component: CurriculumInsertComponent},
           {path: 'search', component: CurriculumSearchComponent},

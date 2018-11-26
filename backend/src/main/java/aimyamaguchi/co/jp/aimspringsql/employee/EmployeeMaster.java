@@ -85,10 +85,8 @@ public class EmployeeMaster implements UserDetails{
     @JoinColumn(name="SHA_AVALIABLEAREA")
     private WorkAreaData shainArea;
 
-
     @Column(name="SHA_ENTRYDAY", nullable=false)
     private Date shainJoinedDate;
-
     
     @Column(name="SHA_RETIREDAY")
     private Date shainRetiredDate;
@@ -96,8 +94,10 @@ public class EmployeeMaster implements UserDetails{
     @Column(name="SHA_RETIREFLG", nullable=false)
     private boolean shainActive;
 
-    @Column(name="SHA_CARDMODEL", length=30)
-    private String shainCarModel;
+    //@Column(name="SHA_CARMODEL", length=30)
+    @JoinColumn(name="SHA_CARMODEL")
+    @ManyToOne
+    private CARMODELData shainCarModel;
 
     @JoinColumn(name="SHA_AUTHFLAG")
     @ManyToOne
@@ -118,7 +118,7 @@ public class EmployeeMaster implements UserDetails{
     @OneToOne(mappedBy="employee")
     private ResumeModel resume;
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "employee_id")
     private List<CurriculumModel> curriculum;
 
 

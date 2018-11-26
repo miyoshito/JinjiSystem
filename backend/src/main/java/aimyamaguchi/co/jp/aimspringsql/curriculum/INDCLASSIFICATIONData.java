@@ -4,22 +4,32 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
-@Table(name="M_GYKUBUN")
+@Table(name="[M_GYKUBUN]", schema="[dbo]")
 @Data
-public class INDCLASSIFICATIONData {
+public class INDCLASSIFICATIONData implements Serializable {
 
-    @Id
-    @Column(name="INDUSTRY_CLASS_ID")
-    private Long id;
+
+    @EmbeddedId
+    private IndustryKeys id;
     @Column(name="INDUSTRY_CLASS_DESC")
     private String desc;
     @Column(name="ACTIVE")
     private boolean active;
 
+    @JoinColumn(name="INDUSTRY_ID")
     @ManyToOne
-    @JoinColumn(name = "INDUSTRY_ID")
+    @MapsId("industry")
     @JsonIgnore
     private INDUSTRYData industry;
+
+    @OneToMany(mappedBy = "industryclass")
+    @JsonIgnore
+    private List<CurriculumModel> curriculum;
+
+
 }
+

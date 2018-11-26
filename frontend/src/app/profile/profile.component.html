@@ -135,7 +135,7 @@
           </table>
           <br />
           <div class="alert alert-danger">
-          <span>※経歴※</span>
+            <span><b>※経歴※</b></span>
           </div>
           <table class="table table-bordered">
             <thead>
@@ -157,62 +157,54 @@
             </tbody>
           </table>
           <br />
-          <div class="box box-danger">
-            <div class="box-header">
-              <span>※資格※</span>
-            </div>
-            <div class="box-body">
-              <table class="table table-bordered">
-                <thead>
-                  <th style="width: 10%">年</th>
-                  <th style="width: 10%">月</th>
-                  <th style="width: 80%">資格名</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>2018</td>
-                    <td>11</td>
-                    <td>基本情報技術者試験　合格</td>
-                  </tr>
-                  <tr>
-                    <td>2018</td>
-                    <td>11</td>
-                    <td>応用情報技術者試験　合格</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
+          <div class="alert alert-danger">
+            <span><b>※資格※</b></span>
           </div>
+          <table class="table table-bordered">
+            <thead>
+              <th style="width: 10%">年</th>
+              <th style="width: 10%">月</th>
+              <th style="width: 80%">資格名</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>2018</td>
+                <td>11</td>
+                <td>基本情報技術者試験　合格</td>
+              </tr>
+              <tr>
+                <td>2018</td>
+                <td>11</td>
+                <td>応用情報技術者試験　合格</td>
+              </tr>
+            </tbody>
+          </table>
           <br />
-          <div class="box box-danger">
-            <div class="box-header">
-              <span>※表彰※</span>
-            </div>
-            <div class="box-body">
-              <table class="table table-bordered">
-                <thead>
-                  <th style="width: 10%">年</th>
-                  <th style="width: 10%">月</th>
-                  <th style="width: 80%">内容</th>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td></td>
-                    <td></td>
-                    <td>無し</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <br />
-            <div *ngIf="admin$">
-              <a [routerLink]="['/admin/profile/',shainid,'resume','add']" routerLinkActive="router-link-active">
-                <button type=button class="btn btn-sm btn-outline-primary" style="float:right">履歴書を登録する</button>
-              </a>
-            </div>
+
+          <div class="alert alert-danger">
+            <span><b>※表彰※</b></span>
           </div>
+          <table class="table table-bordered">
+            <thead>
+              <th style="width: 10%">年</th>
+              <th style="width: 10%">月</th>
+              <th style="width: 80%">内容</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+                <td>無し</td>
+              </tr>
+            </tbody>
+          </table>
 
-
+          <br />
+          <div *ngIf="admin$">
+            <a [routerLink]="['/admin/profile/',shainid,'resume','add']" routerLinkActive="router-link-active">
+              <button type=button class="btn btn-sm btn-outline-primary" style="float:right">履歴書を登録する</button>
+            </a>
+          </div>
         </div>
       </div>
     </div>
