@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Data } from 'src/app/interfaces/data';
 import { Employee } from 'src/app/interfaces/employee';
+import { BroadcastService } from 'src/app/broadcast.service';
+import { ProfileService } from 'src/app/profile/profile.service';
 
 @Component({
   selector: 'app-employee-master',
@@ -20,45 +22,41 @@ export class EmployeeMasterComponent implements OnInit {
   support: string[] = ['有','無']
   married: string[] = ['有','無']
   bloodType: String[] = ['A+型','B+型','O+型','AB+型','A-型','B-型','O-型','AB-型']
-  position: Data[] = []
-  warea: Data[] = []
-  affiliation: affiliation[] = []
+
 
   submitted: boolean
-  
-
+  title: string
   response$: Observable<any>
-
   success$: boolean
 
-  carModel: string[] = ['自転車','トラック']
+  isLoggedIn$: Observable<boolean>  
+  loggedUser$: Observable<any>
+  params$: Observable<any[]>
+  
 
-  params$: Observable<Data[]>
-  affiliations$: Observable<affiliation[]>
-
-  constructor(private fb: FormBuilder,
-              private employeeService: EmployeeMasterService) { 
+  constructor(private _fb: FormBuilder,
+              private _employeeService: EmployeeMasterService,
+              private _broadcastService: BroadcastService,
+              private _profileService: ProfileService) { 
                 this.success$ = false
               }
 
   ngOnInit() {
-    this.affiliations$ = this.employeeService.getAffiliations()
-    this.initializeForm()    
-    this.params$ = this.employeeService.getViewRendering()
-    this.params$.forEach((e) => {
-      e.filter((tname) => {
-        switch (tname.tname) {
-            case 'warea':
-            this.warea.push(tname)
-            break
-            case 'position':
-            this.position.push(tname)
-            break
-        }
-      })
+    this.title = 'プロフィール画面'
+    this.initializeForm()
+    //subscreve no broadcast pra saber se o user continua autenticado
+    this.isLoggedIn$ = this._broadcastService.userAuthenticated$
+    // invoca as params do individuo logado...
+    this._profileService.cachedUser$.subscribe(data =>{
+      this.employeeForm.patchValue(data)
+      data.shainJoinedDate != '' ? this.employeeForm.patchValue({shainJoinedDate: data.shainJoinedDate.slice(0,10)}) : console.log('')
+      data.shainBirthday != '' ? this.employeeForm.patchValue({shainBirthday: data.shainBirthday.slice(0,10)}) : console.log('')
+      data.shainRegisterDate != '' ? this.employeeForm.patchValue({shainRegisterDate: data.shainRegisterDate.slice(0,10)}) : console.log('')
+      data.shainRetiredDate != null ? this.employeeForm.patchValue({shainRetiredDate: data.shainRetiredDate.slice(0,10)}) : console.log('')      
     })
+    this.params$ = this._employeeService.getViewRendering()
   }
-
+  
   ngOnDestroy(){
     this.success$ = false    
   }
@@ -70,11 +68,11 @@ export class EmployeeMasterComponent implements OnInit {
       return;
     }
     try {
-    this.employeeService.insertShainAttempt(employee)
-    this.employeeForm.reset()
+    this._employeeService.insertShainAttempt(employee)
+    //this.employeeForm.reset()
     this.success$ = true
-    this.employeeForm.reset();
-    this.initializeForm()
+    //this.employeeForm.reset();
+    //this.initializeForm()
     } catch (err) {
       throw err
     }
@@ -84,7 +82,7 @@ export class EmployeeMasterComponent implements OnInit {
 
 
   initializeForm(){
-    this.employeeForm = this.fb.group({
+    this.employeeForm = this._fb.group({
       shainId: [''],
       shainPassword: [''],
       shainName: ['', Validators.required],
@@ -93,22 +91,22 @@ export class EmployeeMasterComponent implements OnInit {
       shainBirthday: [''],
       shainBloodType: [''],
       shainSex: ['', Validators.required],
-      position: this.fb.group ({id: []}),
+      position: this._fb.group ({id: []}),
       affiliation: ['', Validators.required],
-      shainSupport: [null, Validators.required],
-      shainMarried: [null, Validators.required],
+      shainSupport: [false],
+      shainMarried: [false],
       shainHomePhoneNumber: [''],
       shainMobilePhoneNumber: [''],
       shainMail: [''],
       shainMobileMail: [''],
       shainPostalCode: [''],
       shainAddress: [''],
-      shainArea: this.fb.group ({id:[]}),
+      shainArea: this._fb.group ({id:[]}),
       shainJoinedDate: ['', Validators.required],
       shainRetiredDate: [''],
       shainActive: true,
-      shainCarModel: [''],
-      role: this.fb.group ({roleid: 2}), //SE
+      shainCarModel: this._fb.group ({id: []}),
+      role: this._fb.group ({roleid: 2}), //SE
       shainNotes: [''],
       shainRegisterDate: [''],
       shainRegisteredBy: [''],

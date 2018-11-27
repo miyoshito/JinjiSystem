@@ -7,7 +7,7 @@ export interface Employee {
     role: Roles
     shainRecruit: string
     shainKana: string
-    shainBirthday: Date
+    shainBirthday: String
     shainBloodType: string
     shainSex: string
     position: Data //yaku-interface
@@ -20,12 +20,12 @@ export interface Employee {
     shainPostalCode: string
     shainAddress: string
     shainArea: Data //area-interface
-    shainJoinedDate: Date
-    shainRetiredDate: Date
+    shainJoinedDate: String
+    shainRetiredDate: String
     shainActive: boolean,
     shainCarModel: string,
     shainNotes: string,
-    shainRegisterDate: Date,
+    shainRegisterDate: String,
     shainRegisteredBy: string,
     shainDeletedFlag: boolean,
 }
@@ -43,7 +43,7 @@ export class Employee {
         shainName: string,
         shainRecruit: string,
         shainKana: string,
-        shainBirthday: Date,
+        shainBirthday: String,
         shainBloodType: string,
         shainSex: string,
         position: Data, //yaku-interface
@@ -56,12 +56,12 @@ export class Employee {
         shainPostalCode: string,
         shainAddress: string,
         shainArea: Data, //area-interface
-        shainJoinedDate: Date,
-        shainRetiredDate: Date,
+        shainJoinedDate: String,
+        shainRetiredDate: String,
         shainActive: boolean,
         shainCarModel: string,
         shainNotes: string,
-        shainRegisterDate: Date,
+        shainRegisterDate: String,
         shainRegisteredBy: string,
         shainDeletedFlag: boolean,
         role: Roles

@@ -1,9 +1,7 @@
 package aimyamaguchi.co.jp.aimspringsql.employee;
 
-import java.util.Enumeration;
+import java.util.*;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -34,6 +32,15 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private AffiliationRepository affiliation;
+    @Autowired
+    private CarmodelRepository carmodel;
+    @Autowired
+    private PositionRepository position;
+    @Autowired
+    private WorkAreaRepository workarea;
 
     //login system
     public ResponseEntity<String> authenticationAttempt(String username, String password){
@@ -86,6 +93,20 @@ public class EmployeeService {
            // employee.setShainRegisteredBy(jwtTokenProvider.getSubject(reqs));
             employeeRepository.saveAndFlush(employee);
         }        
+    }
+
+    //stuffs for shainmaster screen...
+
+    public Map<String, Object> getEmpMasterParams(){
+
+        Map<String,Object> map = new HashMap<>();
+
+        map.put("AREA", workarea.findAll());
+        map.put("POSITION", position.findAll());
+        map.put("AFFILIATION", affiliation.findAll());
+        map.put("CARMODEL", carmodel.findAll());
+
+        return map;
     }
 
 }

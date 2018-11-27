@@ -33,7 +33,7 @@ public class EmployeeController {
         return employeeService.findMe(req);
     }
 
-    @PostMapping(value="/admin/add-employee", produces="application/json; charset=utf-8")
+    @PostMapping("/admin/add-employee")
     public ResponseEntity<String> addEmployee(@RequestBody EmployeeMaster employee, HttpServletRequest req){
         
     try {

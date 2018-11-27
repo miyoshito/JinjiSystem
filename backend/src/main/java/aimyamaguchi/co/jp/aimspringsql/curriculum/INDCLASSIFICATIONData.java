@@ -2,6 +2,7 @@ package aimyamaguchi.co.jp.aimspringsql.curriculum;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.util.List;
 @Entity
 @Table(name="[M_GYKUBUN]", schema="[dbo]")
 @Data
+@ToString
 public class INDCLASSIFICATIONData implements Serializable {
 
 
@@ -20,15 +22,13 @@ public class INDCLASSIFICATIONData implements Serializable {
     @Column(name="ACTIVE")
     private boolean active;
 
-    @JoinColumn(name="INDUSTRY_ID")
     @ManyToOne
-    @MapsId("industry")
-    @JsonIgnore
-    private INDUSTRYData industry;
+    @MapsId("industryid")
+    @JoinColumn(name="INDUSTRY_TYPE_ID")
+    private INDUSTRYData industryid;
 
-    @OneToMany(mappedBy = "industryclass")
-    @JsonIgnore
-    private List<CurriculumModel> curriculum;
+
+
 
 
 }

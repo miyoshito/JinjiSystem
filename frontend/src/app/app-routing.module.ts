@@ -32,11 +32,11 @@ const routes: Routes = [
 
   //URL de direcionamento padrao de todos os usuarios
   {path: 'profile', children:[
-    {path: '', component: ProfileComponent},
+    {path: '', component: EmployeeMasterComponent},
     {path: 'edit', component: NotFoundComponent}, // -> Edit em dados pessoais (telefone, e-mail e blablabla)
     {path: 'curriculum/add', component: CurriculumInsertComponent},
     {path: 'curriculum/{id}/edit', component: ResumeSearchComponent},
-  ]},
+  ],canActivate:[AuthGuardService]},
 
   //URL de direcionamento pra quem tem permissoes de administrador...
   {path: 'admin',
@@ -46,13 +46,13 @@ const routes: Routes = [
       {path: 'skillmap', component: SkillMapComponent},
       {path: 'systemsettings', component: SystemSettingsComponent}, //temp
       //resumes...
-      {path: 'resume', children:[
+      {path: 'rirekisho', children:[
           {path: 'add', component: ResumeAddComponent},
           {path: 'search', component: ResumeSearchComponent},
           {path: 'list', component: ResumeListComponent},
           {path: '{shainbangou}/{id}/details', component: ResumeDetailsComponent},
       ]},
-      {path: 'curriculum', children:[
+      {path: 'shokumurirekisho', children:[
           {path: 'add', component: CurriculumInsertComponent},
           {path: 'search', component: CurriculumSearchComponent},
           {path: 'list', component: CurriculumListComponent},

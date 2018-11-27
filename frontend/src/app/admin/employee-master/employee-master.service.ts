@@ -20,11 +20,7 @@ export class EmployeeMasterService {
   }  
   
   getViewRendering(): Observable<any>{
-      return this._http.get<any>(PUBLIC_URL+'/employee-dependencies')
-  }
-
-  getAffiliations(): Observable<any>{
-      return this._http.get<any>(PUBLIC_URL+'/shozoku-list')
+      return this._http.get<any>(PUBLIC_URL+'/employee-params')
   }
 
   public insertShainAttempt(employee: Employee){
@@ -32,7 +28,7 @@ export class EmployeeMasterService {
       observe: 'response'})
       .subscribe(resp => {
         if (resp.status === 201)
-        alert("Employee Inserted")
+        alert("Success! <!-- temporary alert -->")
     },
     err => {
       alert("Something bad happened !")

@@ -10,17 +10,16 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthGuardService implements CanActivate {
 
   constructor(private router: Router, 
-              private authService: AuthService
+              private auth: AuthService
               ) { }
 
-  private isAuthenticated: boolean;
-
-  canActivate(): boolean{
-
-    if (!this.authService.isAuthenticated()){
-      this.router.navigate(['/'])
-      return false
-    } 
-    return true
+    canActivate() {
+      //validating only expiration date
+      if (!this.auth.isAuthenticated()) {
+        this.router.navigate(['login'])        
+        localStorage.removeItem('currentUser')
+        return false;
+      }
+      return true;
     }
   }

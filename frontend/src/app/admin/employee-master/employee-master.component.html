@@ -1,7 +1,11 @@
 <form [formGroup]="employeeForm" (ngSubmit)="submitForm()">
+<ng-container *ngIf="params$ | async; let data">
+<div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="success$">
+    Saved!
+  </div>
 <div class="row">
   <div class="col-md-6">
-  <h3>社員マスタ編集画面</h3>
+  <h3>{{title}}</h3>
   </div>
   <div class="col-md-3"></div>
   <div class="col-md-3 d-flex justify-content-end align-items-end">
@@ -10,11 +14,6 @@
           <label class="custom-control-label" for="customCheck1">退職フラグ</label>
         </div>
     </div>
-</div>
-<div class="alert alert-success" role="alert" *ngIf="success$">
-  Success! User inserted. #temporary<br/>
-  Default password for new created accounts is "aim123456", remember to ask the employee<br/>
-  to change his password.
 </div>
 <div class="row">
   <div class="col-md-3">
@@ -50,7 +49,7 @@
   <div class="col-md-6">
     <span>所属</span>    
     <ng-select
-      [items]="affiliations$ | async"
+      [items]="data.AFFILIATION"
       [multiple]="true"
       [closeOnSelect]="true"
       [hideSelected]="true"
@@ -69,7 +68,7 @@
     <span>役職</span>
     <!-- VALIDAR ISSO AQUI DE ALGUM JEITO DEPOIS...-->
       <select class="custom-select" formControlName="id">
-          <option *ngFor="let item of position" value="{{item.tid}}">{{item.tdesc}}</option>
+          <option *ngFor="let item of data.POSITION" value="{{item.id}}">{{item.desc}}</option>
       </select>
       </div>
   </div>
@@ -158,7 +157,7 @@
     <span>勤務可能地域</span>
     <div formGroupName="shainArea">
     <select class="custom-select" formControlName="id">
-      <option *ngFor="let cities of warea" value="{{cities.tid}}">{{cities.tdesc}}</option>
+      <option *ngFor="let cities of data.AREA" value="{{cities.id}}">{{cities.desc}}</option>
     </select>
     <!--<div *ngIf="submitted && f.shainName.errors"><small class="errormsg">必須</small></div>-->
     </div>
@@ -172,9 +171,11 @@
 <div class="row">
   <div class="col-md-3">
     <span>車種</span>
-    <select class="custom-select" formControlName="shainCarModel">
-      <option *ngFor="let cars of carModel" value="{{cars}}">{{cars}}</option>
+    <div formGroupName="shainCarModel">
+    <select class="custom-select" formControlName="id">
+      <option *ngFor="let cars of data.CARMODEL" value="{{cars.id}}">{{cars.tdesc}}</option>
     </select>
+    </div>
   </div>
   <div class="col-md-3">
     <span>入社日</span>
@@ -207,4 +208,6 @@
   <button type="button" class="btn btn-primary">削除</button>
 </div>
 </div>
+</ng-container>
+{{employeeForm.value | json}}
 </form>

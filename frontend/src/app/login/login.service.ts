@@ -15,7 +15,9 @@ export class LoginService {
   constructor(private _http: HttpClient,
               private broadcastService: BroadcastService) { }
 
-  private loggedUser: EmployeeMasterComponent
+  _disconnectedSource: Subject<boolean> = new Subject<boolean>()
+  disconnected$ = this._disconnectedSource.asObservable()
+
 
   doLogin(authuser: User){
     return this._http.post<any>(AUTH_URL+'/login?username=' + authuser.username + '&password=' + authuser.password, null,
@@ -26,6 +28,7 @@ export class LoginService {
 
   logout(): void {
     // clear token remove user from local storage to log user out
-    localStorage.removeItem('currentUser');    
+    localStorage.removeItem('currentUser');  
+    this._disconnectedSource.next(true);
   }
 }

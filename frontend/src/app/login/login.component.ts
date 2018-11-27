@@ -22,8 +22,9 @@ export class LoginComponent implements OnInit {
   loggedUsername: Observable<String>
   isLoggedIn: boolean = false;
 
+
   authFailed$: boolean
-  redirecting$: boolean;
+  redirecting$: boolean
 
   constructor(private fb: FormBuilder,
               private loginService: LoginService,
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
               {
                 this.authFailed$ = false;
                 this.redirecting$ = false;
-               }
+              }
 
   ngOnInit() {
 

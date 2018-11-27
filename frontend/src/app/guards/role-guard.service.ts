@@ -12,12 +12,10 @@ export class RoleGuardService implements CanActivate {
               public auth: AuthService,
               public router: Router) { }
 
-  canActivate(route: ActivatedRouteSnapshot): boolean {    
-    const expectedRole = route.data.expectedRole
-    const token = localStorage.getItem('currentUser');
-    const tokenPayload = this.jwtHelper.decodeToken(token)
-    if (!this.auth.isAuthenticated() || tokenPayload.role !== expectedRole) {
-      this.router.navigate(['404'])
+  canActivate() {
+    if (!this.auth.isAuthenticated()) {
+      this.router.navigate(['login'])
+      localStorage.removeItem('currentUser')
       return false;
     }
     return true;

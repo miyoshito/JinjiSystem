@@ -5,15 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Column;
-import javax.persistence.JoinColumns;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -36,17 +28,15 @@ public class CurriculumModel {
     @Column(name="CV_CUSTOMER")
     private String customer; //(isso pode ser um m2m no futuro)
 
-    /*@ManyToOne
-    @JoinColumn(name="CV_INDUSTRY_TYPE")
-    private INDUSTRYData industry;
-    */
-
     @ManyToOne
-    @JoinColumns({
-        @JoinColumn(name="CV_INDUSTRY_TYPE", referencedColumnName = "INDUSTRY_ID"),
-            @JoinColumn(name="CV_INDUSTRY_CLASS", referencedColumnName = "INDUSTRY_CLASS_ID")
+    @JoinColumns(value = {
+        @JoinColumn(name="CV_INDUSTRY_TYPE", referencedColumnName = "INDUSTRY_TYPE_ID"),
+        @JoinColumn(name="CV_INDUSTRY_CLASS", referencedColumnName ="INDUSTRY_CLASS_ID")
     })
-    private INDCLASSIFICATIONData industryclass;
+    private INDCLASSIFICATIONData industry;
+
+    @Column(name="CV_TARGETBUSINESS")
+    private String targetbusiness;
 
     @ManyToMany
     @JoinTable(name="CV_MAKER")

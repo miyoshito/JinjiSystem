@@ -13,9 +13,24 @@ export class CurriculumService {
 
   constructor(private _http: HttpClient) { }
 
+  indType: Observable<any[]>
+  indClass: Observable<any[]>
+
 
   getPropertiesList(): Observable<any[]>{
     return this._http.get<any[]>(PUBLIC_URL+'/cv-params')
+  }
+  //temporary
+  getBusinessLogic(): Observable<any[]>{
+    return this._http.get<any[]>(PUBLIC_URL+'/industry-sublist') 
+  }
+
+  makeBusinessStructure(){
+    this.getBusinessLogic().pipe(
+      map((values) =>{
+        console.log(values)
+      })
+    )
   }
 
 

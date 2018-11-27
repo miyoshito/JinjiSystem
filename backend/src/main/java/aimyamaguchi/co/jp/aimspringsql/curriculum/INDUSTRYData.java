@@ -5,6 +5,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 
 @Entity
@@ -21,6 +22,14 @@ public class INDUSTRYData {
     @Column(name="ACTIVE")
     private boolean active;
 
-    @OneToMany(mappedBy = "industry")
-    private List<INDCLASSIFICATIONData> classification;
+    @OneToMany(mappedBy = "industryid")
+    @JsonIgnore
+    private Set<INDCLASSIFICATIONData> industryClass;
+
+
+    /*
+    @OneToMany(mappedBy = "industryType")
+    private List<CurriculumModel> curriculum;
+    */
+
 }

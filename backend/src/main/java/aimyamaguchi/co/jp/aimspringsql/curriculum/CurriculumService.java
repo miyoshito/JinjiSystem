@@ -39,8 +39,15 @@ public class CurriculumService {
 
     }
 
-    public List<INDUSTRYData> industryList(){
+    public List<INDCLASSIFICATIONData> industryList(){
         return industry.findAll();
+
+    }
+
+    public Map<String, Object> industryList233(){
+
+        Map<String, Object> list = new HashMap<>();
+        return null;
     }
 
 }

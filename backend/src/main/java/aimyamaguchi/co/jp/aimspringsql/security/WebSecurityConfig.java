@@ -45,8 +45,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .and().authorizeRequests()
                 //API antMatchers
                 .antMatchers("/login").permitAll()
+                .antMatchers("*","/api/admin/**").authenticated()
                 .antMatchers("POST", "/api/auth/**").permitAll()
-                .antMatchers("/api/admin/**").hasAnyRole("ADMIN","SOUMU")
+                .antMatchers("POST", "/api/admin/**").authenticated()
                 .antMatchers("/api/se/**").authenticated()
                 //ANGULAR antMatchers (testing)
                 .antMatchers("/profile/**").authenticated()
