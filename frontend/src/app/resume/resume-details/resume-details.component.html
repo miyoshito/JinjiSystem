@@ -9,11 +9,6 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-3"></div>
-  <div class="col-md-3"></div>
-  <div class="col-md-3"></div>
-</div>
-<div class="row">
   <div class="col-md-3">
     <span>社員番号: </span><span>userid of this resume</span>
   </div>
@@ -29,87 +24,83 @@
 </div>
 <div class="row">
   <div class="col-md-4">
-    <span>生年月日</span>
-    <input type="date" class="form-control form-control-sm">
-  </div>
-  <div class="d-flex p-2 align-items-center justify-content-center col-md-4">
-    <span>扶養: </span>
-    <div class="form-control-sm d-flex justify-content-end" style="margin: 0px;">
-      <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="supportRadioButton1" name="supportRadioButton1" class="custom-control-input">
-        <label class="custom-control-label" for="supportRadioButton1">無</label>
-      </div>
-      <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="supportRadioButton2" name="supportRadioButton1" class="custom-control-input">
-        <label class="custom-control-label" for="supportRadioButton2">有</label>
-      </div>
-    </div>
-  </div>
-  <div class="d-flex align-items-center justify-content-center col-md-4">
-    <span>配偶者: </span>
-    <div class="form-control-sm d-flex justify-content-end" style="margin: 0px;">
-      <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="marriedRadioButton1" name="marriedRadioButton1" class="custom-control-input">
-        <label class="custom-control-label" for="marriedRadioButton1">無</label>
-      </div>
-      <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="marriedRadioButton2" name="marriedRadioButton1" class="custom-control-input">
-        <label class="custom-control-label" for="marriedRadioButton2">有</label>
-      </div>
-    </div>
+    <span>記載日</span>
+    <input type="text" class="form-control" readonly>
   </div>
 </div>
+
+<div class="row">
+  <div class="col-md-4">
+    <span>生年月日</span>
+    <input type="text" class="form-control" readonly>
+  </div>
+  <div class="col-md-4">
+    <span>扶養</span>
+    <input type="text" class="form-control" readonly>
+  </div>
+  <div class="col-md-4">
+    <span>配偶者</span>
+    <input type="text" class="form-control" readonly>
+  </div>
+</div>
+
+
+
 <div class="row">
   <div class="col-md-3">
     <span>電話番号(自宅)</span>
-    <input type="text" class="form-control form-control-sm">
+    <input type="text" class="form-control" readonly>
   </div>
   <div class="col-md-3">
     <span>電話番号(携帯)</span>
-    <input type="text" class="form-control form-control-sm">
+    <input type="text" class="form-control" readonly>
   </div>
   <div class="col-md-3">
     <span>メールアドレス</span>
-    <input type="text" class="form-control form-control-sm">
+    <input type="text" class="form-control" readonly>
   </div>
   <div class="col-md-3">
     <span>携帯メールアドレス</span>
-    <input type="text" class="form-control form-control-sm">
+    <input type="text" class="form-control" readonly>
   </div>
 </div>
+
 <div class="row">
   <div class="col-md-3">
     <span>郵便番号</span>
-    <input type="text" class="form-control form-control-sm">
+    <input type="text" class="form-control" readonly>
   </div>
   <div class="col-md-2">
     <span>勤務可能地域</span>
-    <input type="text" class="form-control form-control-sm">
+    <input type="text" class="form-control" readonly>
   </div>
   <div class="col-md-7">
     <span>住所</span>
-    <input type="text" class="form-control form-control-sm">
+    <input type="text" class="form-control" readonly>
   </div>
 </div>
 <div class="row">
   <div class="col-md-8">
     <span>出身校</span>
-    <input type="text" class="form-control form-control-sm">
+    <input type="text" class="form-control" readonly>
   </div>
   <div class="col-md-4">
     <span>文理</span>
-    <input type="text" class="form-control form-control-sm">
+    <input type="text" class="form-control" readonly>
+  </div>
+</div>
+
+<div class="row">
+  <div class=col-md-2>
+    <span>※経歴※</span>
   </div>
 </div>
 <div class="row">
-  <div class=col-md-2>
-    <span>経歴</span>
-  </div>
-  <div class="col-md-10">
+  <div class="col-md-12">
     <table class="table table-bordered">
       <thead>
-        <th>年</th>
-        <th>月</th>
+        <th style="width: 10%">年</th>
+        <th style="width: 10%">月</th>
         <th>学校/職場</th>
       </thead>
       <tbody>
@@ -127,15 +118,18 @@
     </table>
   </div>
 </div>
+
 <div class="row">
   <div class=col-md-2>
-    <span>資格</span>
+    <span>※資格※</span>
   </div>
-  <div class="col-md-10">
+</div>
+<div class="row">
+  <div class="col-md-12">
     <table class="table table-bordered">
       <thead>
-        <th>年</th>
-        <th>月</th>
+        <th style="width: 10%">年</th>
+        <th style="width: 10%">月</th>
         <th>資格名</th>
       </thead>
       <tbody>
@@ -155,13 +149,15 @@
 </div>
 <div class="row">
   <div class=col-md-2>
-    <span>表彰</span>
+    <span>※表彰※</span>
   </div>
-  <div class="col-md-10">
+</div>
+<div class="row">
+  <div class="col-md-12">
     <table class="table table-bordered">
       <thead>
-        <th>年</th>
-        <th>月</th>
+        <th style="width: 10%">年</th>
+        <th style="width: 10%">月</th>
         <th>内容</th>
       </thead>
       <tbody>
@@ -176,17 +172,19 @@
 </div>
 <div class="row">
   <div class=col-md-2>
-    <span>表彰</span>
+    <span>※表彰※</span>
   </div>
+</div>
+<div class="row">
   <div class="col-md-10">
     <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
   </div>
 </div>
 <div class="row">
-    <div class="col-md-12 d-flex p-2 justify-content-around">
+  <div class="col-md-12 d-flex p-2 justify-content-around">
     <button type="button" class="btn btn-primary">PDF表示</button>
     <button type="button" class="btn btn-primary">CSV出力</button>
     <button type="button" class="btn btn-primary">編集</button>
     <button type="button" class="btn btn-primary">一覧へ戻る</button>
   </div>
-  </div>
+</div>

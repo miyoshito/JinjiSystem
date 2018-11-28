@@ -1,106 +1,81 @@
 <div class="row">
-    <div class="col-md-6">
+  <div class="col-md-6">
     <h3>履歴書検索画面</h3>
-    </div>
-    <div class="col-md-3"></div>
+  </div>
+  <div class="col-md-3"></div>
+</div>
+
+<div class="row">
+  <div class="col-md-3">
+    <span>社員番号: </span>
+    <input type="text" class="form-control ">
+  </div>
+  <div class="col-md-3">
+    <span>氏名: </span>
+    <input type="text" class="form-control ">
+  </div>
+  <div class="col-md-3">
+    <span>フリガナ: </span>
+    <input type="text" class="form-control ">
+  </div>
+  <div class="col-md-3">
+    <span>採用区分: </span>
+    <select class="custom-select custom-select">         
+      <option selected value="新卒">新卒</option>
+      <option value="キャリア">キャリア</option>
+    </select>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-2">
+    <span>年代</span>
+    <input type="text" class="form-control ">
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-9">
+    <span>出身校</span>
+    <input type="text" class="form-control ">
+  </div>
+  <div class="col-md-3">
+    <span>文理</span>
+    <select class="custom-select custom-select">
+      <option selected>Selected Option</option>
+      <option value="1">One</option>
+      <option value="2">Two</option>
+      <option value="3">Three</option>
+    </select>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-9">
+    <span>経歴</span>
+    <input type="text" class="form-control ">
+  </div>
+  
+  <div *ngIf="1 != 1" class="col-md-3">
+    <span>退職: </span>
+    <select class="custom-select custom-select">
+      <option value="1">在職</option>
+      <option value="2">退職</option>
+      <option value="3">すべて</option>
+    </select>
+  </div>
+  
 </div>
 <div class="row">
-  <div class="col-md-4">
-    <span>検索条件</span>
+  <div class="col-md-9">
+    <span>資格</span>
+    <input type="text" class="form-control ">
   </div>
-  <div class="d-flex p-2 align-items-center justify-content-center col-md-4">
-    <span>退職: </span>
-    <div class="form-control-sm d-flex justify-content-end" style = "margin: 0px;">
-      <div class="custom-control custom-radio custom-control-inline">
-          <input type="radio" id="searchForRetiredRadio1" name="searchForRetiredRadio" class="custom-control-input" checked>
-          <label class="custom-control-label" for="searchForRetiredRadio1">在職</label>
-        </div>
-        <div class="custom-control custom-radio custom-control-inline">
-          <input type="radio" id="searchForRetiredRadio2" name="searchForRetiredRadio" class="custom-control-input">
-          <label class="custom-control-label" for="searchForRetiredRadio2">退職</label>
-        </div>
-        <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="searchForRetiredRadio3" name="searchForRetiredRadio" class="custom-control-input">
-            <label class="custom-control-label" for="searchForRetiredRadio3">すべて</label>
-        </div>
-      </div>
-  </div>
-  <div class="d-flex p-2 align-items-center justify-content-center col-md-4">
-      <span>削除: </span>
-      <div class="form-control-sm d-flex justify-content-end" style = "margin: 0px;">
-        <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="searchForDeleted1" name="searchForDeleted" class="custom-control-input" checked>
-            <label class="custom-control-label" for="searchForDeleted1">未削除</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline">
-            <input type="radio" id="searchForDeleted2" name="searchForDeleted" class="custom-control-input">
-            <label class="custom-control-label" for="searchForDeleted2">削除済</label>
-          </div>
-          <div class="custom-control custom-radio custom-control-inline">
-              <input type="radio" id="searchForDeleted3" name="searchForDeleted" class="custom-control-input">
-              <label class="custom-control-label" for="searchForDeleted3">すべて</label>
-          </div>
-        </div>
-    </div>
 </div>
 
-  <div class="row">
-    <div class="col-md-3">
-      <span>社員番号: </span>
-      <input type="text" class="form-control form-control-sm">
-    </div>
-    <div class="col-md-3">
-      <span>氏名: </span>
-      <input type="text" class="form-control form-control-sm">
-    </div>
-    <div class="col-md-3">
-      <span>フリガナ: </span>
-      <input type="text" class="form-control form-control-sm">
-    </div>
-    <div class="col-md-3">
-      <span>採用区分: </span>
-      <select class="custom-select custom-select-sm">
-          <option selected>Selected Option</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-3">
-      <span>年代</span>
-      <input type="text" class="form-control form-control-sm">
-    </div>
-    <div class="col-md-6">
-      <span>出身校</span>
-      <input type="text" class="form-control form-control-sm">
-    </div>
-    <div class="col-md-3">
-    <span>文理</span>
-    <select class="custom-select custom-select-sm">
-        <option selected>Selected Option</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </select>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="col-md-6">
-      <span>経歴</span>
-      <input type="text" class="form-control form-control-sm" >
-    </div>
-    <div class="col-md-6">
-      <span>資格</span>
-      <input type="text" class="form-control form-control-sm" >
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-12 d-flex p-2 justify-content-around">
+<div class="row">
+  <div class="col-md-12 d-flex p-2 justify-content-around">
     <button type="button" class="btn btn-primary">検索</button>
     <button type="button" class="btn btn-primary">メニューへ戻る</button>
   </div>
-  </div>
+</div>

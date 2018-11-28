@@ -21,6 +21,8 @@ import { EmployeeListComponent } from './admin/employee-list/employee-list.compo
 import { ResumeAddComponent } from './resume/resume-add/resume-add.component';
 import { SkillMapComponent } from './skill-map/skill-map.component';
 import { SystemSettingsComponent } from './admin/system-settings/system-settings.component';
+import { QualificationsComponent } from './qualifications/qualifications.component';
+import { StudycourseComponent } from './studycourse/studycourse.component';
 
 const routes: Routes = [
   // Login routes
@@ -33,9 +35,10 @@ const routes: Routes = [
   //URL de direcionamento padrao de todos os usuarios
   {path: 'profile', children:[
     {path: '', component: EmployeeMasterComponent},
-    {path: 'edit', component: NotFoundComponent}, // -> Edit em dados pessoais (telefone, e-mail e blablabla)
-    {path: 'curriculum/add', component: CurriculumInsertComponent},
-    {path: 'curriculum/{id}/edit', component: ResumeSearchComponent},
+    {path: 'shokumurireki', component: CurriculumDetailsComponent},
+    {path: 'skillmap', component: SkillMapComponent},
+    {path: 'qualifications', component: QualificationsComponent},
+    {path: 'studycourses', component: StudycourseComponent},
   ],canActivate:[AuthGuardService]},
 
   //URL de direcionamento pra quem tem permissoes de administrador...
@@ -50,13 +53,13 @@ const routes: Routes = [
           {path: 'add', component: ResumeAddComponent},
           {path: 'search', component: ResumeSearchComponent},
           {path: 'list', component: ResumeListComponent},
+          {path: 'details', component: ResumeDetailsComponent},
           {path: '{shainbangou}/{id}/details', component: ResumeDetailsComponent},
       ]},
       {path: 'shokumurirekisho', children:[
           {path: 'add', component: CurriculumInsertComponent},
           {path: 'search', component: CurriculumSearchComponent},
-          {path: 'list', component: CurriculumListComponent},
-          {path: '{shainbangou}/{id}/details', component: CurriculumDetailsComponent},
+          {path: 'list', component: CurriculumListComponent}
       ]},
       {path: 'profile/:id', children:[
         {path: '', component: ProfileComponent},

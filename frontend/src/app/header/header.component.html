@@ -1,125 +1,84 @@
 <header>
-<mat-toolbar color="warn" class="header-box-shadow">
-    <!-- tem uma funcao aqui porque se eu usar <a> ele vira um link azul (?)-->
-    <button mat-button (click)="home()">
-    <mat-icon class="ml-1">home</mat-icon> ホームページ   
-    </button>    
-    <!-- fill-remaining-space pusha os botoes pra direita-->
-    <span class="example-fill-remaining-space"></span>
-<div *ngIf="isAdmin">
-    <span fxShow.lt-md="false" fxShow.gt-sm="true">
+    <mat-toolbar color="warn" class="header-box-shadow">
+        <a routerLink="/profile" routerLinkActive="active">
+            <button mat-button>
+                <mat-icon class="ml-1">home</mat-icon> ホームページ
+            </button>
+        </a>
+        <!-- fill-remaining-space pusha os botoes pra direita-->
+        <span class="example-fill-remaining-space"></span>
+        <ng-container *ngIf="menuStyle === 'ADMIN' || menuStyle === 'SOUMU'; then admin"></ng-container>
+        <ng-container *ngIf="menuStyle === 'USER'; then normaluser"></ng-container>
+        <ng-container *ngIf="menuStyle === 'MANAGER'; then managers"></ng-container>
+        <ng-container *ngIf="menuStyle === ''; then err"></ng-container>
 
-        <button mat-button [matMenuTriggerFor]="curriculum">
-            <mat-icon class="ml-1">work</mat-icon>
-            職務経歴書
-            <mat-icon class="ml-1">arrow_drop_down</mat-icon>
-        </button>
-    
-        <mat-menu #curriculum="matMenu" overlapTrigger="false">
-                <a routerLink="/admin/curriculum/search" routerLinkActive="active">
-                    <button mat-menu-item>
-                    <mat-icon>search</mat-icon>
-                    <span>検索</span>
-                    </button>
-                </a>
-                <a routerLink="/admin/curriculum/list" routerLinkActive="active">
-                <button mat-menu-item>
-                    <mat-icon>format_list_bulleted</mat-icon>
-                    <span>リスト</span>
-                </button>
-                </a>
-                <a routerLink="/admin/curriculum/add" routerLinkActive="active">
-                    <button mat-menu-item>
-                        <mat-icon>format_list_bulleted</mat-icon>
-                        <span>登録</span>
-                    </button>
+        <ng-template #admin>
+            <app-admin-header></app-admin-header>
+        </ng-template>
+        <!-- OK !-->
+        <ng-template #normaluser>
+            <div>
+                <span fxShow.lt-md="false" fxShow.gt-sm="true">
+                    <a routerLink="/profile/shokumurireki" routerLinkActive="active">
+                        <button mat-button fxShow.lt-md="false" fxShow.gt-sm="true">
+                            <mat-icon class="ml-1">work</mat-icon>
+                            職務経歴書
+                        </button>
                     </a>
-        </mat-menu>
-        
-        <button mat-button [matMenuTriggerFor]="resume">
-            <mat-icon class="ml-1">assignment_ind</mat-icon>
-            履歴書
-            <mat-icon class="ml-1">arrow_drop_down</mat-icon>
-        </button>
-        <mat-menu #resume="matMenu" overlapTrigger="false">
-        <a routerLink="/admin/resume/search" routerLinkActive="active">
-        <button mat-menu-item>
-                <mat-icon>search</mat-icon>
-                <span>検索</span>
-            </button>
-        </a>
-        <a routerLink="/admin/resume/list" routerLinkActive="active">
-            <button mat-menu-item>
-                <mat-icon>format_list_bulleted</mat-icon>
-                <span>リスト</span>
-            </button>
-        </a>
-        </mat-menu> 
 
-        <button mat-button [matMenuTriggerFor]="dropDown">
-                <mat-icon class="ml-1">verified_user</mat-icon>
-            管理者メニュー
-            <mat-icon class="ml-1">arrow_drop_down</mat-icon>
-        </button>
-        <mat-menu #dropDown="matMenu" overlapTrigger="false">
-        <a routerLink="/admin/employee-master" routerLinkActive="active">
-            <button mat-menu-item>
-                <mat-icon>people</mat-icon>
-                <span>社員マスタ</span>
-            </button>
-        </a>
-        <a routerLink="/admin/employee-list" routerLinkActive="active">
-            <button mat-menu-item>
-                <mat-icon>format_list_bulleted</mat-icon>
-                <span>社員リスト</span>
-            </button>
-        </a>
-        <a routerLink="/admin/skillmap" routerLinkActive="active">
-            <button mat-menu-item>
-                <mat-icon>category</mat-icon>
-                <span>スキルマップ</span>
-            </button>
-        </a>
-        <a routerLink="/admin/systemsettings" routerLinkActive="active">
-            <button mat-menu-item>
-                <mat-icon>settings</mat-icon>
-                <span>システム設定</span>
-            </button>
-        </a>
-        </mat-menu>
+                    <a routerLink="/profile/skillmap" routerLinkActive="active">
+                        <button mat-button fxShow.lt-md="false" fxShow.gt-sm="true">
+                            <mat-icon class="ml-1">device_hub</mat-icon>
+                            スキルマップ
+                        </button>
+                    </a>
 
-    </span>
-</div>
-    <span class="spacer"></span>
-    <button mat-button [matMenuTriggerFor]="menu" fxShow.lt-md="false" fxShow.gt-sm="true">
-        
-        <ng-container *ngIf="loggedUser$ | async; let user" class="d-flex">
-        <mat-icon>face</mat-icon>        
-        <span class="ml-1">{{user.shainName}}</span>
-        <mat-icon class="ml-1">arrow_drop_down</mat-icon>
-        </ng-container>
-        
-        
-    </button>
-    <mat-menu #menu="matMenu" overlapTrigger="false">
-    <a routerLink="/profile" routerLinkActive="active">
-        <button mat-menu-item>
-            <mat-icon>account_circle</mat-icon>
-            <span>プロファイルを見る</span>
-        </button>
-    </a>
-    <!--
-    <a routerLink="/home/profile" routerLinkActive="active">
-        <button mat-menu-item>
-            <mat-icon>settings</mat-icon>
-            <span>プロファイル設定する</span>
-        </button>
-    </a>
-    -->
-        <button mat-menu-item (click)="logout()">
-            <mat-icon>exit_to_app</mat-icon>
-            <span>ログアウト</span>
-        </button>
-    </mat-menu>
-</mat-toolbar>
+                    <a routerLink="/profile/studycourses" routerLinkActive="active">
+                        <button mat-button fxShow.lt-md="false" fxShow.gt-sm="true">
+                            <mat-icon class="ml-1">school</mat-icon>
+                            教育受講履歴
+
+                        </button>
+                    </a>
+
+                    <a routerLink="/profile/qualifications" routerLinkActive="active">
+                        <button mat-button fxShow.lt-md="false" fxShow.gt-sm="true">
+                            <mat-icon class="ml-1">assignment</mat-icon>
+                            資格
+                        </button>
+                    </a>
+
+                    <ng-container *ngIf="loggedUser$ | async; let user" class="d-flex">
+                            <button mat-button [matMenuTriggerFor]="accountmenu">
+                              <mat-icon>face</mat-icon>
+                              <span>{{user.shainName}}</span>
+                              <mat-icon class="ml-1">arrow_drop_down</mat-icon>
+                            </button>
+                    </ng-container>
+                    <mat-menu #accountmenu="matMenu" overlapTrigger="false">
+                            <a routerLink="/profile" routerLinkActive="active">
+                              <button mat-menu-item>
+                                <span>プロファイルを見る</span>
+                              </button>
+                            </a>
+                            <button mat-menu-item (click)="logout()">
+                              <span>ログアウト</span>
+                            </button>
+                    </mat-menu>
+
+                </span>
+            </div>
+        </ng-template>
+
+        <ng-template #managers>
+            <div>
+            </div>
+        </ng-template>
+
+        <ng-template #err>
+            <div>
+                something bad happened, please log out and log in again or call an administrator
+            </div>
+        </ng-template>
+    </mat-toolbar>
 </header>

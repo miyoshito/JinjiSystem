@@ -1,78 +1,104 @@
 <form [formGroup]="employeeForm" (ngSubmit)="submitForm()">
-<ng-container *ngIf="params$ | async; let data">
-<div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="success$">
-    Saved!
-  </div>
-<div class="row">
-  <div class="col-md-6">
-  <h3>{{title}}</h3>
-  </div>
-  <div class="col-md-3"></div>
-  <div class="col-md-3 d-flex justify-content-end align-items-end">
-      <div class="custom-control custom-checkbox">
+  <ng-container *ngIf="params$ | async; let data">
+    <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="success$">
+      {{successMsg}}
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <h3>{{title}}</h3>
+      </div>
+      <div class="col-md-3"></div>
+      <div class="col-md-3 d-flex justify-content-end align-items-end">
+        <div class="custom-control custom-checkbox">
           <input type="checkbox" formControlName="shainDeletedFlag" class="custom-control-input" id="customCheck1">
           <label class="custom-control-label" for="customCheck1">退職フラグ</label>
         </div>
+      </div>
     </div>
-</div>
-<div class="row">
-  <div class="col-md-3">
-    <span>社員番号: </span>
-    <input type="text" formControlName="shainId" class="form-control " readonly>
-  </div>
-  <div class="col-md-3">
-    <span>氏名: </span>
-    <input type="text" formControlName="shainName" class="form-control " [ngClass]="{ 'is-invalid': submitted && f.shainName.errors }">
-    <div *ngIf="submitted && f.shainName.errors"><small class="errormsg">必須</small></div>
-  </div>
-  <div class="col-md-3">
-    <span>フリガナ: </span>
-    <input type="text" formControlName="shainKana" class="form-control " [ngClass]="{ 'is-invalid': submitted && f.shainKana.errors }">
-    <div *ngIf="submitted && f.shainKana.errors"><small class="errormsg">必須</small></div>
-  </div>
-  <div class="col-md-3">
-    <span>採用区分: </span>
-    <select class="custom-select" formControlName="shainRecruit" [ngClass]="{ 'is-invalid': submitted && f.shainRecruit.errors }">
-      <option selected value="新卒">新卒</option>
-      <option value="キャリア">キャリア</option>
-    </select>
-    <div *ngIf="submitted && f.shainRecruit.errors"><small class="errormsg">必須</small></div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-3">
-    <span>生年月日</span>
-    <div>
-    <input type=date formControlName="shainBirthday" class="form-control " >
-  </div>    
-  </div>
-  <div class="col-md-6">
-    <span>所属</span>    
-    <ng-select
-      [items]="data.AFFILIATION"
-      [multiple]="true"
-      [closeOnSelect]="true"
-      [hideSelected]="true"
-      bindLabel="desc"
-      placeholder="..."      
-      formControlName="affiliation">
-    </ng-select>
-    <div *ngIf="submitted && f.affiliation.errors"><small class="errormsg">必須</small></div>
-    <!--<select class="custom-select custom-select-sm" formControlName="id">
+    <div class="row">
+      <div class="col-md-3">
+        <span>社員番号: </span>
+        <input type="text" formControlName="shainId" class="form-control " readonly>
+      </div>
+      <div class="col-md-3">
+        <span>氏名: </span>
+        <input type="text" formControlName="shainName" class="form-control " [ngClass]="{ 'is-invalid': submitted && f.shainName.errors }">
+        <div *ngIf="submitted && f.shainName.errors"><small class="errormsg">必須</small></div>
+      </div>
+      <div class="col-md-3">
+        <span>フリガナ: </span>
+        <input type="text" formControlName="shainKana" class="form-control " [ngClass]="{ 'is-invalid': submitted && f.shainKana.errors }">
+        <div *ngIf="submitted && f.shainKana.errors"><small class="errormsg">必須</small></div>
+      </div>
+      <div class="col-md-3">
+        <span>採用区分: </span>
+        <select class="custom-select" formControlName="shainRecruit" [ngClass]="{ 'is-invalid': submitted && f.shainRecruit.errors }">
+          <option selected value="新卒">新卒</option>
+          <option value="キャリア">キャリア</option>
+        </select>
+        <div *ngIf="submitted && f.shainRecruit.errors"><small class="errormsg">必須</small></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <span>生年月日</span>
+        <div>
+          <input type=date formControlName="shainBirthday" class="form-control ">
+        </div>
+      </div>
+      <div class="col-md-6">
+        <span>所属</span>
+        <ng-select [items]="data.AFFILIATION" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindLabel="desc"
+          placeholder="..." formControlName="affiliation">
+        </ng-select>
+        <div *ngIf="submitted && f.affiliation.errors"><small class="errormsg">必須</small></div>
+        <!--<select class="custom-select custom-select-sm" formControlName="id">
       <option *ngFor="let item of affiliation" value="{{item.tid}}">{{item.tdesc}}</option>
     </select>
     -->
-  </div>
-  <div class="col-md-3">
-      <div formGroupName="position">
-    <span>役職</span>
-    <!-- VALIDAR ISSO AQUI DE ALGUM JEITO DEPOIS...-->
-      <select class="custom-select" formControlName="id">
-          <option *ngFor="let item of data.POSITION" value="{{item.id}}">{{item.desc}}</option>
-      </select>
       </div>
-  </div>
-</div>
+      <div class="col-md-3">
+        <div formGroupName="position">
+          <span>役職</span>
+          <!-- VALIDAR ISSO AQUI DE ALGUM JEITO DEPOIS...-->
+          <select class="custom-select" formControlName="id">
+            <option *ngFor="let item of data.POSITION" value="{{item.id}}">{{item.desc}}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <span>扶養</span>
+        <select class="custom-select" formControlName="shainSupport" [ngClass]="{ 'is-invalid': submitted && f.shainSupport.errors }">
+            <option value="true">有</option>
+            <option value="false">無</option>
+        </select>
+      </div>
+    
+    <div class="col-md-3">
+      <span>配偶者</span>
+      <select class="custom-select" formControlName="shainMarried" [ngClass]="{ 'is-invalid': submitted && f.shainMarried.errors }">
+        <option value="true">有</option>
+        <option value="false">無</option>
+      </select>
+    </div>
+    
+    <div class="col-md-3">
+      <span>性別</span>
+      <select class="custom-select" formControlName="shainSex" [ngClass]="{ 'is-invalid': submitted && f.shainSex.errors }">
+        <option *ngFor="let type of sex" value="{{type}}">{{type}}</option>
+      </select>
+    </div>
+    
+    <div class="col-md-3">
+      <span>血液型</span>
+      <select class="custom-select" formControlName="shainBloodType" [ngClass]="{ 'is-invalid': submitted && f.shainBloodType.errors }">
+        <option *ngFor="let type of bloodType" value="{{type}}">{{type}}</option>
+      </select>
+    </div>
+    </div>
+    <!--
 <div class="row">
   <div class="d-flex p-2 align-items-center justify-content-center col">
     <span [ngClass]="{ 'errormsg': submitted && f.shainSupport.errors }">扶養:  &nbsp; </span>
@@ -129,85 +155,85 @@
   </div>
 
 </div>
-
-<div class="row">
-  <div class="col-md-3">
-    <span>電話番号(自宅)</span>
-    <input type="text" class="form-control " formControlName="shainHomePhoneNumber" >
-  </div>
-  <div class="col-md-3">
-    <span>電話番号(携帯)</span>
-    <input type="text" class="form-control " formControlName="shainMobilePhoneNumber">
-  </div>
-  <div class="col-md-3">
-    <span>メールアドレス</span>
-    <input type="text" class="form-control " formControlName="shainMail">
-  </div>
-  <div class="col-md-3">
-    <span>携帯メールアドレス</span>
-    <input type="text" class="form-control " formControlName="shainMobileMail">
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-3">
-    <span>郵便番号</span>
-    <input type="text" class="form-control " formControlName="shainPostalCode" >
-  </div>
-  <div class="col-md-2">
-    <span>勤務可能地域</span>
-    <div formGroupName="shainArea">
-    <select class="custom-select" formControlName="id">
-      <option *ngFor="let cities of data.AREA" value="{{cities.id}}">{{cities.desc}}</option>
-    </select>
-    <!--<div *ngIf="submitted && f.shainName.errors"><small class="errormsg">必須</small></div>-->
-    </div>
-  </div>
-
-  <div class="col-md-7">
-    <span>住所</span>
-    <input type="text" class="form-control " formControlName="shainAddress" >
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-3">
-    <span>車種</span>
-    <div formGroupName="shainCarModel">
-    <select class="custom-select" formControlName="id">
-      <option *ngFor="let cars of data.CARMODEL" value="{{cars.id}}">{{cars.tdesc}}</option>
-    </select>
-    </div>
-  </div>
-  <div class="col-md-3">
-    <span>入社日</span>
-    <input type="date" class="form-control " formControlName="shainJoinedDate" [ngClass]="{ 'is-invalid': submitted && f.shainJoinedDate.errors }">
-    <div *ngIf="submitted && f.shainJoinedDate.errors"><small class="errormsg">必須</small></div>
-  </div>
-  <div class="col-md-3">
-    <span>退社日</span>
-    <input type="date" class="form-control " formControlName="shainRetiredDate">
-  </div>
-  <div class="col-md-3">
-    <span>パスワード</span>
-  <div class="input-group">
-      <input type="password" class="form-control " aria-describedby="button-addon2" readonly formControlName="shainPassword">
-      <div class="input-group-append">
-        <button class="btn btn-outline-danger" type="button" id="button-addon2">リセット</button>
+-->
+    <div class="row">
+      <div class="col-md-3">
+        <span>電話番号(自宅)</span>
+        <input type="text" class="form-control " formControlName="shainHomePhoneNumber">
       </div>
-  </div>
-  </div>
-</div>
-<div class="row" style="margin-top:20px;">
-  <div class="col-md-12">
-    <label for="exampleFormControlTextarea1">備考文</label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" formControlName="shainNotes"></textarea>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-12 d-flex p-2 justify-content-around">
-  <button type="submit" class="btn btn-primary">更新</button>
-  <button type="button" class="btn btn-primary">削除</button>
-</div>
-</div>
-</ng-container>
-{{employeeForm.value | json}}
+      <div class="col-md-3">
+        <span>電話番号(携帯)</span>
+        <input type="text" class="form-control " formControlName="shainMobilePhoneNumber">
+      </div>
+      <div class="col-md-3">
+        <span>メールアドレス</span>
+        <input type="text" class="form-control " formControlName="shainMail">
+      </div>
+      <div class="col-md-3">
+        <span>携帯メールアドレス</span>
+        <input type="text" class="form-control " formControlName="shainMobileMail">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <span>郵便番号</span>
+        <input type="text" class="form-control " formControlName="shainPostalCode">
+      </div>
+      <div class="col-md-2">
+        <span>勤務可能地域</span>
+        <div formGroupName="shainArea">
+          <select class="custom-select" formControlName="id">
+            <option *ngFor="let cities of data.AREA" value="{{cities.id}}">{{cities.desc}}</option>
+          </select>
+          <!--<div *ngIf="submitted && f.shainName.errors"><small class="errormsg">必須</small></div>-->
+        </div>
+      </div>
+
+      <div class="col-md-7">
+        <span>住所</span>
+        <input type="text" class="form-control " formControlName="shainAddress">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <span>車種</span>
+        <div formGroupName="shainCarModel">
+          <select class="custom-select" formControlName="id">
+            <option *ngFor="let cars of data.CARMODEL" value="{{cars.id}}">{{cars.tdesc}}</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <span>入社日</span>
+        <input type="date" class="form-control " formControlName="shainJoinedDate" [ngClass]="{ 'is-invalid': submitted && f.shainJoinedDate.errors }">
+        <div *ngIf="submitted && f.shainJoinedDate.errors"><small class="errormsg">必須</small></div>
+      </div>
+      <div class="col-md-3">
+        <span>退社日</span>
+        <input type="date" class="form-control " formControlName="shainRetiredDate">
+      </div>
+      <div class="col-md-3">
+        <span>パスワード</span>
+        <div class="input-group">
+          <input [type]="show ? 'text' : 'password'" class="form-control " id="pwd" aria-describedby="button-addon2"
+            formControlName="shainPassword">
+          <div class="input-group-append">
+            <button class="btn btn-outline-danger" type="button" id="button-addon2" (click)="showPassword()">見る</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top:20px;">
+      <div class="col-md-12">
+        <label for="exampleFormControlTextarea1">備考文</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" formControlName="shainNotes"></textarea>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 d-flex p-2 justify-content-around">
+        <button type="submit" class="btn btn-primary">更新</button>
+        <button type="button" class="btn btn-primary">削除</button>
+      </div>
+    </div>
+  </ng-container>
 </form>

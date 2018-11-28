@@ -1,0 +1,152 @@
+<div>
+  <span fxShow.lt-md="false" fxShow.gt-sm="true">
+
+    <button mat-button [matMenuTriggerFor]="resume">
+      履歴書
+      <mat-icon class="ml-1">arrow_drop_down</mat-icon>
+    </button>
+
+    <button mat-button [matMenuTriggerFor]="curriculum">
+      
+      職務経歴書
+      <mat-icon class="ml-1">arrow_drop_down</mat-icon>
+    </button>
+
+    <button mat-button [matMenuTriggerFor]="credentials">
+      
+      資格検索
+      <mat-icon class="ml-1">arrow_drop_down</mat-icon>
+    </button>
+
+    <button mat-button [matMenuTriggerFor]="educational">
+      
+      教育受講履歴
+      <mat-icon class="ml-1">arrow_drop_down</mat-icon>
+    </button>
+
+    <button mat-button [matMenuTriggerFor]="skillmap">
+      
+      スキルマップ
+      <mat-icon class="ml-1">arrow_drop_down</mat-icon>
+    </button>
+
+    <button mat-button [matMenuTriggerFor]="adminmenu">
+      
+      管理メニュー
+      <mat-icon class="ml-1">arrow_drop_down</mat-icon>
+    </button>
+
+    <ng-container *ngIf="loggedUser$ | async; let user" class="d-flex">
+      <button mat-button [matMenuTriggerFor]="accountmenu">
+        <mat-icon>face</mat-icon>
+        <span>{{user.shainName}}</span>
+        <mat-icon class="ml-1">arrow_drop_down</mat-icon>
+      </button>
+    </ng-container>
+  </span>
+
+  <mat-menu #resume="matMenu" overlapTrigger="false">
+    <a routerLink="/admin/rirekisho/search" routerLinkActive="active">
+      <button mat-menu-item>
+        <span>検索</span>
+      </button>
+    </a>
+    <a routerLink="/admin/rirekisho/list" routerLinkActive="active">
+      <button mat-menu-item>
+        <span>リスト</span>
+      </button>
+    </a>
+  </mat-menu>
+
+  <mat-menu #curriculum="matMenu" overlapTrigger="false">
+    <a routerLink="/admin/shokumurirekisho/search" routerLinkActive="active">
+      <button mat-menu-item>
+        <span>検索</span>
+      </button>
+    </a>
+    <a routerLink="/admin/shokumurirekisho/list" routerLinkActive="active">
+      <button mat-menu-item>
+        <span>リスト</span>
+      </button>
+    </a>
+    <a routerLink="/admin/shokumurirekisho/add" routerLinkActive="active">
+      <button mat-menu-item>
+        <span>登録</span>
+      </button>
+    </a>
+  </mat-menu>
+
+  <mat-menu #credentials="matMenu" overlapTrigger="false">
+    <a routerLink="/404" routerLinkActive="active">
+      <button mat-menu-item>
+        <span>検索</span>
+      </button>
+    </a>
+  </mat-menu>
+
+  <mat-menu #educational="matMenu" overlapTrigger="false">
+    <a routerLink="/404" routerLinkActive="active">
+      <button mat-menu-item>
+        <span>検索</span>
+      </button>
+    </a>
+  </mat-menu>
+
+  <mat-menu #skillmap="matMenu" overlapTrigger="false">
+    <a routerLink="/404" routerLinkActive="active">
+      <button mat-menu-item>
+        <span>検索</span>
+      </button>
+    </a>
+  </mat-menu>
+
+  <mat-menu #adminmenu="matMenu" overlapTrigger="false">
+    <a routerLink="404" routerLinkActive="active">
+      <button mat-menu-item>
+        <span>アカウント管理画面</span>
+      </button>
+    </a>
+
+    <a routerLink="404" routerLinkActive="active">
+      <button mat-menu-item>
+        <span>履歴管理画面</span>
+      </button>
+    </a>
+    <a routerLink="/404" routerLinkActive="active">
+    <button mat-menu-item [matMenuTriggerFor]="superadmin">
+      <span>マスタ管理メニュー</span>
+    </button>
+    </a>
+  </mat-menu>
+
+  <mat-menu #accountmenu="matMenu" overlapTrigger="false">
+    <a routerLink="/profile" routerLinkActive="active">
+      <button mat-menu-item>
+        <span>プロファイルを見る</span>
+      </button>
+    </a>
+    <button mat-menu-item (click)="logout()">
+      <span>ログアウト</span>
+    </button>
+  </mat-menu>
+
+  <mat-menu #superadmin="matMenu" overlapTrigger="false">
+    <a routerLink="/admin/employee-master" routerLinkActive="active">
+      <button mat-menu-item>
+        <span>社員マスタ画面</span>
+      </button>
+    </a>
+
+    <a routerLink="/404" routerLinkActive="active">
+      <button mat-menu-item>
+        <span>資格マスタ画面</span>
+      </button>
+    </a>
+
+    <a routerLink="/404" routerLinkActive="active">
+      <button mat-menu-item>
+        <span>研修マスタ画面</span>
+      </button>
+    </a>
+  </mat-menu>
+</div>

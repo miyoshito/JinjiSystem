@@ -6,7 +6,7 @@ import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../guards/auth.service';
 import { BroadcastService } from '../broadcast.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { ProfileService } from '../profile/profile.service';
 
 @Component({
@@ -21,6 +21,8 @@ export class LoginComponent implements OnInit {
   httpStatus = null
   loggedUsername: Observable<String>
   isLoggedIn: boolean = false;
+
+  sub: Subscription
 
 
   authFailed$: boolean
@@ -48,7 +50,7 @@ export class LoginComponent implements OnInit {
   login(){    
     if(localStorage.getItem('currentUser') != null){localStorage.removeItem('currentUser')}
     const form: User = this.loginform.value
-    this.loginService.doLogin(form)    
+    this.sub = this.loginService.doLogin(form)    
     .subscribe(res => {
         localStorage.setItem('currentUser', res.headers.get('Authorization'))
         this.authFailed$ = false;
@@ -63,5 +65,9 @@ export class LoginComponent implements OnInit {
       console.log(err)
       this.authFailed$ = true
     })
+  }
+
+  ngOnDestroy(){
+    this.sub.unsubscribe()
   }
 }

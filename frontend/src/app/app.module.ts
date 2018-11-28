@@ -38,6 +38,11 @@ import { SkillMapComponent } from './skill-map/skill-map.component';
 import { SystemSettingsComponent } from './admin/system-settings/system-settings.component';
 import { SkillMapSearchComponent } from './admin/skill-map-search/skill-map-search.component';
 import { ValidatorsComponent } from './validators/validators.component';
+import { StudycourseComponent } from './studycourse/studycourse.component';
+import { QualificationsComponent } from './qualifications/qualifications.component';
+import { AdminHeaderComponent } from './header/admin-header/admin-header.component';
+import { UserHeaderComponent } from './header/user-header/user-header.component';
+import { ManagerHeaderComponent } from './header/manager-header/manager-header.component';
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -68,7 +73,12 @@ export function tokenGetter() {
     SkillMapComponent,
     SystemSettingsComponent,
     SkillMapSearchComponent,
-    ValidatorsComponent
+    ValidatorsComponent,
+    StudycourseComponent,
+    QualificationsComponent,
+    AdminHeaderComponent,
+    UserHeaderComponent,
+    ManagerHeaderComponent
   ],
   imports: [
     BrowserModule,

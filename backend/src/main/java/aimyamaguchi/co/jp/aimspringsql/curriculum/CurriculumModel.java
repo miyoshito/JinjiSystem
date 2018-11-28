@@ -28,6 +28,12 @@ public class CurriculumModel {
     @Column(name="CV_CUSTOMER")
     private String customer; //(isso pode ser um m2m no futuro)
 
+    @Column(name="ACTIVE")
+    private boolean active;
+
+    @Column(name="DELETED")
+    private boolean deleted;
+
     @ManyToOne
     @JoinColumns(value = {
         @JoinColumn(name="CV_INDUSTRY_TYPE", referencedColumnName = "INDUSTRY_TYPE_ID"),

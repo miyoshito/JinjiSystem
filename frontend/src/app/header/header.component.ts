@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { LoginService } from '../login/login.service';
 import { Router } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
@@ -21,9 +21,12 @@ export class HeaderComponent implements OnInit {
     isLoggedIn$: Observable<boolean>
     authorities$: Observable<String>
     disconnect$: Observable<boolean>
-    isAdmin: boolean
+    
+    menuStyle: string
 
     subs: Subscription
+
+    @Input() userdata: EventEmitter<Observable<Employee>> = new EventEmitter()
 
     constructor(private _loginService: LoginService,
                 private _route: Router,
@@ -31,27 +34,25 @@ export class HeaderComponent implements OnInit {
                 private _profileService: ProfileService,
                 private _tokenVerify: AuthService) {
 
-                  this.isAdmin = false
+                  this.menuStyle = ''
                 }
 
   ngOnInit() {
     //in case of page refresh, this will be loaded anyway since header loads in every single page.
     if(!this.loggedUser$){
       this._profileService.cacheUser()
+      this.userdata.emit(this.loggedUser$)
     }
     
-    this._broadcastService.userAuthorization$.subscribe(auth =>{
-      if (auth == 'ADMIN' || auth == 'SOUMU'){
-        console.log('check if is admin or soumu...')
-        this.isAdmin = true
-      } else this.isAdmin = false
+    this.subs = this._broadcastService.userAuthorization$.subscribe(auth =>{
+      this.menuStyle = auth
     })
 
     this.isLoggedIn$ = this._broadcastService.userAuthenticated$  
     this.loggedUser$ = this._profileService.cachedUser$
-    this.disconnect$ = this._loginService.disconnected$
 
   }
+  
   home(){
     this._route.navigate(['profile']);
   }

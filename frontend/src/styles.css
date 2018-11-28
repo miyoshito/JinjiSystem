@@ -7,7 +7,16 @@
 
 
 
+.table {
+  font-style: normal;
+  border: 1px black;
+}
+th, td{
+  font-style: normal !important; 
+  font-weight: 400;
+}
 
+.fill-remaining-space{flex: 1 1 auto;}
 .custom-radio .custom-control-input:checked~.custom-control-label::before,
 .custom-radio .custom-control-input:checked~.custom-control-label::after{
     background-color: red;
@@ -34,21 +43,21 @@ option{
 }
 
   
-  body {
-    display: flex;
-    flex-direction: column;
-    
-  }
-
-  main {
-    flex: fill;
-  }
+body {
+  display: flex;
+  flex-direction: column;
   
-  header, footer{
-    flex: none;
-    font-family: 'Noto Sans JP', sans-serif !important;
-    font-size: 16px !important;
-  }
+}
+
+main {
+  flex: fill;
+}
+
+header, footer{
+  flex: none;
+  font-family: 'Noto Sans JP', sans-serif !important;
+  font-size: 16px !important;
+}
 
   
  

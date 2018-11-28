@@ -86,7 +86,6 @@ public class EmployeeService {
         } else {
             Long nextSeq = seq.findBySeqTablename("m_shain").getSeqValue();
             employee.setShainId(nextSeq.toString());
-            employee.setShainPassword("aim123456"); //pls change this soon   
             Date dt = new Date();
             employee.setShainRegisterDate(dt);
             System.out.println(employee.getShainRegisterDate());

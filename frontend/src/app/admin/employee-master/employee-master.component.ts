@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { EmployeeMasterService } from './employee-master.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Data } from 'src/app/interfaces/data';
 import { Employee } from 'src/app/interfaces/employee';
 import { BroadcastService } from 'src/app/broadcast.service';
 import { ProfileService } from 'src/app/profile/profile.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LoginService } from 'src/app/login/login.service';
 
 @Component({
   selector: 'app-employee-master',
@@ -19,16 +21,18 @@ export class EmployeeMasterComponent implements OnInit {
 
   
   sex: string[] = ['女','男'];
-  support: string[] = ['有','無']
-  married: string[] = ['有','無']
   bloodType: String[] = ['A+型','B+型','O+型','AB+型','A-型','B-型','O-型','AB-型']
 
 
   submitted: boolean
   title: string
-  response$: Observable<any>
   success$: boolean
-
+  sub: Subscription
+  successMsg: string
+  show: boolean
+  
+  role$: Observable<any>
+  response$: Observable<any>
   isLoggedIn$: Observable<boolean>  
   loggedUser$: Observable<any>
   params$: Observable<any[]>
@@ -37,46 +41,71 @@ export class EmployeeMasterComponent implements OnInit {
   constructor(private _fb: FormBuilder,
               private _employeeService: EmployeeMasterService,
               private _broadcastService: BroadcastService,
-              private _profileService: ProfileService) { 
+              private _profileService: ProfileService,
+              private _route: ActivatedRoute,
+              private _router: Router,
+              private _loginService: LoginService) { 
                 this.success$ = false
               }
 
   ngOnInit() {
-    this.title = 'プロフィール画面'
-    this.initializeForm()
-    //subscreve no broadcast pra saber se o user continua autenticado
-    this.isLoggedIn$ = this._broadcastService.userAuthenticated$
-    // invoca as params do individuo logado...
+  this.initializeForm()
+  this.params$ = this._employeeService.getViewRendering()
+  this.isLoggedIn$ = this._broadcastService.userAuthenticated$
+
+  console.log('u are navigating from ' +this._route.parent)
+
+  this._route.parent.url.subscribe(url =>{
+    console.log(url[0].path)
+    if (url[0].path === 'profile') { // it means im seeing my profile!
+      this.title = 'プロフィール画面'
+      this.loadUserData()
+    } else if (url[0].path === 'admin') { //it means im trying to add a new profile
+      this.title = '社員マスタ登録画面'
+
+    } else {
+      this.title = '社員マスタ編集画面' // it means theyre editing or smth
+    }
+  })
+  }
+
+  ngOnDestroy(){
+    this.success$ = false
+  }
+
+  loadUserData(){
     this._profileService.cachedUser$.subscribe(data =>{
       this.employeeForm.patchValue(data)
-      data.shainJoinedDate != '' ? this.employeeForm.patchValue({shainJoinedDate: data.shainJoinedDate.slice(0,10)}) : console.log('')
-      data.shainBirthday != '' ? this.employeeForm.patchValue({shainBirthday: data.shainBirthday.slice(0,10)}) : console.log('')
-      data.shainRegisterDate != '' ? this.employeeForm.patchValue({shainRegisterDate: data.shainRegisterDate.slice(0,10)}) : console.log('')
+      data.shainJoinedDate != null ? this.employeeForm.patchValue({shainJoinedDate: data.shainJoinedDate.slice(0,10)}) : console.log('')
+      data.shainBirthday != null ? this.employeeForm.patchValue({shainBirthday: data.shainBirthday.slice(0,10)}) : console.log('')
+      data.shainRegisterDate != null ? this.employeeForm.patchValue({shainRegisterDate: data.shainRegisterDate.slice(0,10)}) : console.log('')
       data.shainRetiredDate != null ? this.employeeForm.patchValue({shainRetiredDate: data.shainRetiredDate.slice(0,10)}) : console.log('')      
     })
-    this.params$ = this._employeeService.getViewRendering()
   }
-  
-  ngOnDestroy(){
-    this.success$ = false    
+
+  showPassword() {
+    this.show = !this.show;
   }
 
   submitForm(){
     let employee: Employee = this.employeeForm.value
-    this.submitted = true
     if (this.employeeForm.invalid) {
       return;
     }
-    try {
-    this._employeeService.insertShainAttempt(employee)
-    //this.employeeForm.reset()
-    this.success$ = true
-    //this.employeeForm.reset();
-    //this.initializeForm()
-    } catch (err) {
-      throw err
-    }
+    if (this.employeeForm.value.shainId != ''){
+      try {
+        this._employeeService.insertShainAttempt(employee)
+        this.success$ = true
+        this.successMsg = 'アップデートは成功します。セキュリティのため、10秒後に切断されるつもりです。もう一度ログインしてください'
+        setTimeout(() => {
+          this._loginService.logout()
+          this._router.navigate(['login'])
+        },10000)        
+        } catch (err) {
+          throw err
+    }    
   }
+}
 
   get f(){ return this.employeeForm.controls }
 

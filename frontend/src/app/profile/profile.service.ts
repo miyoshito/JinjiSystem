@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, ReplaySubject } from 'rxjs';
+import { Observable, BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
 import { EmployeeMasterComponent } from '../admin/employee-master/employee-master.component';
 
 import { API_URL, ADMIN_URL } from '../url-settings'
@@ -16,7 +16,7 @@ export class ProfileService {
 
   employee$: Employee
 
-  _cacheUserSource: ReplaySubject<Employee> = new ReplaySubject<Employee>()
+  private _cacheUserSource: ReplaySubject<Employee> = new ReplaySubject<Employee>()
   cachedUser$ = this._cacheUserSource.asObservable()
 
   constructor(private _http: HttpClient,
