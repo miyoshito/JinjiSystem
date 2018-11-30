@@ -1,0 +1,70 @@
+import { Optional } from "@angular/core";
+
+export interface Resume {
+
+    resumeId: number        
+    universityName: string
+    formationArea: string    
+    careers: Career[]
+    qualifications: Qualifications[]
+    commendations: Commendations[]
+}
+export class Resume {
+    constructor(
+        resumeId: number,
+        universityName: string,
+        formationArea: string,
+        @Optional() careers: Career[],
+        @Optional() qualifications: Qualifications[],
+        @Optional() commendations: Commendations[]
+    ){
+        this.resumeId = resumeId
+        this.universityName = universityName
+        this.formationArea = formationArea
+        this.careers = careers
+        this.qualifications = qualifications
+        this.commendations = commendations
+    }
+}
+
+export interface Career {
+    career_id: number,
+    career_year: number,
+    career_month: number,
+    career_scwk: string,
+    career_dpaf: string,
+    career_result: string
+}
+export class Career {
+    constructor(
+        career_id: number,
+        career_year: number,
+        career_month: number,
+        career_scwk: string,
+        career_dpaf: string,
+        career_result: string
+    ){
+        this.career_id = career_id
+        this.career_year = career_year
+        this.career_month = career_month
+        this.career_scwk = career_scwk
+        this.career_dpaf = career_dpaf
+        this.career_result = career_result
+    }
+}
+
+export interface Qualifications{
+    qualification_id: number,
+    qualification_year: number,
+    qualification_month: number,
+    qualification_name: string,
+    qualification_result: string    
+}
+
+export interface Commendations{
+    commendation_id: number,
+    commendation_year: number,
+    commendation_month: number,
+    commendation_name: string,
+    commendation_result: string
+}

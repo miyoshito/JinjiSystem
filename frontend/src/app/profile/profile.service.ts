@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
+import { Observable, BehaviorSubject, ReplaySubject, Subject, Subscription, AsyncSubject } from 'rxjs';
 import { EmployeeMasterComponent } from '../admin/employee-master/employee-master.component';
 
 import { API_URL, ADMIN_URL } from '../url-settings'
@@ -14,13 +14,15 @@ import { BroadcastService } from '../broadcast.service';
 })
 export class ProfileService {
 
-  employee$: Employee
+  employee$: Observable<Employee>
+  sub: Subscription
 
-  private _cacheUserSource: ReplaySubject<Employee> = new ReplaySubject<Employee>()
+  employee: Employee// = new Employee(null,"","","","",null,"","",null,null,null,"","","","","","",null,null,null,null,"","",null,"",null,null)
+
+  private _cacheUserSource: ReplaySubject<Employee> = new ReplaySubject<Employee>(1)
   cachedUser$ = this._cacheUserSource.asObservable()
 
   constructor(private _http: HttpClient,
-              private _authService: AuthService,
               private _broadcastService: BroadcastService) { }
 
   public getLoggedInUserData(): Observable<Employee>{
@@ -32,13 +34,14 @@ export class ProfileService {
   }
 
   public cacheUser(){
-    this.getLoggedInUserData().subscribe(data =>{
+  this.sub = this.getLoggedInUserData().subscribe(data =>{
         this._broadcastService.pushAuthorization(data.role.roledesc)
         this._cacheUserSource.next(data)
-      })
+      })      
   }
 
   public clearLoggedUser(){
+    this.sub.unsubscribe()
     this._cacheUserSource.complete()//(new Employee(null,"","","","",null,"","",null,null,null,"","","","","","",null,null,null,null,"","",null,"",null))
   }
 }

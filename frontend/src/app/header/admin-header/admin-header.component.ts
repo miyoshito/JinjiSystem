@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
 import { ProfileService } from 'src/app/profile/profile.service';
@@ -13,8 +13,14 @@ import { LoginService } from 'src/app/login/login.service';
 })
 export class AdminHeaderComponent implements OnInit {
 
+  @Input('loggedUser')
   loggedUser$: Observable<Employee>
-  isLoggedIn$: Observable<boolean>
+  
+  @Input('isLoggedIn')
+  isLoggedIn$: Observable<boolean>  
+
+  @Output('logout')
+  logout = new EventEmitter<boolean>()
 
   constructor(private _profileService: ProfileService,
     private _broadcastService: BroadcastService,
@@ -22,18 +28,12 @@ export class AdminHeaderComponent implements OnInit {
     private _loginService: LoginService) { }
 
   ngOnInit() {
-    if (!this.loggedUser$) {
-      this._profileService.cacheUser()
-    }
-    this.isLoggedIn$ = this._broadcastService.userAuthenticated$
-    this.loggedUser$ = this._profileService.cachedUser$
   }
 
-  logout() {
-    this._broadcastService.pushAuthentication(false)
-    this._route.navigate(['/'])
-    this._loginService.logout()
+  doLogout(){
+    this.logout.emit(true)
   }
+
 
 
 }

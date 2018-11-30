@@ -1,103 +1,192 @@
 <div class="row">
   <div class="col-md-6">
-    <h3>社員マスタリスト画面</h3>
+    <h3>{{title}}</h3>
   </div>
 </div>
 <!-- dados que vem do profile-->
-<div class="row">
-  <div class="col-md-3">
-    <span>Employee id</span>
-  </div>
-  <div class="col-md-3">
-    <span>Employee name</span>
-  </div>
-  <div class="col-md-3">
-    <span>Employee kana</span>
-  </div>
-  <div class="col-md-3">
-    <span>something</span>
-  </div>
-</div>
-<div class="row">
-  <div class="col-md-4">
-    <span>Study Area</span>
-    <input type="text" class="form-control form-control-sm">
-  </div>
-  <div class="col-md-4">
-    <span>University Name</span>
-    <input type="text" class="form-control form-control-sm">
-  </div>
-  <div class="col-md-4">
-    <span>Graduation Date</span>
-    <input type="text" class="form-control form-control-sm">
-  </div>
-</div>
-
-<br />
-<h4>Attach graduation documents</h4>
-
-<div class="row">
-  <div class="col-md-4">
-    <input type="file" ng2FileSelect [uploader]="uploader" multiple /><br />
-  </div>
-</div>
-<br />
-<div class="box box-danger">
-  <div class="box-body">
-    <div class="col-md-12">
-      <table class="table">
-        <thead>
-          <tr>
-            <th width="50%">Name</th>
-            <th>Size</th>
-            <th>Progress</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of uploader.queue">
-            <td><strong>{{ item?.file?.name }}</strong></td>
-            <td *ngIf="uploader.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
-            <td *ngIf="uploader.isHTML5">
-              <div class="progress" style="margin-bottom: 0;">
-                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
-              </div>
-            </td>
-            <td class="text-center">
-              <span *ngIf="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
-              <span *ngIf="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
-              <span *ngIf="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
-            </td>
-            <td nowrap>
-              <button type="button" class="btn btn-success btn-sm" (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
-                Upload
-              </button>
-              <button type="button" class="btn btn-warning btn-sm" (click)="item.cancel()" [disabled]="!item.isUploading">
-                Cancel
-              </button>
-              <button type="button" class="btn btn-danger btn-sm" (click)="item.remove()">
-                Remove
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div>
-        <div>
-          <div class="progress" style="">
-            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
-          </div>
+<div *ngIf="directInsert">
+  <div class=row>
+    <div class="col-md-3">
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="社員番号" aria-describedby="button-addon2" [(ngModel)]="shainid">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="button" id="button-addon2" (click)="selectEmployee(shainid)">検索</button>
         </div>
       </div>
     </div>
   </div>
+  <div class="alert alert-danger" *ngIf="displaymsg != ''">
+    {{displaymsg}}
+  </div>
 </div>
 
-<div class="row">
-  <div class="col-md-3">
-    <button type="button" class="btn btn-success btn-sm">登録</button>  
-    <button type="button" class="btn btn-warning btn-sm">キャンセル</button>
+
+<div *ngIf="selectedUser$ | async; let user">
+  <div class="row">
+    <div class="col-md-3">
+      <span style="font-weight: 600">社員番号: </span><span>{{user.shainId}}</span>
+    </div>
+    <div class="col-md-3">
+      <span style="font-weight: 600">社員氏名: </span><span>{{user.shainName}}</span>
+    </div>
+    <div class="col-md-3">
+      <span style="font-weight: 600">社員カナ: </span><span>{{user.shainKana}}</span>
+    </div>
+    <div class="col-md-3">
+      <span style="font-weight: 600">採用区分: </span><span>{{user.shainRecruit}}</span>
+    </div>
   </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <span>記載日</span>
+      <input type="text" class="form-control" value="{{user.shainJoinedDate}}" readonly>
+    </div>
+    <div class="col-md-3">
+      <span>扶養</span>
+      <input type="text" class="form-control" value="{{user.shainSupport}}" readonly>
+    </div>
+    <div class="col-md-3">
+      <span>配偶者</span>
+      <input type="text" class="form-control" value="{{user.shainMarried}}" readonly>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <span>電話番号(自宅)</span>
+      <input type="text" class="form-control" value="{{user.shainHomePhoneNumber}}" readonly>
+    </div>
+    <div class="col-md-3">
+      <span>電話番号(携帯)</span>
+      <input type="text" class="form-control" value="{{user.shainMobilePhoneNumber}}" readonly>
+    </div>
+    <div class="col-md-3">
+      <span>メールアドレス</span>
+      <input type="text" class="form-control" value="{{user.shainMail}}" readonly>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <span>郵便番号</span>
+      <input type="text" class="form-control" value="{{user.shainPostalCode}}" readonly>
+    </div>
+    <div class="col-md-9">
+      <span>住所</span>
+      <input type="text" class="form-control" value="{{user.shainArea?.desc}}{{user.shainAddress}}" readonly>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <span>出身校</span>
+      <input type="text" class="form-control">
+    </div>
+    <div class="col-md-4">
+      <span>出身学部・学科</span>
+      <input type="text" class="form-control">
+    </div>
+    <div class="col-md-4">
+      <span>文理</span>
+      <select class="custom-select">
+        <option>文系</option>
+        <option>理系</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <form [formGroup]="careerForm">
+        <h4>経歴</h4>
+        <table class="table table-bordered">
+          <thead>
+            <th style="width: 10%">年</th>
+            <th style="width: 10%">月</th>
+            <th style="width: 35%">学校/職場</th>
+            <th style="width: 35%">学科/所属</th>
+            <th style="width: 10%">結果</th>
+          </thead>
+          <tbody>
+            <tr formArrayName="careers" *ngFor="let row of careerRows.controls; let i = index;">
+              <ng-container [formGroupName]="i">
+                <td><input type="text" class="form-control" formControlName="career_year"></td>
+                <td><input type="text" class="form-control" formControlName="career_month"></td>
+                <td><input type="text" class="form-control" formControlName="career_scwk"></td>
+                <td><input type="text" class="form-control" formControlName="career_dpaf"></td>
+                <td><select class="custom-select" formControlName="career_result">
+                    <option value="入学">入学</option>
+                    <option value="卒業">卒業</option>
+                    <option value="入社">入社</option>
+                    <option value="退社">退社</option>
+                  </select></td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <form [formGroup]="qualificationForm">
+        <h4>資格</h4>
+        <table class="table table-bordered">
+          <thead>
+            <th style="width: 10%">年</th>
+            <th style="width: 10%">月</th>
+            <th style="width: 70%">資格名</th>
+            <th style="width: 10%">結果</th>
+          </thead>
+          <tbody>
+            <tr formArrayName="qualifications" *ngFor="let row of qualificationRows.controls; let i = index;">
+              <ng-container [formGroupName]="i">
+                <td><input type="text" class="form-control" formControlName="qualification_year"></td>
+                <td><input type="text" class="form-control" formControlName="qualification_month"></td>
+                <td><input type="text" class="form-control" formControlName="qualification_name"></td>
+                <td><select class="custom-select" formControlName="qualification_result">
+                    <option value="入学">合格</option>
+                    <option value="卒業">合格</option>
+                  </select></td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <form [formGroup]="commendationForm">
+        <h4>資格</h4>
+        <table class="table table-bordered">
+          <thead>
+            <th style="width: 10%">年</th>
+            <th style="width: 10%">月</th>
+            <th style="width: 80%">資格名</th>
+          </thead>
+          <tbody>
+            <tr formArrayName="commendations" *ngFor="let row of commendationRows.controls; let i = index;">
+              <ng-container [formGroupName]="i">
+                <td><input type="text" class="form-control" formControlName="commendation_year"></td>
+                <td><input type="text" class="form-control" formControlName="commendation_month"></td>
+                <td><input type="text" class="form-control" formControlName="commendation_name"></td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+      <button type="button" class="btn btn-outline-primary">登録</button>
+      <button type="button" class="btn btn-outline-primary">キャンセル</button>
+    </div>
+  </div>
+  <pre>{{careerForm.value | json}}</pre>
+  <pre>{{qualificationForm.value | json}}</pre>
+  <pre>{{commendationForm.value | json}}</pre>
 </div>

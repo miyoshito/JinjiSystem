@@ -26,8 +26,6 @@ export class HeaderComponent implements OnInit {
 
     subs: Subscription
 
-    @Input() userdata: EventEmitter<Observable<Employee>> = new EventEmitter()
-
     constructor(private _loginService: LoginService,
                 private _route: Router,
                 private _broadcastService: BroadcastService,
@@ -38,29 +36,23 @@ export class HeaderComponent implements OnInit {
                 }
 
   ngOnInit() {
-    //in case of page refresh, this will be loaded anyway since header loads in every single page.
-    if(!this.loggedUser$){
-      this._profileService.cacheUser()
-      this.userdata.emit(this.loggedUser$)
-    }
-    
     this.subs = this._broadcastService.userAuthorization$.subscribe(auth =>{
       this.menuStyle = auth
     })
-
     this.isLoggedIn$ = this._broadcastService.userAuthenticated$  
     this.loggedUser$ = this._profileService.cachedUser$
-
   }
   
   home(){
     this._route.navigate(['profile']);
   }
 
-  logout() {
+  logout(trying: boolean) {
+    if (trying){
     this._broadcastService.pushAuthentication(false)
     this._route.navigate(['/'])
     this._loginService.logout()
+    }
   }
 
 }

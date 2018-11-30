@@ -38,6 +38,7 @@ export class EmployeeMasterComponent implements OnInit {
   params$: Observable<any[]>
   
 
+
   constructor(private _fb: FormBuilder,
               private _employeeService: EmployeeMasterService,
               private _broadcastService: BroadcastService,
@@ -54,7 +55,10 @@ export class EmployeeMasterComponent implements OnInit {
   this.isLoggedIn$ = this._broadcastService.userAuthenticated$
 
   console.log('u are navigating from ' +this._route.parent)
+  }
 
+  ngAfterContentInit(){
+    
   this._route.parent.url.subscribe(url =>{
     console.log(url[0].path)
     if (url[0].path === 'profile') { // it means im seeing my profile!
@@ -62,7 +66,6 @@ export class EmployeeMasterComponent implements OnInit {
       this.loadUserData()
     } else if (url[0].path === 'admin') { //it means im trying to add a new profile
       this.title = '社員マスタ登録画面'
-
     } else {
       this.title = '社員マスタ編集画面' // it means theyre editing or smth
     }
@@ -96,14 +99,10 @@ export class EmployeeMasterComponent implements OnInit {
       try {
         this._employeeService.insertShainAttempt(employee)
         this.success$ = true
-        this.successMsg = 'アップデートは成功します。セキュリティのため、10秒後に切断されるつもりです。もう一度ログインしてください'
-        setTimeout(() => {
-          this._loginService.logout()
-          this._router.navigate(['login'])
-        },10000)        
+        this._router.navigate(['home'])
         } catch (err) {
           throw err
-    }    
+    }
   }
 }
 

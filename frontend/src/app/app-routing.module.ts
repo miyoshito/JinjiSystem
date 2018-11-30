@@ -28,6 +28,7 @@ const routes: Routes = [
   // Login routes
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: '404', component: NotFoundComponent},
+  {path: 'home', component: HomeComponent},
   
   {path: 'login', component: LoginComponent, canActivate:[LoginGuardService]},
   // User parent routes

@@ -49,6 +49,8 @@ public class EmployeeController {
 
     @GetMapping("/admin/getprofile/{id}")
     public EmployeeMaster getProfile(@PathVariable String id){
+
+
         return  employeeService.getProfile(id);
     }
 }

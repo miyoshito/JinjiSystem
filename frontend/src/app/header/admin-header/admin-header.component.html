@@ -6,8 +6,7 @@
       <mat-icon class="ml-1">arrow_drop_down</mat-icon>
     </button>
 
-    <button mat-button [matMenuTriggerFor]="curriculum">
-      
+    <button mat-button [matMenuTriggerFor]="curriculum">      
       職務経歴書
       <mat-icon class="ml-1">arrow_drop_down</mat-icon>
     </button>
@@ -54,6 +53,11 @@
     <a routerLink="/admin/rirekisho/list" routerLinkActive="active">
       <button mat-menu-item>
         <span>リスト</span>
+      </button>
+    </a>
+    <a routerLink="/admin/rirekisho/add" routerLinkActive="active">
+      <button mat-menu-item>
+        <span>新し履歴書を登録</span>
       </button>
     </a>
   </mat-menu>
@@ -125,7 +129,7 @@
         <span>プロファイルを見る</span>
       </button>
     </a>
-    <button mat-menu-item (click)="logout()">
+    <button mat-menu-item (click)="doLogout()">
       <span>ログアウト</span>
     </button>
   </mat-menu>

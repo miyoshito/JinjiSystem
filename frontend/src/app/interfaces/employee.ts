@@ -1,4 +1,5 @@
 import { Data } from "./data";
+import { Resume } from "../resume/resume-details-interface";
 
 export interface Employee {
     shainId: number
@@ -28,6 +29,8 @@ export interface Employee {
     shainRegisterDate: String,
     shainRegisteredBy: string,
     shainDeletedFlag: boolean,
+
+    resume: Resume
 }
 
 export interface Roles{

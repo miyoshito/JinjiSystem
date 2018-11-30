@@ -58,7 +58,7 @@ export class LoginComponent implements OnInit {
         this.profileService.cacheUser(); // -> isso aqui ja me traz as infos da pessoa logada pra buildar o perfil (tenho a auth_role)
         setTimeout(() =>{
           this.broadcastService.pushAuthentication(true);
-          this.route.navigate(['profile'])
+          this.route.navigate(['home'])
         },3000)
     },
     err => {

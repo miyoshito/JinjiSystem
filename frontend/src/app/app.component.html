@@ -1,4 +1,4 @@
-<app-header *ngIf="authenticated$"></app-header>
+<app-header *ngIf="isLoggedIn$"></app-header>
 <main>
     <div class="container">
         <router-outlet (activate)="authValidate()" ></router-outlet>

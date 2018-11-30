@@ -4,6 +4,8 @@ import { RoleGuardService } from './guards/role-guard.service';
 import { BroadcastService } from './broadcast.service';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { Employee } from './interfaces/employee';
+import { ProfileService } from './profile/profile.service';
 
 @Component({
   selector: 'app-root',
@@ -12,23 +14,33 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 })
 export class AppComponent implements OnInit{
 
-  constructor(private broadcastService: BroadcastService,
-              private _route: Router){}
+  loggedUser$: Observable<Employee>
+  isLoggedIn$: boolean
+  authorities$: Observable<String>
+  
 
-  authenticated$: boolean
+  constructor(private _broadcastService: BroadcastService,
+              private _route: Router,
+              private _authService: AuthService,
+              private _profileService: ProfileService){}
+
+  
   
   ngOnInit(): void {
-    console.log(this.authenticated$)
-    this.broadcastService.userAuthenticated$.subscribe(value =>{
-      this.authenticated$ = value
+    this._broadcastService.userAuthenticated$.subscribe((val) =>{
+      this.isLoggedIn$ = val
     })
+      if (this._authService.isAuthenticated()){
+        this._profileService.cacheUser()
+        this._broadcastService.pushAuthentication(true)
+      }
   }
 
   authValidate(){
     if (localStorage.getItem('currentUser') != null) {
-      this.broadcastService.pushAuthentication(true);
+      this._broadcastService.pushAuthentication(true);
     } else {
-      this.broadcastService.pushAuthentication(false);
+      this._broadcastService.pushAuthentication(false);
       this._route.navigate(['login'])
     }
   }

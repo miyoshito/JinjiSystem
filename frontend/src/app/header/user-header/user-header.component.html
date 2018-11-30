@@ -1,3 +1,51 @@
-<p>
-  user-header works!
-</p>
+<div>
+  <span fxShow.lt-md="false" fxShow.gt-sm="true">
+      <a routerLink="/profile/shokumurireki" routerLinkActive="active">
+          <button mat-button fxShow.lt-md="false" fxShow.gt-sm="true">
+              <mat-icon class="ml-1">work</mat-icon>
+              職務経歴書
+          </button>
+      </a>
+
+      <a routerLink="/profile/skillmap" routerLinkActive="active">
+          <button mat-button fxShow.lt-md="false" fxShow.gt-sm="true">
+              <mat-icon class="ml-1">device_hub</mat-icon>
+              スキルマップ
+          </button>
+      </a>
+
+      <a routerLink="/profile/studycourses" routerLinkActive="active">
+          <button mat-button fxShow.lt-md="false" fxShow.gt-sm="true">
+              <mat-icon class="ml-1">school</mat-icon>
+              教育受講履歴
+
+          </button>
+      </a>
+
+      <a routerLink="/profile/qualifications" routerLinkActive="active">
+          <button mat-button fxShow.lt-md="false" fxShow.gt-sm="true">
+              <mat-icon class="ml-1">assignment</mat-icon>
+              資格
+          </button>
+      </a>
+
+      <ng-container *ngIf="loggedUser$ | async; let user" class="d-flex">
+              <button mat-button [matMenuTriggerFor]="accountmenu">
+                <mat-icon>face</mat-icon>
+                <span>{{user.shainName}}</span>
+                <mat-icon class="ml-1">arrow_drop_down</mat-icon>
+              </button>
+      </ng-container>
+      <mat-menu #accountmenu="matMenu" overlapTrigger="false">
+              <a routerLink="/profile" routerLinkActive="active">
+                <button mat-menu-item>
+                  <span>プロファイルを見る</span>
+                </button>
+              </a>
+              <button mat-menu-item (click)="doLogout()">
+                <span>ログアウト</span>
+              </button>
+      </mat-menu>
+
+  </span>
+</div>
