@@ -5,10 +5,10 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { EmployeeMasterService } from 'src/app/admin/employee-master/employee-master.service';
 import { ProfileService } from 'src/app/profile/profile.service';
 import { Employee } from 'src/app/interfaces/employee';
-import { Observable, BehaviorSubject, Subscription } from 'rxjs';
+import { Observable, BehaviorSubject, Subscription, Subject } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { Qualifications, Career, Commendations } from '../resume-details-interface';
-import { map } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 
 const url = API_URL
 
@@ -25,7 +25,7 @@ export class ResumeAddComponent implements OnInit {
     private _profileService: ProfileService,
     private _fb: FormBuilder) { }
 
-  subs: Subscription
+  destroySubject$: Subject<void> = new Subject()
   title: string
   displaymsg: string = ''
   selectedUser$: Observable<Employee>
@@ -61,19 +61,18 @@ export class ResumeAddComponent implements OnInit {
     commendation_result: ''
   }]
 
-  displayedColumnsA = ['年', '月', '学校/職場', '学科/所属', '結果']
-  displayedColumnsB = ['年', '月', '資格名', '結果']
-  displayedColumnsC = ['年', '月', '内容', '結果']
-
   careerRows: FormArray = this._fb.array([]);
   qualificationRows: FormArray = this._fb.array([]);
   commendationRows: FormArray = this._fb.array([]);
+
+  resumeForm: FormGroup
   careerForm: FormGroup = this._fb.group({ 'careers': this.careerRows });
   qualificationForm: FormGroup = this._fb.group({ 'qualifications': this.qualificationRows });
   commendationForm: FormGroup = this._fb.group({ 'commendations': this.commendationRows });
 
   ngOnInit() {
-    this._route.parent.parent.url.subscribe(url => {
+    this.buildResumeForm()
+    this._route.parent.parent.url.pipe(takeUntil(this.destroySubject$)).subscribe(url => {
       console.log(url[0].path)
       if (url[0].path === 'admin') {
         //since you are trying to direct insert a new rirekisho, you need to pick a employee.
@@ -84,13 +83,14 @@ export class ResumeAddComponent implements OnInit {
   }
 
   selectEmployee(shainid: string) {
+    this.resetForms()
     console.log(shainid)
-    if (shainid == '' || shainid === null || shainid === undefined) {
+    if (shainid === '' || shainid === null || shainid === undefined) {
       this._router.navigate(['admin/employee-list'])
     } else {
       this.selectedUser$ = this._profileService.getUserProfile(shainid)
-
-      this.subs = this.selectedUser$.pipe(
+      this.selectedUser$.pipe(
+        takeUntil(this.destroySubject$),
         map((data) => {
           if (data === null) {
             this.displaymsg = 'id not found, redirecting to list...'
@@ -104,6 +104,10 @@ export class ResumeAddComponent implements OnInit {
               this.qualifications.forEach((d: Qualifications) => this.clearQualificationRow(d))
               this.commendations.forEach((d: Commendations) => this.clearCommendationRow(d))
             } else {
+              this.resumeForm.patchValue({
+                formation: data.resume.formation,
+                universityName: data.resume.universityName,
+                bunri: data.resume.bunri})
               data.resume.careers.forEach((car) => { this.addCareerRow(car) })
               data.resume.qualifications.forEach((qua) => { this.addQualificationRow(qua) })
               data.resume.commendations.forEach((com) => { this.addCommendationRow(com) })
@@ -111,6 +115,37 @@ export class ResumeAddComponent implements OnInit {
           }
         })).subscribe()
     }
+  }
+
+  resetForms(){
+  if (this.careerRows.length > 0){
+    this.careerRows.value.forEach(value => {
+      this.careerRows.removeAt(value)
+    });
+  }
+
+  if (this.qualificationRows.length > 0){
+    this.qualificationRows.value.forEach(value => {
+      this.qualificationRows.removeAt(value)
+    });
+  }
+
+  if (this.commendationRows.length > 0){
+    this.commendationRows.value.forEach(value => {
+      this.commendationRows.removeAt(value)
+    });
+  }
+  }
+
+  buildResumeForm(){
+    this.resumeForm = this._fb.group({
+      formation: [''],
+      universityName: [''],
+      bunri: [''],
+      careers: this.careerRows,
+      qualifications: this.qualificationRows,
+      commendations: this.commendationRows
+    })
   }
 
   clearCareerRow(d?: Career){
@@ -193,10 +228,17 @@ export class ResumeAddComponent implements OnInit {
         this.dataSource.next(this.commendationRows.controls)
   }
 
+  removeCareerRow(index: number){
+    this.careerRows.removeAt(index);
+  }
+  removeQualificationRow(index: number){
+    this.qualificationRows.removeAt(index);
+  }
+  removeCommendationRow(index: number) {
+    this.commendationRows.removeAt(index);
+  }
+
   ngOnDestroy() {
-    if (this.subs) {
-      this.subs.unsubscribe()
-    }
   }
 
 }

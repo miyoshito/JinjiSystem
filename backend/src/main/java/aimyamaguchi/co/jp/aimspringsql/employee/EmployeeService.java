@@ -3,6 +3,12 @@ package aimyamaguchi.co.jp.aimspringsql.employee;
 import java.util.*;
 import java.text.SimpleDateFormat;
 
+import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.CriteriaUpdate;
+import javax.persistence.metamodel.Metamodel;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +26,9 @@ import aimyamaguchi.co.jp.aimspringsql.constants.SequenceInterface;
 
 @Service
 public class EmployeeService {
+
+
+
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -106,6 +115,10 @@ public class EmployeeService {
         map.put("CARMODEL", carmodel.findAll());
 
         return map;
+    }
+
+    public List<EmployeeMaster> searchForResumes(String id, String name, String kana, String recruit, Long age, String univ, String career, String qualif, String commend){
+        return employeeRepository.resumeSearch(id, name, kana, recruit, age, univ, career, qualif, commend);
     }
 
 }

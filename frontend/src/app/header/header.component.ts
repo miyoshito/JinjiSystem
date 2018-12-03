@@ -50,6 +50,7 @@ export class HeaderComponent implements OnInit {
   logout(trying: boolean) {
     if (trying){
     this._broadcastService.pushAuthentication(false)
+    this.subs.unsubscribe()
     this._route.navigate(['/'])
     this._loginService.logout()
     }

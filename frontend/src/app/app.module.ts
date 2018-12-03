@@ -43,6 +43,7 @@ import { QualificationsComponent } from './qualifications/qualifications.compone
 import { AdminHeaderComponent } from './header/admin-header/admin-header.component';
 import { UserHeaderComponent } from './header/user-header/user-header.component';
 import { ManagerHeaderComponent } from './header/manager-header/manager-header.component';
+import { BooleanPipe } from './boolean-pipe'
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -78,7 +79,8 @@ export function tokenGetter() {
     QualificationsComponent,
     AdminHeaderComponent,
     UserHeaderComponent,
-    ManagerHeaderComponent
+    ManagerHeaderComponent,
+    BooleanPipe
   ],
   imports: [
     BrowserModule,
@@ -110,9 +112,10 @@ export function tokenGetter() {
     MatDatepickerModule,
     MatNativeDateModule,
     MatPaginatorModule,
-    FileUploadModule
+    FileUploadModule    
   ],
   exports: [
+    [BooleanPipe]
   ],
   providers: [
     {

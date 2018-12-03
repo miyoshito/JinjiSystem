@@ -6,9 +6,11 @@ import java.util.List;
 import javax.persistence.*;
 
 import aimyamaguchi.co.jp.aimspringsql.files.ResumeFileDetails;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 
@@ -19,6 +21,7 @@ public class ResumeModel {
 
     @Id
     @Column(name="RI_ID")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long resumeId;
 
     @Column(name="RI_STUDY_AREA")
@@ -27,8 +30,8 @@ public class ResumeModel {
     @Column(name="RI_UNIVERSITYNAME")
     private String universityName;
 
-    @Column(name="RI_GRADUATEDDATE")
-    private Date graduationDate;
+    @Column(name="RI_BUNRI")
+    private String bunri;
 
     @Column(name="LOG_REGISTERED")
     private Date insertDate;
@@ -36,10 +39,8 @@ public class ResumeModel {
     @Column(name="LOG_INSERTEDBY")
     private String insertedBy;
 
-
-
     @OneToOne
-    @JsonIgnore
+    @JsonBackReference
     @JoinColumn(name="SHA_NO", nullable=false)
     private EmployeeMaster employee;
 

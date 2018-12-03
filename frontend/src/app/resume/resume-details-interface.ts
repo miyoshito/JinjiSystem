@@ -4,7 +4,8 @@ export interface Resume {
 
     resumeId: number        
     universityName: string
-    formationArea: string    
+    formation: string
+    bunri: string 
     careers: Career[]
     qualifications: Qualifications[]
     commendations: Commendations[]
@@ -13,17 +14,19 @@ export class Resume {
     constructor(
         resumeId: number,
         universityName: string,
-        formationArea: string,
+        formation: string,
+        bunri: string,
         @Optional() careers: Career[],
         @Optional() qualifications: Qualifications[],
         @Optional() commendations: Commendations[]
     ){
         this.resumeId = resumeId
         this.universityName = universityName
-        this.formationArea = formationArea
+        this.formation = formation
         this.careers = careers
         this.qualifications = qualifications
         this.commendations = commendations
+        this.bunri = bunri
     }
 }
 

@@ -40,15 +40,15 @@
   <div class="row">
     <div class="col-md-3">
       <span>記載日</span>
-      <input type="text" class="form-control" value="{{user.shainJoinedDate}}" readonly>
+      <input type="text" class="form-control" value="{{user.shainJoinedDate | slice:0:10}}" readonly>
     </div>
     <div class="col-md-3">
       <span>扶養</span>
-      <input type="text" class="form-control" value="{{user.shainSupport}}" readonly>
+      <input type="text" class="form-control" value="{{user.shainSupport | toJapanese}}" readonly>
     </div>
     <div class="col-md-3">
       <span>配偶者</span>
-      <input type="text" class="form-control" value="{{user.shainMarried}}" readonly>
+      <input type="text" class="form-control" value="{{user.shainMarried | toJapanese}}" readonly>
     </div>
   </div>
 
@@ -78,35 +78,41 @@
     </div>
   </div>
 
+<ng-container [formGroup]="resumeForm">
   <div class="row">
     <div class="col-md-4">
       <span>出身校</span>
-      <input type="text" class="form-control">
+      <input type="text" class="form-control" value="{{user?.resume?.formation}}" formControlName="formation">
     </div>
     <div class="col-md-4">
       <span>出身学部・学科</span>
-      <input type="text" class="form-control">
+      <input type="text" class="form-control" value="{{user?.resume?.universityName}}" formControlName="universityName">
     </div>
     <div class="col-md-4">
       <span>文理</span>
-      <select class="custom-select">
+      <select class="custom-select" value="{{user?.resume?.bunri}}" formControlName="bunri">
         <option>文系</option>
         <option>理系</option>
       </select>
     </div>
   </div>
+  </ng-container>
 
   <div class="row">
     <div class="col-md-12">
       <form [formGroup]="careerForm">
-        <h4>経歴</h4>
+        <h4>
+        経歴
+        <button class="btn btn-sm btn-success" (click)="clearCareerRow()">+</button>
+      </h4>
         <table class="table table-bordered">
           <thead>
             <th style="width: 10%">年</th>
             <th style="width: 10%">月</th>
-            <th style="width: 35%">学校/職場</th>
-            <th style="width: 35%">学科/所属</th>
+            <th style="width: 33%">学校/職場</th>
+            <th style="width: 33%">学科/所属</th>
             <th style="width: 10%">結果</th>
+            <th style="width: 4%"></th>
           </thead>
           <tbody>
             <tr formArrayName="careers" *ngFor="let row of careerRows.controls; let i = index;">
@@ -120,7 +126,9 @@
                     <option value="卒業">卒業</option>
                     <option value="入社">入社</option>
                     <option value="退社">退社</option>
-                  </select></td>
+                  </select>
+                </td>
+                <td><button class="btn btn-sm btn-danger" (click)="removeCareerRow(i)">-</button></td>
               </ng-container>
             </tr>
           </tbody>
@@ -131,13 +139,16 @@
   <div class="row">
     <div class="col-md-12">
       <form [formGroup]="qualificationForm">
-        <h4>資格</h4>
+        <h4>資格
+            <button class="btn btn-sm btn-success" (click)="clearQualificationRow()">+</button>
+        </h4>
         <table class="table table-bordered">
           <thead>
             <th style="width: 10%">年</th>
             <th style="width: 10%">月</th>
-            <th style="width: 70%">資格名</th>
+            <th style="width: 66%">資格名</th>
             <th style="width: 10%">結果</th>
+            <th style="width: 4%"></th>
           </thead>
           <tbody>
             <tr formArrayName="qualifications" *ngFor="let row of qualificationRows.controls; let i = index;">
@@ -148,7 +159,9 @@
                 <td><select class="custom-select" formControlName="qualification_result">
                     <option value="入学">合格</option>
                     <option value="卒業">合格</option>
-                  </select></td>
+                  </select>
+                </td>
+                <td><button class="btn btn-sm btn-danger" (click)="removeQualificationRow(i)">-</button></td>
               </ng-container>
             </tr>
           </tbody>
@@ -159,12 +172,15 @@
   <div class="row">
     <div class="col-md-12">
       <form [formGroup]="commendationForm">
-        <h4>資格</h4>
+        <h4>資格
+            <button class="btn btn-sm btn-success" (click)="clearCommendationRow()">+</button>
+        </h4>
         <table class="table table-bordered">
           <thead>
             <th style="width: 10%">年</th>
             <th style="width: 10%">月</th>
-            <th style="width: 80%">資格名</th>
+            <th style="width: 86%">資格名</th>
+            <th style="width: 4%"></th>
           </thead>
           <tbody>
             <tr formArrayName="commendations" *ngFor="let row of commendationRows.controls; let i = index;">
@@ -172,6 +188,7 @@
                 <td><input type="text" class="form-control" formControlName="commendation_year"></td>
                 <td><input type="text" class="form-control" formControlName="commendation_month"></td>
                 <td><input type="text" class="form-control" formControlName="commendation_name"></td>
+                <td><button class="btn btn-sm btn-danger" (click)="removeCommendationRow(i)">-</button></td>
               </ng-container>
             </tr>
           </tbody>
@@ -186,7 +203,5 @@
       <button type="button" class="btn btn-outline-primary">キャンセル</button>
     </div>
   </div>
-  <pre>{{careerForm.value | json}}</pre>
-  <pre>{{qualificationForm.value | json}}</pre>
-  <pre>{{commendationForm.value | json}}</pre>
+  <pre>{{resumeForm.value | json}}</pre>
 </div>

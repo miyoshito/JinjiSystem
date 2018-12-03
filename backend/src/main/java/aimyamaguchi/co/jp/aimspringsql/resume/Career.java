@@ -1,5 +1,6 @@
 package aimyamaguchi.co.jp.aimspringsql.resume;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
@@ -35,6 +36,4 @@ public class Career {
     @JoinColumn(name="RK_RESUME")
     @JsonIgnore
     private ResumeModel k_resume;
-
-
 }

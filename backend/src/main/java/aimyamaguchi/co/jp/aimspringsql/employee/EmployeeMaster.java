@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -115,6 +116,7 @@ public class EmployeeMaster implements UserDetails{
     @Column(name="SHA_DELETEFLG")
     private boolean shainDeletedFlag;
 
+    @JsonManagedReference
     @OneToOne(mappedBy="employee")
     private ResumeModel resume;
 

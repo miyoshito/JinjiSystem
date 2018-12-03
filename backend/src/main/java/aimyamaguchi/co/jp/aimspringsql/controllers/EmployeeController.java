@@ -3,6 +3,7 @@ package aimyamaguchi.co.jp.aimspringsql.controllers;
 import javax.servlet.http.HttpServletRequest;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,9 +49,20 @@ public class EmployeeController {
     }
 
     @GetMapping("/admin/getprofile/{id}")
-    public EmployeeMaster getProfile(@PathVariable String id){
+    public EmployeeMaster getProfile(@PathVariable String id){return  employeeService.getProfile(id);}
 
-
-        return  employeeService.getProfile(id);
+    @GetMapping("/admin/resumes/search")
+    public List<EmployeeMaster> resumeSearch(
+            @RequestParam (value="i", required = false) String i,
+            @RequestParam (value="n", required = false)String n,
+            @RequestParam (value="kat", required = false)String kat,
+            @RequestParam (value="r", required = false)String r,
+            @RequestParam (value="a", required = false)Long a,
+            @RequestParam (value="g", required = false)String g,
+            @RequestParam (value="b", required = false)String b,
+            @RequestParam (value="kei", required = false)String kei,
+            @RequestParam (value="s", required = false)String s
+            ) {
+        return employeeService.searchForResumes(i, n, kat, r, a, g, b, kei, s);
     }
 }
