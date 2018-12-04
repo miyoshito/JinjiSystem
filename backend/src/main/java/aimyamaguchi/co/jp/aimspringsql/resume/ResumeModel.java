@@ -21,7 +21,7 @@ public class ResumeModel {
 
     @Id
     @Column(name="RI_ID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long resumeId;
 
     @Column(name="RI_STUDY_AREA")

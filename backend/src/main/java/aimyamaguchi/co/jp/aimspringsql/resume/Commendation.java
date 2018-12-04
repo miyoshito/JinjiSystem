@@ -2,6 +2,7 @@ package aimyamaguchi.co.jp.aimspringsql.resume;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -14,7 +15,8 @@ public class Commendation {
 
     @Id
     @Column(name = "RH_NO")
-    private Long commendation_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long commendationid;
 
     @Column(name = "RH_CONTENTS")
     private String commendation_name;
@@ -27,6 +29,9 @@ public class Commendation {
 
     @Column(name = "RH_MM")
     private int commendation_month;
+
+    @Column(name="ACTIVE")
+    private boolean active;
 
     @ManyToOne
     @JoinColumn(name="RH_RESUME")

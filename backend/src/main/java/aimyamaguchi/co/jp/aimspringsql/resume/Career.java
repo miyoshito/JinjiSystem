@@ -3,6 +3,8 @@ package aimyamaguchi.co.jp.aimspringsql.resume;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.hibernate.annotations.Where;
+
 
 import javax.persistence.*;
 import java.util.Date;
@@ -15,7 +17,8 @@ public class Career {
 
     @Id
     @Column(name = "RK_NO")
-    private Long career_id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long careerid;
 
     @Column(name="RK_YYYY")
     private Long career_year;
@@ -31,6 +34,9 @@ public class Career {
 
     @Column(name = "RK_RESULT")
     private String career_result;
+
+    @Column(name="ACTIVE")
+    private boolean active;
 
     @ManyToOne
     @JoinColumn(name="RK_RESUME")

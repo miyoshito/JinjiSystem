@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.CurriculumModel;
 import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
 import lombok.Data;
+import org.hibernate.annotations.Where;
 
 @Data
 @Entity

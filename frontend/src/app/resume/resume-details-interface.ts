@@ -31,43 +31,48 @@ export class Resume {
 }
 
 export interface Career {
-    career_id: number,
+    careerid: number,
     career_year: number,
     career_month: number,
     career_scwk: string,
     career_dpaf: string,
     career_result: string
+    active: boolean
 }
 export class Career {
     constructor(
-        career_id: number,
+        careerid: number,
         career_year: number,
         career_month: number,
         career_scwk: string,
         career_dpaf: string,
-        career_result: string
+        career_result: string,
+        active: boolean
     ){
-        this.career_id = career_id
+        this.careerid = careerid
         this.career_year = career_year
         this.career_month = career_month
         this.career_scwk = career_scwk
         this.career_dpaf = career_dpaf
         this.career_result = career_result
+        this.active = active
     }
 }
 
 export interface Qualifications{
-    qualification_id: number,
+    qualificationid: number,
     qualification_year: number,
     qualification_month: number,
     qualification_name: string,
-    qualification_result: string    
+    qualification_result: string,
+    active: boolean 
 }
 
 export interface Commendations{
-    commendation_id: number,
+    commendationid: number,
     commendation_year: number,
     commendation_month: number,
     commendation_name: string,
-    commendation_result: string
+    commendation_result: string,
+    active: boolean
 }

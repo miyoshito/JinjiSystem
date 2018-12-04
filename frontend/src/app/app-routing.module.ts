@@ -23,6 +23,7 @@ import { SkillMapComponent } from './skill-map/skill-map.component';
 import { SystemSettingsComponent } from './admin/system-settings/system-settings.component';
 import { QualificationsComponent } from './qualifications/qualifications.component';
 import { StudycourseComponent } from './studycourse/studycourse.component';
+import { RoleGuardService } from './guards/role-guard.service';
 
 const routes: Routes = [
   // Login routes
@@ -71,7 +72,7 @@ const routes: Routes = [
         {path: 'curriculum/add', component: CurriculumInsertComponent},
         {path: 'curriculum/edit', component: CurriculumInsertComponent}
       ]},
-  ]},
+  ],canActivate:[RoleGuardService]},
   //mapeando o direcionamento pra paginas inexistentes...
   {path: '**', redirectTo: '404' }
 ]

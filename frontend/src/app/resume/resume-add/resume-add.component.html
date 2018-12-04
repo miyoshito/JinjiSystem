@@ -15,8 +15,8 @@
       </div>
     </div>
   </div>
-  <div class="alert alert-danger" *ngIf="displaymsg != ''">
-    {{displaymsg}}
+  <div *ngIf="displaymsg$ | async ; let value" class="alert alert-danger">
+    <span>{{value}}</span>
   </div>
 </div>
 
@@ -128,7 +128,10 @@
                     <option value="退社">退社</option>
                   </select>
                 </td>
-                <td><button class="btn btn-sm btn-danger" (click)="removeCareerRow(i)">-</button></td>
+                <td>
+                  <button *ngIf="row.controls.careerid.value" class="btn btn-sm btn-danger" (click)="removeCareerRow(i)">x</button>
+                  <button *ngIf="!row.controls.careerid.value" class="btn btn-sm btn-warning" (click)="removeCareerRow(i)">-</button>
+                </td>                
               </ng-container>
             </tr>
           </tbody>
@@ -161,7 +164,10 @@
                     <option value="卒業">合格</option>
                   </select>
                 </td>
-                <td><button class="btn btn-sm btn-danger" (click)="removeQualificationRow(i)">-</button></td>
+                <td>
+                    <button *ngIf="row.controls.qualificationid.value" class="btn btn-sm btn-danger" (click)="removeQualificationRow(i)">x</button>
+                    <button *ngIf="!row.controls.qualificationid.value" class="btn btn-sm btn-warning" (click)="removeQualificationRow(i)">-</button>
+                </td>
               </ng-container>
             </tr>
           </tbody>
@@ -188,7 +194,10 @@
                 <td><input type="text" class="form-control" formControlName="commendation_year"></td>
                 <td><input type="text" class="form-control" formControlName="commendation_month"></td>
                 <td><input type="text" class="form-control" formControlName="commendation_name"></td>
-                <td><button class="btn btn-sm btn-danger" (click)="removeCommendationRow(i)">-</button></td>
+                <td>
+                    <button *ngIf="row.controls.commendationid.value" class="btn btn-sm btn-danger" (click)="removeCommendationRow(i)">x</button>
+                    <button *ngIf="!row.controls.commendationid.value" class="btn btn-sm btn-warning" (click)="removeCommendationRow(i)">-</button>
+                </td>
               </ng-container>
             </tr>
           </tbody>
@@ -199,9 +208,8 @@
 
   <div class="row">
     <div class="col-md-3">
-      <button type="button" class="btn btn-outline-primary">登録</button>
-      <button type="button" class="btn btn-outline-primary">キャンセル</button>
+      <button type="button" class="btn btn-outline-primary" (click)="saveResume()">登録</button>
+      <button type="button" class="btn btn-outline-primary" [routerLink]="['/home']" routerLinkActive="active" >キャンセル</button>
     </div>
   </div>
-  <pre>{{resumeForm.value | json}}</pre>
 </div>

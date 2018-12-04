@@ -93,16 +93,16 @@ export class EmployeeMasterComponent implements OnInit {
   submitForm(){
     let employee: Employee = this.employeeForm.value
     if (this.employeeForm.invalid) {
+      console.log('invalidr...')
       return;
     }
-    if (this.employeeForm.value.shainId != ''){
-      try {
-        this._employeeService.insertShainAttempt(employee)
-        this.success$ = true
-        this._router.navigate(['home'])
-        } catch (err) {
-          throw err
-    }
+    
+    try {
+      this._employeeService.insertShainAttempt(employee)
+      this.success$ = true
+      this._router.navigate(['home'])
+      } catch (err) {
+        throw err
   }
 }
 

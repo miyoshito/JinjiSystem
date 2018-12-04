@@ -8,8 +8,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatFormFieldModule, MatInputModule, MatRadioModule, MatTableModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatButtonModule, MatIconModule, MatMenuModule, MatListModule, MatExpansionModule, MatDatepickerModule, MatNativeDateModule,
-MatPaginatorModule } from '@angular/material'
+import {
+  MatFormFieldModule, MatInputModule, MatRadioModule, MatTableModule, MatCheckboxModule, MatToolbarModule, MatSidenavModule, MatButtonModule, MatIconModule, MatMenuModule, MatListModule, MatExpansionModule, MatDatepickerModule, MatNativeDateModule,
+  MatPaginatorModule, MatDialogModule
+} from '@angular/material'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginService } from './login/login.service';
@@ -43,7 +45,8 @@ import { QualificationsComponent } from './qualifications/qualifications.compone
 import { AdminHeaderComponent } from './header/admin-header/admin-header.component';
 import { UserHeaderComponent } from './header/user-header/user-header.component';
 import { ManagerHeaderComponent } from './header/manager-header/manager-header.component';
-import { BooleanPipe } from './boolean-pipe'
+import { BooleanPipe } from './boolean-pipe';
+import { CustomDialogComponent } from './custom-dialog/custom-dialog.component'
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -80,7 +83,8 @@ export function tokenGetter() {
     AdminHeaderComponent,
     UserHeaderComponent,
     ManagerHeaderComponent,
-    BooleanPipe
+    BooleanPipe,
+    CustomDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -112,7 +116,8 @@ export function tokenGetter() {
     MatDatepickerModule,
     MatNativeDateModule,
     MatPaginatorModule,
-    FileUploadModule    
+    FileUploadModule,
+    MatDialogModule
   ],
   exports: [
     [BooleanPipe]
@@ -128,6 +133,7 @@ export function tokenGetter() {
     LoginGuardService,
     TokenInterceptorService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CustomDialogComponent]
 })
 export class AppModule { }
