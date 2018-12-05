@@ -29,13 +29,12 @@ export class ResumeAddComponent implements OnInit {
     private _resumeService: ResumeService,
     private _matDialog: MatDialog) { }
 
-  destroySubject$: Subject<void> = new Subject()
-
-  title: string
-  displaymsg$: Subject<String> = new Subject<String>()
+  destroySubject$: Subject<void> = new Subject() // unsubscribe purposes
+  displaymsg$: Subject<String> = new Subject<String>() //display message based on clicks
   selectedUser$: Observable<Employee>
   errMsg$: Observable<String>
 
+  title: string
   directInsert: boolean
   userselected: boolean
   submitted: boolean

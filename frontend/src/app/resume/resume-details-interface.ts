@@ -76,3 +76,15 @@ export interface Commendations{
     commendation_result: string,
     active: boolean
 }
+
+export interface SearchForm{
+    id: string,
+    name: string,
+    kana: string,
+    recruit: string,
+    age: number,
+    study: string,
+    bunri: string,
+    career: string,
+    qualification: string
+}

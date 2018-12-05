@@ -46,7 +46,8 @@ import { AdminHeaderComponent } from './header/admin-header/admin-header.compone
 import { UserHeaderComponent } from './header/user-header/user-header.component';
 import { ManagerHeaderComponent } from './header/manager-header/manager-header.component';
 import { BooleanPipe } from './boolean-pipe';
-import { CustomDialogComponent } from './custom-dialog/custom-dialog.component'
+import { CustomDialogComponent } from './custom-dialog/custom-dialog.component';
+import { ResumeSearchResultsComponent } from './resume/resume-search-results/resume-search-results.component'
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -84,7 +85,8 @@ export function tokenGetter() {
     UserHeaderComponent,
     ManagerHeaderComponent,
     BooleanPipe,
-    CustomDialogComponent
+    CustomDialogComponent,
+    ResumeSearchResultsComponent
   ],
   imports: [
     BrowserModule,

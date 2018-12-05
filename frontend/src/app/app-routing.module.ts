@@ -24,6 +24,7 @@ import { SystemSettingsComponent } from './admin/system-settings/system-settings
 import { QualificationsComponent } from './qualifications/qualifications.component';
 import { StudycourseComponent } from './studycourse/studycourse.component';
 import { RoleGuardService } from './guards/role-guard.service';
+import { ResumeSearchResultsComponent } from './resume/resume-search-results/resume-search-results.component';
 
 const routes: Routes = [
   // Login routes
@@ -54,6 +55,7 @@ const routes: Routes = [
       {path: 'rirekisho', children:[
           {path: 'add', component: ResumeAddComponent},
           {path: 'search', component: ResumeSearchComponent},
+          {path: 'results', component: ResumeSearchResultsComponent},
           {path: 'list', component: ResumeListComponent},
           {path: 'details', component: ResumeDetailsComponent},
           {path: '{shainbangou}/{id}/details', component: ResumeDetailsComponent},

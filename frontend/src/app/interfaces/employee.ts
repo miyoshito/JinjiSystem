@@ -2,7 +2,7 @@ import { Data } from "./data";
 import { Resume } from "../resume/resume-details-interface";
 
 export interface Employee {
-    shainId: number
+    shainId: string
     shainPassword: string
     shainName: string
     role: Roles
@@ -41,7 +41,7 @@ export interface Roles{
 
 export class Employee {
     constructor(
-        shainId: number,
+        shainId: string,
         shainPassword: string,
         shainName: string,
         shainRecruit: string,

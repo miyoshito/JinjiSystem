@@ -1,17 +1,13 @@
 package aimyamaguchi.co.jp.aimspringsql.employee;
 
 import java.util.*;
-import java.text.SimpleDateFormat;
 
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.CriteriaUpdate;
-import javax.persistence.metamodel.Metamodel;
+
 import javax.servlet.http.HttpServletRequest;
 
+import aimyamaguchi.co.jp.aimspringsql.resume.ResumeModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,14 +16,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
 
-import aimyamaguchi.co.jp.aimspringsql.authfilters.CustomException;
 import aimyamaguchi.co.jp.aimspringsql.authfilters.JwtTokenProvider;
 import aimyamaguchi.co.jp.aimspringsql.constants.SequenceInterface;
 
 @Service
-public class EmployeeService {
-
-
+public class EmployeeService{
 
 
     @Autowired
@@ -115,10 +108,6 @@ public class EmployeeService {
         map.put("CARMODEL", carmodel.findAll());
 
         return map;
-    }
-
-    public List<EmployeeMaster> searchForResumes(String id, String name, String kana, String recruit, Long age, String univ, String career, String qualif, String commend){
-        return employeeRepository.resumeSearch(id, name, kana, recruit, age, univ, career, qualif, commend);
     }
 
 }
