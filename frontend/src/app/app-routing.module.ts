@@ -54,11 +54,10 @@ const routes: Routes = [
       //resumes...
       {path: 'rirekisho', children:[
           {path: 'add', component: ResumeAddComponent},
+          {path: 'edit/:id', component: ResumeAddComponent},
           {path: 'search', component: ResumeSearchComponent},
           {path: 'results', component: ResumeSearchResultsComponent},
-          {path: 'list', component: ResumeListComponent},
-          {path: 'details', component: ResumeDetailsComponent},
-          {path: '{shainbangou}/{id}/details', component: ResumeDetailsComponent},
+          {path: 'details', component: ResumeDetailsComponent}
       ]},
       {path: 'shokumurirekisho', children:[
           {path: 'add', component: CurriculumInsertComponent},

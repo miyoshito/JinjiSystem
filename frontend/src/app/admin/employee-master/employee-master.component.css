@@ -7,3 +7,8 @@
     color: red;
     float: right;
 }
+
+.ng-select.invalid {
+    border: 1px red;
+    border-radius: 5%;
+}

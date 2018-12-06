@@ -25,15 +25,16 @@ import io.jsonwebtoken.Jwts;
 @Component
 public class JwtTokenProvider {
 
-  Algorithm kee = Algorithm.HMAC256("secret");
+  private Algorithm kee = Algorithm.HMAC256("secret");
 
-  private long validityInMilliseconds = 604800000; // 1h
+
 
   @Autowired
   private UserDetailsServiceImpl myUserDetails;
 
 
   public String createToken(String username, Roles roles) {
+  long validityInMilliseconds = 259200000;
     //Claims claims = Jwts.claims().setSubject(username);
     //claims.put("auth", roles.stream().map(s -> new SimpleGrantedAuthority(s.getAuthority())).filter(Objects::nonNull).collect(Collectors.toList()));
     //claims.put("auth", roles);
@@ -64,7 +65,6 @@ public class JwtTokenProvider {
 
   public String resolveToken(HttpServletRequest req) {
     String bearerToken = req.getHeader("Authorization");
-    System.out.println("token resolve token=>" +req.getHeader("Authorization"));
     if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
       return bearerToken.substring(7, bearerToken.length());
     }
@@ -96,7 +96,7 @@ public class JwtTokenProvider {
         //JWT.decode(token);
         return true;
       } catch (JWTDecodeException exception) {
-        throw new CustomException("Expired or invalid JWT token", HttpStatus.INTERNAL_SERVER_ERROR);
+        return false;
       }
     /*
     try {

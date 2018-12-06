@@ -35,7 +35,7 @@ export class ResumeAddComponent implements OnInit {
   errMsg$: Observable<String>
 
   title: string
-  directInsert: boolean
+  idsearchbox: boolean
   userselected: boolean
   submitted: boolean
 
@@ -84,15 +84,28 @@ export class ResumeAddComponent implements OnInit {
 
   ngOnInit() {
     this.buildResumeForm()
-    this._route.parent.parent.url.pipe(takeUntil(this.destroySubject$)).subscribe(url => {
-      console.log(url[0].path)
-      if (url[0].path === 'admin') {
-        //since you are trying to direct insert a new rirekisho, you need to pick a employee.
-        this.title = '履歴書登録画面'
-        this.directInsert = true
-      }
-    })
+    if ((this._router.url).endsWith('/add')){
+      this.idsearchbox = true
+      this.title = '履歴書登録画面'
+    } else {
+      this.title = '履歴書編集画面'
+      let id: string = this._route.snapshot.paramMap.get('id') 
+      this.selectedUser$ = this._profileService.getUserProfile(id)
+      this.idsearchbox = false
+      this.buildEditView(this.selectedUser$)
+    }
   }
+
+  selectEmployee(shainid: string) {
+    this.resetForms()
+    if (shainid === '' || shainid === null || shainid === undefined) {
+      this._router.navigate(['admin/employee-list'])
+    } else {
+      this.selectedUser$ = this._profileService.getUserProfile(shainid)
+      this.buildEditView(this.selectedUser$)
+    }
+  }
+
 
   saveResume() {
     this.submitted = true
@@ -108,51 +121,37 @@ export class ResumeAddComponent implements OnInit {
       })
   }
 
-  selectEmployee(shainid: string) {
-    this.resetForms()
-    console.log(shainid)
-    if (shainid === '' || shainid === null || shainid === undefined) {
-      this._router.navigate(['admin/employee-list'])
-    } else {
-      this.selectedUser$ = this._profileService.getUserProfile(shainid)
-      this.selectedUser$.pipe(
-        takeUntil(this.destroySubject$),
-        map((data) => {
-          if (data === null) {
-            this.displaymsg$.next('id not found, redirecting to list...')
-            setTimeout(() => {
-              this._router.navigate(['admin/employee-list'])
-            }, 3000)
-          } else {
-            this.shainForm.patchValue({ shainId: shainid })
-            if (!data.resume) {
-              console.log('!!!!!!!!!!!!!!!!!!')
-              this.career.forEach((d: Career) => this.clearCareerRow(d))
-              this.qualifications.forEach((d: Qualifications) => this.clearQualificationRow(d))
-              this.commendations.forEach((d: Commendations) => this.clearCommendationRow(d))
-            } else {
-              this.resumeForm.patchValue({
-                resumeId: data.resume.resumeId,
-                formation: data.resume.formation,
-                universityName: data.resume.universityName,
-                bunri: data.resume.bunri
-              })
-              data.resume.careers.forEach((car) => { 
-                //temporary until i finish the custom JPA Entity
-                (car.active) ? this.addCareerRow(car) : null
-               })
-              data.resume.qualifications.forEach((qua) => { 
-                (qua.active) ? this.addQualificationRow(qua) : null
-               })
-              data.resume.commendations.forEach((com) => { 
-              (com.active) ? this.addCommendationRow(com) : null
-               })
-            }
+  async buildEditView(withUser: Observable<Employee>){
+  this.resetForms()
+    withUser.pipe(
+      takeUntil(this.destroySubject$),
+      map(val =>{
+        console.log(val)
+        this.shainForm.patchValue({ shainId: val.shainId })
+        if (!val.resume) {
+          this.career.forEach((d: Career) => this.clearCareerRow(d))
+          this.qualifications.forEach((d: Qualifications) => this.clearQualificationRow(d))
+          this.commendations.forEach((d: Commendations) => this.clearCommendationRow(d))
+        } else {
+          this.resumeForm.patchValue({
+            resumeId: val.resume.resumeId,
+            formation: val.resume.formation,
+            universityName: val.resume.universityName,
+            bunri: val.resume.bunri
+          })
+          val.resume.careers.forEach((car) => {
+            (car.active) ? this.addCareerRow(car) : null
+           })
+          val.resume.qualifications.forEach((qua) => { 
+            (qua.active) ? this.addQualificationRow(qua) : null
+           })
+          val.resume.commendations.forEach((com) => { 
+          (com.active) ? this.addCommendationRow(com) : null
+           })
           }
         })).subscribe()
-    }
-  }
-
+  }    
+    
   resetForms() {
     if (this.careerRows.length > 0) {
       this.careerRows.value.forEach(value => {
@@ -274,7 +273,7 @@ export class ResumeAddComponent implements OnInit {
       const dialogRef = this._matDialog.open(CustomDialogComponent, {
         data: {
           title: '経歴削除確認画面',
-          message: 'You are trying to delete a already saved information, dou you REALLY wanna do dis?'
+          message: '削除しますよろしいでしょうか？'
         },
         width: '350px',
         height: '400px',
@@ -287,7 +286,6 @@ export class ResumeAddComponent implements OnInit {
       })
     }
   }
-
   async removeQualificationRow(index: number) {
     let q: Qualifications = this.qualificationRows.at(index).value
 
@@ -296,7 +294,7 @@ export class ResumeAddComponent implements OnInit {
       const dialogRef = this._matDialog.open(CustomDialogComponent, {
         data: {
           title: '資格削除確認画面',
-          message: 'You are trying to delete a already saved information, dou you REALLY wanna do dis?'
+          message: '削除しますよろしいでしょうか？'
         },
         width: '350px',
         height: '400px',
@@ -317,7 +315,7 @@ export class ResumeAddComponent implements OnInit {
       const dialogRef = this._matDialog.open(CustomDialogComponent, {
         data: {
           title: '資格削除確認画面',
-          message: 'You are trying to delete a already saved information, dou you REALLY wanna do dis?'
+          message: '削除しますよろしいでしょうか？'
         },
         width: '350px',
         height: '400px',
@@ -331,8 +329,6 @@ export class ResumeAddComponent implements OnInit {
 
     }
   }
-
-
 
   softDelete(type: string, id: number) {
     this._resumeService.softDeleteDetail(type, id).pipe(

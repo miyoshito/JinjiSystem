@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import aimyamaguchi.co.jp.aimspringsql.authfilters.JwtTokenProvider;
@@ -21,7 +22,6 @@ import aimyamaguchi.co.jp.aimspringsql.constants.SequenceInterface;
 
 @Service
 public class EmployeeService{
-
 
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -51,7 +51,7 @@ public class EmployeeService{
         try {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         responseHeaders.add("Authorization", jwtTokenProvider.createToken(username, user.getRole()));
-        return new ResponseEntity<>("", responseHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
         } catch (AuthenticationException e) {
             return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);
             //throw new CustomException("Invalid username/password", HttpStatus.UNAUTHORIZED);
@@ -83,20 +83,34 @@ public class EmployeeService{
     }    
 
     public void insertEmployee(EmployeeMaster employee, HttpServletRequest reqs){
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+        String token = reqs.getHeader("authorization");
+
         if (employee.getShainId() != ""){
+
+        if (!passwordEncoder.matches(
+                employee.getPassword(),
+                employeeRepository.findByShainId(employee.getShainId()).getShainPassword())){
+            employee.setShainPassword(passwordEncoder.encode(employee.getPassword()));
+            employeeRepository.save(employee);
+        } else
             employeeRepository.save(employee);
         } else {
             Long nextSeq = seq.findBySeqTablename("m_shain").getSeqValue();
             employee.setShainId(nextSeq.toString());
+            if(employee.getPassword().equals(""))
+                employee.setShainPassword(passwordEncoder.encode("aim123456"));
+            else
+                employee.setShainPassword(passwordEncoder.encode(employee.getPassword()));
             Date dt = new Date();
             employee.setShainRegisterDate(dt);
-            System.out.println(employee.getShainRegisterDate());
-           // employee.setShainRegisteredBy(jwtTokenProvider.getSubject(reqs));
+            employee.setShainRegisteredBy(employeeRepository.findByShainId(jwtTokenProvider.getUsername(token)).getShainName());
             employeeRepository.saveAndFlush(employee);
-        }        
+        }
     }
 
-    //stuffs for shainmaster screen...
 
     public Map<String, Object> getEmpMasterParams(){
 

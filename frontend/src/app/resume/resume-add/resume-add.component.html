@@ -4,7 +4,7 @@
   </div>
 </div>
 <!-- dados que vem do profile-->
-<div *ngIf="directInsert">
+<div *ngIf="idsearchbox">
   <div class=row>
     <div class="col-md-3">
       <div class="input-group mb-3">
@@ -19,7 +19,6 @@
     <span>{{value}}</span>
   </div>
 </div>
-
 
 <div *ngIf="selectedUser$ | async; let user">
   <div class="row">
@@ -209,7 +208,7 @@
   <div class="row">
     <div class="col-md-3">
       <button type="button" class="btn btn-outline-primary" (click)="saveResume()">登録</button>
-      <button type="button" class="btn btn-outline-primary" [routerLink]="['/home']" routerLinkActive="active" >キャンセル</button>
+      <button type="button" class="btn btn-outline-primary" [routerLink]="['/admin/rirekisho/search']" routerLinkActive="active" >キャンセル</button>
     </div>
   </div>
 </div>

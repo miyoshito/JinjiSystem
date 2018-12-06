@@ -1,6 +1,7 @@
 package aimyamaguchi.co.jp.aimspringsql.controllers;
 
 
+import aimyamaguchi.co.jp.aimspringsql.authfilters.CustomException;
 import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
 import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeRepository;
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeModel;
@@ -26,7 +27,7 @@ public class ResumeController{
     private EmployeeRepository er;
 
     @GetMapping("/resume/search")
-    public List<EmployeeMaster> searchResults(
+    public ResponseEntity<List<EmployeeMaster>> searchResults(
             @RequestParam (value="i", required = false) String id,
             @RequestParam (value="n", required = false) String name,
             @RequestParam (value="k", required = false) String kata,
@@ -36,10 +37,12 @@ public class ResumeController{
             @RequestParam (value="b", required = false) String bunri,
             @RequestParam (value="ca", required = false)String career,
             @RequestParam (value="qq", required = false)String qualification){
-        List<String> list = rs.searchQueryBuilder(id, name, kata, recruit, age, study, bunri, career, qualification);
-        System.out.println(list);
-
-        return er.findByShainIdIn(list);
+        try {
+            List<String> list = rs.searchQueryBuilder(id, name, kata, recruit, age, study, bunri, career, qualification);
+            return new ResponseEntity<List<EmployeeMaster>>(er.findByShainIdIn(list), HttpStatus.OK);
+        } catch (CustomException e) {
+            return  new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
     }
 
     @PostMapping("/resume/save")

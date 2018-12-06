@@ -5,6 +5,10 @@
   <div class="col-md-3"></div>
 </div>
 
+<mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="検索">
+  </mat-form-field>
+
 <mat-table #table [dataSource]="dataSource">
   <ng-container matColumnDef="社員番号">
     <mat-header-cell *matHeaderCellDef> 社員番号 </mat-header-cell>
@@ -13,82 +17,30 @@
 
   <ng-container matColumnDef="氏名">
     <mat-header-cell *matHeaderCellDef> 社員氏名 </mat-header-cell>
-    <mat-cell *matCellDef="let employees"> {{employees.shainName}} </mat-cell>
+    <mat-cell *matCellDef="let employees"> {{employees.shainName}}<br/>[{{employees.shainKana}}] </mat-cell>
   </ng-container>
-
   <ng-container matColumnDef="採用区分">
-    <mat-header-cell *matHeaderCellDef> 社員カナ </mat-header-cell>
-    <mat-cell *matCellDef="let employees"> {{employees.shainKana}} </mat-cell>
+    <mat-header-cell *matHeaderCellDef> 採用区分 </mat-header-cell>
+    <mat-cell *matCellDef="let employees"> {{employees.shainRecruit}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="出身校">
-    <mat-header-cell *matHeaderCellDef> 所属 </mat-header-cell>
-    <mat-cell *matCellDef="let employees"> {{employees?.affiliation?.desc}} </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="資格">
-    <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-    <mat-cell *matCellDef="let employees">
-      <mat-icon class="ml-1">arrow_drop_down</mat-icon>
+    <mat-header-cell *matHeaderCellDef> 出身校 </mat-header-cell>
+    <mat-cell *matCellDef="let employees"> {{employees.resume?.universityName}}<br />{{employees.resume?.formation}}
     </mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="退職">
-      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-      <mat-cell *matCellDef="let employees">
-        <mat-icon class="ml-1">arrow_drop_down</mat-icon>
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="削除">
-        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-        <mat-cell *matCellDef="let employees">
-          <mat-icon class="ml-1">arrow_drop_down</mat-icon>
-        </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef=" ">
-        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-        <mat-cell *matCellDef="let employees">
-          <mat-icon class="ml-1">arrow_drop_down</mat-icon>
-        </mat-cell>
-    </ng-container>
-  
+  <ng-container matColumnDef="資格">
+    <mat-header-cell *matHeaderCellDef> 資格 </mat-header-cell>
+    <mat-cell *matCellDef="let employees" ><ng-container *ngFor="let itens of employees.resume?.careers?.career_scwk; let i = index">{{itens}}</ng-container><br />{{employees.resume?.careers?.career_dpaf}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="詳細">
+      <mat-header-cell *matHeaderCellDef> 詳細 </mat-header-cell>
+      <mat-cell *matCellDef="let employees"><button class="btn btn-primary" (click)="editRirekisho(employees.shainId)">詳細</button></mat-cell>
+  </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  <mat-row [class.is-retired]="!row.shainActive" *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
-<!--<mat-paginator [length]="let employees?.length" [pageSize]="5" [pageSizeOptions]="[3, 5, 10]"></mat-paginator>-->
-
-<table class="table table-bordered">
-  <thead>
-    <th>社員番号</th>
-    <th>氏名</th>
-    <th>採用区分</th>
-    <th>出身校</th>
-    <th>資格</th>
-    <th>退職</th>
-    <th>削除</th>
-    <th></th>
-  </thead>
-  <tbody>
-    <td>696969</td>
-    <td>sample user</td>
-    <td>sample something idk</td>
-    <td>sample formation or smth</td>
-    <td>
-      sample qualifications<br />
-      many qualifications are possible<br />
-      what if i have 3<br />
-      or 4<br />
-      or more than 5<br />
-      :thinking:
-    </td>
-    <td><input type="checkbox" readonly checked></td>
-    <td><input type="checkbox" readonly></td>
-    <td>details</td>
-  </tbody>
-</table>
-<div class="d-flex align-content-center col-md-12">
-  <button type=button class="btn btn-primary">検索画面へ戻る</button>
-</div>
+<!--<mat-paginator [length]="dataSource.length" [pageSize]="5" [pageSizeOptions]="[3, 5, 10]"></mat-paginator> -->
+<br/>

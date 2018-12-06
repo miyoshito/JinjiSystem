@@ -30,8 +30,13 @@ public class EmployeeController {
     }
 
     @GetMapping("/se/getmyinfos")
-    public EmployeeMaster getMe(HttpServletRequest req){
-        return employeeService.findMe(req);
+    public ResponseEntity<EmployeeMaster> getMe(HttpServletRequest req){
+        try {
+            EmployeeMaster e = employeeService.findMe(req);
+            return new ResponseEntity<EmployeeMaster>(e,HttpStatus.OK);
+        } catch (AuthenticationException e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping("/admin/add-employee")

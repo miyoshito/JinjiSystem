@@ -35,16 +35,12 @@ export class HeaderComponent implements OnInit {
                   this.menuStyle = ''
                 }
 
-  ngOnInit() {
-    this.subs = this._broadcastService.userAuthorization$.subscribe(auth =>{
-      this.menuStyle = auth
+  ngOnInit() {    
+    this.subs = this._broadcastService.userAuthorization$.subscribe(auth =>{     
+        this.menuStyle = auth
     })
     this.isLoggedIn$ = this._broadcastService.userAuthenticated$  
     this.loggedUser$ = this._profileService.cachedUser$
-  }
-  
-  home(){
-    this._route.navigate(['profile']);
   }
 
   logout(trying: boolean) {

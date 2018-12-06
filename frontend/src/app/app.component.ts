@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Employee } from './interfaces/employee';
 import { ProfileService } from './profile/profile.service';
+import { LoginService } from './login/login.service';
 
 @Component({
   selector: 'app-root',
@@ -15,34 +16,38 @@ import { ProfileService } from './profile/profile.service';
 export class AppComponent implements OnInit{
 
   loggedUser$: Observable<Employee>
-  isLoggedIn$: boolean
+  isLoggedIn$: Boolean
   authorities$: Observable<String>
+
+  
   
 
   constructor(private _broadcastService: BroadcastService,
-              private _route: Router,
+              private _router: Router,
               private _authService: AuthService,
-              private _profileService: ProfileService){}
+              private _profileService: ProfileService,
+              private _loginService: LoginService){}
 
   
   
   ngOnInit(): void {
-    this._broadcastService.userAuthenticated$.subscribe((val) =>{
-      this.isLoggedIn$ = val
+    this._broadcastService.userAuthenticated$.subscribe(check =>{
+      this.isLoggedIn$ = check
     })
-      if (this._authService.isAuthenticated()){
+    let token: string = localStorage.getItem('currentUser')
+    if(!this._authService.isTokenExpired(token) || token != null){
         this._profileService.cacheUser()
-        this._broadcastService.pushAuthentication(true)
-      }
-  }
-
-  authValidate(){
-    if (localStorage.getItem('currentUser') != null) {
-      this._broadcastService.pushAuthentication(true);
     } else {
-      this._broadcastService.pushAuthentication(false);
-      this._route.navigate(['login'])
+      this._loginService.logout()
     }
   }
 
+  authValidate(){
+    let token: string = localStorage.getItem('currentUser')    
+    if(this._authService.isTokenExpired(token) || token == null){
+      this._broadcastService.pushAuthentication(false)
+      this._router.navigate(['login'])
+      this._loginService.logout()
+    }
+  }
 }

@@ -52,14 +52,15 @@ export class LoginComponent implements OnInit {
     const form: User = this.loginform.value
     this.sub = this.loginService.doLogin(form)    
     .subscribe(res => {
-        localStorage.setItem('currentUser', res.headers.get('Authorization'))
+        localStorage.setItem('currentUser', res.headers.get('Authorization'))        
         this.authFailed$ = false;
-        this.redirecting$ = true;
-        this.profileService.cacheUser(); // -> isso aqui ja me traz as infos da pessoa logada pra buildar o perfil (tenho a auth_role)
-        setTimeout(() =>{
-          this.broadcastService.pushAuthentication(true);
-          this.route.navigate(['home'])
-        },3000)
+        this.redirecting$ = true;        
+        setTimeout(() => {        
+        this.profileService.cacheUser() //soh roda no login, as proximas qm fica responsavel eh o app.component.ts
+        this.broadcastService.pushAuthentication(true);
+        this.route.navigate(['home'])        
+        },3000)        
+        
     },
     err => {
       console.log(err)

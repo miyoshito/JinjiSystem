@@ -82,7 +82,7 @@ export interface SearchForm{
     name: string,
     kana: string,
     recruit: string,
-    age: number,
+    age: string,
     study: string,
     bunri: string,
     career: string,

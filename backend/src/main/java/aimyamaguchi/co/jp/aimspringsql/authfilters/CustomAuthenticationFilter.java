@@ -9,6 +9,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -28,15 +29,15 @@ public class CustomAuthenticationFilter extends GenericFilterBean {
       String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
       try {
         if (token != null && jwtTokenProvider.validateToken(token)) {
-          Authentication auth = token != null ? jwtTokenProvider.getAuthentication(token) : null;
+          Authentication auth = jwtTokenProvider.getAuthentication(token);
           SecurityContextHolder.getContext().setAuthentication(auth);
         }
+
       } catch (CustomException ex) {
         HttpServletResponse response = (HttpServletResponse) res;
-        response.sendError(ex.getHttpStatus().value(), ex.getMessage());
+        response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
         return;
       }
-  
       filterChain.doFilter(req, res);
     }
   

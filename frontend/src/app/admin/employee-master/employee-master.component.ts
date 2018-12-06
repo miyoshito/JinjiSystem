@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { EmployeeMasterService } from './employee-master.service';
 import { Observable, Subscription } from 'rxjs';
@@ -13,7 +13,8 @@ import { LoginService } from 'src/app/login/login.service';
 @Component({
   selector: 'app-employee-master',
   templateUrl: './employee-master.component.html',
-  styleUrls: ['./employee-master.component.css']
+  styleUrls: ['./employee-master.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class EmployeeMasterComponent implements OnInit {
 
@@ -30,12 +31,15 @@ export class EmployeeMasterComponent implements OnInit {
   sub: Subscription
   successMsg: string
   show: boolean
+  currentRoute: string
   
   role$: Observable<any>
   response$: Observable<any>
   isLoggedIn$: Observable<boolean>  
   loggedUser$: Observable<any>
   params$: Observable<any[]>
+
+  subscription: Subscription
   
 
 
@@ -53,14 +57,11 @@ export class EmployeeMasterComponent implements OnInit {
   this.initializeForm()
   this.params$ = this._employeeService.getViewRendering()
   this.isLoggedIn$ = this._broadcastService.userAuthenticated$
-
-  console.log('u are navigating from ' +this._route.parent)
   }
 
-  ngAfterContentInit(){
-    
-  this._route.parent.url.subscribe(url =>{
-    console.log(url[0].path)
+  ngAfterContentInit(){    
+  this.subscription = this._route.parent.url.subscribe(url =>{
+    this.currentRoute = url[0].path
     if (url[0].path === 'profile') { // it means im seeing my profile!
       this.title = 'プロフィール画面'
       this.loadUserData()
@@ -73,8 +74,8 @@ export class EmployeeMasterComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    this.success$ = false
-  }
+    this.subscription.unsubscribe()
+  } 
 
   loadUserData(){
     this._profileService.cachedUser$.subscribe(data =>{
@@ -93,22 +94,41 @@ export class EmployeeMasterComponent implements OnInit {
   submitForm(){
     let employee: Employee = this.employeeForm.value
     if (this.employeeForm.invalid) {
-      console.log('invalidr...')
+      this.submitted = true
       return;
     }
-    
+
     try {
       this._employeeService.insertShainAttempt(employee)
       this.success$ = true
-      this._router.navigate(['home'])
+      
+      if (this.currentRoute === 'profile'){
+        this._router.navigate(['home'])
+        alert('アップデート完了しました。')
+      } else alert('ユーザーが挿入されました。')
+      this.resetForms()
       } catch (err) {
         throw err
   }
 }
+  resetForms(){
+    this.employeeForm.reset()
+    this.positionForm.reset()
+    this.areaForm.reset()
+    this.carForm.reset()
 
-  get f(){ return this.employeeForm.controls }
+    this.initializeForm()
+  }
 
-
+  get f() { return this.employeeForm.controls }
+  get p() { return this.positionForm.controls }
+  get a() {return this.areaForm.controls}
+  get car() {return this.carForm.controls}
+  
+  positionForm: FormGroup = this._fb.group({id: ['',Validators.required]})
+  areaForm: FormGroup = this._fb.group({id: ['',Validators.required]})
+  carForm: FormGroup = this._fb.group({id: [1,Validators.required]})
+  
   initializeForm(){
     this.employeeForm = this._fb.group({
       shainId: [''],
@@ -116,10 +136,10 @@ export class EmployeeMasterComponent implements OnInit {
       shainName: ['', Validators.required],
       shainRecruit: ['', Validators.required],
       shainKana: ['', Validators.required],
-      shainBirthday: [''],
+      shainBirthday: ['', Validators.required],
       shainBloodType: [''],
       shainSex: ['', Validators.required],
-      position: this._fb.group ({id: []}),
+      position: this.positionForm,
       affiliation: ['', Validators.required],
       shainSupport: [false],
       shainMarried: [false],
@@ -129,11 +149,11 @@ export class EmployeeMasterComponent implements OnInit {
       shainMobileMail: [''],
       shainPostalCode: [''],
       shainAddress: [''],
-      shainArea: this._fb.group ({id:[]}),
+      shainArea: this.areaForm,
       shainJoinedDate: ['', Validators.required],
       shainRetiredDate: [''],
       shainActive: true,
-      shainCarModel: this._fb.group ({id: []}),
+      shainCarModel: this.carForm,
       role: this._fb.group ({roleid: 2}), //SE
       shainNotes: [''],
       shainRegisterDate: [''],

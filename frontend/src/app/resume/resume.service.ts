@@ -3,10 +3,11 @@ import { HttpClient } from '@angular/common/http';
 import { Resume, SearchForm } from './resume-details-interface';
 
 import { ADMIN_URL } from 'src/app/url-settings'
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, map } from 'rxjs/operators';
 import { Subject, Observable, BehaviorSubject, ReplaySubject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Employee } from '../interfaces/employee';
+import { LoginService } from '../login/login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,8 @@ import { Employee } from '../interfaces/employee';
 export class ResumeService {
 
   constructor(private _httpClient: HttpClient,
-              private _router: Router) { }
+              private _router: Router,
+              private _loginService: LoginService) { }
 
   private searchSource_ = new ReplaySubject<Employee[]>()
   resumeSearchResult$ = this.searchSource_.asObservable();
@@ -44,7 +46,7 @@ export class ResumeService {
       + '&b=' + searchParam.bunri
       + '&ca=' + searchParam.career
       + '&qq=' + searchParam.qualification
-      )
+      ,{observe: 'response'})
   }
 
   sendSearchResults(list: Employee[]){

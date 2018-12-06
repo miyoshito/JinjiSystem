@@ -11,17 +11,13 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import aimyamaguchi.co.jp.aimspringsql.authfilters.JwtTokenFilterConfigurer;
 import aimyamaguchi.co.jp.aimspringsql.authfilters.JwtTokenProvider;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.resource.PathResourceResolver;
 
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
-import java.io.IOException;
 
 
 @EnableWebSecurity
@@ -39,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public PasswordEncoder encoder(){
-        return NoOpPasswordEncoder.getInstance();
+        return new BCryptPasswordEncoder();
     }
 
     @Override
@@ -48,13 +44,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .cors()
                 .and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .apply(new JwtTokenFilterConfigurer(jwtTokenProvider))
         .and().authorizeRequests()
                 .antMatchers("POST", "/api/auth/**").permitAll()
                 .antMatchers("*","/api/admin/**").authenticated()
                 .antMatchers("*","/api/se/**").authenticated()
-                .antMatchers("/**").permitAll()
-        .and()
-        .apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
+                .antMatchers("/**").permitAll();
     }
 
     @Override

@@ -26,12 +26,10 @@ export class EmployeeMasterService {
   public insertShainAttempt(employee: Employee){
     return this._http.post<any>(ADMIN_URL+'/add-employee', employee, {
       observe: 'response'})
-      .subscribe(resp => {
-        if (resp.status === 201)
-        alert("Success! <!-- temporary alert -->")
-    },
+      .subscribe(
+    resp => {},
     err => {
-      alert("Something bad happened !")
+      alert("Something bad happened ! You gonna be disconnected for security purposes.")
       throw err
     }
   )}

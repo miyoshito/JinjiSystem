@@ -5,8 +5,9 @@ import { ResumeService } from '../resume.service';
 import { Router } from '@angular/router';
 import { BroadcastService } from 'src/app/broadcast.service';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, map } from 'rxjs/operators';
 import { ProfileService } from 'src/app/profile/profile.service';
+import { LoginService } from 'src/app/login/login.service';
 
 @Component({
   selector: 'app-resume-search',
@@ -26,7 +27,8 @@ export class ResumeSearchComponent implements OnInit {
   constructor(private _fb: FormBuilder,
               private _resumeService: ResumeService,
               private _profileService: ProfileService,
-              private _router: Router) { }
+              private _router: Router,
+              private _loginService: LoginService) { }
 
   ngOnInit() {
     this.initializeForm()
@@ -37,23 +39,30 @@ export class ResumeSearchComponent implements OnInit {
 
   
   searchAttempt(){
-    this.searchParam = this.searchForm.value
-    console.log(this.searchParam)
+    this.searchParam = this.searchForm.value    
+    if( this.searchParam.id == '' && this.searchParam.name == '' && this.searchParam.kana == '' && this.searchParam.recruit == ''
+    && this.searchParam.age == '' && this.searchParam.study == '' && this.searchParam.bunri == '' && this.searchParam.career == ''
+    && this.searchParam.qualification == ''){
+      alert ('atleast 1 field needs to be filled')
+      return
+    }
+    
     this._resumeService.searchResumeAttempt(this.searchParam)
-    .subscribe(res =>{
-      console.log(res)
-      if (!res.length) {
-        alert('nothing found')
-      } else if (res.length > 1) {
-      this._resumeService.sendSearchResults(res)
-      console.log(res)
-      this._router.navigate(['/admin/rirekisho/results']) 
+    .pipe(
+      map(res => {
+      if (!res.body.length) {
+        alert('データーが見つかりません')
+      } else if (res.body.length > 1) {
+      this._resumeService.sendSearchResults(res.body)
+      this._router.navigate(['/admin/rirekisho/results'])
       } else {
-      this._profileService.getUserProfile(res[0].shainId)
-      console.log(res)
-      this._router.navigate(['home']) 
+      this._router.navigate(['/admin/rirekisho/edit/'+res.body[0].shainId])
       }
-    })   
+    })).subscribe(
+    res => {},
+    err => {
+      this._loginService.logout()
+    })
   }
 
   initializeForm(){

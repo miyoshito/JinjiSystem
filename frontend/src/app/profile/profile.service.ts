@@ -6,8 +6,10 @@ import { EmployeeMasterComponent } from '../admin/employee-master/employee-maste
 import { API_URL, ADMIN_URL } from '../url-settings'
 import { AuthService } from '../guards/auth.service';
 import { Employee } from '../interfaces/employee';
-import { map } from 'rxjs/operators';
+import { map, tap, takeUntil } from 'rxjs/operators';
 import { BroadcastService } from '../broadcast.service';
+import { Router } from '@angular/router';
+import { LoginService } from '../login/login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,7 @@ import { BroadcastService } from '../broadcast.service';
 export class ProfileService {
 
   employee$: Observable<Employee>
-  sub: Subscription
+  isAuthenticated$: Subject<any>
 
   employee: Employee// = new Employee(null,"","","","",null,"","",null,null,null,"","","","","","",null,null,null,null,"","",null,"",null,null)
 
@@ -23,25 +25,35 @@ export class ProfileService {
   cachedUser$ = this._cacheUserSource.asObservable()
 
   constructor(private _http: HttpClient,
-              private _broadcastService: BroadcastService) { }
+              private _broadcastService: BroadcastService,
+              private _loginService: LoginService
+              ) { }
 
-  public getLoggedInUserData(): Observable<Employee>{
-    return this._http.get<any>(API_URL+'/api/se/getmyinfos') //considerando que o HttpInterceptor vai mandar meu token pro sistema.
+  public getLoggedInUserData(){
+    return this._http.get<Employee>(API_URL+'/api/se/getmyinfos',
+    {observe: 'response'})
+    //considerando que o HttpInterceptor vai mandar meu token pro sistema.
   }
 
-  public getUserProfile(id: string): Observable<Employee>{
-    return this._http.get<any>(ADMIN_URL+'/getprofile/'+id)
+  public getUserProfile(id: string){
+    return this._http.get<Employee>(ADMIN_URL+'/getprofile/'+id)
   }
 
-  public cacheUser(){
-  this.sub = this.getLoggedInUserData().subscribe(data =>{
-        this._broadcastService.pushAuthorization(data.role.roledesc)
-        this._cacheUserSource.next(data)
-      })      
+  public cacheUser(){  
+  this.getLoggedInUserData().subscribe(data =>{ 
+    this._cacheUserSource.next(data.body)
+    this._broadcastService.pushAuthentication(true)
+    this._broadcastService.pushAuthorization(data.body.role.roledesc)
+  },
+  err =>{    
+    this._loginService.logout()
+    console.log(err)
+  })
+
   }
 
   public clearLoggedUser(){
-    this.sub.unsubscribe()
+    this.isAuthenticated$.next()
     this._cacheUserSource.complete()//(new Employee(null,"","","","",null,"","",null,null,null,"","","","","","",null,null,null,null,"","",null,"",null))
   }
 }
