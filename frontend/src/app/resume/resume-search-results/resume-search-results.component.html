@@ -20,10 +20,12 @@
           <td>{{user.shainId}}</td>
           <td>{{user.shainName}}({{user.shainKana}})</td>
           <td>{{user.shainRecruit}}</td>
-          <td>{{user.resume?.universityName}} {{user.resume?.formation}}</td>
-          <td>{{user.resume?.careers?.career_scwk}}<br/>{{user.resume?.careers?.career_dpaf}}</td>
+          <td>{{user.resume?.universityName}}<br/>{{user.resume?.formation}}</td>
+          <td><ng-container *ngFor="let qualifications of user.resume?.qualifications">
+              <!--temprary--><span *ngIf="qualifications.active">{{qualifications.qualification_name}}<br/></span>
+          </ng-container></td>
           <td>
-            <button class="btn btn-primary" (click)="editRirekisho(user.shainId)">編集</button>
+            <button class="btn btn-primary" (click)="showRirekisho(user.shainId)">詳細</button>
           </td>
         </tr>        
       </tbody>

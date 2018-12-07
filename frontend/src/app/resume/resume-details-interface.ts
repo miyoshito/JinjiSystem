@@ -1,14 +1,18 @@
 import { Optional } from "@angular/core";
 
 export interface Resume {
-
     resumeId: number        
     universityName: string
     formation: string
-    bunri: string 
+    bunri: string
     careers: Career[]
     qualifications: Qualifications[]
     commendations: Commendations[]
+    employee: miniEmployee
+}
+
+export interface miniEmployee{
+    id: string
 }
 export class Resume {
     constructor(
@@ -16,6 +20,7 @@ export class Resume {
         universityName: string,
         formation: string,
         bunri: string,
+        employee: miniEmployee,
         @Optional() careers: Career[],
         @Optional() qualifications: Qualifications[],
         @Optional() commendations: Commendations[]
@@ -27,6 +32,7 @@ export class Resume {
         this.qualifications = qualifications
         this.commendations = commendations
         this.bunri = bunri
+        this.employee = employee
     }
 }
 

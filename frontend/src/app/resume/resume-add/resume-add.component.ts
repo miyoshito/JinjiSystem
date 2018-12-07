@@ -80,8 +80,6 @@ export class ResumeAddComponent implements OnInit {
     active: null
   }]
 
-
-
   ngOnInit() {
     this.buildResumeForm()
     if ((this._router.url).endsWith('/add')){
@@ -109,16 +107,12 @@ export class ResumeAddComponent implements OnInit {
 
   saveResume() {
     this.submitted = true
-    this._resumeService.saveResumeAttempt(this.resumeForm.value).pipe(
-      takeUntil(this.destroySubject$))
-      .subscribe(res => {
-        console.log()
-        if (res.status === 200) {
-          this._router.navigate(['home'])
-        } else {
-          this.displaymsg$.next('Something bad happened, please try again or contact a administrator.')
-        }
-      })
+    try {
+    this._resumeService.saveResumeAttempt(this.resumeForm.value)
+    this._router.navigate(['/admin/rirekisho/details/'+ this._route.snapshot.paramMap.get('id')])
+    } catch (err) {
+      throw err
+    }
   }
 
   async buildEditView(withUser: Observable<Employee>){
@@ -126,7 +120,6 @@ export class ResumeAddComponent implements OnInit {
     withUser.pipe(
       takeUntil(this.destroySubject$),
       map(val =>{
-        console.log(val)
         this.shainForm.patchValue({ shainId: val.shainId })
         if (!val.resume) {
           this.career.forEach((d: Career) => this.clearCareerRow(d))
@@ -334,7 +327,6 @@ export class ResumeAddComponent implements OnInit {
     this._resumeService.softDeleteDetail(type, id).pipe(
       takeUntil(this.destroySubject$)
     ).subscribe(res =>{
-      console.log(res)
     })
   }
   ngOnDestroy() {

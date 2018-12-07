@@ -32,6 +32,7 @@ export class EmployeeMasterComponent implements OnInit {
   successMsg: string
   show: boolean
   currentRoute: string
+  passwordbutton: boolean
   
   role$: Observable<any>
   response$: Observable<any>
@@ -51,6 +52,7 @@ export class EmployeeMasterComponent implements OnInit {
               private _router: Router,
               private _loginService: LoginService) { 
                 this.success$ = false
+                this.passwordbutton = false
               }
 
   ngOnInit() {
@@ -64,6 +66,7 @@ export class EmployeeMasterComponent implements OnInit {
     this.currentRoute = url[0].path
     if (url[0].path === 'profile') { // it means im seeing my profile!
       this.title = 'プロフィール画面'
+      this.passwordbutton = true
       this.loadUserData()
     } else if (url[0].path === 'admin') { //it means im trying to add a new profile
       this.title = '社員マスタ登録画面'
@@ -89,6 +92,9 @@ export class EmployeeMasterComponent implements OnInit {
 
   showPassword() {
     this.show = !this.show;
+  }
+  changePassword(){
+    alert('開発中です')
   }
 
   submitForm(){

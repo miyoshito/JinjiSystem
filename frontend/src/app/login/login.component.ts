@@ -55,12 +55,10 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('currentUser', res.headers.get('Authorization'))        
         this.authFailed$ = false;
         this.redirecting$ = true;        
-        setTimeout(() => {        
+             
         this.profileService.cacheUser() //soh roda no login, as proximas qm fica responsavel eh o app.component.ts
         this.broadcastService.pushAuthentication(true);
-        this.route.navigate(['home'])        
-        },3000)        
-        
+        this.route.navigate(['home'])
     },
     err => {
       console.log(err)

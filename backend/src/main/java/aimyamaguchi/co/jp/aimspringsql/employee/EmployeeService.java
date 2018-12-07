@@ -6,6 +6,7 @@ import java.util.*;
 import javax.servlet.http.HttpServletRequest;
 
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeModel;
+import aimyamaguchi.co.jp.aimspringsql.resume.ResumeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpHeaders;
@@ -34,6 +35,9 @@ public class EmployeeService{
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private ResumeRepository resumeRepository;
 
     @Autowired
     private AffiliationRepository affiliation;
@@ -100,14 +104,19 @@ public class EmployeeService{
         } else {
             Long nextSeq = seq.findBySeqTablename("m_shain").getSeqValue();
             employee.setShainId(nextSeq.toString());
+
             if(employee.getPassword().equals(""))
                 employee.setShainPassword(passwordEncoder.encode("aim123456"));
             else
                 employee.setShainPassword(passwordEncoder.encode(employee.getPassword()));
             Date dt = new Date();
             employee.setShainRegisterDate(dt);
-            employee.setShainRegisteredBy(employeeRepository.findByShainId(jwtTokenProvider.getUsername(token)).getShainName());
+            //employee.setShainRegisteredBy(employeeRepository.findByShainId(jwtTokenProvider.getUsername(token)).getShainName());
             employeeRepository.saveAndFlush(employee);
+
+            ResumeModel res = new ResumeModel();
+            res.setEmployee(employee);
+            resumeRepository.save(res);
         }
     }
 

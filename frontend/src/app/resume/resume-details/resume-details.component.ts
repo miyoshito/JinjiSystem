@@ -10,6 +10,7 @@ export class ResumeDetailsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    
   }
 
 }

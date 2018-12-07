@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Resume, SearchForm } from './resume-details-interface';
 
 import { ADMIN_URL } from 'src/app/url-settings'
@@ -24,9 +24,11 @@ export class ResumeService {
   
 
   saveResumeAttempt(resume: Resume){
-    return this._httpClient.post<any>(ADMIN_URL+'/resume/save', resume, {
-      observe: 'response'
-    })
+    return this._httpClient.post<Resume>(ADMIN_URL+'/resume/save', resume, { observe: 'response' }).subscribe(
+      response =>{},
+      error => {
+        alert('something bad happened...')
+      })
   }
 
   softDeleteDetail(type: string, id: number){

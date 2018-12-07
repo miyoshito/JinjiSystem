@@ -44,7 +44,6 @@ public class ResumeService {
         if (resume.getEmployee() == null || resume.getEmployee().equals("")) {
             return;
         }
-        resume.setInsertDate(new Date());
         if (resume.getResumeId() == null || resume.getResumeId().equals("")) {
             resumeRepo.save(resume);
             ResumeModel res = resumeRepo.findByEmployee(employee.findByShainId(resume.getEmployee().getShainId()));
@@ -61,7 +60,7 @@ public class ResumeService {
     private void insertDetails(ResumeModel resume) {
 
         resume.getCareers().forEach((car) ->{
-            if (car.getCareerid() == null || car.getCareerid().equals("")){
+            if (car.getCareerid() == null){
                 car.setActive(true);
                 car.setK_resume(resume);
                 career.save(car);
@@ -71,7 +70,7 @@ public class ResumeService {
             }
         });
         resume.getQualifications().forEach(qual ->{
-            if( qual.getQualificationid() == null || qual.getQualificationid().equals("")) {
+            if( qual.getQualificationid() == null) {
                 qual.setActive(true);
                 qual.setS_resume(resume);
                 qualification.save(qual);
@@ -81,7 +80,7 @@ public class ResumeService {
             }
         });
         resume.getCommendations().forEach(com -> {
-            if (com.getCommendationid() == null || com.getCommendationid().equals("")){
+            if (com.getCommendationid() == null){
                 com.setActive(true);
                 com.setH_resume(resume);
                 commendation.save(com);
@@ -92,29 +91,25 @@ public class ResumeService {
             });
         }
 
-    public boolean deleteResumeDetails(Long id, String desc){
+    public void deleteResumeDetails(Long id, String desc){
 
-        if(desc.equals("career")) {
-            System.out.println("Deleting career...");
-            Career ca = career.findBycareerid(id);
-            ca.setActive(false);
-            career.save(ca);
-            return true;
-        } else if(desc.equals("qualification")){
-            System.out.println("Deleting Qualification...");
-            Qualification qu = qualification.findByqualificationid(id);
-            qu.setActive(false);
-            qualification.save(qu);
-            return true;
-        } else if(desc.equals("commendation")){
-            System.out.println("Deleting Commendation...");
-            Commendation co = commendation.findBycommendationid(id);
-            co.setActive(false);
-            commendation.save(co);
-            return true;
+        switch(desc){
+            case "career":
+                Career ca = career.findBycareerid(id);
+                ca.setActive(false);
+                career.save(ca);
+                break;
+            case "qualification":
+                Qualification qu = qualification.findByqualificationid(id);
+                qu.setActive(false);
+                qualification.save(qu);
+                break;
+            case "commendation":
+                Commendation co = commendation.findBycommendationid(id);
+                co.setActive(false);
+                commendation.save(co);
+                break;
         }
-        else return false;
-
     }
 
     public List<String> searchQueryBuilder(String id, String name, String kana, String recruit, String age, String study, String bunri, String keireki, String shikaku){

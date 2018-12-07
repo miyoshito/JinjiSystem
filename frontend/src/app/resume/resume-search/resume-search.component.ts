@@ -45,8 +45,7 @@ export class ResumeSearchComponent implements OnInit {
     && this.searchParam.qualification == ''){
       alert ('atleast 1 field needs to be filled')
       return
-    }
-    
+    }    
     this._resumeService.searchResumeAttempt(this.searchParam)
     .pipe(
       map(res => {
@@ -61,7 +60,7 @@ export class ResumeSearchComponent implements OnInit {
     })).subscribe(
     res => {},
     err => {
-      this._loginService.logout()
+      console.log(err)
     })
   }
 

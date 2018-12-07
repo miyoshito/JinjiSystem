@@ -24,7 +24,8 @@ export class EmployeeMasterService {
   }
 
   public insertShainAttempt(employee: Employee){
-    return this._http.post<any>(ADMIN_URL+'/add-employee', employee, {
+    console.log(JSON.stringify(employee))
+    return this._http.post<Employee>(ADMIN_URL+'/add-employee', employee, {
       observe: 'response'})
       .subscribe(
     resp => {},

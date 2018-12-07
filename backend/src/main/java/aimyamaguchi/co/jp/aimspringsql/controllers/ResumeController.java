@@ -39,7 +39,7 @@ public class ResumeController{
             @RequestParam (value="qq", required = false)String qualification){
         try {
             List<String> list = rs.searchQueryBuilder(id, name, kata, recruit, age, study, bunri, career, qualification);
-            return new ResponseEntity<List<EmployeeMaster>>(er.findByShainIdIn(list), HttpStatus.OK);
+            return new ResponseEntity<>(er.findByShainIdIn(list), HttpStatus.OK);
         } catch (CustomException e) {
             return  new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -48,8 +48,12 @@ public class ResumeController{
     @PostMapping("/resume/save")
     public ResponseEntity<String> saveResume(@RequestBody ResumeModel resume, HttpServletRequest req){
         System.out.println(resume);
-        rs.saveResume(resume, req);
-        return new ResponseEntity<>("OK", HttpStatus.OK);
+        try {
+            rs.saveResume(resume, req);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (CustomException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PutMapping("/resume/delete")

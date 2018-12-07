@@ -89,10 +89,7 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
       try {
         JWTVerifier verifier = JWT.require(kee).build();
-
         DecodedJWT jwt = verifier.verify(token);
-
-          System.out.println(jwt);
         //JWT.decode(token);
         return true;
       } catch (JWTDecodeException exception) {

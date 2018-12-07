@@ -213,9 +213,15 @@
       </div>
       <div class="col-md-3">
         <span>パスワード</span>
-        <div class="input-group">
-          <input [type]="show ? 'text' : 'password'" class="form-control" onfocus="value=''" id="pwd" aria-describedby="button-addon2"
-            formControlName="shainPassword">
+        <div class="input-group" *ngIf="passwordbutton">
+          <input type="password" class="form-control" id="pwd" aria-describedby="button-addon2" formControlName="shainPassword" readonly>
+          <div class="input-group-append">
+            <button class="btn btn-outline-danger" type="button" id="button-addon2" (click)="changePassword()">チェンジ</button>
+          </div>
+        </div>
+
+        <div class="input-group" *ngIf="!passwordbutton">
+          <input [type]="show ? 'text' : 'password'" class="form-control" id="pwd" aria-describedby="button-addon2" formControlName="shainPassword">
           <div class="input-group-append">
             <button class="btn btn-outline-danger" type="button" id="button-addon2" (click)="showPassword()">見る</button>
           </div>
