@@ -1,35 +1,28 @@
 <div class="row">
-  <div class="col-md-6">
-  <h3>社員マスタリスト画面</h3>
-  </div>
+    <div class="col-md-4">
+        <p>社員検索結果一覧画面</p>
+    </div>
 </div>
-<mat-table #table [dataSource]="dataSource">
-    <ng-container matColumnDef="社員番号">
-      <mat-header-cell *matHeaderCellDef> 社員番号 </mat-header-cell>
-      <mat-cell *matCellDef="let employees"> {{employees.shainId}} </mat-cell>
-  </ng-container>
 
-  <ng-container matColumnDef="社員氏名">
-    <mat-header-cell *matHeaderCellDef> 社員氏名 </mat-header-cell>
-    <mat-cell *matCellDef="let employees"> {{employees.shainName}} </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="社員カナ">
-    <mat-header-cell *matHeaderCellDef> 社員カナ </mat-header-cell>
-    <mat-cell *matCellDef="let employees"> {{employees.shainKana}} </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="所属">
-    <mat-header-cell *matHeaderCellDef> 所属 </mat-header-cell>
-    <mat-cell *matCellDef="let employees"> {{employees?.affiliation?.desc}} </mat-cell>
-  </ng-container>
-
-  <ng-container matColumnDef="　">
-    <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-    <mat-cell *matCellDef="let employees"> <mat-icon class="ml-1">arrow_drop_down</mat-icon> </mat-cell>
-  </ng-container>
-
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-</mat-table>
-<mat-paginator [length]="employees?.length" [pageSize]="5" [pageSizeOptions]="[3, 5, 10]"></mat-paginator>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table table-bordered">
+            <thead>
+                <th>社員番号</th>
+                <th>社員氏名</th>
+                <th>所属</th>
+                <th> </th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let employees of employees$ | async; let i = index">
+                    <td>{{employees.shainId}}</td>
+                    <td>{{employees.shainName}}<br/>{{employees.shainKana}}</td>                    
+                    <td> <span *ngFor="let affs of employees.affiliation">{{affs.desc}}<br/></span></td>
+                    <td>
+                        <button class="btn btn-primary" (click)="editShain(employees.shainId)">編集</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

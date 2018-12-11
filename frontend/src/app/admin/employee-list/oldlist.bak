@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-md-6">
+  <h3>社員マスタリスト画面</h3>
+  </div>
+</div>
+<mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="社員番号">
+      <mat-header-cell *matHeaderCellDef> 社員番号 </mat-header-cell>
+      <mat-cell *matCellDef="let employees"> {{employees.shainId}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="社員氏名">
+    <mat-header-cell *matHeaderCellDef> 社員氏名 </mat-header-cell>
+    <mat-cell *matCellDef="let employees"> {{employees.shainName}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="社員カナ">
+    <mat-header-cell *matHeaderCellDef> 社員カナ </mat-header-cell>
+    <mat-cell *matCellDef="let employees"> {{employees.shainKana}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="所属">
+    <mat-header-cell *matHeaderCellDef> 所属 </mat-header-cell>
+    <mat-cell *matCellDef="let employees"> {{employees?.affiliation?.desc}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="　">
+    <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+    <mat-cell *matCellDef="let employees"> <mat-icon class="ml-1">arrow_drop_down</mat-icon> </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+<mat-paginator [length]="employees?.length" [pageSize]="5" [pageSizeOptions]="[3, 5, 10]"></mat-paginator>

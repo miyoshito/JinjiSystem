@@ -207,8 +207,10 @@
 
   <div class="row">
     <div class="col-md-3">
-      <button type="button" class="btn btn-outline-primary" (click)="saveResume()">登録</button>
-      <button type="button" class="btn btn-outline-primary" [routerLink]="['/admin/rirekisho/search']" routerLinkActive="active" >キャンセル</button>
+      <button type="button" class="btn btn-outline-primary" disabled>PDF取込</button>
+      <button type="button" class="btn btn-outline-primary" (click)="saveResume()">更新</button>
+      <button type="button" class="btn btn-outline-primary" disabled>削除</button>
+      <button type="button" class="btn btn-outline-primary" [routerLink]="['/admin/rirekisho/search']" routerLinkActive="active" >詳細へ戻る</button>
     </div>
   </div>
 </div>

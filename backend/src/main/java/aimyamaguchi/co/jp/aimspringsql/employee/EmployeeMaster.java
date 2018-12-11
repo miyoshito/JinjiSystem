@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,6 +31,7 @@ public class EmployeeMaster implements UserDetails{
     private String shainId;
 
     @Column(name="SHA_PASSWORD", length=100, nullable=false)
+    @JsonIgnore
     private String shainPassword;
 
     @Column(name="SHA_NAME", length=20, nullable=false)
@@ -130,6 +132,7 @@ public class EmployeeMaster implements UserDetails{
     }
 
     @Override
+    @JsonIgnore
     public String getPassword() {
         return this.getShainPassword();
     }

@@ -22,7 +22,7 @@
           <td>{{user.shainRecruit}}</td>
           <td>{{user.resume?.universityName}}<br/>{{user.resume?.formation}}</td>
           <td><ng-container *ngFor="let qualifications of user.resume?.qualifications">
-              <!--temprary--><span *ngIf="qualifications.active">{{qualifications.qualification_name}}<br/></span>
+           <span *ngIf="qualifications.active">{{qualifications.qualification_name}}<br/></span>
           </ng-container></td>
           <td>
             <button class="btn btn-primary" (click)="showRirekisho(user.shainId)">詳細</button>
@@ -33,5 +33,7 @@
    </div>
 </div>
 <div class="row">
+  <div class="col-md-4">
   <button class="btn btn-primary" [routerLink]="['/admin/rirekisho/search']" routerLinkActive="router-link-active" >検索画面へ戻る</button>
+  </div>
 </div>

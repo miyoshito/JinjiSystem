@@ -55,16 +55,20 @@
         formControlName="affiliation">
         </ng-select>
         <!--<select class="custom-select custom-select-sm" formControlName="id">
-      <option *ngFor="let item of affiliation" value="{{item.tid}}">{{item.tdesc}}</option>
+      <option *ngFor="let item of affiliation" value="{{item.tid}}">{{item.as}}</option>
     </select>
     -->
       </div>
       <div class="col-md-3">
         <div formGroupName="position">
-          <span>役職</span>
-          <select class="custom-select" formControlName="id"  [ngClass]="{ 'is-invalid': submitted && p.id.errors}">
+          <span>役職</span>          
+          <select *ngIf="isEditing || isInserting; else profile" class="custom-select" formControlName="id"  [ngClass]="{ 'is-invalid': submitted && p.id.errors}">
             <option *ngFor="let item of data.POSITION" value="{{item.id}}">{{item.desc}}</option>
           </select>
+        <ng-template #profile>
+          <input type="text" class="form-control" formControlName="id" hidden>
+          <input type="text" class="form-control"value="{{myPosition}}" readonly>
+        </ng-template>
         </div>
       </div>
     </div>
@@ -199,7 +203,7 @@
         <span>車種</span>
         <div formGroupName="shainCarModel">
           <select class="custom-select" formControlName="id" [ngClass]="{ 'is-invalid': submitted && car.id.errors }">
-            <option *ngFor="let cars of data.CARMODEL" value="{{cars.id}}">{{cars.tdesc}}</option>
+            <option *ngFor="let cars of data.CARMODEL" value="{{cars.id}}">{{cars.desc}}</option>
           </select>
         </div>
       </div>
@@ -237,6 +241,7 @@
     <div class="row">
       <div class="col-md-12 d-flex p-2 justify-content-around">
         <button type="submit" class="btn btn-primary">更新</button>
+        <button *ngIf="isEditing" type="button" class="btn btn-primary" (click)="returnToSearch()">キャンセル</button>
       </div>
     </div>
   </ng-container>

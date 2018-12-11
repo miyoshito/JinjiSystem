@@ -48,7 +48,9 @@ import { ManagerHeaderComponent } from './header/manager-header/manager-header.c
 import { BooleanPipe } from './boolean-pipe';
 import { CustomDialogComponent } from './custom-dialog/custom-dialog.component';
 import { ResumeSearchResultsComponent } from './resume/resume-search-results/resume-search-results.component';
-import { LoadingDialogComponent } from './loading-dialog/loading-dialog.component'
+import { LoadingDialogComponent } from './loading-dialog/loading-dialog.component';
+import { EmployeeSearchComponent } from './admin/employee-search/employee-search.component';
+import { EmployeeDetailsComponent } from './admin/employee-details/employee-details.component'
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -88,7 +90,9 @@ export function tokenGetter() {
     BooleanPipe,
     CustomDialogComponent,
     ResumeSearchResultsComponent,
-    LoadingDialogComponent
+    LoadingDialogComponent,
+    EmployeeSearchComponent,
+    EmployeeDetailsComponent
   ],
   imports: [
     BrowserModule,

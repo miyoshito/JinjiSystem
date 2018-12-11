@@ -27,37 +27,49 @@ th, td{
     border-radius: 25%;
 }
 
-.row{
-    margin-top: 10px !important;
-}
-
-html, body {
-    margin: 0;
-    height: 100%;
-    font-family: 'Noto Sans JP', sans-serif !important;
-    font-size: 16px !important;
-  }
-
 option{
   font-size: 16px !important;
 }
 
-  
-body {
-  display: flex;
-  flex-direction: column;
-  
+.row{
+    margin-top: 10px !important;
 }
 
-main {
-  flex: fill;
-}
-
-header, footer{
-  flex: none;
+body, footer, header, main {
   font-family: 'Noto Sans JP', sans-serif !important;
   font-size: 16px !important;
 }
+
+body {
+  display: flex;
+  min-height: 100vh;  
+  flex-direction: column;
+}
+
+.wrapper {
+  display: flex;
+  flex: 1 1 auto;
+}
+.container {
+  flex: 1 1 auto;
+}
+
+footer{
+  flex: none;
+
+  border: 1px solid black;
+}
+
+
+
+
+
+
+
+
+
+
+
 
   
  

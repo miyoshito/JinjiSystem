@@ -1,0 +1,124 @@
+<ng-container *ngIf="selectedUser$ | async; let user">
+<div class="row">
+  <div class="col-md-3">
+    <span>社員番号: </span>
+    <input type="text" value="{{user.shainId}}" class="form-control" readonly>
+  </div>
+  <div class="col-md-3">
+    <span>氏名: </span>
+    <input type="text" value="{{user.shainName}}" class="form-control">
+  </div>
+  <div class="col-md-3">
+    <span>フリガナ: </span>
+    <input type="text" value="{{user.shainKana}}" class="form-control">
+  </div>
+  <div class="col-md-3">
+    <span>採用区分: </span>
+    <input type="text" value="{{user.shainRecruit}}" class="form-control">
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <span>生年月日</span>
+    <div>
+      <input type=date value="{{user.shainBirthday}}" class="form-control">
+    </div>
+  </div>
+  <div class="col-md-6">
+    <span>所属</span>
+    <input type="text" class="form-control " value="{{user.area?.desc}} {{user.shainAddress}}">
+  </div>
+  <div class="col-md-3">
+      <span>役職</span>
+      <input type="text" class="form-control " value="{{user.position?.desc}}">
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <span>扶養</span>
+    <input type="text" class="form-control " value="user.shainPostalCode">
+  </div>
+
+  <div class="col-md-3">
+    <span>配偶者</span>
+    <input type="text" class="form-control " value="user.shainPostalCode">
+  </div>
+
+  <div class="col-md-3">
+    <span>性別</span>
+    <input type="text" class="form-control " value="user.shainPostalCode">
+  </div>
+
+  <div class="col-md-3">
+    <span>血液型</span>
+    <input type="text" class="form-control " value="user.shainPostalCode">
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <span>電話番号(自宅)</span>
+    <input type="text" class="form-control " value="user.shainHomePhoneNumber">
+  </div>
+  <div class="col-md-3">
+    <span>電話番号(携帯)</span>
+    <input type="text" class="form-control " value="user.shainMobilePhoneNumber">
+  </div>
+  <div class="col-md-3">
+    <span>メールアドレス</span>
+    <input type="text" class="form-control " value="user.shainMail">
+  </div>
+  <div class="col-md-3">
+    <span>携帯メールアドレス</span>
+    <input type="text" class="form-control " value="user.shainMobileMail">
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <span>郵便番号</span>
+    <input type="text" class="form-control " value="user.shainPostalCode">
+  </div>
+  <div class="col-md-2">
+    <span>勤務可能地域</span>
+    <div formGroupName="shainArea">
+        <input type="text" class="form-control " value="user.shainPostalCode">
+    </div>
+  </div>
+
+  <div class="col-md-7">
+    <span>住所</span>
+    <input type="text" class="form-control " value="user.shainAddress">
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+    <span>車種</span>
+    <div formGroupName="shainCarModel">
+        <input type="text" class="form-control " value="user.shainPostalCode">
+    </div>
+  </div>
+  <div class="col-md-3">
+    <span>入社日</span>
+    <input type="date" class="form-control " value="user.shainJoinedDate" [ngClass]="{ 'is-invalid': submitted && f.shainJoinedDate.errors }">
+  </div>
+  <div class="col-md-3">
+    <span>退社日</span>
+    <input type="date" class="form-control " value="user.shainRetiredDate">
+  </div>
+  <div class="col-md-3">
+    <span>パスワード</span>
+    <input type="text" class="form-control " value="user.shainPostalCode">
+  </div>
+</div>
+<div class="row" style="margin-top:20px;">
+  <div class="col-md-12">
+    <label for="exampleFormControlTextarea1">備考文</label>
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" value="user.shainNotes"></textarea>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 d-flex p-2 justify-content-around">
+    <button type="submit" class="btn btn-primary">更新</button>
+    <button *ngIf="isEditing" type="button" class="btn btn-primary" (click)="returnToSearch()">キャンセル</button>
+  </div>
+</div>
+</ng-container>

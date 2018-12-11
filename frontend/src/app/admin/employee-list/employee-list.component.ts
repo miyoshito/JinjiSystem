@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
 import { EmployeeMasterService } from '../employee-master/employee-master.service';
 import { Employee } from 'src/app/interfaces/employee';
+import { Observable } from 'rxjs';
+import { ProfileService } from 'src/app/profile/profile.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee-list',
@@ -10,21 +13,18 @@ import { Employee } from 'src/app/interfaces/employee';
 })
 export class EmployeeListComponent implements OnInit {
 
-  displayedColumns = ['社員番号','社員氏名','社員カナ','所属','　']
-  dataSource = new MatTableDataSource()
-  employees: Employee[];
+  employees$ = new Observable<Employee[]>();
 
-  @ViewChild(MatPaginator) paginator: MatPaginator
+  constructor(private employeeService: EmployeeMasterService,
+              private _router: Router) { }
 
-  constructor(private employeeService: EmployeeMasterService) { }
-
-  ngOnInit() {
-    this.employeeService.getEmployeeList().subscribe(list =>{
-      this.dataSource.data = list
-    })
-  }
-  ngAfterViewInit(){
-    this.dataSource.paginator = this.paginator
+  ngOnInit() {    
+    this.employees$ = this.employeeService.searchResults$
+  } 
+  
+  editShain(id: string){
+    console.log('/admin/profile/'+id+'/edit')
+    this._router.navigate(['/admin/profile/'+id+'/edit'])
   }
 
 }

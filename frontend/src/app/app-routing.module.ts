@@ -25,6 +25,7 @@ import { QualificationsComponent } from './qualifications/qualifications.compone
 import { StudycourseComponent } from './studycourse/studycourse.component';
 import { RoleGuardService } from './guards/role-guard.service';
 import { ResumeSearchResultsComponent } from './resume/resume-search-results/resume-search-results.component';
+import { EmployeeSearchComponent } from './admin/employee-search/employee-search.component';
 
 const routes: Routes = [
   // Login routes
@@ -49,6 +50,7 @@ const routes: Routes = [
     children:[
       {path: 'employee-master', component: EmployeeMasterComponent},
       {path: 'employee-list', component: EmployeeListComponent},
+      {path: 'employee-search', component: EmployeeSearchComponent},
       {path: 'skillmap', component: SkillMapComponent},
       {path: 'systemsettings', component: SystemSettingsComponent}, //temp
       //resumes...

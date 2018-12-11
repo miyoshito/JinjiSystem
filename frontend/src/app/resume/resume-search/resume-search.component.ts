@@ -55,7 +55,7 @@ export class ResumeSearchComponent implements OnInit {
       this._resumeService.sendSearchResults(res.body)
       this._router.navigate(['/admin/rirekisho/results'])
       } else {
-      this._router.navigate(['/admin/rirekisho/edit/'+res.body[0].shainId])
+      this._router.navigate(['/admin/rirekisho/details/'+res.body[0].shainId])
       }
     })).subscribe(
     res => {},

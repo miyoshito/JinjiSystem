@@ -4,12 +4,15 @@ import { Observable } from 'rxjs';
 import { Data } from '../interfaces/data';
 import { map } from 'rxjs/operators';
 
-import { PUBLIC_URL } from '../url-settings'
+import { PUBLIC_URL, ADMIN_URL } from '../url-settings'
+
+import { cvSearchForm } from 'src/app/curriculum/curriculum-search/curriculum-search.component'
+import { Employee } from '../interfaces/employee';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CurriculumService {  
+export class CurriculumService {
 
   constructor(private _http: HttpClient) { }
 
@@ -17,21 +20,53 @@ export class CurriculumService {
   indClass: Observable<any[]>
 
 
-  getPropertiesList(): Observable<any[]>{
-    return this._http.get<any[]>(PUBLIC_URL+'/cv-params')
+  getPropertiesList(): Observable<any[]> {
+    return this._http.get<any[]>(PUBLIC_URL + '/cv-params')
   }
   //temporary
-  getBusinessLogic(): Observable<any[]>{
-    return this._http.get<any[]>(PUBLIC_URL+'/industry-sublist') 
+  getBusinessLogic(): Observable<any[]> {
+    return this._http.get<any[]>(PUBLIC_URL + '/industry-sublist')
   }
 
-  makeBusinessStructure(){
+  makeBusinessStructure() {
     this.getBusinessLogic().pipe(
-      map((values) =>{
+      map((values) => {
         console.log(values)
       })
     )
   }
 
 
+  searchShokumuRireki(params: cvSearchForm) {
+    this._http.get<Employee[]>(ADMIN_URL + '/shokureki/search?'
+      + 'id=' + params.id
+      + '&n=' + params.name
+      + '&k=' + params.kana
+      + '&r=' + params.recruit
+      + '&age=' + params.age
+      + '&op=' + params.operator
+      + '&exp=' + params.experience
+      + '&idt=' + params.indType
+      + '&db=' + params.dbms
+      + '&os=' + params.os
+      + '&lng=' + params.lang
+      + '&tls=' + params.tools
+      + '&res=' + params.response
+      + '&mkr=' + params.maker
+      + '&cm=' + params.customerName
+      + '&tb=' + params.targetBusiness
+      , {
+        observe: 'response'
+      }).subscribe(res =>{
+        console.log(res)
+      },
+      err =>{
+        console.log('ERROR, ERROR, ERROR')
+        console.log(err)
+      })
+
+  }
+
+
 }
+

@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { EmployeeMasterService } from './employee-master.service';
-import { Observable, Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable, Subscription, Subject } from 'rxjs';
+import { map, tap, takeUntil } from 'rxjs/operators';
 import { Data } from 'src/app/interfaces/data';
 import { Employee } from 'src/app/interfaces/employee';
 import { BroadcastService } from 'src/app/broadcast.service';
@@ -19,7 +19,6 @@ import { LoginService } from 'src/app/login/login.service';
 export class EmployeeMasterComponent implements OnInit {
 
   employeeForm: FormGroup
-
   
   sex: string[] = ['女','男'];
   bloodType: String[] = ['A+型','B+型','O+型','AB+型','A-型','B-型','O-型','AB-型']
@@ -27,20 +26,23 @@ export class EmployeeMasterComponent implements OnInit {
 
   submitted: boolean
   title: string
-  success$: boolean
-  sub: Subscription
-  successMsg: string
-  show: boolean
+  myPosition: string
+  isInserting: boolean
+  isEditing: boolean
+
   currentRoute: string
   passwordbutton: boolean
   
   role$: Observable<any>
-  response$: Observable<any>
   isLoggedIn$: Observable<boolean>  
-  loggedUser$: Observable<any>
   params$: Observable<any[]>
+  unsub$: Subject<boolean> = new Subject<boolean>()
 
-  subscription: Subscription
+  yakushokuSelects: Data[]
+
+  selectedUser$: Observable<Employee>
+
+  
   
 
 
@@ -51,45 +53,50 @@ export class EmployeeMasterComponent implements OnInit {
               private _route: ActivatedRoute,
               private _router: Router,
               private _loginService: LoginService) { 
-                this.success$ = false
                 this.passwordbutton = false
+                this.isInserting = false
+                this.isEditing = false
               }
 
   ngOnInit() {
   this.initializeForm()
   this.params$ = this._employeeService.getViewRendering()
   this.isLoggedIn$ = this._broadcastService.userAuthenticated$
+  
+  if ((this._router.url).endsWith('/edit')){    
+    this.selectedUser$ = this._profileService.getUserProfile(this._route.snapshot.paramMap.get('id'))
+    this.loadUserData()
+    this.title = '社員マスタ編集画面'
+    this.isEditing = true
+    this.passwordbutton=  true
+  } else if ((this._router.url).endsWith('/profile')) {
+    this.selectedUser$ = this._profileService.cachedUser$
+    this.title = 'プロフィール画面'
+    this.passwordbutton = true
+    this.loadUserData()
+  } else {
+    this.isInserting  = true
+  }
   }
 
-  ngAfterContentInit(){    
-  this.subscription = this._route.parent.url.subscribe(url =>{
-    this.currentRoute = url[0].path
-    if (url[0].path === 'profile') { // it means im seeing my profile!
-      this.title = 'プロフィール画面'
-      this.passwordbutton = true
-      this.loadUserData()
-    } else if (url[0].path === 'admin') { //it means im trying to add a new profile
-      this.title = '社員マスタ登録画面'
-    } else {
-      this.title = '社員マスタ編集画面' // it means theyre editing or smth
-    }
-  })
+  returnToSearch(){
+    this._router.navigate(['/admin/employee-search'])
   }
-
-  ngOnDestroy(){
-    this.subscription.unsubscribe()
-  } 
 
   loadUserData(){
-    this._profileService.cachedUser$.subscribe(data =>{
-      this.employeeForm.patchValue(data)
-      data.shainJoinedDate != null ? this.employeeForm.patchValue({shainJoinedDate: data.shainJoinedDate.slice(0,10)}) : console.log('')
-      data.shainBirthday != null ? this.employeeForm.patchValue({shainBirthday: data.shainBirthday.slice(0,10)}) : console.log('')
-      data.shainRegisterDate != null ? this.employeeForm.patchValue({shainRegisterDate: data.shainRegisterDate.slice(0,10)}) : console.log('')
-      data.shainRetiredDate != null ? this.employeeForm.patchValue({shainRetiredDate: data.shainRetiredDate.slice(0,10)}) : console.log('')      
+    this.selectedUser$.pipe(takeUntil(this.unsub$))
+    .subscribe(data =>{
+      console.log(data.position)
+      this.myPosition = data.position.desc
+      this.employeeForm.patchValue(data)      
+      data.shainJoinedDate != null ? this.employeeForm.patchValue({shainJoinedDate: data.shainJoinedDate.slice(0,10)}) : null
+      data.shainBirthday != null ? this.employeeForm.patchValue({shainBirthday: data.shainBirthday.slice(0,10)}) : null
+      data.shainRegisterDate != null ? this.employeeForm.patchValue({shainRegisterDate: data.shainRegisterDate.slice(0,10)}) : null
+      data.shainRetiredDate != null ? this.employeeForm.patchValue({shainRetiredDate: data.shainRetiredDate.slice(0,10)}) : null
     })
   }
-
+  
+  show: boolean
   showPassword() {
     this.show = !this.show;
   }
@@ -103,15 +110,19 @@ export class EmployeeMasterComponent implements OnInit {
       this.submitted = true
       return;
     }
-
     try {
       this._employeeService.insertShainAttempt(employee)
-      this.success$ = true
-      
-      if (this.currentRoute === 'profile'){
-        this._router.navigate(['home'])
+
+      if ((this._router.url).endsWith('/edit')){
+        alert('ユーザー更新されました。')
+          this._router.navigate(['home'])
+      } else if ((this._router.url).endsWith('/profile')) {
         alert('アップデート完了しました。')
-      } else alert('ユーザーが挿入されました。')
+          this._router.navigate(['home'])
+      } else {
+        alert('ユーザーが挿入されました。')
+        this._router.navigate(['home'])
+      }
       this.resetForms()
       } catch (err) {
         throw err

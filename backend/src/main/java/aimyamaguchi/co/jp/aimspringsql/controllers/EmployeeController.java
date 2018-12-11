@@ -2,6 +2,7 @@ package aimyamaguchi.co.jp.aimspringsql.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -41,6 +42,7 @@ public class EmployeeController {
 
     @PostMapping("/admin/add-employee")
     public ResponseEntity<String> addEmployee(@RequestBody EmployeeMaster employee, HttpServletRequest req){
+        System.out.println();
         
     try {
         if(employeeService.validateRequest(req)) {
@@ -55,5 +57,19 @@ public class EmployeeController {
 
     @GetMapping("/admin/getprofile/{id}")
     public EmployeeMaster getProfile(@PathVariable String id){return  employeeService.getProfile(id);}
+
+    @GetMapping("/admin/search-employee")
+    public ResponseEntity<List<EmployeeMaster>> searchEmployee(
+            @RequestParam(value="id", required = false) String id,
+            @RequestParam(value="name", required = false) String name,
+            @RequestParam(value="kana", required = false) String kana,
+            @RequestParam(value="affiliation", required = false) List<String> affiliation){
+        try {
+            return new ResponseEntity<>(employeeService.searchResults(id, name, kana, affiliation), HttpStatus.OK);
+        } catch (CustomException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
 
 }
