@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP|Noto+Serif+JP');
-@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+/*@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';*/
 @import './assets/css/boxes.css';
 @import "~@ng-select/ng-select/themes/default.theme.css";
 
@@ -40,26 +40,28 @@ body, footer, header, main {
   font-size: 16px !important;
 }
 
-body {
+html, body {
+  height: 100%;
+}
+
+
+main {
+  /* flex: 1; would be enough but IE has different defaults (surprise!) */
+  flex: 1 1 auto;
+}
+
+.app{
+  min-height: 100vh;
+  height: 100vh;
   display: flex;
-  min-height: 100vh;  
   flex-direction: column;
 }
 
-.wrapper {
+.pezin{
   display: flex;
-  flex: 1 1 auto;
+  align-content: center;
+  justify-content: flex-end;
 }
-.container {
-  flex: 1 1 auto;
-}
-
-footer{
-  flex: none;
-
-  border: 1px solid black;
-}
-
 
 
 

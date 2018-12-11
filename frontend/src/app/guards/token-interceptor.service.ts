@@ -24,7 +24,6 @@ export class TokenInterceptorService implements HttpInterceptor{
     })
     }
     else request = req.clone({})
-    console.log(request)
     return next.handle(request)
   }
   }
