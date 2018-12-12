@@ -1,6 +1,10 @@
 package aimyamaguchi.co.jp.aimspringsql.employee;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 
 import javax.persistence.EntityManager;
@@ -23,6 +27,8 @@ import org.springframework.stereotype.Service;
 
 import aimyamaguchi.co.jp.aimspringsql.authfilters.JwtTokenProvider;
 import aimyamaguchi.co.jp.aimspringsql.constants.SequenceInterface;
+
+import static java.util.stream.Collectors.toMap;
 
 @Service
 public class EmployeeService{
@@ -164,6 +170,12 @@ public class EmployeeService{
             return employeeRepository.findByShainIdIn(results);
         }
         else return null;
+    }
+
+
+    public int calcExperienceTime(LocalDate start, LocalDate end){
+        Period period = Period.between(start, end);
+        return period.getMonths();
     }
 
 }

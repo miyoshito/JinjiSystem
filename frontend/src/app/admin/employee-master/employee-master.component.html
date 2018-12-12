@@ -203,7 +203,7 @@
         <span>車種</span>
         <div formGroupName="shainCarModel">
           <select class="custom-select" formControlName="id" [ngClass]="{ 'is-invalid': submitted && car.id.errors }">
-            <option *ngFor="let cars of data.CARMODEL" value="{{cars.id}}">{{cars.desc}}</option>
+            <option *ngFor="let cars of data.CARMODEL" value="{{cars.id}}">{{cars.tdesc}}</option>
           </select>
         </div>
       </div>

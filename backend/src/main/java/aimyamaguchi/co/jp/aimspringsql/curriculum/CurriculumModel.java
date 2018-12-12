@@ -1,5 +1,7 @@
 package aimyamaguchi.co.jp.aimspringsql.curriculum;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -21,9 +23,9 @@ public class CurriculumModel {
     @Column(name="CV_ID")
     private long id;
     @Column(name="CV_START")
-    private Date startperiod;
+    private LocalDate startdate;
     @Column(name="CV_END")
-    private Date endperiod;
+    private LocalDate enddate;
 
     @Column(name="CV_CUSTOMER")
     private String customer; //(isso pode ser um m2m no futuro)
@@ -33,6 +35,18 @@ public class CurriculumModel {
 
     @Column(name="DELETED")
     private boolean deleted;
+
+    @Transient
+    private Long experienceTime;
+
+    public Long getExperienceTime(){
+        Period period = Period.between(this.startdate, this.enddate);
+        if(period.getYears() > 0){
+            return Long.valueOf(period.getMonths() + (period.getYears() * 12));
+        }
+        else
+        return Long.valueOf(period.getMonths());
+    }
 
     @ManyToOne
     @JoinColumns(value = {
@@ -67,6 +81,11 @@ public class CurriculumModel {
     @ManyToMany
     @JoinTable(name="CV_TOOLS")
     private List<TOOLSData> toolsData;
+
+    @ManyToOne
+    @JoinColumn(name="CV_ASSIGN")
+    private ASSIGNData assignData;
+
 
     @ManyToOne
     @JsonIgnore

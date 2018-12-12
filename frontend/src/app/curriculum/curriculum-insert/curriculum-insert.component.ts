@@ -23,14 +23,6 @@ export class CurriculumInsertComponent implements OnInit {
 
   cvForm: FormGroup
   indForm: FormGroup
-
-  
-  selectedMakers: Data[]
-  selectedOs: Data[]
-  selectedTools: Data[]
-  selectedResponse: Data[]
-  selectedLang: Data[]
-  selectedDbms: Data[]
   data$: Observable<any[]>
   loggedUser$: Observable<Employee>
 

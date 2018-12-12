@@ -6,32 +6,26 @@
   <div *ngIf="profileSelected$ | async; let user">
     <div class="row">
       <div class="col-md-3">
-        <span>社員番号: </span><span>{{user.shainId}}</span>
+        <span><b>社員番号:</b> </span><span>{{user.shainId}}</span>
       </div>
       <div class="col-md-3">
-        <span>氏名: </span><span>{{user.shainName}}</span>
+        <span><b>氏名:</b> </span><span>{{user.shainName}}</span>
       </div>
       <div class="col-md-3">
-        <span>フリガナ: </span><span>{{user.shainKana}}</span>
+        <span><b>フリガナ:</b> </span><span>{{user.shainKana}}</span>
       </div>
       <div class="col-md-3">
-        <span>採用区分: </span><span>{{user.shainRecruit}}</span>
+        <span><b>採用区分:</b> </span><span>{{user.shainRecruit}}</span>
       </div>
     </div>
     <br/>
     <div class="row">
       <div class="col-md-3">
-        <span>勤務可能地域: </span><span>{{user?.shainArea?.desc}}</span>
+        <span><b>住所:</b> </span><span>{{user?.shainArea?.desc}}{{user.shainAddress}}</span>
       </div>
       <div class="col-md-3">
-          <span>経験年数: </span><span>shain year experience, gonna be calculated soon</span>
+          <span><b>経験年数:</b> </span><span>{{sumOf(user.curriculum)}}</span>
         </div>
-    </div>
-    <br/>
-    <div class="row">
-      <div class="col-md-12">
-          <span>住所: </span><span>{{user.shainAddress}}</span>
-      </div>
     </div>
     <br/>
     <div class="row">
@@ -67,8 +61,8 @@
                   <ng-container *ngFor="let res of cv.responseData">{{res.desc}}<br /></ng-container>
                 </td>
                 <td>
-                  {{cv.startperiod | slice:0:10}} <br />~<br /> {{cv.endperiod | slice:0:10}} <br />
-                  (何ヶ月)
+                  {{cv.startdate | slice:0:10}} <br />~<br /> {{cv.enddate | slice:0:10}} <br />
+                  ({{cv.experienceTime}}ヶ月)
                 </td>
                 <td>
                     <button class="btn btn-outline-secondary" (click)="editSR(cv.id)">編集</button>

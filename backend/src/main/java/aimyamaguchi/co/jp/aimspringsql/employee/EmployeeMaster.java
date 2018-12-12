@@ -1,5 +1,6 @@
 package aimyamaguchi.co.jp.aimspringsql.employee;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -19,7 +20,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="[M_SHAIN]", schema="[DBO]")
-public class EmployeeMaster implements UserDetails{
+public class EmployeeMaster implements UserDetails, Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -124,7 +125,6 @@ public class EmployeeMaster implements UserDetails{
 
     @OneToMany(mappedBy = "employee_id")
     private List<CurriculumModel> curriculum;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

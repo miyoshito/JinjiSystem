@@ -62,6 +62,8 @@ const routes: Routes = [
           {path: 'details/:id', component: ResumeDetailsComponent}
       ]},
       {path: 'shokumurirekisho', children:[
+          {path: 'edit/:uid/:shid', component: CurriculumInsertComponent},
+          {path: 'details/:id', component: CurriculumDetailsComponent},
           {path: 'add', component: CurriculumInsertComponent},
           {path: 'search', component: CurriculumSearchComponent},
           {path: 'list', component: CurriculumListComponent}

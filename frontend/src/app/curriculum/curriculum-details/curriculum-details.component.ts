@@ -3,7 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BroadcastService } from 'src/app/broadcast.service';
 import { ProfileService } from 'src/app/profile/profile.service';
 import { Subscription, Observable } from 'rxjs';
-import { Employee } from 'src/app/interfaces/employee';
+import { Employee, Curriculum } from 'src/app/interfaces/employee';
+import { CurriculumService } from '../curriculum.service';
 
 @Component({
   selector: 'app-curriculum-details',
@@ -23,7 +24,8 @@ export class CurriculumDetailsComponent implements OnInit {
   constructor(private _profileService: ProfileService,
               private _broadcastService: BroadcastService,
               private _router: Router,
-              private _route: ActivatedRoute) { }
+              private _route: ActivatedRoute,
+              private _curriculumService: CurriculumService) { }
 
   ngOnInit() {
     this.sub = this._route.parent.parent.url.subscribe( url => {
@@ -39,6 +41,16 @@ export class CurriculumDetailsComponent implements OnInit {
         this.profileSelected$ = this._profileService.cachedUser$
         }
       }) 
+  }
+
+  sumOf(cv: Curriculum[]): string{
+    let total: number = 0
+    for(let c of cv){
+      total += c.experienceTime
+    }
+    let years = (total/12).toFixed(0)
+    let month = (total % 12).toFixed(0)
+    return years + '年 ' + month + 'ヶ月'
   }
 
   editSR(id: number){

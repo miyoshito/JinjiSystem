@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, AsyncSubject, BehaviorSubject } from 'rxjs';
 import { Data } from '../interfaces/data';
 import { map } from 'rxjs/operators';
 
 import { PUBLIC_URL, ADMIN_URL } from '../url-settings'
 
 import { cvSearchForm } from 'src/app/curriculum/curriculum-search/curriculum-search.component'
-import { Employee } from '../interfaces/employee';
+import { Employee, Curriculum } from '../interfaces/employee';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +18,9 @@ export class CurriculumService {
 
   indType: Observable<any[]>
   indClass: Observable<any[]>
+  employee: Employee
+  userSource_: BehaviorSubject<any> = new BehaviorSubject<any>(this.employee);
+  selectedUser$ = this.userSource_.asObservable()
 
 
   getPropertiesList(): Observable<any[]> {
@@ -35,7 +38,6 @@ export class CurriculumService {
       })
     )
   }
-
 
   searchShokumuRireki(params: cvSearchForm) {
     this._http.get<Employee[]>(ADMIN_URL + '/shokureki/search?'
@@ -58,13 +60,12 @@ export class CurriculumService {
       , {
         observe: 'response'
       }).subscribe(res =>{
-        console.log(res)
+        this.userSource_.next(res.body)
       },
       err =>{
         console.log('ERROR, ERROR, ERROR')
         console.log(err)
       })
-
   }
 
 

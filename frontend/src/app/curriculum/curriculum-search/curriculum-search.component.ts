@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { CurriculumService } from '../curriculum.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { atLeastOne } from 'src/app/validators/atleastOne';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-curriculum-search',
@@ -17,7 +18,8 @@ export class CurriculumSearchComponent implements OnInit {
   age = new Array
 
   constructor(private curriculumService: CurriculumService,
-              private _fb: FormBuilder) { }
+              private _fb: FormBuilder,
+              private _router: Router) { }
 
   ngOnInit() {
     for (let i = 18; i <= 90; i++){
@@ -33,6 +35,7 @@ export class CurriculumSearchComponent implements OnInit {
       return
     }
     this.curriculumService.searchShokumuRireki(this.searchForm.value)
+    this._router.navigate(['/admin/shokumurirekisho/list'])
   }
 
 

@@ -31,6 +31,7 @@ export interface Employee {
     shainDeletedFlag: boolean,
 
     resume: Resume
+    curriculum: Curriculum[]
 }
 
 export interface Roles{
@@ -39,6 +40,43 @@ export interface Roles{
     roledesc: string
 }
 
+export interface Curriculum{
+    id: number
+    startdate: Date
+    enddate: Date
+    experienceTime: number
+    customer: string
+    active: boolean
+    industry: Industry
+    industryClass: IndustryClass
+    targetBusiness: string
+    makerData: DataCommons[]
+    osData: DataCommons[]
+    dbmsData: DataCommons[]
+    responseData: DataCommons[]
+    langData: DataCommons[]
+    toolsData: DataCommons[]
+}
+export interface DataCommons{
+    id: number
+    desc: string
+    active: boolean
+}
+
+export interface Industry{
+    id: number
+    desc: string
+    active: boolean
+
+}
+export interface IndustryClass{
+    indId: Industry
+    id: number
+    desc: string
+    active: boolean
+
+}
+/*
 export class Employee {
     constructor(
         shainId: string,
@@ -98,4 +136,4 @@ export class Employee {
             this.shainDeletedFlag= shainDeletedFlag
             this.role = role
         }
-}
+    }*/

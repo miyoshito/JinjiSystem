@@ -85,7 +85,7 @@ public class CurriculumService {
         if (validator(id)) queryParam.add("and m.sha_no = '"+id+"'\n");
         if (validator(name)) queryParam.add("and m.sha_kana like '%"+name+"%'\n");
         if (validator(kana)) queryParam.add("and m.sha_kana like '%"+kana+"%'\n");
-        if (validator(recruit)) queryParam.add("and m.sha_recruit = "+recruit+"\n");
+        if (validator(recruit)) queryParam.add("and m.sha_recruit = '"+recruit+"'\n");
         if (validator(age)) queryParam.add("and year(getdate()) - year(m.sha_birthday) = "+age+"\n");
         if (validator(customerName)) queryParam.add("and sho.cv_customer like '%"+customerName+"%'\n");
         if (validator(targetBusiness)) queryParam.add("and sho.cv_targetbusiness like '%"+targetBusiness+"%'\n");
@@ -133,7 +133,7 @@ public class CurriculumService {
 
         if(tools != null && tools.size() >0){
             String toolsin = String.join(",",tools);
-            queryParam.add("dtools.tools_id in ("+toolsin+")");
+            queryParam.add("and dtools.tools_id in ("+toolsin+")");
 
             queryJoins.add("\n" +
                     "left outer join cv_tools tools on tools.curriculum_cv_id = sho.cv_id\n" +
@@ -141,7 +141,7 @@ public class CurriculumService {
         }
         if (response != null && response.size() > 0){
             String responsein = String.join(",",response);
-            queryParam.add("dtools.tools_id in ("+responsein+")");
+            queryParam.add("and dresponse.response_id in ("+responsein+")");
 
             queryJoins.add("\n" +
                     "left outer join cv_response response on response.curriculum_cv_id = sho.cv_id\n" +
@@ -150,7 +150,7 @@ public class CurriculumService {
 
         if (maker != null && maker.size() > 0) {
             String makerin = String.join(",",maker);
-            queryParam.add("dtools.tools_id in ("+makerin+")");
+            queryParam.add("and dmaker.maker_id in ("+makerin+")");
 
             queryJoins.add("\n" +
                     "left outer join cv_maker maker on maker.curriculum_cv_id = sho.cv_id\n" +

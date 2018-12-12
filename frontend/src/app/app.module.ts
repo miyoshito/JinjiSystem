@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { NgbModule, NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap'
+import { MomentModule, DifferencePipe } from 'ngx-moment';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -125,7 +126,8 @@ export function tokenGetter() {
     MatNativeDateModule,
     MatPaginatorModule,
     FileUploadModule,
-    MatDialogModule
+    MatDialogModule,
+    MomentModule
   ],
   exports: [
     [BooleanPipe]
@@ -140,6 +142,7 @@ export function tokenGetter() {
     AuthGuardService,
     LoginGuardService,
     TokenInterceptorService,
+    DifferencePipe
   ],
   bootstrap: [AppComponent],
   entryComponents: [CustomDialogComponent]
