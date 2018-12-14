@@ -8,13 +8,15 @@ import { PUBLIC_URL, ADMIN_URL } from '../url-settings'
 
 import { cvSearchForm } from 'src/app/curriculum/curriculum-search/curriculum-search.component'
 import { Employee, Curriculum } from '../interfaces/employee';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CurriculumService {
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _http: HttpClient,
+              private _router: Router) { }
 
   indType: Observable<any[]>
   indClass: Observable<any[]>
@@ -22,21 +24,16 @@ export class CurriculumService {
   userSource_: BehaviorSubject<any> = new BehaviorSubject<any>(this.employee);
   selectedUser$ = this.userSource_.asObservable()
 
+  industryObj: IndustryType[]
+  industryBase: IndustryType
+
 
   getPropertiesList(): Observable<any[]> {
-    return this._http.get<any[]>(PUBLIC_URL + '/cv-params')
+    return this._http.get<any[]>(PUBLIC_URL + '/cvparams')
   }
   //temporary
-  getBusinessLogic(): Observable<any[]> {
-    return this._http.get<any[]>(PUBLIC_URL + '/industry-sublist')
-  }
-
-  makeBusinessStructure() {
-    this.getBusinessLogic().pipe(
-      map((values) => {
-        console.log(values)
-      })
-    )
+  getBusinessLogic(): Observable<any[]>{
+    return this._http.get<any[]>(PUBLIC_URL + '/industry-params')
   }
 
   searchShokumuRireki(params: cvSearchForm) {
@@ -60,7 +57,13 @@ export class CurriculumService {
       , {
         observe: 'response'
       }).subscribe(res =>{
+        if (!res.body.length){
+          alert('結果が見つかりません')
+          return
+      } else {
         this.userSource_.next(res.body)
+        this._router.navigate(['/admin/shokumurirekisho/list'])
+      }
       },
       err =>{
         console.log('ERROR, ERROR, ERROR')
@@ -69,5 +72,23 @@ export class CurriculumService {
   }
 
 
+}
+
+export interface Gambiarra{
+  tid: number,
+  tdesc: string,
+  cid: number,
+  cdesc: string
+}
+
+export interface IndustryClass{  
+  id: number
+  desc: string
+}
+
+export interface IndustryType{
+  id: number
+  desc: string
+  class: IndustryClass[]
 }
 

@@ -1,7 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { NgbModule, NgbButtonsModule } from '@ng-bootstrap/ng-bootstrap'
 import { MomentModule, DifferencePipe } from 'ngx-moment';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -51,11 +50,16 @@ import { CustomDialogComponent } from './custom-dialog/custom-dialog.component';
 import { ResumeSearchResultsComponent } from './resume/resume-search-results/resume-search-results.component';
 import { LoadingDialogComponent } from './loading-dialog/loading-dialog.component';
 import { EmployeeSearchComponent } from './admin/employee-search/employee-search.component';
-import { EmployeeDetailsComponent } from './admin/employee-details/employee-details.component'
+import { EmployeeDetailsComponent } from './admin/employee-details/employee-details.component';
+import { MonthPickerComponent } from './utils/month-picker/month-picker.component';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
+import { defineLocale } from 'ngx-bootstrap/chronos';
+import { jaLocale } from 'ngx-bootstrap/locale';
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
 }
+defineLocale('ja',jaLocale)
 
 @NgModule({
   declarations: [
@@ -93,7 +97,8 @@ export function tokenGetter() {
     ResumeSearchResultsComponent,
     LoadingDialogComponent,
     EmployeeSearchComponent,
-    EmployeeDetailsComponent
+    EmployeeDetailsComponent,
+    MonthPickerComponent
   ],
   imports: [
     BrowserModule,
@@ -127,7 +132,8 @@ export function tokenGetter() {
     MatPaginatorModule,
     FileUploadModule,
     MatDialogModule,
-    MomentModule
+    MomentModule,
+    BsDatepickerModule.forRoot()
   ],
   exports: [
     [BooleanPipe]

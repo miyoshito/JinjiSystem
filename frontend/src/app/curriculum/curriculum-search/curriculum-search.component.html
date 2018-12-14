@@ -37,19 +37,18 @@
     <div class="col-md-4">
       <span>経験月数</span>
       <div class="input-group">
-        <select class="custom-select" formControlName="operator">
-          <option value="greaterthan">＞＝</option>
-          <option selected value="equals">以上</option>
-          <option value="lessthan">＜＝</option>
-        </select>
         <input type="text" class="form-control" formControlName="experience">
         <div class="input-group-prepend">
-          <span class="input-group-text">年</span>
-        </div>
+            <span class="input-group-text">年</span>
+          </div>
+        <select class="custom-select" formControlName="operator">
+          <option selected value="greaterthan">以上</option>
+          <option value="lessthan">以下</option>
+        </select>
       </div>
     </div>
   </div>
-  <ng-container *ngIf="data$ | async; let data">
+    <ng-container *ngIf="industry$ | async; let industry">
     <div class="row">
       <div class="col-md-6">
         <span>顧客名</span>
@@ -58,11 +57,12 @@
       <div class="col-md-6">
         <span>業種</span>
         <select class="custom-select" formControlName="indType">
-          <option *ngFor="let ind of data.INDUSTRY" value="{{ind.id}}">{{ind.tdesc}}</option>
+          <option *ngFor="let ind of industry" value="{{ind.id}}">{{ind.tdesc}}</option>
         </select>
       </div>
     </div>
-
+    </ng-container>
+    <ng-container *ngIf="data$ | async; let data">
     <div class="row">
       <div class="col-md-6">
         <span>対象業務</span>
@@ -109,23 +109,17 @@
           placeholder="何々を選択して下さい。" formControlName="response">
         </ng-select>
       </div>
-    </div>
-  </ng-container>
+    </div>  
 
   <div class="row">
     <div class="col-md-4">
       <span>役割</span>
       <select class="custom-select" formControlName="role">
-        <option>ﾌﾟﾛｼﾞｪｸﾄ管理者</option>
-        <option>ﾘｰﾀﾞｰ</option>
-        <option>ｻﾌﾞﾘｰﾀﾞｰ</option>
-        <option>SE</option>
-        <option>PG</option>
-        <option>ｱｼｽﾀﾝﾄ</option>
-        <option>他</option>
+        <option *ngFor="let role of data.ASSIGN" value="{{role.desc}}">{{role.desc}}</option>        
       </select>
     </div>
   </div>
+</ng-container>
 
   <div class="row">
     <div class="col-md-12">

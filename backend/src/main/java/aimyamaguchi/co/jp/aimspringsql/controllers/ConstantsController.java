@@ -5,6 +5,8 @@ import java.util.Map;
 
 import aimyamaguchi.co.jp.aimspringsql.curriculum.CurriculumService;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.INDCLASSIFICATIONData;
+import aimyamaguchi.co.jp.aimspringsql.curriculum.INDUSTRYData;
+import aimyamaguchi.co.jp.aimspringsql.curriculum.IndustryRepository;
 import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,14 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins  = "*")
 @RequestMapping("/api")
 public class ConstantsController {
-
     @Autowired
     private CurriculumService cv;
 
     @Autowired
     private EmployeeService es;
 
-    @GetMapping("/public/cv-params")
+    @GetMapping("/public/cvparams")
     public Map<String,Object> getCvParams(){
         return cv.generateCvMap();
     }
@@ -31,11 +32,6 @@ public class ConstantsController {
     @GetMapping("/public/employee-params")
     public Map<String, Object> getEmpParams(){ return es.getEmpMasterParams(); }
 
-    @GetMapping("/public/industry-sublist")
-    public List<INDCLASSIFICATIONData> getIndustryList() { return cv.industryList(); }
-
-    
-    
-    
-
+    @GetMapping("/public/industry-params")
+    public List<INDUSTRYData>  getIndustryList() { return cv.getIndustryList(); }
 }

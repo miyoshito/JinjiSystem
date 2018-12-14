@@ -2,10 +2,7 @@ package aimyamaguchi.co.jp.aimspringsql.curriculum;
 
 import java.time.LocalDate;
 import java.time.Period;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.*;
 
@@ -22,8 +19,10 @@ public class CurriculumModel {
     @Id
     @Column(name="CV_ID")
     private long id;
+
     @Column(name="CV_START")
     private LocalDate startdate;
+
     @Column(name="CV_END")
     private LocalDate enddate;
 
@@ -48,12 +47,29 @@ public class CurriculumModel {
         return Long.valueOf(period.getMonths());
     }
 
+
+
+    @Transient
+    public String industryClass;
+
+    @Transient
+    public String industryType;
+
+    public String getIndustryType(){
+        return this.industryClassData.getId().getIndustryid().getTdesc();
+    }
+
+    public String getIndustryClass(){
+        return this.industryClassData.getDesc();
+    }
+
     @ManyToOne
     @JoinColumns(value = {
-        @JoinColumn(name="CV_INDUSTRY_TYPE", referencedColumnName = "INDUSTRY_TYPE_ID"),
-        @JoinColumn(name="CV_INDUSTRY_CLASS", referencedColumnName ="INDUSTRY_CLASS_ID")
+            @JoinColumn(name="CV_INDUSTRY_TYPE", referencedColumnName = "INDUSTRY_TYPE_ID"),
+            @JoinColumn(name="CV_INDUSTRY_CLASS", referencedColumnName ="INDUSTRY_CLASS_ID")
     })
-    private INDCLASSIFICATIONData industry;
+    @JsonIgnore
+    private INDCLASSIFICATIONData industryClassData;
 
     @Column(name="CV_TARGETBUSINESS")
     private String targetbusiness;

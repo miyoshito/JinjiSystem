@@ -44,8 +44,8 @@
             <tbody>
               <tr *ngFor="let cv of user.curriculum">
                 <td>{{cv.customer}}</td>
-                <td>{{cv.industry?.industryid?.tdesc}}</td>
-                <td>{{cv.industry?.desc}}</td>
+                <td>{{cv.industryType}}</td>
+                <td>{{cv.industryClass}}</td>
                 <td>
                   <ng-container *ngFor="let maker of cv.makerData">{{maker.desc}}<br /> </ng-container>
                 </td>

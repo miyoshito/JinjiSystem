@@ -6,10 +6,8 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CurriculumService {
@@ -32,6 +30,8 @@ public class CurriculumService {
     IndustryDataRepository industry;
     @Autowired
     IndustryRepository indList;
+    @Autowired
+    AssignRepository assign;
 
     public Map<String, Object> generateCvMap(){
 
@@ -42,23 +42,14 @@ public class CurriculumService {
         map.put("LANG",lang.findAll());
         map.put("MAKER",maker.findAll());
         map.put("TOOLS",tools.findAll());
-        map.put("INDUSTRY", industry.findAll());
+        map.put("ASSIGN", assign.findAll());
+
         return map;
-
-
     }
 
-    public List<INDCLASSIFICATIONData> industryList(){
-        return indList.findAll();
-
+    public List<INDUSTRYData> getIndustryList(){
+        return industry.findAll();
     }
-
-    public Map<String, Object> industryList233(){
-
-        Map<String, Object> list = new HashMap<>();
-        return null;
-    }
-
 
     public List<String> searchForCV(
             String id,
@@ -81,7 +72,6 @@ public class CurriculumService {
         ArrayList<String> queryJoins = new ArrayList<>();
         ArrayList<String> queryParam = new ArrayList<>();
 
-        //validating the null fields
         if (validator(id)) queryParam.add("and m.sha_no = '"+id+"'\n");
         if (validator(name)) queryParam.add("and m.sha_kana like '%"+name+"%'\n");
         if (validator(kana)) queryParam.add("and m.sha_kana like '%"+kana+"%'\n");

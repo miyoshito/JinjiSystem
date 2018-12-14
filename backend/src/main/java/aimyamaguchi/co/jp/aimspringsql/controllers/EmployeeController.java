@@ -28,11 +28,6 @@ public class EmployeeController {
     @Autowired
     EmployeeRepository er;
 
-    @GetMapping("/public/testemtdoido")
-    public List<EmployeeMaster> wtherealfuck(){
-        return er.findAllPlusExperience();
-    }
-
     @GetMapping("/admin/employee-list")
     public List<EmployeeMaster> employeeList(){
         return employeeService.returnAllEmployees();
@@ -79,5 +74,7 @@ public class EmployeeController {
         }
 
     }
+
+
 
 }

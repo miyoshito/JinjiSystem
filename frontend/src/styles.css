@@ -1,9 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+JP|Noto+Serif+JP');
-/*@import '../node_modules/bootstrap/dist/css/bootstrap.min.css';*/
 @import './assets/css/boxes.css';
 @import "~@ng-select/ng-select/themes/default.theme.css";
+@import "../node_modules/ngx-bootstrap/datepicker/bs-datepicker.css";
 
 
 

@@ -1,6 +1,8 @@
 package aimyamaguchi.co.jp.aimspringsql.authfilters;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,10 +10,11 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
+import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,8 +22,7 @@ import org.springframework.stereotype.Component;
 
 import aimyamaguchi.co.jp.aimspringsql.security.Roles;
 import aimyamaguchi.co.jp.aimspringsql.security.UserDetailsServiceImpl;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
+
 
 @Component
 public class JwtTokenProvider {
@@ -43,19 +45,17 @@ public class JwtTokenProvider {
 
       String token = JWT.create()
       .withSubject(username)
+      .withClaim("role", roles.getRoledesc())
       .withIssuedAt(now)
       .withExpiresAt(validity)
       .sign(kee);  
     return "Bearer "+token;  
 
-    /*String token = Jwts.builder()//
-        .setClaims(claims)//
-        .setIssuedAt(now)//
-        .setExpiration(validity)//
-        .signWith(kee)
-        .compact();
-    return "Bearer "+token;
-    */
+  }
+
+  public String getRole(String token){
+    Claim claim = JWT.decode(token).getClaim("role");
+    return claim.asString();
   }
 
     public Authentication getAuthentication(String token) {
@@ -72,7 +72,6 @@ public class JwtTokenProvider {
   }
 
   public String getUsername(String token) {
-    //return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
     return JWT.decode(token).getSubject();
   }
 

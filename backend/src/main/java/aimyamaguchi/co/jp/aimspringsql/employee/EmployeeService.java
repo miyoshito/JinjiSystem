@@ -3,6 +3,7 @@ package aimyamaguchi.co.jp.aimspringsql.employee;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
+import java.lang.CharSequence;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -104,14 +105,7 @@ public class EmployeeService{
 
         String token = reqs.getHeader("authorization");
 
-        if (employee.getShainId() != ""){
-
-        if (!passwordEncoder.matches(
-                employee.getPassword(),
-                employeeRepository.findByShainId(employee.getShainId()).getShainPassword())){
-            employee.setShainPassword(passwordEncoder.encode(employee.getPassword()));
-            employeeRepository.save(employee);
-        } else
+        if (!employee.getShainId().equals("")){
             employeeRepository.save(employee);
         } else {
             Long nextSeq = seq.findBySeqTablename("m_shain").getSeqValue();
@@ -123,13 +117,28 @@ public class EmployeeService{
                 employee.setShainPassword(passwordEncoder.encode(employee.getPassword()));
             Date dt = new Date();
             employee.setShainRegisterDate(dt);
-            //employee.setShainRegisteredBy(employeeRepository.findByShainId(jwtTokenProvider.getUsername(token)).getShainName());
             employeeRepository.saveAndFlush(employee);
 
             ResumeModel res = new ResumeModel();
             res.setEmployee(employee);
             resumeRepository.save(res);
         }
+    }
+
+    public ResponseEntity<String>changePassword(String shainid, String oldPassword, String newPassword){
+        EmployeeMaster user = employeeRepository.findByShainId(shainid);
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        if(passwordEncoder.matches((CharSequence) oldPassword, user.getPassword())) {
+            user.setShainPassword(passwordEncoder.encode(newPassword));
+            employeeRepository.save(user);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+    }
+
+    public ResponseEntity<String>resetPassword(){
+        return null;
     }
 
 

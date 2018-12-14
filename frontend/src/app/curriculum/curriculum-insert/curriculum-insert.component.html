@@ -25,27 +25,39 @@
       <input type="text" class="form-control form-control" formControlName="customer">
     </div>
   </div>
-
-  <div class="row">
-    <div class="col-md-4">
-      <span>業種</span>
-      <input type="text" class="form-control">
+  <ng-container *ngIf="industryDropdown$ | async; let industry">
+    <div class="row">
+      <div class="col-md-4">
+        <span>業種</span>
+        <select (change)="changeChilds($event.target.value)" class="custom-select">
+          <option value="999999" disabled>業種を選んで下さい</option>
+          <option *ngFor="let i of industry" value="{{i.id}}">{{i.tdesc}}</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <span>業務区分</span>
+        <select class="custom-select" *ngIf="typeSelected$ | async">
+          <option *ngFor="let icss of industry[type].industryClass" value="{{icss.classId}}">{{icss.desc}}</option>
+        </select>
+        <input type="text" class="form-control" *ngIf="!(typeSelected$ | async)" value="業種を選んで下さい" readonly>
+      </div>
     </div>
-    <div class="col-md-4">
-      <span>業務区分</span>
-      <input type="text" class="form-control">
-    </div>
-  </div>
-
-
-  <div class="row">
-    <div class="col-md-8">
-      <span>対象業務</span>
-      <input type="text" class="form-control">
-    </div>
-  </div>
+  </ng-container>
 
   <ng-container *ngIf="data$ | async; let data">
+    <div class="row">
+      <div class="col-md-8">
+        <span>対象業務</span>
+        <input type="text" class="form-control">
+      </div>
+      <div class="col-md-4">
+        <span>役割</span>
+        <select class="custom-select">
+          <option *ngFor="let role of data.ASSIGN" value="{{role.id}}">{{role.desc}}</option>
+        </select>
+      </div>
+    </div>
+
     <div class="row">
       <div class="col-md-4">
         <span>開発機種／メーカー</span>
@@ -88,5 +100,36 @@
       </div>
     </div>
   </ng-container>
+
+  <div class="row">
+    <div class="col-md-4">
+      <span>期間</span>
+      <div class="input-group">
+          <input type="text"
+          class="form-control"
+          [bsConfig]="bsConfig"
+          #dp="bsDatepicker"
+          placement="top"
+          bsDatepicker>
+          <div class="input-group-prepend">
+            <span class="input-group-text">~</span>
+          </div>
+          <input type="text"
+          class="form-control"
+          [bsConfig]="bsConfig"
+          placement="top"
+          #dp="bsDatepicker"
+          bsDatepicker >
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <button class="btn btn-primary">更新</button>
+      <button class="btn btn-primary">行削除</button>
+    </div>
+  </div>
+
 
 </form>

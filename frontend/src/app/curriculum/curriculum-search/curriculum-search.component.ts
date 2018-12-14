@@ -4,6 +4,7 @@ import { CurriculumService } from '../curriculum.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { atLeastOne } from 'src/app/validators/atleastOne';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-curriculum-search',
@@ -13,6 +14,7 @@ import { Router } from '@angular/router';
 export class CurriculumSearchComponent implements OnInit {
 
   data$: Observable<any>
+  industry$: Observable<any>
 
   searchForm: FormGroup
   age = new Array
@@ -27,6 +29,7 @@ export class CurriculumSearchComponent implements OnInit {
     }
     this.buildSearchForm()
     this.data$ = this.curriculumService.getPropertiesList()    
+    this.industry$ = this.curriculumService.getBusinessLogic()
   }
 
   doSearch(){
@@ -35,7 +38,6 @@ export class CurriculumSearchComponent implements OnInit {
       return
     }
     this.curriculumService.searchShokumuRireki(this.searchForm.value)
-    this._router.navigate(['/admin/shokumurirekisho/list'])
   }
 
 

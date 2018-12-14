@@ -3,10 +3,7 @@ package aimyamaguchi.co.jp.aimspringsql.curriculum;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -14,15 +11,31 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
+@EqualsAndHashCode
 @Embeddable
-@Data
 @ToString
 public class IndustryKeys implements Serializable{
 
-
-    private Long industryid;
+    @ManyToOne
+    @JoinColumn(name="INDUSTRY_TYPE_ID")
+    private INDUSTRYData industryid;
 
     @Column(name="INDUSTRY_CLASS_ID")
-    private Long classid; //
+    private Long classid;
 
+    public INDUSTRYData getIndustryid() {
+        return industryid;
+    }
+
+    public void setIndustryid(INDUSTRYData industryid) {
+        this.industryid = industryid;
+    }
+
+    public Long getClassid() {
+        return classid;
+    }
+
+    public void setClassid(Long classid) {
+        this.classid = classid;
+    }
 }

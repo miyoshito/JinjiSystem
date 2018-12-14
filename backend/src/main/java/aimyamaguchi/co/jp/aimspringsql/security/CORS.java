@@ -25,7 +25,6 @@ public class CORS{
         config.addAllowedMethod("DELETE");        
 
         config.addExposedHeader("Authorization");
-        config.addExposedHeader("Displayname");
         config.addAllowedHeader("Authorization");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);

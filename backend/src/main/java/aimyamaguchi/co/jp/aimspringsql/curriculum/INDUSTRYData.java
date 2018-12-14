@@ -1,9 +1,12 @@
 package aimyamaguchi.co.jp.aimspringsql.curriculum;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -21,15 +24,9 @@ public class INDUSTRYData {
     private String tdesc;
     @Column(name="ACTIVE")
     private boolean active;
-
-    @OneToMany(mappedBy = "industryid")
-    @JsonIgnore
-    private Set<INDCLASSIFICATIONData> industryClass;
-
-
-    /*
-    @OneToMany(mappedBy = "industryType")
-    private List<CurriculumModel> curriculum;
-    */
+    @OneToMany(mappedBy = "id.industryid")
+    private List<INDCLASSIFICATIONData> industryClass = new ArrayList<>();
 
 }
+
+
