@@ -10,10 +10,13 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 @EqualsAndHashCode
 @Embeddable
 @ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class IndustryKeys implements Serializable{
 
     @ManyToOne

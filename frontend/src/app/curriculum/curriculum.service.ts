@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, AsyncSubject, BehaviorSubject } from 'rxjs';
-import { Data } from '../interfaces/data';
+import { Data, cvForm } from '../interfaces/data';
 import { map } from 'rxjs/operators';
 
 import { PUBLIC_URL, ADMIN_URL } from '../url-settings'
-
-import { cvSearchForm } from 'src/app/curriculum/curriculum-search/curriculum-search.component'
 import { Employee, Curriculum } from '../interfaces/employee';
 import { Router } from '@angular/router';
 
@@ -36,7 +34,15 @@ export class CurriculumService {
     return this._http.get<any[]>(PUBLIC_URL + '/industry-params')
   }
 
-  searchShokumuRireki(params: cvSearchForm) {
+  insertShokumuAttempt(cv: any){
+    return this._http.post<any>(ADMIN_URL+'/shokureki/add',cv,{observe: 'response'}).subscribe()
+  }
+
+  deleteShokumuAttempt(sid: number){
+    return this._http.put<any>(ADMIN_URL + '/shokureki/delete?sid='+sid, null, {observe: 'response'}).subscribe()
+  }
+
+  searchShokumuRireki(params: cvForm) {
     this._http.get<Employee[]>(ADMIN_URL + '/shokureki/search?'
       + 'id=' + params.id
       + '&n=' + params.name
@@ -70,8 +76,6 @@ export class CurriculumService {
         console.log(err)
       })
   }
-
-
 }
 
 export interface Gambiarra{

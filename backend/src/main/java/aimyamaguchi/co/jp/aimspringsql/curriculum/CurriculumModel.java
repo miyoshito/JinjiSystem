@@ -18,7 +18,8 @@ public class CurriculumModel {
 
     @Id
     @Column(name="CV_ID")
-    private long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(name="CV_START")
     private LocalDate startdate;
@@ -37,7 +38,7 @@ public class CurriculumModel {
 
     @Transient
     private Long experienceTime;
-
+    @Transient
     public Long getExperienceTime(){
         Period period = Period.between(this.startdate, this.enddate);
         if(period.getYears() > 0){
@@ -51,14 +52,25 @@ public class CurriculumModel {
 
     @Transient
     public String industryClass;
-
     @Transient
     public String industryType;
-
+    @Transient
+    private Long industryTypeId;
+    @Transient
+    private Long industryClassId;
+    @Transient
+    public Long getIndustryTypeId() {
+        return this.industryClassData.getId().getIndustryid().getId();
+    }
+    @Transient
+    public Long getIndustryClassId() {
+        return this.industryClassData.getId().getClassid();
+    }
+    @Transient
     public String getIndustryType(){
         return this.industryClassData.getId().getIndustryid().getTdesc();
     }
-
+    @Transient
     public String getIndustryClass(){
         return this.industryClassData.getDesc();
     }

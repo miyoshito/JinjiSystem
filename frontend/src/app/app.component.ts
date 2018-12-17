@@ -36,7 +36,7 @@ export class AppComponent implements OnInit{
     })
     let token: string = localStorage.getItem('currentUser')
     if(!this._authService.isTokenExpired(token) || token != null){
-        this._profileService.cacheUser()
+        this._profileService.getLoggedInUserData()
     } else {
       this._loginService.logout()
     }

@@ -18,3 +18,24 @@ export class Data {
         this.active = active
     }
 }
+
+export interface cvForm{
+    id: string,
+    name: string,
+    kana: string,
+    recruit: string,
+    age: string
+    operator: string
+    experience: string
+    customerName: string,
+    indType: string,
+    targetBusiness: string,
+    dbms: number[]
+    os: number[]
+    lang: number[]
+    tools: number[]
+    response: number[]
+    maker: number[]
+    role: string
+  }
+

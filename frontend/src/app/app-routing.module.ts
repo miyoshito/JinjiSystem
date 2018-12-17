@@ -39,7 +39,9 @@ const routes: Routes = [
   //URL de direcionamento padrao de todos os usuarios
   {path: 'profile', children:[
     {path: '', component: EmployeeMasterComponent},
-    {path: 'shokumurireki', component: CurriculumDetailsComponent},
+    {path: 'shokumurirekisho', component: CurriculumDetailsComponent},
+    {path: 'shokumurirekisho/add', component: CurriculumInsertComponent},
+    {path: 'shokumurirekisho/edit/:shid', component: CurriculumInsertComponent},
     {path: 'skillmap', component: SkillMapComponent},
     {path: 'qualifications', component: QualificationsComponent},
     {path: 'studycourses', component: StudycourseComponent},

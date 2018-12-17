@@ -1,6 +1,8 @@
 package aimyamaguchi.co.jp.aimspringsql.controllers;
 
 import aimyamaguchi.co.jp.aimspringsql.authfilters.CustomException;
+import aimyamaguchi.co.jp.aimspringsql.curriculum.CurriculumDAO;
+import aimyamaguchi.co.jp.aimspringsql.curriculum.CurriculumModel;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.CurriculumService;
 import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
 import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeRepository;
@@ -11,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.ws.Response;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.List;
 
 @RestController
@@ -23,6 +27,27 @@ public class CurriculumController {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @PostMapping("/shokureki/add")
+    public ResponseEntity<String> insertcv(@RequestBody CurriculumDAO cv){
+
+        try {
+            cs.insertCV(cv);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (CustomException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/shokureki/delete")
+    public ResponseEntity<String> deleteShokumu(@RequestParam(value="sid", required = true) Long sid){
+    try {
+        cs.softDeleteCV(sid);
+        return new ResponseEntity<>(HttpStatus.OK);
+    } catch (CustomException e) {
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
     @GetMapping("/shokureki/search")
@@ -44,6 +69,7 @@ public class CurriculumController {
             @RequestParam(value = "cm", required = false) String customerName,
             @RequestParam(value = "tb", required = false) String targetBusiness
     ) {
+        System.out.println(kata);
         try {
             List<String> results = cs.searchForCV(id, name, kata, recruit, age, operator, experience, indType, dbms, os, lang, tools, response, maker, customerName, targetBusiness);
             return new ResponseEntity<>(employeeRepository.findByShainIdIn(results), HttpStatus.OK);

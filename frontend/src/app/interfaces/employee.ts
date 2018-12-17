@@ -47,9 +47,12 @@ export interface Curriculum{
     experienceTime: number
     customer: string
     active: boolean
-    industry: Industry
-    industryClass: IndustryClass
+    industryType: String
+    industryClass: String
+    industryTypeId: number
+    industryClassId: number
     targetBusiness: string
+    assignData: DataCommons
     makerData: DataCommons[]
     osData: DataCommons[]
     dbmsData: DataCommons[]
@@ -57,6 +60,7 @@ export interface Curriculum{
     langData: DataCommons[]
     toolsData: DataCommons[]
 }
+
 export interface DataCommons{
     id: number
     desc: string

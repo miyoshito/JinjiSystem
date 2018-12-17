@@ -1,5 +1,6 @@
 package aimyamaguchi.co.jp.aimspringsql.curriculum;
 
+import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +33,11 @@ public class CurriculumService {
     IndustryRepository indList;
     @Autowired
     AssignRepository assign;
+    @Autowired
+    EmployeeRepository er;
+
+    @Autowired
+    CurriculumInterface ci;
 
     public Map<String, Object> generateCvMap(){
 
@@ -73,7 +79,7 @@ public class CurriculumService {
         ArrayList<String> queryParam = new ArrayList<>();
 
         if (validator(id)) queryParam.add("and m.sha_no = '"+id+"'\n");
-        if (validator(name)) queryParam.add("and m.sha_kana like '%"+name+"%'\n");
+        if (validator(name)) queryParam.add("and m.sha_name like '%"+name+"%'\n");
         if (validator(kana)) queryParam.add("and m.sha_kana like '%"+kana+"%'\n");
         if (validator(recruit)) queryParam.add("and m.sha_recruit = '"+recruit+"'\n");
         if (validator(age)) queryParam.add("and year(getdate()) - year(m.sha_birthday) = "+age+"\n");
@@ -157,14 +163,59 @@ public class CurriculumService {
                 +"left outer join m_gykubun gyk on sho.cv_industry_class = gyk.industry_class_id\n"
                 + joins
                 + "\nwhere\n"
-                + "gyk.industry_type_id = gyo.industry_type_id \n"
+                + "gyk.industry_type_id = gyo.industry_type_id\n"
                 + param);
 
         return query.getResultList();
     }
 
+    public void softDeleteCV(Long id){
+        Optional<CurriculumModel> cv = ci.findById(id);
+        if (cv.isPresent()) {
+            cv.get().setDeleted(true);
+            ci.save(cv.get());
+        }
+    }
+
+    public void insertCV(CurriculumDAO cv){
+        CurriculumModel shokureki = new CurriculumModel();
+
+        if (validator(cv.getId())) {
+            shokureki.setId(cv.getId());
+        } else {
+            shokureki.setId(null);
+        }
+
+        shokureki.setCustomer(cv.getCustomer());
+        shokureki.setAssignData(assign.getOne(cv.getAssignData()));
+        shokureki.setEmployee_id(er.findByShainId(cv.getEmployee_id()));
+        shokureki.setStartdate(cv.getStartdate());
+        shokureki.setEnddate(cv.getEnddate());
+        shokureki.setTargetbusiness(cv.getTargetbusiness());
+        shokureki.setActive(true);
+
+        IndustryKeys k = new IndustryKeys();
+        k.setIndustryid(industry.getOne(cv.getIndustryType()));
+        k.setClassid(cv.getIndustryClass());
+
+        INDUSTRYData d = industry.findById(cv.getIndustryType()).orElse(null);
+        shokureki.setIndustryClassData(indList.findOneById(k));
+        shokureki.setLangData(cv.getLangData());
+        shokureki.setOsData(cv.getOsData());
+        shokureki.setToolsData(cv.getToolsData());
+        shokureki.setDbmsData(cv.getDbmsData());
+        shokureki.setResponseData(cv.getResponseData());
+        shokureki.setMakerData(cv.getMakerData());
+
+        ci.save(shokureki);
+    }
+
+
     private boolean validator(String value){
         return (value != null && !value.equals(""));
+    }
+    private boolean validator(Long value){
+        return (value != null);
     }
 
 }

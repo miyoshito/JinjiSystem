@@ -31,7 +31,15 @@ export class ProfileService {
 
   public getLoggedInUserData(){
     return this._http.get<Employee>(API_URL+'/api/se/getmyinfos',
-    {observe: 'response'})
+    {observe: 'response'}).subscribe(data =>{
+    this._cacheUserSource.next(data.body)
+    this._broadcastService.pushAuthentication(true)
+    this._broadcastService.pushAuthorization(data.body.role.roledesc)
+    },
+    err =>{    
+      this._loginService.logout()
+      console.log(err)
+    })
     //considerando que o HttpInterceptor vai mandar meu token pro sistema.
   }
 
@@ -39,18 +47,6 @@ export class ProfileService {
     return this._http.get<Employee>(ADMIN_URL+'/getprofile/'+id)
   }
 
-  public cacheUser(){  
-  this.getLoggedInUserData().subscribe(data =>{ 
-    this._cacheUserSource.next(data.body)
-    this._broadcastService.pushAuthentication(true)
-    this._broadcastService.pushAuthorization(data.body.role.roledesc)
-  },
-  err =>{    
-    this._loginService.logout()
-    console.log(err)
-  })
-
-  }
 
   public clearLoggedUser(){
     this.isAuthenticated$.next()

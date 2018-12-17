@@ -1,9 +1,14 @@
+<div *ngIf="profileSelected$ | async; let user">
 <div class="row">
     <div class="col-md-6">
       <h3>職務経歴書詳細画面</h3>
     </div>
-  </div>
-  <div *ngIf="profileSelected$ | async; let user">
+    <div class="col-md-3"></div>
+    <div class="col-md-3">
+        <span>登録日：{{user.shainJoinedDate | date:'shortDate'}}</span><br />
+        <span>更新日：{{user.shainJoinedDate | date:'shortDate'}}</span>
+      </div>
+    </div>
     <div class="row">
       <div class="col-md-3">
         <span><b>社員番号:</b> </span><span>{{user.shainId}}</span>
@@ -29,7 +34,7 @@
     </div>
     <br/>
     <div class="row">
-        <table class="table table-bordered">
+        <table class="table table-bordered table-hover">
             <thead>
               <th style="width: 10%">顧客名</th>
               <th style="width: 10%">業種</th>
@@ -43,6 +48,7 @@
             </thead>
             <tbody>
               <tr *ngFor="let cv of user.curriculum">
+                <ng-container *ngIf="!cv.deleted">
                 <td>{{cv.customer}}</td>
                 <td>{{cv.industryType}}</td>
                 <td>{{cv.industryClass}}</td>
@@ -67,6 +73,7 @@
                 <td>
                     <button class="btn btn-outline-secondary" (click)="editSR(cv.id)">編集</button>
                 </td>
+                </ng-container>
               </tr>
             </tbody>
           </table>
@@ -76,6 +83,7 @@
       <button class="btn btn-outline-secondary" (click)="addNewSR()">職務経歴を追加する</button>
       </div>
     </div>
+    <!--
     <div class="row">
       <table class="table-bordered col-md-12">
         <thead  class="d-flex justify-content-center">
@@ -86,6 +94,7 @@
         </tbody>
       </table>    
     </div>
+    -->
     <div class="row d-flex justify-content-start">
       <button class="btn btn-outline-secondary">CSV出力</button>
     </div>

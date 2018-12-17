@@ -1,7 +1,6 @@
 <div class="row">
   <div class="col-md-6">
-    <h1>開発中です</h1>
-    <h3>職務経歴書編集画面</h3>
+    <h3>{{title}}</h3>
   </div>
 </div>
 <div *ngIf="loggedUser$ | async; let user">
@@ -22,21 +21,21 @@
   <div class="row">
     <div class="col-md-8">
       <span>顧客名</span>
-      <input type="text" class="form-control form-control" formControlName="customer">
+      <input type="text" class="form-control form-control" [ngClass]="{ 'is-invalid': submitted && f.customer.errors }" formControlName="customer">
     </div>
   </div>
   <ng-container *ngIf="industryDropdown$ | async; let industry">
     <div class="row">
       <div class="col-md-4">
         <span>業種</span>
-        <select (change)="changeChilds($event.target.value)" class="custom-select">
+        <select (change)="changeChilds($event.target.value)" [ngClass]="{ 'is-invalid': submitted && f.industryType.errors }" class="custom-select" formControlName="industryType">
           <option value="999999" disabled>業種を選んで下さい</option>
           <option *ngFor="let i of industry" value="{{i.id}}">{{i.tdesc}}</option>
         </select>
       </div>
       <div class="col-md-4">
         <span>業務区分</span>
-        <select class="custom-select" *ngIf="typeSelected$ | async">
+        <select class="custom-select" *ngIf="typeSelected$ | async" [ngClass]="{ 'is-invalid': submitted && f.industryClass.errors }" formControlName="industryClass">
           <option *ngFor="let icss of industry[type].industryClass" value="{{icss.classId}}">{{icss.desc}}</option>
         </select>
         <input type="text" class="form-control" *ngIf="!(typeSelected$ | async)" value="業種を選んで下さい" readonly>
@@ -48,11 +47,11 @@
     <div class="row">
       <div class="col-md-8">
         <span>対象業務</span>
-        <input type="text" class="form-control">
+        <input type="text" class="form-control" formControlName="targetbusiness" [ngClass]="{ 'is-invalid': submitted && f.targetbusiness.errors }">
       </div>
       <div class="col-md-4">
         <span>役割</span>
-        <select class="custom-select">
+        <select class="custom-select" formControlName="assignData" [ngClass]="{ 'is-invalid': submitted && f.assignData.errors }">
           <option *ngFor="let role of data.ASSIGN" value="{{role.id}}">{{role.desc}}</option>
         </select>
       </div>
@@ -62,19 +61,19 @@
       <div class="col-md-4">
         <span>開発機種／メーカー</span>
         <ng-select [items]="data.MAKER" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindLabel="desc"
-          placeholder="何々を選択して下さい。">
+        placeholder="何々を選択して下さい" formControlName="makerData">
         </ng-select>
       </div>
       <div class="col-md-4">
         <span>OS</span>
         <ng-select [items]="data.OS" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindLabel="desc"
-          placeholder="何々を選択して下さい。">
+        placeholder="何々を選択して下さい。" formControlName="osData">
         </ng-select>
       </div>
       <div class="col-md-4">
         <span>DBMS</span>
         <ng-select [items]="data.DBMS" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindLabel="desc"
-          placeholder="何々を選択して下さい。">
+        placeholder="何々を選択して下さい。" formControlName="dbmsData">
         </ng-select>
       </div>
     </div>
@@ -83,19 +82,19 @@
       <div class="col-md-4">
         <span>言語</span>
         <ng-select [items]="data.LANG" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindLabel="desc"
-          placeholder="何々を選択して下さい。">
+        placeholder="何々を選択して下さい。" formControlName="langData">
         </ng-select>
       </div>
       <div class="col-md-4">
         <span>ツール</span>
         <ng-select [items]="data.TOOLS" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindLabel="desc"
-          bindValue="tid" placeholder="何々を選択して下さい。">
+        placeholder="何々を選択して下さい。" formControlName="toolsData">
         </ng-select>
       </div>
       <div class="col-md-4">
         <span>担当作業</span>
         <ng-select [items]="data.DUTY" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindLabel="desc"
-          placeholder="何々を選択して下さい。">
+        placeholder="何々を選択して下さい。" formControlName="responseData">
         </ng-select>
       </div>
     </div>
@@ -110,6 +109,8 @@
           [bsConfig]="bsConfig"
           #dp="bsDatepicker"
           placement="top"
+          formControlName="startdate"
+          [ngClass]="{ 'is-invalid': submitted && f.startdate.errors }"
           bsDatepicker>
           <div class="input-group-prepend">
             <span class="input-group-text">~</span>
@@ -119,6 +120,8 @@
           [bsConfig]="bsConfig"
           placement="top"
           #dp="bsDatepicker"
+          formControlName="enddate"
+          [ngClass]="{ 'is-invalid': submitted && f.enddate.errors }"
           bsDatepicker >
       </div>
     </div>
@@ -126,10 +129,8 @@
 
   <div class="row">
     <div class="col-md-4">
-      <button class="btn btn-primary">更新</button>
-      <button class="btn btn-primary">行削除</button>
+      <button class="btn btn-primary" (click)="insertAttempt()">{{button}}</button>
+      <button *ngIf="authority === 'ADMIN'" class="btn btn-primary">行削除</button>
     </div>
   </div>
-
-
 </form>

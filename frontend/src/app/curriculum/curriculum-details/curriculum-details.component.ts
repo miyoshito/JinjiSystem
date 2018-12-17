@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BroadcastService } from 'src/app/broadcast.service';
 import { ProfileService } from 'src/app/profile/profile.service';
-import { Subscription, Observable } from 'rxjs';
+import { Subscription, Observable, Subject } from 'rxjs';
 import { Employee, Curriculum } from 'src/app/interfaces/employee';
 import { CurriculumService } from '../curriculum.service';
+import { takeUntil, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-curriculum-details',
@@ -13,14 +14,13 @@ import { CurriculumService } from '../curriculum.service';
 })
 export class CurriculumDetailsComponent implements OnInit {
 
-  //global vars
-  sub: Subscription //just for unsub after leaving the screen...
+  //global vars  
   loggedUser$: Observable<Employee>
   profileSelected$: Observable<Employee>
   admin$: boolean
   shainid: string
-  user: Employee
-
+  user: Employee  
+  isAlive$: Subject<boolean> = new Subject<boolean>()
   constructor(private _profileService: ProfileService,
               private _broadcastService: BroadcastService,
               private _router: Router,
@@ -28,36 +28,52 @@ export class CurriculumDetailsComponent implements OnInit {
               private _curriculumService: CurriculumService) { }
 
   ngOnInit() {
-    this.sub = this._route.parent.parent.url.subscribe( url => {
+    this._route.parent.parent.url.pipe(takeUntil(this.isAlive$), map(url =>{
       if (url[0].path === 'admin'){ //if you're navigating from /admin/ path        
-        this.shainid = this._route.snapshot.paramMap.get('id')
-        this.admin$ = true        
-        this.profileSelected$ = this._profileService.getUserProfile(this.shainid)
-        this.profileSelected$.subscribe(data =>{
-          this.user = data
-        })
-      } else { //any another route that casts /profile/
-        this.admin$ = false
-        this.profileSelected$ = this._profileService.cachedUser$
-        }
-      }) 
+      this.shainid = this._route.snapshot.paramMap.get('id')
+      this.admin$ = true        
+      this.profileSelected$ = this._profileService.getUserProfile(this.shainid)      
+    } else { //any another route that casts /profile/
+      this.admin$ = false
+      this._profileService.getLoggedInUserData()
+      this.profileSelected$ = this._profileService.cachedUser$
+      this.profileSelected$.pipe(takeUntil(this.isAlive$), map(usr =>{
+        this.shainid = usr.shainId
+      })).subscribe()
+    }
+    })).subscribe()
+
+
+  }
+  ngOnDestroy(){
+    this.isAlive$.next();
   }
 
   sumOf(cv: Curriculum[]): string{
     let total: number = 0
+    let years: number = 0
     for(let c of cv){
       total += c.experienceTime
     }
-    let years = (total/12).toFixed(0)
+    if(total >=12){
+    years = parseInt((total/12).toFixed(0))
+    }
     let month = (total % 12).toFixed(0)
+
     return years + '年 ' + month + 'ヶ月'
   }
 
   editSR(id: number){
-    console.log(id)
+    this.admin$ ? this._router.navigate(['/admin/shokumurirekisho/edit/'+this.shainid+'/'+id]) :
+    this._router.navigate(['profile/shokumurirekisho/edit/'+id])
   }
+
   addNewSR(){
-    console.log('add new sr')
+    this._broadcastService.userAuthorization$.pipe(takeUntil(this.isAlive$), map(auth =>{
+      if (auth === 'ADMIN' || auth === 'SOUMU') {
+        this._router.navigate(['admin/shokumurirekisho/'+this.shainid+'/add'])
+      } else this._router.navigate(['profile/shokumurirekisho/add'])
+    })).subscribe()
   }
 
 }
