@@ -39,13 +39,13 @@ public class CurriculumModel {
     @Transient
     private Long experienceTime;
     @Transient
-    public Long getExperienceTime(){
-        Period period = Period.between(this.startdate, this.enddate);
+    public Integer getExperienceTime(){
+        Period period = Period.between(this.startdate.withDayOfMonth(1), this.enddate.withDayOfMonth(1));
         if(period.getYears() > 0){
-            return Long.valueOf(period.getMonths() + (period.getYears() * 12));
+            return (period.getMonths() + (period.getYears() * 12));
         }
         else
-        return Long.valueOf(period.getMonths());
+        return period.getMonths();
     }
 
 

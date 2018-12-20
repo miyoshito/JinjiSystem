@@ -39,3 +39,30 @@ export interface cvForm{
     role: string
   }
 
+  export interface SkillMap {
+    DBMS: Childs[]
+    OS: Childs[]
+    DUTY: Childs[]
+    ASSIGN: Childs[]
+    LANG: Childs[]
+    MAKER: Childs[]
+    TOOLS: Childs[]
+  }
+
+  export interface Childs {
+    id: number
+    desc: string
+    active: boolean
+  }
+
+  export interface IndustryClass {
+    id: number
+    desc: string
+  }
+  
+  export interface IndustryType {
+    id: number
+    desc: string
+    class: IndustryClass[]
+  }
+  

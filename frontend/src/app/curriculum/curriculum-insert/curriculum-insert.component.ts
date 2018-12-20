@@ -87,6 +87,9 @@ export class CurriculumInsertComponent implements OnInit {
             t.curriculum.map((id, index) => {
               if (id.id === parseInt(this._route.snapshot.paramMap.get('shid'))) {
                 this.cvForm.patchValue(t.curriculum[index])
+                console.log('Start ->' +t.curriculum[index].startdate)
+                console.log('End ->' +t.curriculum[index].enddate)
+                console.log(this.cvForm.value)
                 this.cvForm.patchValue({
                   employee_id: t.shainId,
                   industryType: t.curriculum[index].industryTypeId,
@@ -102,7 +105,8 @@ export class CurriculumInsertComponent implements OnInit {
     this.bsConfig = Object.assign(
       { minMode: this.minMode },
       { containerClass: "theme-red" },
-      { dateInputFormat: 'YYYY/MMMM' });
+      { dateInputFormat: 'YYYY/MMMM' },
+      { dateRangeFormat: 'YYYY/MMMM'});
   }
 
 

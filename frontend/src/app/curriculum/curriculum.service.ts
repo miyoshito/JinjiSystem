@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, AsyncSubject, BehaviorSubject } from 'rxjs';
-import { Data, cvForm } from '../interfaces/data';
+import { Data, cvForm, SkillMap } from '../interfaces/data';
 import { map } from 'rxjs/operators';
 
 import { PUBLIC_URL, ADMIN_URL } from '../url-settings'
@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 export class CurriculumService {
 
   constructor(private _http: HttpClient,
-              private _router: Router) { }
+    private _router: Router) { }
 
   indType: Observable<any[]>
   indClass: Observable<any[]>
@@ -22,24 +22,20 @@ export class CurriculumService {
   userSource_: BehaviorSubject<any> = new BehaviorSubject<any>(this.employee);
   selectedUser$ = this.userSource_.asObservable()
 
-  industryObj: IndustryType[]
-  industryBase: IndustryType
-
-
   getPropertiesList(): Observable<any[]> {
     return this._http.get<any[]>(PUBLIC_URL + '/cvparams')
   }
   //temporary
-  getBusinessLogic(): Observable<any[]>{
+  getBusinessLogic(): Observable<any[]> {
     return this._http.get<any[]>(PUBLIC_URL + '/industry-params')
   }
 
-  insertShokumuAttempt(cv: any){
-    return this._http.post<any>(ADMIN_URL+'/shokureki/add',cv,{observe: 'response'}).subscribe()
+  insertShokumuAttempt(cv: any) {
+    return this._http.post<any>(ADMIN_URL + '/shokureki/add', cv, { observe: 'response' }).subscribe()
   }
 
-  deleteShokumuAttempt(sid: number){
-    return this._http.put<any>(ADMIN_URL + '/shokureki/delete?sid='+sid, null, {observe: 'response'}).subscribe()
+  deleteShokumuAttempt(sid: number) {
+    return this._http.put<any>(ADMIN_URL + '/shokureki/delete?sid=' + sid, null, { observe: 'response' }).subscribe()
   }
 
   searchShokumuRireki(params: cvForm) {
@@ -62,37 +58,18 @@ export class CurriculumService {
       + '&tb=' + params.targetBusiness
       , {
         observe: 'response'
-      }).subscribe(res =>{
-        if (!res.body.length){
+      }).subscribe(res => {
+        if (!res.body.length) {
           alert('結果が見つかりません')
           return
-      } else {
-        this.userSource_.next(res.body)
-        this._router.navigate(['/admin/shokumurirekisho/list'])
-      }
+        } else {
+          this.userSource_.next(res.body)
+          this._router.navigate(['/admin/shokumurirekisho/list'])
+        }
       },
-      err =>{
-        console.log('ERROR, ERROR, ERROR')
-        console.log(err)
-      })
+        err => {
+          console.log('ERROR, ERROR, ERROR')
+          console.log(err)
+        })
   }
 }
-
-export interface Gambiarra{
-  tid: number,
-  tdesc: string,
-  cid: number,
-  cdesc: string
-}
-
-export interface IndustryClass{  
-  id: number
-  desc: string
-}
-
-export interface IndustryType{
-  id: number
-  desc: string
-  class: IndustryClass[]
-}
-

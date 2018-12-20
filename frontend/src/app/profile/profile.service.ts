@@ -42,6 +42,7 @@ export class ProfileService {
     })
     //considerando que o HttpInterceptor vai mandar meu token pro sistema.
   }
+  
 
   public getUserProfile(id: string){
     return this._http.get<Employee>(ADMIN_URL+'/getprofile/'+id)

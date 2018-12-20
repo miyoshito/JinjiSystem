@@ -17,10 +17,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.CurriculumModel;
 import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.Where;
 
 @Data
 @Entity
+@ToString
 @Table(name="[M_SHOZOKU]", schema="[dbo]")
 public class AFFILIATIONData{
     

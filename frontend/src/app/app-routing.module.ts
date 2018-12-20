@@ -26,6 +26,7 @@ import { StudycourseComponent } from './studycourse/studycourse.component';
 import { RoleGuardService } from './guards/role-guard.service';
 import { ResumeSearchResultsComponent } from './resume/resume-search-results/resume-search-results.component';
 import { EmployeeSearchComponent } from './admin/employee-search/employee-search.component';
+import { SkillMapDetailsComponent } from './skill-map/skill-map-details/skill-map-details.component';
 
 const routes: Routes = [
   // Login routes
@@ -53,7 +54,7 @@ const routes: Routes = [
       {path: 'employee-master', component: EmployeeMasterComponent},
       {path: 'employee-list', component: EmployeeListComponent},
       {path: 'employee-search', component: EmployeeSearchComponent},
-      {path: 'skillmap', component: SkillMapComponent},
+      {path: 'skillmap', component: SkillMapDetailsComponent},
       {path: 'systemsettings', component: SystemSettingsComponent}, //temp
       //resumes...
       {path: 'rirekisho', children:[

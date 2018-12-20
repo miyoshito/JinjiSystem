@@ -3,16 +3,11 @@ package aimyamaguchi.co.jp.aimspringsql.controllers;
 import java.util.List;
 import java.util.Map;
 
-import aimyamaguchi.co.jp.aimspringsql.curriculum.CurriculumService;
-import aimyamaguchi.co.jp.aimspringsql.curriculum.INDCLASSIFICATIONData;
-import aimyamaguchi.co.jp.aimspringsql.curriculum.INDUSTRYData;
-import aimyamaguchi.co.jp.aimspringsql.curriculum.IndustryRepository;
+import aimyamaguchi.co.jp.aimspringsql.curriculum.*;
+import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
 import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins  = "*")
@@ -34,4 +29,10 @@ public class ConstantsController {
 
     @GetMapping("/public/industry-params")
     public List<INDUSTRYData>  getIndustryList() { return cv.getIndustryList(); }
+
+
+    @GetMapping("/public/theresnosense")
+    public List<SkillMap> asdfffgaa(@RequestParam(value = "wtf", required = true) String id){
+        return cv.fml(id);
+    }
 }

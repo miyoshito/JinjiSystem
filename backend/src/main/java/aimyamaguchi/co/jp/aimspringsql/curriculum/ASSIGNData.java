@@ -19,6 +19,9 @@ public class ASSIGNData {
         @Column(name="ACTIVE")
         private boolean active;
 
+        @Transient
+        private Integer experienceTime;
+
         @OneToMany(mappedBy="assignData")
         @JsonIgnore
         private List<CurriculumModel> curriculum;

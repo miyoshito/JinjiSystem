@@ -1,3 +1,4 @@
+<div class="container">
 <form [formGroup]="employeeForm" (ngSubmit)="submitForm()">
   <ng-container *ngIf="params$ | async; let data">
     <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="success$">
@@ -246,3 +247,4 @@
     </div>
   </ng-container>
 </form>
+</div>

@@ -20,9 +20,7 @@ export class EmployeeMasterService {
   searchSource: ReplaySubject<Employee[]> = new ReplaySubject<Employee[]>()
   searchResults$ = this.searchSource.asObservable()  
 
-  getEmployeeList(): Observable<Employee[]>{
-    return this._http.get<Employee[]>(ADMIN_URL+'/employee-list')
-  }  
+
   
   getViewRendering(): Observable<any>{
       return this._http.get<any>(PUBLIC_URL+'/employee-params')
@@ -38,6 +36,14 @@ export class EmployeeMasterService {
       throw err
     }
   )}
+
+  getAllShains(){
+    return this._http.get<Employee[]>(ADMIN_URL+'/employee-list', {observe: 'response'}).subscribe(
+      res => {
+        this.searchSource.next(res.body)
+      }
+    )
+  }  
 
   searchShain(id: string, name: string, kana: string, aff: number[]){
     let affs = ''

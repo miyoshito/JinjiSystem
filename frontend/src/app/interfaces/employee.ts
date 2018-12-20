@@ -47,6 +47,7 @@ export interface Curriculum{
     experienceTime: number
     customer: string
     active: boolean
+    deleted: boolean
     industryType: String
     industryClass: String
     industryTypeId: number

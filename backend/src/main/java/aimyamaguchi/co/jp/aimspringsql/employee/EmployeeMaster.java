@@ -10,6 +10,7 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,13 +22,11 @@ import lombok.Data;
 
 @Data
 @Entity
+@ToString
 @Table(name="[M_SHAIN]", schema="[DBO]")
 public class EmployeeMaster implements UserDetails, Serializable {
 
     private static final long serialVersionUID = 1L;
-
-
-	public EmployeeMaster(){}
 
     @Id
     @Column(name="SHA_NO", length=6, nullable=false)
@@ -55,7 +54,7 @@ public class EmployeeMaster implements UserDetails, Serializable {
     @Column(name="SHA_SEX", length=5, nullable=false)
     private String shainSex; //selectable key (hardcoded)
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany
     @JoinTable(name="SHA_SHOZOKU")
     private List<AFFILIATIONData> affiliation;
 

@@ -18,17 +18,12 @@ export class AppComponent implements OnInit{
   loggedUser$: Observable<Employee>
   isLoggedIn$: Boolean
   authorities$: Observable<String>
-
   
-  
-
   constructor(private _broadcastService: BroadcastService,
               private _router: Router,
               private _authService: AuthService,
               private _profileService: ProfileService,
               private _loginService: LoginService){}
-
-  
   
   ngOnInit(): void {
     this._broadcastService.userAuthenticated$.subscribe(check =>{
@@ -40,6 +35,7 @@ export class AppComponent implements OnInit{
     } else {
       this._loginService.logout()
     }
+    
   }
 
   authValidate(){

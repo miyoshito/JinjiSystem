@@ -24,13 +24,7 @@ export class ResumeListComponent implements OnInit {
 
 
   ngOnInit() {
-    this._employeeService.getEmployeeList().subscribe(list =>{
-      this.dataSource.data = list
-
-      list.forEach(val=>{
-        console.log(val)
-      })
-    })
+    
   }
 
   editRirekisho(id: number){

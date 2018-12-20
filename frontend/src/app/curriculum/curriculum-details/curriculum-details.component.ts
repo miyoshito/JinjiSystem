@@ -53,14 +53,16 @@ export class CurriculumDetailsComponent implements OnInit {
     let total: number = 0
     let years: number = 0
     for(let c of cv){
+      if(!c.deleted){
       total += c.experienceTime
+      }
     }
     if(total >=12){
     years = parseInt((total/12).toFixed(0))
+    let months = parseInt((total % 12).toFixed(0))
+    return years + '年 ' + months + 'ヶ月'
     }
-    let month = (total % 12).toFixed(0)
-
-    return years + '年 ' + month + 'ヶ月'
+    else return total + 'ヶ月'
   }
 
   editSR(id: number){

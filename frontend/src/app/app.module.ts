@@ -38,7 +38,7 @@ import { ResumeAddComponent } from './resume/resume-add/resume-add.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { SkillMapComponent } from './skill-map/skill-map.component';
 import { SystemSettingsComponent } from './admin/system-settings/system-settings.component';
-import { SkillMapSearchComponent } from './admin/skill-map-search/skill-map-search.component';
+import { SkillMapSearchComponent } from './skill-map/skill-map-search/skill-map-search.component';
 import { ValidatorsComponent } from './validators/validators.component';
 import { StudycourseComponent } from './studycourse/studycourse.component';
 import { QualificationsComponent } from './qualifications/qualifications.component';
@@ -55,6 +55,7 @@ import { MonthPickerComponent } from './utils/month-picker/month-picker.componen
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { jaLocale } from 'ngx-bootstrap/locale';
+import { SkillMapDetailsComponent } from './skill-map/skill-map-details/skill-map-details.component';
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -85,7 +86,6 @@ defineLocale('ja',jaLocale)
     ResumeAddComponent,
     SkillMapComponent,
     SystemSettingsComponent,
-    SkillMapSearchComponent,
     ValidatorsComponent,
     StudycourseComponent,
     QualificationsComponent,
@@ -98,7 +98,9 @@ defineLocale('ja',jaLocale)
     LoadingDialogComponent,
     EmployeeSearchComponent,
     EmployeeDetailsComponent,
-    MonthPickerComponent
+    MonthPickerComponent,
+    SkillMapDetailsComponent,
+    SkillMapSearchComponent
   ],
   imports: [
     BrowserModule,

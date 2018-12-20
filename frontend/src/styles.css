@@ -16,6 +16,15 @@ th, td{
   font-weight: 400;
 }
 
+.vertical-text{
+  writing-mode: vertical-lr;
+  -webkit-writing-mode: vertical-lr;
+  -ms-writing-mode: vertical-lr;
+  text-orientation: use-glyph-orientation;
+  unicode-bidi: bidi-override;
+  /*font-family: monospace;*/
+}
+
 .fill-remaining-space{flex: 1 1 auto;}
 .custom-radio .custom-control-input:checked~.custom-control-label::before,
 .custom-radio .custom-control-input:checked~.custom-control-label::after{
@@ -28,7 +37,7 @@ th, td{
 }
 
 option{
-  font-size: 16px !important;
+  font-size: 15px !important;
 }
 
 .row{
@@ -36,8 +45,8 @@ option{
 }
 
 body, footer, header, main {
-  font-family: 'Noto Sans JP', sans-serif !important;
-  font-size: 16px !important;
+  /*font-family: 'Noto Sans JP', sans-serif !important;*/
+  font-size: 15px !important;
 }
 
 html, body {
