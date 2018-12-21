@@ -53,6 +53,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { jaLocale } from 'ngx-bootstrap/locale';
 import { SkillMapDetailsComponent } from './skill-map/skill-map-details/skill-map-details.component';
+import { SmLangColumnComponent } from './skill-map/skill-map-headers/sm-lang-column/sm-lang-column.component';
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -94,7 +95,8 @@ defineLocale('ja',jaLocale)
     EmployeeDetailsComponent,
     MonthPickerComponent,
     SkillMapDetailsComponent,
-    SkillMapSearchComponent
+    SkillMapSearchComponent,
+    SmLangColumnComponent
   ],
   imports: [
     BrowserModule,

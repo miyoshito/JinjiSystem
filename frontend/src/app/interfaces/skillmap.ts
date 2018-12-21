@@ -3,14 +3,7 @@ export interface SkillMapData{
     name: string
     katakana: string
     affiliation: string
-
-    lang: SkillMapParams[]
-    os: SkillMapParams[]
-    db: SkillMapParams[]
-    tools: SkillMapParams[]
-    maker: SkillMapParams[]
-    duty: SkillMapParams[]
-    industry: SkillMapParams[]
+    params: Map<String, SkillMapParams[]>
 }
 
 export interface SkillMapParams {    
@@ -34,25 +27,13 @@ export class SkillMapData{
         name: string,
         katakana: string,
         affiliation: string,
-        lang: SkillMapParams[],
-        os: SkillMapParams[],
-        db: SkillMapParams[],
-        tools: SkillMapParams[],
-        maker: SkillMapParams[],
-        duty: SkillMapParams[],
-        industry: SkillMapParams[]
+        params: Map<String, SkillMapParams[]>
     ){
         this.id = id
         this.name = name
         this.katakana = katakana
         this.affiliation = affiliation
-        this.lang = lang
-        this.os = os
-        this.db = db
-        this.tools = tools
-        this.maker = maker
-        this.duty = duty
-        this.industry = industry
+        this.params = params
     }
 
 }

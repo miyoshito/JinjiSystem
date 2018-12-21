@@ -54,16 +54,20 @@
             </th>
           </ng-container>
         </tr>
-        <ng-container *ngIf="mapping$ | async; let usr">
-        <tr *ngFor="let t of usr; let i = index">          
-          <td>{{t.affiliation}}</td>
-          <td>{{t.name}}</td>
-          <ng-container  *ngFor="let c of cc.LANG">
-            <td id="{{c.desc}}{{i}}"></td>
-          </ng-container>
-        </tr>
+  
+        <ng-container *ngIf="mapping$ | async; let smap">
+          <tr *ngFor="let item of smap">
+            <td>{{item.affiliation}}</td>
+            <td>{{item.name}}</td>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+            <td headers="Java">69</td>
+          </tr>
         </ng-container>
-        </ng-container>
+  
+      </ng-container>
     </table>
   
   </div>

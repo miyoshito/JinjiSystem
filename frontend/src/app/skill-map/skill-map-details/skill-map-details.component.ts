@@ -8,6 +8,7 @@ import { EmployeeMasterService } from 'src/app/admin/employee-master/employee-ma
 import { SkillMapData, SkillMapParams } from 'src/app/interfaces/skillmap';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/guards/auth.service';
+import { t } from '@angular/core/src/render3';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class SkillMapDetailsComponent implements OnInit {
               private _authService: AuthService) { }
 
   columnCount$: Observable<any[]>
-  mapping$: Observable<any[]>
+  mapping$: Observable<SkillMapData[]>
   myself: string
 
   displayMap: SkillMapData[] = []
@@ -32,6 +33,8 @@ export class SkillMapDetailsComponent implements OnInit {
   
 
   ngOnInit() {
+
+    
 
     this.columnCount$ = this._curriculumService.getPropertiesList()
     this.mapping$ = this._curriculumService.SkillMapSearchResults$
@@ -42,24 +45,12 @@ export class SkillMapDetailsComponent implements OnInit {
       ).subscribe()
       //remontando o mapa LOL
       this.mapping$.pipe(
-        map((d, i) =>{
-            this.displayMap.push(new SkillMapData(
-              d[i].id,
-              d[i].name,
-              d[i].name,
-              d[i].affiliation,
-              new SkillMapParams[0](d[i].params.lang.description, d[i].params.lang.experience),
-              new SkillMapParams[0](d[i].params.lang.description, d[i].params.lang.experience),
-              new SkillMapParams[0](d[i].params.lang.description, d[i].params.lang.experience),
-              new SkillMapParams[0](d[i].params.lang.description, d[i].params.lang.experience),
-              new SkillMapParams[0](d[i].params.lang.description, d[i].params.lang.experience),
-              new SkillMapParams[0](d[i].params.lang.description, d[i].params.lang.experience),
-              new SkillMapParams[0](d[i].params.lang.description, d[i].params.lang.experience))
-              )
+        map((sm, index) =>{
+          sm[index].params.forEach(param =>{
           })
+            //document.getElementById(la.description+index).setAttribute('value',la.experience.toString())
+        })               
       ).subscribe()
-
-      console.log(this.displayMap)
     }
   }
 
@@ -71,5 +62,8 @@ export class SkillMapDetailsComponent implements OnInit {
    
 
 }
-
+export interface ggg{
+  description: string
+  experience: number
+}
 

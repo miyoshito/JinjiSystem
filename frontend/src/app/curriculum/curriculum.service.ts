@@ -55,7 +55,7 @@ export class CurriculumService {
     (!sh) ? sh = '' : sh;
     (!kt) ? kt = '' : kt;
 
-    this._http.get<any[]>(API_URL + '/api/se/skillmapbuilder?'
+    this._http.get<SkillMapData[]>(API_URL + '/api/se/skillmapbuilder?'
     + 'id=' + id
     + '&nm=' + name
     + '&sh=' + sh
