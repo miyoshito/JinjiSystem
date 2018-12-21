@@ -30,7 +30,9 @@ export class CurriculumListComponent implements OnInit {
   sumOf(cv: Curriculum[]): number{
     let total: number = 0
     for(let c of cv){
+      if (!c.deleted){
       total += c.experienceTime
+      }
     }
     return total
   }
@@ -39,8 +41,10 @@ export class CurriculumListComponent implements OnInit {
     let data: String[] = []
     
     for(let c of cv){
+      if (!c.deleted){
       c.osData.forEach(o =>{data.push(' '+o.desc)})
       c.dbmsData.forEach(d =>{data.push(' '+d.desc)})
+      }
     }
     let correctedData = Array.from(new Set(data))
     return correctedData
@@ -49,8 +53,10 @@ export class CurriculumListComponent implements OnInit {
   getToolsandLang(cv: Curriculum[]) {
     let data: String[] = []
     for(let c of cv){
+      if (!c.deleted){
       c.makerData.forEach(m =>{data.push(' '+m.desc)})
       c.toolsData.forEach(t =>{data.push(' '+t.desc)})
+      }
     }
     let correctedData = Array.from(new Set(data))
     return correctedData

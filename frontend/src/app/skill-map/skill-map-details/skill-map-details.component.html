@@ -1,4 +1,4 @@
-<div class="row border border-danger">
+<div class="row border border-danger" style="min-height: 80vh; margin-top: 0px;">
   <table class="table-responsive table-bordered table-hover">
     <ng-container *ngIf="columnCount$ | async; let cc">
       <tr>
@@ -15,9 +15,11 @@
         <th>
           <div style="width: 150px">所属</div>
         </th>
-        <th><div style="width: 150px">名前</div></th>
+        <th>
+          <div style="width: 150px">名前</div>
+        </th>
         <ng-container *ngFor="let lang of cc.LANG">
-          <th>
+          <th id="{{lang.desc}}">
             <div class="vertical-text">{{lang.desc}}</div>
           </th>
         </ng-container>
@@ -51,10 +53,20 @@
           </th>
         </ng-container>
       </tr>
+
+      <ng-container *ngIf="mapping$ | async; let smap">
+        <tr *ngFor="let item of smap">
+          <td>{{item.affiliation}}</td>
+          <td>{{item.name}}</td>
+          <td>3</td>
+          <td>3</td>
+          <td>3</td>
+          <td>3</td>
+          <td headers="Java">69</td>
+        </tr>
+      </ng-container>
+
     </ng-container>
-    <tr *ngFor="let users of selectedUsers$ | async">
-     <td>{{users.affiliation?.desc}}</td>
-     <td>{{users.shainName}}</td>
-    </tr>
   </table>
+
 </div>

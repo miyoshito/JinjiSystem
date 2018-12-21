@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SearchForm } from '../resume-details-interface';
 import { ResumeService } from '../resume.service';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
 import { ProfileService } from 'src/app/profile/profile.service';
 import { LoginService } from 'src/app/login/login.service';
+import { atLeastOne } from 'src/app/validators/atleastOne';
 
 @Component({
   selector: 'app-resume-search',
@@ -39,10 +40,8 @@ export class ResumeSearchComponent implements OnInit {
 
   
   searchAttempt(){
-    this.searchParam = this.searchForm.value    
-    if( this.searchParam.id == '' && this.searchParam.name == '' && this.searchParam.kana == '' && this.searchParam.recruit == ''
-    && this.searchParam.age == '' && this.searchParam.study == '' && this.searchParam.bunri == '' && this.searchParam.career == ''
-    && this.searchParam.qualification == ''){
+    if (!this.searchForm.valid)
+    {
       alert ('atleast 1 field needs to be filled')
       return
     }    
@@ -75,7 +74,7 @@ export class ResumeSearchComponent implements OnInit {
       bunri: [''],
       career: [''],
       qualification: [''],
-    })
+    }, {validator: atLeastOne(Validators.required)})
   }
 
 

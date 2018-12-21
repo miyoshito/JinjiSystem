@@ -20,13 +20,10 @@ import { AuthGuardService } from './guards/auth-guard.service';
 import { JwtModule } from '@auth0/angular-jwt';
 import { LoginGuardService } from './guards/login-guard.service';
 import { ProfileComponent } from './profile/profile.component';
-import { AdminComponent } from './admin/admin.component';
 import { EmployeeMasterComponent } from './admin/employee-master/employee-master.component';
-import { ResumeComponent } from './resume/resume.component';
 import { ResumeSearchComponent } from './resume/resume-search/resume-search.component';
 import { ResumeListComponent } from './resume/resume-list/resume-list.component';
 import { ResumeDetailsComponent } from './resume/resume-details/resume-details.component';
-import { CurriculumComponent } from './curriculum/curriculum.component';
 import { CurriculumSearchComponent } from './curriculum/curriculum-search/curriculum-search.component';
 import { CurriculumListComponent } from './curriculum/curriculum-list/curriculum-list.component';
 import { CurriculumDetailsComponent } from './curriculum/curriculum-details/curriculum-details.component';
@@ -70,13 +67,10 @@ defineLocale('ja',jaLocale)
     FooterComponent,
     HomeComponent,
     ProfileComponent,
-    AdminComponent,
     EmployeeMasterComponent,
-    ResumeComponent,
     ResumeSearchComponent,
     ResumeListComponent,
     ResumeDetailsComponent,
-    CurriculumComponent,
     CurriculumSearchComponent,
     CurriculumListComponent,
     CurriculumDetailsComponent,

@@ -5,12 +5,9 @@ import { HomeComponent } from './home/home.component';
 import { AuthGuardService } from './guards/auth-guard.service';
 import { LoginGuardService } from './guards/login-guard.service';
 import { ProfileComponent } from './profile/profile.component';
-import { AdminComponent } from './admin/admin.component';
 import { EmployeeMasterComponent } from './admin/employee-master/employee-master.component';
-import { ResumeComponent } from './resume/resume.component';
 import { ResumeDetailsComponent } from './resume/resume-details/resume-details.component';
 import { ResumeListComponent } from './resume/resume-list/resume-list.component';
-import { CurriculumComponent } from './curriculum/curriculum.component';
 import { CurriculumSearchComponent } from './curriculum/curriculum-search/curriculum-search.component';
 import { CurriculumListComponent } from './curriculum/curriculum-list/curriculum-list.component';
 import { CurriculumDetailsComponent } from './curriculum/curriculum-details/curriculum-details.component';
@@ -43,7 +40,7 @@ const routes: Routes = [
     {path: 'shokumurirekisho', component: CurriculumDetailsComponent},
     {path: 'shokumurirekisho/add', component: CurriculumInsertComponent},
     {path: 'shokumurirekisho/edit/:shid', component: CurriculumInsertComponent},
-    {path: 'skillmap', component: SkillMapComponent},
+    {path: 'skillmap', component: SkillMapDetailsComponent},
     {path: 'qualifications', component: QualificationsComponent},
     {path: 'studycourses', component: StudycourseComponent},
   ],canActivate:[AuthGuardService]},

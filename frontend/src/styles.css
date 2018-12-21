@@ -17,9 +17,9 @@ th, td{
 }
 
 .vertical-text{
-  writing-mode: vertical-lr;
-  -webkit-writing-mode: vertical-lr;
-  -ms-writing-mode: vertical-lr;
+  writing-mode: vertical-rl;
+  -webkit-writing-mode: vertical-rl;
+  -ms-writing-mode: vertical-rl;
   text-orientation: use-glyph-orientation;
   unicode-bidi: bidi-override;
   /*font-family: monospace;*/

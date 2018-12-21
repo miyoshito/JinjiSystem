@@ -1,15 +1,19 @@
 package aimyamaguchi.co.jp.aimspringsql.curriculum;
+import aimyamaguchi.co.jp.aimspringsql.employee.AFFILIATIONData;
 import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
 import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.*;
 
 import java.util.stream.Collectors;
+import static java.util.stream.Collectors.*;
+import java.util.stream.Stream;
 
 
 @Service
@@ -218,24 +222,55 @@ public class CurriculumService {
     private boolean validator(Long value){
         return (value != null);
     }
+    private boolean validator(Integer value){
+        return (value != null);
+    }
 
 
-    public List<SkillMap> fml(String id){
-
-        EmployeeMaster em = er.findByShainId(id);
+    public List<SkillMap> getSkillMap(List<String> id){
 
         List<SkillMap> lsm = new ArrayList<>();
-        lsm.add(new SkillMap(em.getShainId(), em.getShainName(), "fkinfield", buildSkillMapList(er.findByShainId(id))));
+        List<EmployeeMaster> eml = er.findByShainIdIn(id);
+        String affiliation;
+
+        for (EmployeeMaster em : eml){
+            affiliation = String.join("/", em.getAffiliation().stream().map(AFFILIATIONData::getDesc).collect(Collectors.toList()));
+
+            lsm.add(new SkillMap(em.getShainId(), em.getShainName(), affiliation, buildSkillMapList(em)));
+        }
 
         return lsm;
     }
 
+    public List<String> skillMapSearchParams(String id, String name, String kana, Integer affiliation){
+        ArrayList<String> queryParam = new ArrayList<>();
 
-    private Map<String, Map<String,SkillMapUtil>> buildSkillMapList(EmployeeMaster em){
+        if(validator(id)) queryParam.add("sha.sha_no = "+id+ " and");
+        if(validator(name)) queryParam.add("sha.sha_name like '%"+name+"%' and");
+        if(validator(kana)) queryParam.add("sha.sha_kana like '%"+kana+"%' and");
+        if(validator(affiliation)) queryParam.add("sho.affiliation_id = " +affiliation+ " and");
+
+        String param = String.join("\n", queryParam);
+
+        Query query = entityManager.createNativeQuery(
+                "SELECT DISTINCT\n" +
+                "sha_no\n" +
+                "from\n" +
+                "m_shain sha left join sha_shozoku ss\n" +
+                "on sha.sha_no = ss.employee_sha_no\n" +
+                "left join m_shozoku sho on ss.affiliation_affiliation_id = sho.affiliation_id\n" +
+                "where\n" + param.substring(0, param.length() -4));
+
+
+
+        return query.getResultList();
+    }
+
+    private Map<String, List<SkillMapUtil>> buildSkillMapList(EmployeeMaster em){
 
         Map<String, Map<String,SkillMapUtil>> params = new HashMap<>();
 
-        Map<String, SkillMapUtil> fml = new HashMap<>();
+        Map<String, List<SkillMapUtil>> fml = new HashMap<>();
         List<SkillMapUtil> langMap = new ArrayList<>();
         List<SkillMapUtil> makerMap = new ArrayList<>();
         List<SkillMapUtil> osMap = new ArrayList<>();
@@ -245,93 +280,137 @@ public class CurriculumService {
         List<SkillMapUtil> industryMap = new ArrayList<>();
 
         for(CurriculumModel cv : em.getCurriculum()) {
-            cv.getLangData().stream().map(LANGData::getDesc).forEach(l -> langMap.add(new SkillMapUtil(l,cv.getExperienceTime())));
-            cv.getMakerData().stream().map(MAKERData::getDesc).forEach(m -> makerMap.add(new SkillMapUtil(m,cv.getExperienceTime())));
-            cv.getOsData().stream().map(OSData::getDesc).forEach(os -> osMap.add(new SkillMapUtil(os, cv.getExperienceTime())));
-            cv.getDbmsData().stream().map(DBMSData::getDesc).forEach(db -> dbmsMap.add(new SkillMapUtil(db, cv.getExperienceTime())));
-            cv.getResponseData().stream().map(DUTYData::getDesc).forEach(db -> respMap.add(new SkillMapUtil(db, cv.getExperienceTime())));
-            cv.getToolsData().stream().map(TOOLSData::getDesc).forEach(db -> toolsMap.add(new SkillMapUtil(db, cv.getExperienceTime())));
+            if (!cv.isDeleted()) {
+                industryMap.add(new SkillMapUtil(cv.getIndustryType(), cv.getExperienceTime()));
+                cv.getLangData().stream().map(LANGData::getDesc).forEach(l -> langMap.add(new SkillMapUtil(l, cv.getExperienceTime())));
+                cv.getMakerData().stream().map(MAKERData::getDesc).forEach(m -> makerMap.add(new SkillMapUtil(m, cv.getExperienceTime())));
+                cv.getOsData().stream().map(OSData::getDesc).forEach(os -> osMap.add(new SkillMapUtil(os, cv.getExperienceTime())));
+                cv.getDbmsData().stream().map(DBMSData::getDesc).forEach(db -> dbmsMap.add(new SkillMapUtil(db, cv.getExperienceTime())));
+                cv.getResponseData().stream().map(DUTYData::getDesc).forEach(db -> respMap.add(new SkillMapUtil(db, cv.getExperienceTime())));
+                cv.getToolsData().stream().map(TOOLSData::getDesc).forEach(db -> toolsMap.add(new SkillMapUtil(db, cv.getExperienceTime())));
+            }
         }
-        //em.getCurriculum().forEach(cu -> industryMap.add(new SkillMapUtil(cu.industryType, cu.getExperienceTime())));
+        if (validator(industryMap.size())){
+            langMap.stream().collect(Collectors.groupingBy(SkillMapUtil::getDescription,Collectors.collectingAndThen(reducing((a,b) -> new SkillMapUtil(a.description, (a.experience += b.experience))),Optional::get)));
+            fml.put("LANG", langMap);
+        }
+        if (validator(langMap.size())) {
+            makerMap.stream().collect(Collectors.groupingBy(SkillMapUtil::getDescription,Collectors.collectingAndThen(reducing((a,b) -> new SkillMapUtil(a.description, (a.experience += b.experience))),Optional::get)));
+            fml.put("MAKER", makerMap);
+        }
+        if (validator(osMap.size())) {
+            osMap.stream().collect(Collectors.groupingBy(SkillMapUtil::getDescription,Collectors.collectingAndThen(reducing((a,b) -> new SkillMapUtil(a.description, (a.experience += b.experience))),Optional::get)));
+            fml.put("OS",osMap);
+        }
+        if(validator(dbmsMap.size())){
+            dbmsMap.stream().collect(Collectors.groupingBy(SkillMapUtil::getDescription,Collectors.collectingAndThen(reducing((a,b) -> new SkillMapUtil(a.description, (a.experience += b.experience))),Optional::get)));
+            fml.put("DBMS", dbmsMap);
+        }
+        if (validator(respMap.size())) {
+            respMap.stream().collect(Collectors.groupingBy(SkillMapUtil::getDescription,Collectors.collectingAndThen(reducing((a,b) -> new SkillMapUtil(a.description, (a.experience += b.experience))),Optional::get)));
+            fml.put("DUTY", respMap);
+        }
+        if (validator(toolsMap.size())) {
+            toolsMap.stream().collect(Collectors.groupingBy(SkillMapUtil::getDescription,Collectors.collectingAndThen(reducing((a,b) -> new SkillMapUtil(a.description, (a.experience += b.experience))),Optional::get)));
+            fml.put("TOOLS", toolsMap);
+        }
+        if (validator(toolsMap.size())) {
+            industryMap.stream().collect(Collectors.groupingBy(SkillMapUtil::getDescription,Collectors.collectingAndThen(reducing((a,b) -> new SkillMapUtil(a.description, (a.experience += b.experience))),Optional::get)));
+            fml.put("INDUSTRY", industryMap);
+        }
 
-        //LANG
+        return fml;
 
-        /*fml = industryMap.stream()
-                .collect(Collectors.groupingBy(SkillMapUtil::getDescription))
-                .entrySet().stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        e -> e.getValue().stream()
-                                .reduce((acc, val) -> new SkillMapUtil(acc.description, (acc.experience += val.experience)))
-                                .orElse(new SkillMapUtil(e.getKey(), 0))));*/
-
-//        params.put("INDUSTRY",fml);
-
-        fml = langMap.stream()
-                .collect(Collectors.groupingBy(SkillMapUtil::getDescription))
-                .entrySet().stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        e -> e.getValue().stream()
-                                .reduce((acc, val) -> new SkillMapUtil(acc.description, (acc.experience += val.experience)))
-                                .orElse(new SkillMapUtil(e.getKey(), 0))));
-        params.put("LANG", fml);
-        //MAKER
-        fml = makerMap.stream()
-                .collect(Collectors.groupingBy(SkillMapUtil::getDescription))
-                .entrySet().stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        e -> e.getValue().stream()
-                                .reduce((acc, val) -> new SkillMapUtil(acc.description, (acc.experience += val.experience)))
-                                .orElse( new SkillMapUtil(e.getKey(), 0))));
-        params.put("MAKER", fml);
-
-        //OS
-        fml = osMap.stream()
-                .collect(Collectors.groupingBy(SkillMapUtil::getDescription))
-                .entrySet().stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        e -> e.getValue().stream()
-                                .reduce((acc, val) -> new SkillMapUtil(acc.description, (acc.experience += val.experience)))
-                                .orElse( new SkillMapUtil(e.getKey(), 0))));
-        params.put("OS", fml);
+        /*//LANG
+        if (validator(industryMap.size())) {
+            fml = industryMap.stream()
+                    .collect(Collectors.groupingBy(SkillMapUtil::getDescription))
+                    .entrySet().stream()
+                    .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            e -> e.getValue().stream()
+                                    .reduce((acc, val) -> new SkillMapUtil(acc.description, (acc.experience += val.experience)))
+                                    .orElse(new SkillMapUtil(e.getKey(), 0))));
+            params.put("INDUSTRY",fml);
+        }
 
 
-        fml = dbmsMap.stream()
-                .collect(Collectors.groupingBy(SkillMapUtil::getDescription))
-                .entrySet().stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        e -> e.getValue().stream()
-                                .reduce((acc, val) -> new SkillMapUtil(acc.description, (acc.experience += val.experience)))
-                                .orElse( new SkillMapUtil(e.getKey(), 0))));
-        params.put("DBMS", fml);
+        if (validator(langMap.size())) {
+            fml = langMap.stream()
+                    .collect(Collectors.groupingBy(SkillMapUtil::getDescription))
+                    .entrySet().stream()
+                    .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            e -> e.getValue().stream()
+                                    .reduce((acc, val) -> new SkillMapUtil(acc.description, (acc.experience += val.experience)))
+                                    .orElse(new SkillMapUtil(e.getKey(), 0))));
+            params.put("LANG", fml);
+        }
 
-        fml = respMap.stream()
-                .collect(Collectors.groupingBy(SkillMapUtil::getDescription))
-                .entrySet().stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        e -> e.getValue().stream()
-                                .reduce((acc, val) -> new SkillMapUtil(acc.description, (acc.experience += val.experience)))
-                                .orElse( new SkillMapUtil(e.getKey(), 0))));
-        params.put("DUTY", fml);
+        if (validator(makerMap.size())) {
+            fml = makerMap.stream()
+                    .collect(Collectors.groupingBy(SkillMapUtil::getDescription))
+                    .entrySet().stream()
+                    .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            e -> e.getValue().stream()
+                                    .reduce((acc, val) -> new SkillMapUtil(acc.description, (acc.experience += val.experience)))
+                                    .orElse(new SkillMapUtil(e.getKey(), 0))));
+            params.put("MAKER", fml);
+        }
+
+        if (validator(osMap.size())) {
+
+            fml = osMap.stream()
+                    .collect(Collectors.groupingBy(SkillMapUtil::getDescription))
+                    .entrySet().stream()
+                    .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            e -> e.getValue().stream()
+                                    .reduce((acc, val) -> new SkillMapUtil(acc.description, (acc.experience += val.experience)))
+                                    .orElse(new SkillMapUtil(e.getKey(), 0))));
+            params.put("OS", fml);
+        }
+
+        if (validator(dbmsMap.size())) {
+            fml = dbmsMap.stream()
+                    .collect(Collectors.groupingBy(SkillMapUtil::getDescription))
+                    .entrySet().stream()
+                    .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            e -> e.getValue().stream()
+                                    .reduce((acc, val) -> new SkillMapUtil(acc.description, (acc.experience += val.experience)))
+                                    .orElse(new SkillMapUtil(e.getKey(), 0))));
+            params.put("DBMS", fml);
+        }
+
+        if (validator(respMap.size())) {
+            fml = respMap.stream()
+                    .collect(Collectors.groupingBy(SkillMapUtil::getDescription))
+                    .entrySet().stream()
+                    .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            e -> e.getValue().stream()
+                                    .reduce((acc, val) -> new SkillMapUtil(acc.description, (acc.experience += val.experience)))
+                                    .orElse(new SkillMapUtil(e.getKey(), 0))));
+            params.put("DUTY", fml);
+        }
+
+        if (validator(toolsMap.size())) {
+            fml = toolsMap.stream()
+                    .collect(Collectors.groupingBy(SkillMapUtil::getDescription))
+                    .entrySet().stream()
+                    .collect(Collectors.toMap(
+                            Map.Entry::getKey,
+                            e -> e.getValue().stream()
+                                    .reduce((acc, val) -> new SkillMapUtil(acc.description, (acc.experience += val.experience)))
+                                    .orElse(new SkillMapUtil(e.getKey(), 0))));
+            params.put("TOOLS", fml);
+        }
+*/
 
 
-        fml = toolsMap.stream()
-                .collect(Collectors.groupingBy(SkillMapUtil::getDescription))
-                .entrySet().stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        e -> e.getValue().stream()
-                                .reduce((acc, val) -> new SkillMapUtil(acc.description, (acc.experience += val.experience)))
-                                .orElse( new SkillMapUtil(e.getKey(), 0))));
-        params.put("TOOLS", fml);
-
-
-        return params;
+//        return params;
 
     }
 }

@@ -58,9 +58,9 @@ export class CurriculumDetailsComponent implements OnInit {
       }
     }
     if(total >=12){
-    years = parseInt((total/12).toFixed(0))
-    let months = parseInt((total % 12).toFixed(0))
-    return years + '年 ' + months + 'ヶ月'
+      years = parseInt((total/12).toFixed(0))
+      let months = parseInt((total % 12).toFixed(0))
+      return years + '年 ' + months + 'ヶ月'
     }
     else return total + 'ヶ月'
   }

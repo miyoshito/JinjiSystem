@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Map;
 
 @Data
@@ -18,6 +19,7 @@ public class SkillMap {
 
     //LocalDate updated;
 
-    Map<String, Map<String,SkillMapUtil>> params;
+    //Map<String, Map<String,SkillMapUtil>> params;
+    Map<String, List<SkillMapUtil>> params;
 
 }

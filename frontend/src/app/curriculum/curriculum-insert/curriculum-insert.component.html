@@ -62,19 +62,19 @@
       <div class="col-md-4">
         <span>開発機種／メーカー</span>
         <ng-select [items]="data.MAKER" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindLabel="desc"
-        placeholder="何々を選択して下さい" formControlName="makerData">
+        placeholder="選択して下さい" formControlName="makerData">
         </ng-select>
       </div>
       <div class="col-md-4">
         <span>OS</span>
         <ng-select [items]="data.OS" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindLabel="desc"
-        placeholder="何々を選択して下さい。" formControlName="osData">
+        placeholder="選択して下さい。" formControlName="osData">
         </ng-select>
       </div>
       <div class="col-md-4">
         <span>DBMS</span>
         <ng-select [items]="data.DBMS" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindLabel="desc"
-        placeholder="何々を選択して下さい。" formControlName="dbmsData">
+        placeholder="選択して下さい。" formControlName="dbmsData">
         </ng-select>
       </div>
     </div>
@@ -83,19 +83,19 @@
       <div class="col-md-4">
         <span>言語</span>
         <ng-select [items]="data.LANG" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindLabel="desc"
-        placeholder="何々を選択して下さい。" formControlName="langData">
+        placeholder="選択して下さい。" formControlName="langData">
         </ng-select>
       </div>
       <div class="col-md-4">
         <span>ツール</span>
         <ng-select [items]="data.TOOLS" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindLabel="desc"
-        placeholder="何々を選択して下さい。" formControlName="toolsData">
+        placeholder="選択して下さい。" formControlName="toolsData">
         </ng-select>
       </div>
       <div class="col-md-4">
         <span>担当作業</span>
         <ng-select [items]="data.DUTY" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindLabel="desc"
-        placeholder="何々を選択して下さい。" formControlName="responseData">
+        placeholder="選択して下さい。" formControlName="responseData">
         </ng-select>
       </div>
     </div>
@@ -134,6 +134,8 @@
     <div class="col-md-4">
       <button class="btn btn-primary" (click)="insertAttempt()">{{button}}</button>
       <button *ngIf="authority === 'ADMIN'" class="btn btn-primary">行削除</button>
+      <button class="btn btn-primary" onclick="history.back(-1)">詳細へ戻る</button>
+
     </div>
   </div>
 </form>
