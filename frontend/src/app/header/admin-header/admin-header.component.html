@@ -87,11 +87,22 @@
   </mat-menu>
 
   <mat-menu #educational="matMenu" overlapTrigger="false">
-    <a routerLink="/404" routerLinkActive="active">
+    <a routerLink="/admin/studycourse/search" routerLinkActive="active">
       <button mat-menu-item>
         <span>検索</span>
       </button>
     </a>
+    <a routerLink="/admin/studycourse" routerLinkActive="active">
+      <button mat-menu-item>
+        <span>lista</span>
+      </button>
+    </a>
+    <a routerLink="/admin/studycourse/edit" routerLinkActive="active">
+      <button mat-menu-item>
+        <span>editar</span>
+      </button>
+    </a>
+    
   </mat-menu>
 
   <mat-menu #skillmap="matMenu" overlapTrigger="false">

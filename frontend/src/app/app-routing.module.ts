@@ -24,6 +24,8 @@ import { RoleGuardService } from './guards/role-guard.service';
 import { ResumeSearchResultsComponent } from './resume/resume-search-results/resume-search-results.component';
 import { EmployeeSearchComponent } from './admin/employee-search/employee-search.component';
 import { SkillMapDetailsComponent } from './skill-map/skill-map-details/skill-map-details.component';
+import { StudyCourseSearchComponent } from './studycourse/study-course-search/study-course-search.component';
+import { StudyCourseEditComponent } from './studycourse/study-course-edit/study-course-edit.component';
 
 const routes: Routes = [
   // Login routes
@@ -77,6 +79,11 @@ const routes: Routes = [
         {path: 'curriculum/add', component: CurriculumInsertComponent},
         {path: 'curriculum/edit', component: CurriculumInsertComponent}
       ]},
+      {path: 'studycourse', children: [
+        {path: '', component: StudycourseComponent},
+        {path: 'search', component: StudyCourseSearchComponent},
+        {path: 'edit', component: StudyCourseEditComponent}
+      ]}
   ],canActivate:[RoleGuardService]},
   //mapeando o direcionamento pra paginas inexistentes...
   {path: '**', redirectTo: '404' }

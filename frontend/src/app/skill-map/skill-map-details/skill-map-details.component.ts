@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, AfterViewChecked, ElementRef, Renderer2, ViewChildren, ViewContainerRef, QueryList } from '@angular/core';
 import { Employee } from 'src/app/interfaces/employee';
 import { Observable, Subject } from 'rxjs';
 import { ProfileService } from 'src/app/profile/profile.service';
@@ -21,7 +21,9 @@ export class SkillMapDetailsComponent implements OnInit {
   constructor(private _profileService: ProfileService,
               private _curriculumService: CurriculumService,
               private _router: Router,
-              private _authService: AuthService) { }
+              private _authService: AuthService,
+              private _renderer: Renderer2,
+              private _elemRef: ElementRef) { }
 
   columnCount$: Observable<any[]>
   mapping$: Observable<SkillMapData[]>
@@ -29,38 +31,60 @@ export class SkillMapDetailsComponent implements OnInit {
 
   displayMap: SkillMapData[] = []
 
+
+  columnsToDisplay: string[]
+
   unsub$: Subject<boolean> = new Subject<boolean>();
+
+  @ViewChildren('lang', {read: ElementRef})
+  langs: QueryList<ElementRef>
   
 
   ngOnInit() {
-
-    
-
     this.columnCount$ = this._curriculumService.getPropertiesList()
     this.mapping$ = this._curriculumService.SkillMapSearchResults$
+    this.gambiarradoida()
     if (this._router.url.startsWith('/profile')){
       this._profileService.cachedUser$.pipe(
         takeUntil(this.unsub$),
         map(e => this._curriculumService.getSkillMaps(e.shainId))
       ).subscribe()
-      //remontando o mapa LOL
-      this.mapping$.pipe(
-        map((sm, index) =>{
-          sm[index].params.forEach(param =>{
-          })
-            //document.getElementById(la.description+index).setAttribute('value',la.experience.toString())
-        })               
-      ).subscribe()
     }
   }
 
-  buildMap(){
-    let t: SkillMapData
+  ngAfterViewInit(){
+   this.buildEmployeeLine()
   }
 
+  gambiarradoida() {
+    let uwu:Array<number>[] = []
+    //no caso de todas as infos
+    this.columnCount$.pipe(
+      map(cc => {
+        
+      })
+    ).subscribe()
 
-   
+    this.mapping$.pipe(
+      map(usr => {
+        usr.forEach((u,i) => {
+          console.log(i)
+          //for(let la of u.params.LANG){
+           // uwu.push(la.experience)
+          //}
+        })
+      })
+    ).subscribe()
+    console.log(uwu)
+  }
 
+  buildEmployeeLine(){
+    console.log('.,....')
+    this.langs.forEach(e => {
+    console.log(e.nativeElement)
+    })
+  }
+    
 }
 export interface ggg{
   description: string

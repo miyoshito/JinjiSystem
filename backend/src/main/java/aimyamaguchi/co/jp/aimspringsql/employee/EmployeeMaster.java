@@ -3,16 +3,15 @@ package aimyamaguchi.co.jp.aimspringsql.employee;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.*;
 
+import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import aimyamaguchi.co.jp.aimspringsql.curriculum.CurriculumModel;
@@ -126,6 +125,9 @@ public class EmployeeMaster implements UserDetails, Serializable {
 
     @OneToMany(mappedBy = "employee_id")
     private List<CurriculumModel> curriculum;
+
+    @OneToMany(mappedBy ="employee")
+    private List<StudyCourseModel> educations;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

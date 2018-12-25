@@ -27,15 +27,16 @@ export class CurriculumService {
   private userSource_: BehaviorSubject<any> = new BehaviorSubject<any>(this.employee);
   selectedUser$ = this.userSource_.asObservable()
 
-  private buildMapSource_: ReplaySubject<any> = new ReplaySubject<any[]>(1)
+  private buildMapSource_: ReplaySubject<any> = new ReplaySubject<any[]>(0)
   SkillMapSearchResults$ = this.buildMapSource_.asObservable()
 
 
 
-  getPropertiesList(): Observable<any[]> {
+  getPropertiesList(){
     return this._http.get<any[]>(PUBLIC_URL + '/cvparams')
   }
-  //temporary
+
+  
   getBusinessLogic(): Observable<any[]> {
     return this._http.get<any[]>(PUBLIC_URL + '/industry-params')
   }

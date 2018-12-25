@@ -1,0 +1,91 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <h3>{{title}}</h3>
+    </div>
+  </div>
+<form [formGroup]="studyForm">
+  <div class="row">
+    <div class="col-md-3">
+      <span style="font-weight: 600">社員番号: </span><span></span>
+    </div>
+    <div class="col-md-3">
+      <span style="font-weight: 600">社員氏名: </span><span></span>
+    </div>
+    <div class="col-md-3">
+      <span style="font-weight: 600">社員カナ: </span><span>user.shainKana</span>
+    </div>
+    <div class="col-md-3">
+      <span style="font-weight: 600">採用区分: </span><span>user.shainRecruit</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-9">
+      <span>主催</span>
+      <input type="text" class="form-control" formControlName="sponsor">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-9">
+      <span>教育名</span>
+      <input type="text" class="form-control" formControlName="educationName">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <span><span>期間</span></span>
+      <div class="input-group">
+        <input type="date" class="form-control" formControlName="startPeriod">
+        <div class="input-group-prepend">
+          <span class="input-group-text">~</span>
+        </div>
+        <input type="date" class="form-control" formControlName="endPeriod">
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+      <div class="col-md-9">
+        <span>開催場所</span>
+        <input type="text" class="form-control" formControlName="venue">
+      </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+        <span>受講料</span>
+        <input type="text" class="form-control" formControlName="tuitionFee">
+    </div>
+    <div class="col-md-3">
+        <span>交通費</span>
+        <input type="text" class="form-control" formControlName="transportExpenses">
+    </div>
+    <div class="col-md-3">
+        <span>滞在費</span>
+        <input type="text" class="form-control" formControlName="hotelExpenses">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <span>概要</span>
+      <textarea class="form-control" formControlName="overview"></textarea>
+    </div>
+  </div>
+
+  <div class="row d-flex justify-content-around">
+    <button class="btn btn-primary">実施記録取込</button>
+    <button class="btn btn-primary">更新</button>
+    <button class="btn btn-primary">削除</button>
+    <button class="btn btn-primary">詳細へ戻る</button>
+  </div>
+</form>
+
+<pre>{{studyForm.value | json}}</pre>
+
+
+
+
+</div>

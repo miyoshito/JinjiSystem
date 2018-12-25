@@ -54,16 +54,16 @@
             </th>
           </ng-container>
         </tr>
+
         <ng-container *ngIf="mapping$ | async; let usr">
-        <tr *ngFor="let t of usr; let i = index">          
-          <td>{{t.affiliation}}</td>
-          <td>{{t.name}}</td>
-          <ng-container  *ngFor="let c of cc.LANG">
-            <td id="{{c.desc}}{{i}}"></td>
+          <tr *ngFor="let t of usr; let i = index" #lang>
+            <td>{{t.affiliation}}</td>
+            <td>{{t.name}}</td>
+            <ng-container *ngFor="let c of cc.LANG">
+              <td><div attr.id="{{c.desc}}{{i}}" [innerText]="0"></div></td>
+            </ng-container>
+          </tr>
           </ng-container>
-        </tr>
-        </ng-container>
-        </ng-container>
+        </ng-container>        
     </table>
-  
   </div>

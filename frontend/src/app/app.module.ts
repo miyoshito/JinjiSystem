@@ -54,6 +54,8 @@ import { defineLocale } from 'ngx-bootstrap/chronos';
 import { jaLocale } from 'ngx-bootstrap/locale';
 import { SkillMapDetailsComponent } from './skill-map/skill-map-details/skill-map-details.component';
 import { SmLangColumnComponent } from './skill-map/skill-map-headers/sm-lang-column/sm-lang-column.component';
+import { StudyCourseSearchComponent } from './studycourse/study-course-search/study-course-search.component';
+import { StudyCourseEditComponent } from './studycourse/study-course-edit/study-course-edit.component';
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -96,7 +98,9 @@ defineLocale('ja',jaLocale)
     MonthPickerComponent,
     SkillMapDetailsComponent,
     SkillMapSearchComponent,
-    SmLangColumnComponent
+    SmLangColumnComponent,
+    StudyCourseSearchComponent,
+    StudyCourseEditComponent
   ],
   imports: [
     BrowserModule,
