@@ -11,6 +11,8 @@ import java.util.Map;
 @AllArgsConstructor
 //@NoArgsConstructor
 public class SkillMapUtil {
+
     String description;
+
     Integer experience;
 }

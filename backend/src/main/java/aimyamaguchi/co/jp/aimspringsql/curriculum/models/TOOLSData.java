@@ -1,15 +1,9 @@
-package aimyamaguchi.co.jp.aimspringsql.curriculum;
+package aimyamaguchi.co.jp.aimspringsql.curriculum.models;
 
 import java.util.List;
 import java.util.Optional;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -28,6 +22,9 @@ public class TOOLSData {
     private String desc;
     @Column(name="ACTIVE")
     private boolean active;
+
+    @Transient
+    private Integer experienceTime;
     
 
     @ManyToMany(mappedBy="toolsData")

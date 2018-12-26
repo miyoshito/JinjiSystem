@@ -18,4 +18,6 @@ public interface EmployeeRepository extends JpaRepository<EmployeeMaster, String
     List<EmployeeMaster> findAll();
 
     List<EmployeeMaster> findByShainIdIn(List<String> list);
+
+
 }

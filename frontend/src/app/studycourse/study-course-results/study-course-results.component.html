@@ -1,0 +1,39 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-4">
+      <h3>教育受講履歴一覧画面</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class=col-md-12>
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <th>主催</th>
+            <th>教育名</th>
+            <th>受講者</th>
+            <th>期間</th>
+            <th>費用</th>
+            <th>退職</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngIf="results$ | async; let results">
+            <ng-container *ngFor="let user of results">
+              <tr *ngFor="let sc of user.educations">
+                <td>{{sc.sponsor}}</td>
+                <td>{{sc.educationName}}</td>
+                <td>{{user.shainName}}</td>
+                <td>{{sc.startPeriod}}~<br />{{sc.endPeriod}}</td>
+                <td>{{sc.totalExpenses}}</td>
+                <td><input type="checkbox" value="{{user.shainActive}}" readonly></td>
+                <td><button class="btn btn-primary">詳細</button></td>
+              </tr>
+            </ng-container>
+          </ng-container>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -105,13 +105,15 @@ public class EmployeeService{
 
         String token = reqs.getHeader("authorization");
 
+        System.out.println(employee.getPassword());
+
         if (!employee.getShainId().equals("")){
             employeeRepository.save(employee);
         } else {
             Long nextSeq = seq.findBySeqTablename("m_shain").getSeqValue();
             employee.setShainId(nextSeq.toString());
 
-            if(employee.getPassword().equals(""))
+            if(employee.getPassword().equals("") || employee.getPassword() == null)
                 employee.setShainPassword(passwordEncoder.encode("aim123456"));
             else
                 employee.setShainPassword(passwordEncoder.encode(employee.getPassword()));
@@ -125,7 +127,7 @@ public class EmployeeService{
         }
     }
 
-    public ResponseEntity<String>changePassword(String shainid, String oldPassword, String newPassword){
+    public ResponseEntity<String> changePassword(String shainid, String oldPassword, String newPassword){
         EmployeeMaster user = employeeRepository.findByShainId(shainid);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         if(passwordEncoder.matches((CharSequence) oldPassword, user.getPassword())) {

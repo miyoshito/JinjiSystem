@@ -2,10 +2,11 @@ package aimyamaguchi.co.jp.aimspringsql.controllers;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import aimyamaguchi.co.jp.aimspringsql.authfilters.CustomException;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.*;
-import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.curriculum.models.INDUSTRYData;
 import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,11 +39,23 @@ public class ConstantsController {
             @RequestParam(value = "id", required = false) String id,
             @RequestParam(value = "nm", required = false) String name,
             @RequestParam(value = "kt", required = false) String katakana,
-            @RequestParam(value = "sh", required = false) Integer affiliation
-    ){
+            @RequestParam(value = "sh", required = false) Integer affiliation,
+            @RequestParam(value = "lang", required = true) boolean lang,
+            @RequestParam(value = "os", required = true) boolean os,
+            @RequestParam(value = "dbms", required = true) boolean dbms,
+            @RequestParam(value = "tool", required = true) boolean tool,
+            @RequestParam(value = "make", required = true) boolean make,
+            @RequestParam(value = "duty", required = true) boolean duty,
+            @RequestParam(value = "ind", required = false) List<Integer> inds
+    )
+    {
         try {
             List<String> ids = cv.skillMapSearchParams(id, name, katakana, affiliation);
-            return new ResponseEntity<>(cv.getSkillMap(ids), HttpStatus.OK);
+
+
+
+
+            return new ResponseEntity<>(cv.getSkillMap(ids, lang, os, dbms, tool, make, duty, inds), HttpStatus.OK);
         } catch (CustomException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

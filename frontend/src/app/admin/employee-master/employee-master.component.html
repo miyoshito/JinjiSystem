@@ -27,7 +27,7 @@
       </div>
       <div class="col-md-3">
         <span>フリガナ: </span>
-        <input type="text" formControlName="shainKana" class="form-control " [ngClass]="{ 'is-invalid': submitted && f.shainKana.errors }">
+        <input type="text" formControlName="shainKana" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.shainKana.errors }">
       </div>
       <div class="col-md-3">
         <span>採用区分: </span>
@@ -165,25 +165,25 @@
     <div class="row">
       <div class="col-md-3">
         <span>電話番号(自宅)</span>
-        <input type="text" class="form-control " formControlName="shainHomePhoneNumber">
+        <input type="tel" class="form-control" formControlName="shainHomePhoneNumber">
       </div>
       <div class="col-md-3">
         <span>電話番号(携帯)</span>
-        <input type="text" class="form-control " formControlName="shainMobilePhoneNumber">
+        <input type="tel" class="form-control" formControlName="shainMobilePhoneNumber">
       </div>
       <div class="col-md-3">
         <span>メールアドレス</span>
-        <input type="text" class="form-control " formControlName="shainMail">
+        <input type="text" class="form-control" formControlName="shainMail">
       </div>
       <div class="col-md-3">
         <span>携帯メールアドレス</span>
-        <input type="text" class="form-control " formControlName="shainMobileMail">
+        <input type="text" class="form-control no-ime" formControlName="shainMobileMail">
       </div>
     </div>
     <div class="row">
       <div class="col-md-3">
         <span>郵便番号</span>
-        <input type="text" class="form-control " formControlName="shainPostalCode">
+        <input type="tel" class="form-control" formControlName="shainPostalCode">
       </div>
       <div class="col-md-2">
         <span>勤務可能地域</span>
@@ -241,7 +241,7 @@
     </div>
     <div class="row">
       <div class="col-md-12 d-flex p-2 justify-content-around">
-        <button type="submit" class="btn btn-primary">更新</button>
+        <button type="submit" class="btn btn-primary">{{buttonLabel}}</button>
         <button *ngIf="isEditing" type="button" class="btn btn-primary" (click)="returnToSearch()">キャンセル</button>
       </div>
     </div>

@@ -13,18 +13,14 @@
 <!-- temporary -->
 <div class="container">
 <div class="wrapper" style="padding-top: 10px">
-    <div class="row d-flex justify-content-center">
-        <div class="form-group col-md-4">
-            <div *ngIf="authFailed$" class="alert alert-danger" role="alert">
-                    ユーザー名かパスワードが間違っています
-            </div>
-            <div *ngIf="redirecting$" class="alert alert-success" role="alert">
-                    ５秒以内にリダイレクトします
-            </div>            
-        </div>
-    </div>
+    
     <form [formGroup]="loginform">
-        <div class="row d-flex justify-content-center">
+        <div class="row-d-flex justify-content-center">
+            <div class="col-md-4">
+            <img src="../../assets/img/aim_rogo.jpg">
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center">        
             <div class="form-group col-md-4">
                 <label for="exampleInputEmail1">社員番号</label>
                 <input type="text" formControlName="username" class="form-control" id="exampleInputEmail1"

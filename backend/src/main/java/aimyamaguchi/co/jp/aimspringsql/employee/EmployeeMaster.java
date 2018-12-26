@@ -32,7 +32,6 @@ public class EmployeeMaster implements UserDetails, Serializable {
     private String shainId;
 
     @Column(name="SHA_PASSWORD", length=100, nullable=false)
-    @JsonIgnore
     private String shainPassword;
 
     @Column(name="SHA_NAME", length=20, nullable=false)
@@ -120,13 +119,13 @@ public class EmployeeMaster implements UserDetails, Serializable {
     private boolean shainDeletedFlag;
 
     @JsonManagedReference
-    @OneToOne(mappedBy="employee")
+    @OneToOne(mappedBy="employee", fetch = FetchType.LAZY)
     private ResumeModel resume;
 
-    @OneToMany(mappedBy = "employee_id")
+    @OneToMany(mappedBy = "employee_id", fetch = FetchType.LAZY)
     private List<CurriculumModel> curriculum;
 
-    @OneToMany(mappedBy ="employee")
+    @OneToMany(mappedBy ="employee", fetch = FetchType.LAZY)
     private List<StudyCourseModel> educations;
 
     @Override
@@ -135,7 +134,6 @@ public class EmployeeMaster implements UserDetails, Serializable {
     }
 
     @Override
-    @JsonIgnore
     public String getPassword() {
         return this.getShainPassword();
     }

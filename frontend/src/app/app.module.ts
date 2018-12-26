@@ -56,6 +56,7 @@ import { SkillMapDetailsComponent } from './skill-map/skill-map-details/skill-ma
 import { SmLangColumnComponent } from './skill-map/skill-map-headers/sm-lang-column/sm-lang-column.component';
 import { StudyCourseSearchComponent } from './studycourse/study-course-search/study-course-search.component';
 import { StudyCourseEditComponent } from './studycourse/study-course-edit/study-course-edit.component';
+import { StudyCourseResultsComponent } from './studycourse/study-course-results/study-course-results.component';
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -100,7 +101,8 @@ defineLocale('ja',jaLocale)
     SkillMapSearchComponent,
     SmLangColumnComponent,
     StudyCourseSearchComponent,
-    StudyCourseEditComponent
+    StudyCourseEditComponent,
+    StudyCourseResultsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
-package aimyamaguchi.co.jp.aimspringsql.curriculum;
+package aimyamaguchi.co.jp.aimspringsql.curriculum.models;
 
+import aimyamaguchi.co.jp.aimspringsql.curriculum.IndustryKeys;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;

@@ -11,11 +11,24 @@
   font-style: normal;
   border: 1px black;
 }
-th, td{
+th {
+  font-weight: 600;
+}
+td {
   font-style: normal !important; 
   font-weight: 400;
 }
 
+thead {
+  background-color:lightseagreen;
+}
+
+.no-ime{
+  ime-mode: disabled;
+}
+.ime {
+  ime-mode: active;
+}
 .vertical-text{
   writing-mode: vertical-rl;
   -webkit-writing-mode: vertical-rl;

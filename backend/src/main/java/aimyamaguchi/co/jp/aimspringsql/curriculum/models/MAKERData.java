@@ -1,4 +1,5 @@
-package aimyamaguchi.co.jp.aimspringsql.curriculum;
+package aimyamaguchi.co.jp.aimspringsql.curriculum.models;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -11,21 +12,22 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="[M_LANG]", schema="[dbo]")
-public class LANGData{
+@Table(name="[M_MAKER]", schema="[dbo]")
+public class MAKERData{
     
     @Id
-    @Column(name="LANG_ID")
+    @Column(name="MAKER_ID")
     private Long id;
-    @Column(name="LANG_DESC")
+    @Column(name="MAKER_DESC")
     private String desc;
     @Column(name="ACTIVE")
     private boolean active;
 
     @Transient
-    private Integer experience;
-
-    @ManyToMany(mappedBy="langData")
+    private Integer experienceTime;
+    
+    @ManyToMany(mappedBy="makerData")
     @JsonIgnore
     private List<CurriculumModel> curriculum;
+    
 }

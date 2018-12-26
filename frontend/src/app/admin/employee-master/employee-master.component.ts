@@ -26,6 +26,7 @@ export class EmployeeMasterComponent implements OnInit {
 
   submitted: boolean
   title: string
+  buttonLabel: string
   myPosition: string
   isInserting: boolean
   isEditing: boolean
@@ -41,10 +42,6 @@ export class EmployeeMasterComponent implements OnInit {
   yakushokuSelects: Data[]
 
   selectedUser$: Observable<Employee>
-
-  
-  
-
 
   constructor(private _fb: FormBuilder,
               private _employeeService: EmployeeMasterService,
@@ -67,6 +64,7 @@ export class EmployeeMasterComponent implements OnInit {
     this.selectedUser$ = this._profileService.getUserProfile(this._route.snapshot.paramMap.get('id'))
     this.loadUserData()
     this.title = '社員マスタ編集画面'
+    this.buttonLabel = '更新'
     this.isEditing = true
     this.passwordbutton=  true
   } else if ((this._router.url).endsWith('/profile')) {
@@ -76,6 +74,7 @@ export class EmployeeMasterComponent implements OnInit {
     this.loadUserData()
   } else {
     this.isInserting  = true
+    this.buttonLabel = '登録'
   }
   }
 

@@ -6,6 +6,7 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import aimyamaguchi.co.jp.aimspringsql.curriculum.models.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
@@ -115,7 +116,7 @@ public class CurriculumModel {
     private ASSIGNData assignData;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinColumn(name="SHA_NO", nullable=false)
     private EmployeeMaster employee_id;

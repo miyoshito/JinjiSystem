@@ -2,15 +2,13 @@ package aimyamaguchi.co.jp.aimspringsql.curriculum;
 
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import aimyamaguchi.co.jp.aimspringsql.curriculum.models.INDUSTRYData;
 import lombok.*;
 
 import javax.persistence.*;
 
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Optional;
 
 @EqualsAndHashCode
 @Embeddable

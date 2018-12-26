@@ -1,15 +1,13 @@
 package aimyamaguchi.co.jp.aimspringsql.curriculum;
 
-import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.curriculum.models.*;
 import lombok.Data;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
 public class CurriculumDAO {
-
 
     private Long id;
     private LocalDate startdate;

@@ -26,6 +26,7 @@ import { EmployeeSearchComponent } from './admin/employee-search/employee-search
 import { SkillMapDetailsComponent } from './skill-map/skill-map-details/skill-map-details.component';
 import { StudyCourseSearchComponent } from './studycourse/study-course-search/study-course-search.component';
 import { StudyCourseEditComponent } from './studycourse/study-course-edit/study-course-edit.component';
+import { StudyCourseResultsComponent } from './studycourse/study-course-results/study-course-results.component';
 
 const routes: Routes = [
   // Login routes
@@ -80,9 +81,9 @@ const routes: Routes = [
         {path: 'curriculum/edit', component: CurriculumInsertComponent}
       ]},
       {path: 'studycourse', children: [
-        {path: '', component: StudycourseComponent},
+        {path: 'list', component: StudyCourseResultsComponent},
         {path: 'search', component: StudyCourseSearchComponent},
-        {path: 'edit', component: StudyCourseEditComponent}
+        {path: ':sid/:scid/edit', component: StudyCourseEditComponent}
       ]}
   ],canActivate:[RoleGuardService]},
   //mapeando o direcionamento pra paginas inexistentes...

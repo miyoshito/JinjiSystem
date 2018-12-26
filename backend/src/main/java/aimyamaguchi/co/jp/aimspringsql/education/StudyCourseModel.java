@@ -27,11 +27,11 @@ public class StudyCourseModel {
 
     private String venue;
 
-    private Long tuitionFee;
+    private Integer tuitionFee;
 
-    private Long transportExpenses;
+    private Integer transportExpenses;
 
-    private Long hotelExpenses;
+    private Integer hotelExpenses;
 
     private String overview;
 
@@ -40,6 +40,14 @@ public class StudyCourseModel {
     private LocalDate updated;
 
     private String updatedby;
+
+    @Transient
+    private Integer totalExpenses;
+
+    @Transient
+    public Integer getTotalExpenses(){
+        return this.tuitionFee + this.transportExpenses + this.hotelExpenses;
+    }
 
 
     @ManyToOne

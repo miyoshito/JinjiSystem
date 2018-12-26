@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -16,10 +17,6 @@ public class SkillMap {
     String id;
     String name;
     String affiliation;
-
-    //LocalDate updated;
-
-    //Map<String, Map<String,SkillMapUtil>> params;
     Map<String, List<SkillMapUtil>> params;
 
 }

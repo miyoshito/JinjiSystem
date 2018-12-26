@@ -1,11 +1,11 @@
-<div class="container">
-<div *ngIf="profileSelected$ | async; let user">
-<div class="row">
-    <div class="col-md-6">
-      <h3>職務経歴書詳細画面</h3>
-    </div>
-    <div class="col-md-3"></div>
-    <div class="col-md-3">
+  <div *ngIf="profileSelected$ | async; let user">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h3>職務経歴書詳細画面</h3>
+      </div>
+      <div class="col-md-3"></div>
+      <div class="col-md-3">
         <span>登録日：{{user.shainJoinedDate | date:'shortDate'}}</span><br />
         <span>更新日：{{user.shainJoinedDate | date:'shortDate'}}</span>
       </div>
@@ -24,65 +24,67 @@
         <span><b>採用区分:</b> </span><span>{{user.shainRecruit}}</span>
       </div>
     </div>
-    <br/>
+    <br />
     <div class="row">
       <div class="col-md-3">
         <span><b>住所:</b> </span><span>{{user?.shainArea?.desc}}{{user.shainAddress}}</span>
       </div>
       <div class="col-md-3">
-          <span><b>経験年数:</b> </span><span>{{sumOf(user.curriculum)}}</span>
-        </div>
+        <span><b>経験年数:</b> </span><span>{{sumOf(user.curriculum)}}</span>
+      </div>
     </div>
-    <br/>
+  </div>
+  <div class="container-fluid">
+    <br />  
     <div class="row">
-        <table class="table table-bordered table-hover">
-            <thead>
-              <th style="width: 10%">顧客名</th>
-              <th style="width: 10%">業種</th>
-              <th style="width: 10%">対象業務</th>
-              <th style="width: 10%">開発機種<br />メーカー</th>
-              <th style="width: 10%">OS<br />DBMS</th>
-              <th style="width: 10%">言語<br />ツール</th>
-              <th style="width: 10%">担当作業役割</th>
-              <th style="width: 10%">期間</th>
-              <th style="width: 7%"></th>
-            </thead>
-            <tbody>
-              <tr *ngFor="let cv of user.curriculum">
-                <ng-container *ngIf="!cv.deleted">
-                <td>{{cv.customer}}</td>
-                <td>{{cv.industryType}}</td>
-                <td>{{cv.industryClass}}</td>
-                <td>
-                  <ng-container *ngFor="let maker of cv.makerData">{{maker.desc}}<br /> </ng-container>
-                </td>
-                <td>
-                  <ng-container *ngFor="let dbms of cv.dbmsData">{{dbms.desc}}<br /></ng-container>/
-                  <ng-container *ngFor="let os of cv.osData">{{os.desc}}<br /></ng-container>
-                </td>
-                <td>
-                  <ng-container *ngFor="let lang of cv.langData">{{lang.desc}}<br /></ng-container>/
-                  <ng-container *ngFor="let tools of cv.toolsData">{{tools.desc}}<br /></ng-container>
-                </td>
-                <td>
-                  <ng-container *ngFor="let res of cv.responseData">{{res.desc}}<br /></ng-container>
-                </td>
-                <td>
-                  {{cv.startdate | date:'yyyy/MM月'}} <br />~<br /> {{cv.enddate | date:'yyyy/MM月'}} <br />
-                  ({{cv.experienceTime}}ヶ月)
-                </td>
-                <td>
-                    <button class="btn btn-outline-secondary" (click)="editSR(cv.id)">編集</button>
-                </td>
-                </ng-container>
-              </tr>
-            </tbody>
-          </table>
+      <table class="table table-bordered table-hover">
+        <thead>
+          <th style="width: 10%">顧客名</th>
+          <th style="width: 10%">業種</th>
+          <th style="width: 10%">対象業務</th>
+          <th style="width: 10%">開発機種<br />メーカー</th>
+          <th style="width: 10%">OS<br />DBMS</th>
+          <th style="width: 10%">言語<br />ツール</th>
+          <th style="width: 10%">担当作業役割</th>
+          <th style="width: 10%">期間</th>
+          <th style="width: 7%"></th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cv of user.curriculum">
+            <ng-container *ngIf="!cv.deleted">
+              <td>{{cv.customer}}</td>
+              <td>{{cv.industryType}}</td>
+              <td>{{cv.industryClass}}</td>
+              <td>
+                <ng-container *ngFor="let maker of cv.makerData">{{maker.desc}}<br /> </ng-container>
+              </td>
+              <td>
+                <ng-container *ngFor="let dbms of cv.dbmsData">{{dbms.desc}}<br /></ng-container>/
+                <ng-container *ngFor="let os of cv.osData">{{os.desc}}<br /></ng-container>
+              </td>
+              <td>
+                <ng-container *ngFor="let lang of cv.langData">{{lang.desc}}<br /></ng-container>/
+                <ng-container *ngFor="let tools of cv.toolsData">{{tools.desc}}<br /></ng-container>
+              </td>
+              <td>
+                <ng-container *ngFor="let res of cv.responseData">{{res.desc}}<br /></ng-container>
+              </td>
+              <td>
+                {{cv.startdate | date:'yyyy/MM月'}} <br />~<br /> {{cv.enddate | date:'yyyy/MM月'}} <br />
+                ({{cv.experienceTime}}ヶ月)
+              </td>
+              <td>
+                <button class="btn btn-outline-secondary" (click)="editSR(cv.id)">編集</button>
+              </td>
+            </ng-container>
+          </tr>
+        </tbody>
+      </table>
     </div>
     <div class="d-flex justify-content-end row">
       <div>
-      <button class="btn btn-primary" (click)="addNewSR()">職務経歴を追加する</button>
-      
+        <button class="btn btn-primary" (click)="addNewSR()">職務経歴を追加する</button>
+
       </div>
     </div>
     <!--
@@ -101,9 +103,5 @@
       <button class="btn btn-outline-secondary">CSV出力</button>
       <button class="btn btn-primary" onclick="history.back(-1)">一覧へ戻る</button>
     </div>
+  </div>
 </div>
-</div>
-
-
-
-  

@@ -45,7 +45,7 @@ export class ResumeSearchComponent implements OnInit {
       alert ('atleast 1 field needs to be filled')
       return
     }    
-    this._resumeService.searchResumeAttempt(this.searchParam)
+    this._resumeService.searchResumeAttempt(this.searchForm.value)
     .pipe(
       map(res => {
       if (!res.body.length) {
