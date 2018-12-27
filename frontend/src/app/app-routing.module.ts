@@ -27,6 +27,7 @@ import { SkillMapDetailsComponent } from './skill-map/skill-map-details/skill-ma
 import { StudyCourseSearchComponent } from './studycourse/study-course-search/study-course-search.component';
 import { StudyCourseEditComponent } from './studycourse/study-course-edit/study-course-edit.component';
 import { StudyCourseResultsComponent } from './studycourse/study-course-results/study-course-results.component';
+import { StudyCourseDetailsComponent } from './studycourse/study-course-details/study-course-details.component';
 
 const routes: Routes = [
   // Login routes
@@ -55,8 +56,7 @@ const routes: Routes = [
       {path: 'employee-list', component: EmployeeListComponent},
       {path: 'employee-search', component: EmployeeSearchComponent},
       {path: 'skillmap', component: SkillMapDetailsComponent},
-      {path: 'systemsettings', component: SystemSettingsComponent}, //temp
-      //resumes...
+      {path: 'systemsettings', component: SystemSettingsComponent},
       {path: 'rirekisho', children:[
           {path: 'add', component: ResumeAddComponent},
           {path: 'edit/:id', component: ResumeAddComponent},
@@ -71,6 +71,13 @@ const routes: Routes = [
           {path: 'search', component: CurriculumSearchComponent},
           {path: 'list', component: CurriculumListComponent}
       ]},
+      {path: 'studycourse', children: [
+          {path: 'add', component: StudyCourseEditComponent},
+          {path: 'details/:uid/:scid', component: StudyCourseDetailsComponent},
+          {path: 'list', component: StudyCourseResultsComponent},
+          {path: 'search', component: StudyCourseSearchComponent},
+          {path: 'edit/:uid/:scid', component: StudyCourseEditComponent}
+      ]},
       {path: 'profile/:id', children:[
         {path: '', component: ProfileComponent},
         {path: 'edit', component: EmployeeMasterComponent},
@@ -79,11 +86,6 @@ const routes: Routes = [
         {path: 'resume/edit', component: ResumeAddComponent},
         {path: 'curriculum/add', component: CurriculumInsertComponent},
         {path: 'curriculum/edit', component: CurriculumInsertComponent}
-      ]},
-      {path: 'studycourse', children: [
-        {path: 'list', component: StudyCourseResultsComponent},
-        {path: 'search', component: StudyCourseSearchComponent},
-        {path: ':sid/:scid/edit', component: StudyCourseEditComponent}
       ]}
   ],canActivate:[RoleGuardService]},
   //mapeando o direcionamento pra paginas inexistentes...

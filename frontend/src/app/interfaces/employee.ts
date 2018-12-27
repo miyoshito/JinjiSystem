@@ -1,5 +1,6 @@
 import { Data } from "./data";
 import { Resume } from "../resume/resume-details-interface";
+import { studyCourse } from "./study-course"
 
 export interface Employee {
     shainId: string
@@ -23,7 +24,7 @@ export interface Employee {
     shainArea: Data //area-interface
     shainJoinedDate: String
     shainRetiredDate: String
-    shainActive: boolean,
+    shainRetired: boolean,
     shainCarModel: string,
     shainNotes: string,
     shainRegisterDate: String,
@@ -32,6 +33,7 @@ export interface Employee {
 
     resume: Resume
     curriculum: Curriculum[]
+    educations: studyCourse[]
 }
 
 export interface Roles{

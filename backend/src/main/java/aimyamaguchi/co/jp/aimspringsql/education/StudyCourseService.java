@@ -9,6 +9,7 @@ import javax.persistence.Query;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StudyCourseService {
@@ -28,6 +29,10 @@ public class StudyCourseService {
                 scm.setUpdated(now);
                 sci.save(scm);
                 return true;
+    }
+
+    public Optional<StudyCourseModel> findSCM(String id){
+        return sci.findById(Long.valueOf(id));
     }
 
     public List<String> searchSC(String id, String name, String kana, String sponsor, Integer expenses, String start, String end, String biOp){

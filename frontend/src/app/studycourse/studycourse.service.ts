@@ -13,11 +13,23 @@ export class StudycourseService {
 
   constructor(private _http: HttpClient) { }
 
-  private _searchResultsSource: ReplaySubject<Employee[]> = new ReplaySubject<Employee[]>()
+  private _searchResultsSource: ReplaySubject<Employee[]> = new ReplaySubject<Employee[]>(1)
   searchResults$ = this._searchResultsSource.asObservable();
+
+  private _detailsSource: ReplaySubject<studyCourse> = new ReplaySubject<studyCourse>(1)
+  details$ = this._detailsSource.asObservable()
+
 
   insertAttempt(sc: studyCourse){
     return this._http.post<studyCourse>(API_URL+'/se/studycourse/add',sc,{observe: 'response'})
+  }
+
+  getDetails(id: string){
+    return this._http.get<studyCourse>(ADMIN_URL+ '/studycourse/get?id='+id,{observe: 'response'})
+    .subscribe(
+      res => {
+        this._detailsSource.next(res.body)
+      })
   }
 
   searchAttempt(sf: any){
@@ -31,7 +43,6 @@ export class StudycourseService {
     +'&ed=' +sf.enddate
     +'&op='+sf.op, {observe: 'response'}).subscribe(
       res => {
-        console.log(res.body)
         if (!res.body) {
         alert('何も見つかりません')
         return

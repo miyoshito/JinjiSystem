@@ -1,0 +1,69 @@
+
+<div class="row border border-danger" style="min-height: 80vh; margin-top: 0px;">
+    <table>
+      <ng-container *ngIf="columnCount$ | async; let cc">
+        <tr>
+          <th [colSpan]="1" scope="colgroup"></th>
+          <th style="border-right: 1px solid black;" [colSpan]="1" scope="colgroup"></th>
+          <th style="border: 1px solid black;" [colSpan]="cc.LANG.length" scope="colgroup">言語</th>
+          <th style="border: 1px solid black;" [colSpan]="cc.DBMS.length" scope="colgroup">DBMS</th>
+          <th style="border: 1px solid black;" [colSpan]="cc.MAKER.length" scope="colgroup">開発機種／メーカー</th>
+          <th style="border: 1px solid black;" [colSpan]="cc.OS.length" scope="colgroup">OS</th>
+          <th style="border: 1px solid black;" [colSpan]="cc.TOOLS.length" scope="colgroup">ツール</th>
+          <th style="border: 1px solid black;" [colSpan]="cc.DUTY.length" scope="colgroup">担当作業</th>
+        </tr>
+        <tr>
+          <th>
+            <div style="width: 150px">所属</div>
+          </th>
+          <th>
+            <div style="width: 150px">名前</div>
+          </th>
+          <ng-container *ngFor="let lang of cc.LANG">
+            <th id="{{lang.desc}}">
+              <div >{{lang.desc}}</div>
+            </th>
+          </ng-container>
+          <ng-container *ngFor="let dbms of cc.DBMS">
+            <th>
+              <div >{{dbms.desc}}</div>
+            </th>
+          </ng-container>
+  
+          <ng-container *ngFor="let maker of cc.MAKER">
+            <th>
+              <div >{{maker.desc}}</div>
+            </th>
+          </ng-container>
+  
+          <ng-container *ngFor="let os of cc.OS">
+            <td>
+              <div >{{os.desc}}</div>
+            </td>
+          </ng-container>
+  
+          <ng-container *ngFor="let tools of cc.TOOLS">
+            <th>
+              <div >{{tools.desc}}</div>
+            </th>
+          </ng-container>
+  
+          <ng-container *ngFor="let duty of cc.DUTY">
+            <th>
+              <div >{{duty.desc}}</div>
+            </th>
+          </ng-container>
+        </tr>
+
+        <ng-container *ngIf="mapping$ | async; let usr">
+          <tr *ngFor="let t of usr; let i = index" #lang>
+            <td>{{t.affiliation}}</td>
+            <td>{{t.name}}</td>
+            <ng-container *ngFor="let c of cc.LANG">
+              <td><div attr.id="{{c.desc}}{{i}}" [innerText]="0"></div></td>
+            </ng-container>
+          </tr>
+          </ng-container>
+        </ng-container>        
+    </table>
+  </div>

@@ -13,6 +13,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
+import aimyamaguchi.co.jp.aimspringsql.constants.Sequences;
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeModel;
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,8 +87,13 @@ public class EmployeeService{
         }
     }
 
+
+
     public EmployeeMaster getProfile(String id){
-        return employeeRepository.findByShainId(id);
+        EmployeeMaster e = employeeRepository.findByShainId(id);
+        if (e != null) {
+            return e;
+        } else return null;
     }
 
     public EmployeeMaster findMe(HttpServletRequest req){
@@ -97,7 +103,8 @@ public class EmployeeService{
     
     public List<EmployeeMaster> returnAllEmployees(){
         return employeeRepository.findAll();
-    }    
+    }
+
 
     public void insertEmployee(EmployeeMaster employee, HttpServletRequest reqs){
 
@@ -105,25 +112,31 @@ public class EmployeeService{
 
         String token = reqs.getHeader("authorization");
 
-        System.out.println(employee.getPassword());
-
-        if (!employee.getShainId().equals("")){
-            employeeRepository.save(employee);
+        if (!employee.getShainId().equals("") && employeeRepository.findByShainId(employee.getShainId()) != null){
+                employeeRepository.save(employee);
         } else {
-            Long nextSeq = seq.findBySeqTablename("m_shain").getSeqValue();
-            employee.setShainId(nextSeq.toString());
-
+            if (employee.getShainId().equals("")) {
+                String nextSeq = seq.findBySeqTablename("m_shain").getSeqValue();
+                employee.setShainId(nextSeq);
+                Integer i = Integer.parseInt(nextSeq);
+                i++;
+                Sequences sequence = seq.findBySeqTablename("m_shain");
+                sequence.setSeqValue(i.toString());
+                seq.save(sequence);
+            }
             if(employee.getPassword().equals("") || employee.getPassword() == null)
                 employee.setShainPassword(passwordEncoder.encode("aim123456"));
             else
                 employee.setShainPassword(passwordEncoder.encode(employee.getPassword()));
             Date dt = new Date();
+
             employee.setShainRegisterDate(dt);
-            employeeRepository.saveAndFlush(employee);
+            employeeRepository.save(employee);
 
             ResumeModel res = new ResumeModel();
             res.setEmployee(employee);
             resumeRepository.save(res);
+
         }
     }
 

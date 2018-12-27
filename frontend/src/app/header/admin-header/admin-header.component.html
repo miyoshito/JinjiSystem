@@ -23,8 +23,7 @@
       <mat-icon class="ml-1">arrow_drop_down</mat-icon>
     </button>
 
-    <button mat-button [matMenuTriggerFor]="skillmap">
-      
+    <button mat-button [matMenuTriggerFor]="skillmap" disabled>      
       スキルマップ
       <mat-icon class="ml-1">arrow_drop_down</mat-icon>
     </button>
@@ -88,6 +87,7 @@
         <span>検索</span>
       </button>
     </a>
+    <!--
     <a routerLink="/admin/studycourse" routerLinkActive="active">
       <button mat-menu-item>
         <span>lista</span>
@@ -98,16 +98,19 @@
         <span>editar</span>
       </button>
     </a>
+    -->
     
   </mat-menu>
 
-  <mat-menu #skillmap="matMenu" overlapTrigger="false">
+  <!--
+    <mat-menu #skillmap="matMenu" overlapTrigger="false">
     <a routerLink="/admin/skillmap" routerLinkActive="active">
-      <button mat-menu-item>
+      <button mat-menu-item disabled>
         <span>検索</span>
       </button>
     </a>
   </mat-menu>
+  -->
 
   <mat-menu #adminmenu="matMenu" overlapTrigger="false">
     <a routerLink="404" routerLinkActive="active">

@@ -28,6 +28,11 @@ public class EmployeeController {
     @Autowired
     EmployeeRepository er;
 
+    @GetMapping("/admin/isregistered")
+    public EmployeeMaster isRegistered(@RequestParam(value="id", required=true) String id){
+        return employeeService.getProfile(id);
+    }
+
     @GetMapping("/admin/employee-list")
     public List<EmployeeMaster> employeeList(){
         return employeeService.returnAllEmployees();

@@ -1,6 +1,7 @@
 package aimyamaguchi.co.jp.aimspringsql.resume;
 
 import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeRepository;
+import aimyamaguchi.co.jp.aimspringsql.util.CustomValidators;
 import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -39,6 +40,9 @@ public class ResumeService {
 
     @Autowired
     private CommendationRepository commendation;
+
+    @Autowired
+    private CustomValidators valid;
 
     public void saveResume(ResumeModel resume, HttpServletRequest req) {
         if (resume.getEmployee() == null || resume.getEmployee().equals("")) {
@@ -115,7 +119,7 @@ public class ResumeService {
     public List<String> searchQueryBuilder(String id, String name, String kana, String recruit, String age, String study, String bunri, String keireki, String shikaku){
 
         ArrayList<String> queryParam = new ArrayList<>();
-        if(id != "") queryParam.add("sha.sha_no = '"+id+"' and ");
+        if (valid.isNullValidator(id)) queryParam.add("sha.sha_no = '"+id+"' and ");
         Optional.ofNullable(name).ifPresent((p) -> {if (p != "") queryParam.add("sha.sha_name like '%"+p+"%' and");});
         Optional.ofNullable(kana).ifPresent((p) -> {if (p != "") queryParam.add("sha.sha_kana like '%"+p+"%' and");});
         Optional.ofNullable(recruit).ifPresent((p) -> {if (p != "") queryParam.add("sha.sha_recruit = '"+p+"' and");});

@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class StudyCourseSearchComponent implements OnInit {
 
-  private searchForm: FormGroup
+  searchForm: FormGroup
   title: string
   constructor(private _fb: FormBuilder,
               private _scService: StudycourseService,
@@ -24,7 +24,7 @@ export class StudyCourseSearchComponent implements OnInit {
 
   searchAttempt(){
   if(!this.searchForm.valid){
-    alert ("preencha pelo menos 1 campo ae po")
+    alert ("Please fill atleast one field...")
   }
   try{
   this._scService.searchAttempt(this.searchForm.value)

@@ -1,6 +1,6 @@
 
 <div class="row border border-danger" style="min-height: 80vh; margin-top: 0px;">
-    <table class="table-responsive table-bordered table-hover">
+    <table>
       <ng-container *ngIf="columnCount$ | async; let cc">
         <tr>
           <th [colSpan]="1" scope="colgroup"></th>
@@ -21,36 +21,36 @@
           </th>
           <ng-container *ngFor="let lang of cc.LANG">
             <th id="{{lang.desc}}">
-              <div class="vertical-text">{{lang.desc}}</div>
+              <div >{{lang.desc}}</div>
             </th>
           </ng-container>
           <ng-container *ngFor="let dbms of cc.DBMS">
             <th>
-              <div class="vertical-text">{{dbms.desc}}</div>
+              <div >{{dbms.desc}}</div>
             </th>
           </ng-container>
   
           <ng-container *ngFor="let maker of cc.MAKER">
             <th>
-              <div class="vertical-text">{{maker.desc}}</div>
+              <div >{{maker.desc}}</div>
             </th>
           </ng-container>
   
           <ng-container *ngFor="let os of cc.OS">
             <td>
-              <div class="vertical-text">{{os.desc}}</div>
+              <div >{{os.desc}}</div>
             </td>
           </ng-container>
   
           <ng-container *ngFor="let tools of cc.TOOLS">
             <th>
-              <div class="vertical-text">{{tools.desc}}</div>
+              <div >{{tools.desc}}</div>
             </th>
           </ng-container>
   
           <ng-container *ngFor="let duty of cc.DUTY">
             <th>
-              <div class="vertical-text">{{duty.desc}}</div>
+              <div >{{duty.desc}}</div>
             </th>
           </ng-container>
         </tr>

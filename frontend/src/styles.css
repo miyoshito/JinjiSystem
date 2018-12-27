@@ -29,14 +29,15 @@ thead {
 .ime {
   ime-mode: active;
 }
+/*
 .vertical-text{
   writing-mode: vertical-rl;
-  -webkit-writing-mode: vertical-rl;
-  -ms-writing-mode: vertical-rl;
-  text-orientation: use-glyph-orientation;
-  unicode-bidi: bidi-override;
-  /*font-family: monospace;*/
+  -ms-writing-mode: bt-lr;
+  text-orientation: upright;
+  word-wrap: break-word;
+  white-space: nowrap;
 }
+*/
 
 .fill-remaining-space{flex: 1 1 auto;}
 .custom-radio .custom-control-input:checked~.custom-control-label::before,

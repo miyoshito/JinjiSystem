@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -23,6 +24,12 @@ public class StudyCourseController {
 
     @Autowired
     EmployeeRepository er;
+
+    @GetMapping("/admin/studycourse/get")
+    public ResponseEntity<Optional<StudyCourseModel>> getSCModel(@RequestParam(value="id") String id){
+        return new ResponseEntity<>(scs.findSCM(id),HttpStatus.OK);
+    }
+
 
 
     @PostMapping("/se/studycourse/add")

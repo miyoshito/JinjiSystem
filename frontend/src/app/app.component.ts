@@ -34,11 +34,11 @@ export class AppComponent implements OnInit{
         this._profileService.getLoggedInUserData()
     } else {
       this._loginService.logout()
-    }
-    
+    }    
   }
 
   authValidate(){
+    //this._profileService.getLoggedInUserData()
     let token: string = localStorage.getItem('currentUser')    
     if(this._authService.isTokenExpired(token) || token == null){
       this._broadcastService.pushAuthentication(false)

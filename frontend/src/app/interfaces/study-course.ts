@@ -1,5 +1,5 @@
 export interface studyCourse{    
-    id: number
+    id: string
     sponsor: string
     educationName: string
     startPeriod: Date

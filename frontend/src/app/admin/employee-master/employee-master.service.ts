@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders, HttpInterceptor } from '@angular/common/http';
 import { Observable, Subject, ReplaySubject } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
 import { API_URL, PUBLIC_URL, ADMIN_URL } from '../../url-settings'
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { TokenInterceptorService } from 'src/app/guards/token-interceptor.service';
 import { Router } from '@angular/router';
 
@@ -17,11 +17,33 @@ export class EmployeeMasterService {
               private interceptor: TokenInterceptorService,
               private _router: Router) { }
 
-  searchSource: ReplaySubject<Employee[]> = new ReplaySubject<Employee[]>()
-  searchResults$ = this.searchSource.asObservable()  
+  searchSource: ReplaySubject<Employee[]> = new ReplaySubject<Employee[]>(1)
+  searchResults$ = this.searchSource.asObservable()
 
+  usrSource: ReplaySubject<Employee> = new ReplaySubject<Employee>(1)
+  usr$ = this.usrSource.asObservable()
 
   
+
+  
+
+
+  checkIfShainExists(id: string): Observable<boolean>{
+  let d: Subject<boolean> = new Subject<boolean>()
+    this._http.get<Employee>(ADMIN_URL +'/isregistered?id='+id, {observe: 'response'}).pipe(
+      map(res =>{
+        if (!res.body || res.body == null){
+          d.next(false)
+        } else {
+          this.usrSource.next(res.body)
+          d.next(true)
+        }
+      })
+    ).subscribe()   
+    d.pipe(map(r => console.log(r))).subscribe()
+    return d
+  }
+
   getViewRendering(): Observable<any>{
       return this._http.get<any>(PUBLIC_URL+'/employee-params')
   }
@@ -57,7 +79,6 @@ export class EmployeeMasterService {
     +'&kana='+kana
     +'&affiliation='+affs,
     {observe: 'response'}).subscribe(res =>{
-      console.log(res.body)
       this._router.navigate(['/admin/employee-list'])
       this.searchSource.next(res.body)
     })

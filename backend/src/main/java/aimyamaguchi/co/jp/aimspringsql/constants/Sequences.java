@@ -26,6 +26,6 @@ public class Sequences {
     private String seqTablename;
 
     @Column(name="seq_value")
-    private Long seqValue;
+    private String seqValue;
 
 }

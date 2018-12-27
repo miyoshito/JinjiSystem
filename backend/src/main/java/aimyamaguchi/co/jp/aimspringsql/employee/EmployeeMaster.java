@@ -95,7 +95,7 @@ public class EmployeeMaster implements UserDetails, Serializable {
     private Date shainRetiredDate;
 
     @Column(name="SHA_RETIREFLG", nullable=false)
-    private boolean shainActive;
+    private boolean shainRetired;
 
     //@Column(name="SHA_CARMODEL", length=30)
     @JoinColumn(name="SHA_CARMODEL")
@@ -160,7 +160,7 @@ public class EmployeeMaster implements UserDetails, Serializable {
 
     @Override
     public boolean isEnabled() {
-		return this.isShainActive();
+		return !this.isShainRetired();
 	}
     
 

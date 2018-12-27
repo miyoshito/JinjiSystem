@@ -83,6 +83,7 @@ public class CurriculumService {
         ArrayList<String> queryJoins = new ArrayList<>();
         ArrayList<String> queryParam = new ArrayList<>();
 
+
         if (validator(id)) queryParam.add("and m.sha_no = '" + id + "'\n");
         if (validator(name)) queryParam.add("and m.sha_name like '%" + name + "%'\n");
         if (validator(kana)) queryParam.add("and m.sha_kana like '%" + kana + "%'\n");
@@ -172,17 +173,19 @@ public class CurriculumService {
                         + param);
 
         if(query.getResultList().size() < 1) {
-            if (validator(id) || validator(name) || validator(kana) || validator(recruit)){
-                Query q2 = entityManager.createNativeQuery("" +
-                        "select distinct m.sha_no from m_shain m where\n"
-                        +"m.sha_no = "+id+" or"
-                        +"m.sha_name like '%"+name+"%' or"
-                        +"m.sha_kana like '%"+kana+"%' or"
-                        +"m.sha_recruit = '"+recruit+"'");
+            ArrayList<String> subQuery = new ArrayList<>();
+            if(validator(id)) subQuery.add("m.sha_no ="+id);
+            if(validator(name)) subQuery.add("m.sha_name like '%"+name+"%'");
+            if(validator(kana)) subQuery.add("m.sha_kana like '%"+kana+"%'");
+            if(validator(recruit)) subQuery.add("m.sha_recruit = '"+recruit+"'");
+
+            String p2 = String.join("\n or ",subQuery);
+
+            if (subQuery.size() > 0){
+                Query q2 = entityManager.createNativeQuery("select distinct m.sha_no from m_shain m where "+p2);
                 return q2.getResultList();
             }
-        } else {return query.getResultList();};
-
+        } else {return query.getResultList();}
         return new ArrayList<>();
     }
 
@@ -354,4 +357,5 @@ public class CurriculumService {
         return fml;
 
     }
+
 }

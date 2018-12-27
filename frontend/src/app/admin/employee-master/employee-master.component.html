@@ -1,9 +1,6 @@
 <div class="container">
 <form [formGroup]="employeeForm" (ngSubmit)="submitForm()">
   <ng-container *ngIf="params$ | async; let data">
-    <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="success$">
-      {{successMsg}}
-    </div>
     <div class="row">
       <div class="col-md-6">
         <h3>{{title}}</h3>
@@ -11,7 +8,7 @@
       <div class="col-md-3"></div>
       <div class="col-md-3 d-flex justify-content-end align-items-end">
         <div class="custom-control custom-checkbox">
-          <input type="checkbox" formControlName="shainDeletedFlag" class="custom-control-input" id="customCheck1">
+          <input type="checkbox" formControlName="shainRetired" class="custom-control-input" id="customCheck1">
           <label class="custom-control-label" for="customCheck1">退職フラグ</label>
         </div>
       </div>
@@ -19,7 +16,8 @@
     <div class="row">
       <div class="col-md-3">
         <span>社員番号: </span>
-        <input type="text" formControlName="shainId" class="form-control" readonly>
+        <input type="text" maxlength="6" formControlName="shainId" class="form-control" *ngIf="isEditing || isProfile" readonly>
+        <input type="text" maxlength="6" formControlName="shainId" class="form-control" *ngIf="isInserting" (change)="onChange($event)">
       </div>
       <div class="col-md-3">
         <span>氏名: </span>
@@ -103,65 +101,7 @@
         <option *ngFor="let type of bloodType" value="{{type}}">{{type}}</option>
       </select>
     </div>
-    </div>
-    <!--
-<div class="row">
-  <div class="d-flex p-2 align-items-center justify-content-center col">
-    <span [ngClass]="{ 'errormsg': submitted && f.shainSupport.errors }">扶養:  &nbsp; </span>
-      <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="supportRadioButton1" value ="false" class="custom-control-input" formControlName="shainSupport">
-        <label class="custom-control-label" for="supportRadioButton1">無</label>
-      </div>
-      <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="supportRadioButton2" value ="true" class="custom-control-input" formControlName="shainSupport">
-        <label class="custom-control-label" for="supportRadioButton2">有</label>
-      </div>
-    <div *ngIf="submitted && f.shainSupport.errors"><small class="errormsg">必須</small></div>
-  </div>
-
-  <div class="d-flex align-items-center justify-content-center col">
-    <span [ngClass]="{ 'errormsg': submitted && f.shainMarried.errors }">配偶者:  &nbsp; </span>
-    
-      <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="marriedRadioButton1" formControlName="shainMarried" value="false" class="custom-control-input">
-        <label class="custom-control-label" for="marriedRadioButton1">無</label>
-      </div>
-      <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="marriedRadioButton2" formControlName="shainMarried" value="true" class="custom-control-input">
-        <label class="custom-control-label" for="marriedRadioButton2">有</label>
-      </div>
-    
-    <div *ngIf="submitted && f.shainMarried.errors"><small class="errormsg">必須</small></div>
-  </div>
-
-  <div class="d-flex align-items-center justify-content-center col">
-    <span [ngClass]="{ 'errormsg': submitted && f.shainSex.errors }">性別:  &nbsp;</span>
-    
-      <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="sexRadioButton1" value="男" formControlName="shainSex" class="custom-control-input">
-        <label class="custom-control-label" for="sexRadioButton1">男</label>
-      </div>
-      <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="sexRadioButton2" value="女" formControlName="shainSex" class="custom-control-input">
-        <label class="custom-control-label" for="sexRadioButton2">女</label>
-      </div>
-    
-    <div *ngIf="submitted && f.shainSex.errors"><small class="errormsg">必須</small></div>
-  </div>
-
-  <div class="d-flex justify-content-end col-md-4"> 
-    <div class="d-flex p-2 align-items-center justify-content-center">
-    <span >血液型: &nbsp;</span>
-  </div>
-  <div class="d-flex p-2 align-items-center justify-content-end col-md-9" style="float: right">
-    <select class="custom-select" formControlName="shainBloodType" [ngClass]="{ 'is-invalid': submitted && f.shainMarried.errors }">
-        <option *ngFor="let type of bloodType" value="{{type}}">{{type}}</option>
-    </select>  
-  </div>
-  </div>
-
-</div>
--->
+    </div>    
     <div class="row">
       <div class="col-md-3">
         <span>電話番号(自宅)</span>
@@ -239,12 +179,18 @@
         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" formControlName="shainNotes"></textarea>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12 d-flex p-2 justify-content-around">
+    <div class="row d-flex p-2 justify-content-around">
         <button type="submit" class="btn btn-primary">{{buttonLabel}}</button>
+        <button *ngIf="isInserting" type="button" class="btn btn-primary" (click)="resetForms()">クリア</button>
         <button *ngIf="isEditing" type="button" class="btn btn-primary" (click)="returnToSearch()">キャンセル</button>
-      </div>
+    </div>
+    <div class="row dflex justify-content-around" *ngIf="displayInsertButtons">
+        <button type="button" class="btn btn-success" (click)="redirect('rirekisho')" >履歴書を登録する</button>
+        <button type="button" class="btn btn-success" (click)="redirect('shokumurirekisho')" >職務経歴書を登録する</button>
+        <button type="button" class="btn btn-success" (click)="redirect('kyouiku')" disabled>教育履歴を登録する</button>
+        <button type="button" class="btn btn-success" (click)="redirect('shikaku')" disabled>資格情報を登録する</button>
     </div>
   </ng-container>
 </form>
 </div>
+
