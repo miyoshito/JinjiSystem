@@ -130,13 +130,10 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-4">
-      <button class="btn btn-primary" (click)="insertAttempt()">{{button}}</button>
-      <button *ngIf="authority === 'ADMIN'" class="btn btn-primary">行削除</button>
-      <button class="btn btn-primary" onclick="history.back(-1)">詳細へ戻る</button>
-
-    </div>
+  <div class="row d-flex justify-content-around">    
+      <button type="button" class="btn btn-primary" (click)="insertAttempt()">{{button}}</button>
+      <button type="button" *ngIf="authority === 'ADMIN'" class="btn btn-primary">行削除</button>
+      <button type="button" class="btn btn-primary" onclick="history.back(-1)">詳細へ戻る</button>
   </div>
 </form>
 </div>

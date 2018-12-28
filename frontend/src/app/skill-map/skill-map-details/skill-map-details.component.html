@@ -1,7 +1,6 @@
-
-<div class="row border border-danger" style="min-height: 80vh; margin-top: 0px;">
+<!--<div class="row border border-danger" style="min-height: 80vh; margin-top: 0px;">
     <table>
-      <ng-container *ngIf="columnCount$ | async; let cc">
+      
         <tr>
           <th [colSpan]="1" scope="colgroup"></th>
           <th style="border-right: 1px solid black;" [colSpan]="1" scope="colgroup"></th>
@@ -55,15 +54,16 @@
           </ng-container>
         </tr>
 
-        <ng-container *ngIf="mapping$ | async; let usr">
+        
           <tr *ngFor="let t of usr; let i = index" #lang>
             <td>{{t.affiliation}}</td>
             <td>{{t.name}}</td>
-            <ng-container *ngFor="let c of cc.LANG">
+        
               <td><div attr.id="{{c.desc}}{{i}}" [innerText]="0"></div></td>
-            </ng-container>
+        
           </tr>
-          </ng-container>
-        </ng-container>        
+        
+        
     </table>
   </div>
+  -->

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
 import { StudycourseService } from '../studycourse.service';
@@ -26,6 +26,8 @@ export class StudyCourseDetailsComponent implements OnInit {
   education$: Observable<studyCourse>
   studyForm: FormGroup
 
+  title: string = "教育履歴詳細画面"
+
   ngOnInit() {
     this.education$ = this._scService.details$
     this.results$ = this._scService.searchResults$
@@ -38,6 +40,10 @@ export class StudyCourseDetailsComponent implements OnInit {
         })
       })
     ).subscribe()
+  }
+
+  ngOnDestroy(){
+    this.isAlive$.next();
   }
 }
 

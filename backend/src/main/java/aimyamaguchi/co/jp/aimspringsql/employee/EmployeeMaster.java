@@ -10,6 +10,7 @@ import javax.persistence.*;
 import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -30,26 +31,26 @@ public class EmployeeMaster implements UserDetails, Serializable {
     @Id
     @Column(name="SHA_NO", length=6, nullable=false)
     private String shainId;
-
     @Column(name="SHA_PASSWORD", length=100, nullable=false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String shainPassword;
 
-    @Column(name="SHA_NAME", length=20, nullable=false)
+    @Column(name="SHA_NAME", length=60, nullable=false)
     private String shainName;
 
     @Column(name="SHA_RECRUIT", length=20, nullable=false)
     private String shainRecruit; //selectable key (hardcoded)
 
-    @Column(name="SHA_KANA", length=20, nullable=false)
+    @Column(name="SHA_KANA", length=60, nullable=false)
     private String shainKana;
 
     @Column(name="SHA_BIRTHDAY", nullable=false)
     private Date shainBirthday;
 
-    @Column(name="SHA_BLOOD", length=5)
+    @Column(name="SHA_BLOOD", length=10)
     private String shainBloodType; //selectable key (hardcoded)
 
-    @Column(name="SHA_SEX", length=5, nullable=false)
+    @Column(name="SHA_SEX", length=10, nullable=false)
     private String shainSex; //selectable key (hardcoded)
 
     @ManyToMany
@@ -66,22 +67,22 @@ public class EmployeeMaster implements UserDetails, Serializable {
     @Column(name="SHA_MARRIED", nullable=false)
     private boolean shainMarried;
 
-    @Column(name="SHA_HOMEPHONENUMBER", length=13)
+    @Column(name="SHA_HOMEPHONENUMBER", length=15)
     private String shainHomePhoneNumber;
 
-    @Column(name="SHA_MOBILEPHONENUMBER", length=13)
+    @Column(name="SHA_MOBILEPHONENUMBER", length=15)
     private String shainMobilePhoneNumber;
 
-    @Column(name="SHA_MAIL", length=30)
+    @Column(name="SHA_MAIL", length=60)
     private String shainMail;
 
-    @Column(name="SHA_MOBILEMAIL", length=30, nullable=false)
+    @Column(name="SHA_MOBILEMAIL", length=60, nullable=false)
     private String shainMobileMail;
 
-    @Column(name="SHA_POSTALCODE", length=8, nullable=false)
+    @Column(name="SHA_POSTALCODE", length=10, nullable=false)
     private String shainPostalCode;
 
-    @Column(name="SHA_ADDRESS", length=30, nullable=false)
+    @Column(name="SHA_ADDRESS", length=100, nullable=false)
     private String shainAddress;
 
     @ManyToOne
@@ -97,7 +98,6 @@ public class EmployeeMaster implements UserDetails, Serializable {
     @Column(name="SHA_RETIREFLG", nullable=false)
     private boolean shainRetired;
 
-    //@Column(name="SHA_CARMODEL", length=30)
     @JoinColumn(name="SHA_CARMODEL")
     @ManyToOne
     private CARMODELData shainCarModel;
@@ -106,7 +106,7 @@ public class EmployeeMaster implements UserDetails, Serializable {
     @ManyToOne
     private Roles role;
 
-    @Column(name="SHA_NOTES", length=50)
+    @Column(name="SHA_NOTES", length=200)
     private String shainNotes;
 
     @Column(name="SHA_RESIST")
@@ -118,8 +118,8 @@ public class EmployeeMaster implements UserDetails, Serializable {
     @Column(name="SHA_DELETEFLG")
     private boolean shainDeletedFlag;
 
-    @JsonManagedReference
-    @OneToOne(mappedBy="employee", fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="SHA_RESUME", nullable=true)
     private ResumeModel resume;
 
     @OneToMany(mappedBy = "employee_id", fetch = FetchType.LAZY)
@@ -144,21 +144,25 @@ public class EmployeeMaster implements UserDetails, Serializable {
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return false;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return false;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return false;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
 		return !this.isShainRetired();
 	}

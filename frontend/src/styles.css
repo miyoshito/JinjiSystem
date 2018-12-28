@@ -29,6 +29,10 @@ thead {
 .ime {
   ime-mode: active;
 }
+
+.retired-bg{
+  background-color: salmon;
+}
 /*
 .vertical-text{
   writing-mode: vertical-rl;

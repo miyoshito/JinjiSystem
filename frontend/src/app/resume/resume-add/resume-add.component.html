@@ -111,14 +111,14 @@
             <th style="width: 10%">月</th>
             <th style="width: 30%">学校/職場</th>
             <th style="width: 30%">学科/所属</th>
-            <th style="width: 15%">結果</th>
+            <th style="width: 15%"></th>
             <th style="width: 4%"></th>
           </thead>
           <tbody>
             <tr formArrayName="careers" *ngFor="let row of careerRows.controls; let i = index;">
               <ng-container [formGroupName]="i">
-                <td><input type="text" class="form-control" formControlName="career_year"></td>
-                <td><input type="text" class="form-control" formControlName="career_month"></td>
+                <td><input maxlength="2" type="tel" class="form-control" formControlName="career_year"></td>
+                <td><input maxlength="2" type="tel" class="form-control" formControlName="career_month"></td>
                 <td><input type="text" class="form-control" formControlName="career_scwk"></td>
                 <td><input type="text" class="form-control" formControlName="career_dpaf"></td>
                 <td><select class="custom-select" formControlName="career_result">
@@ -150,18 +150,18 @@
             <th style="width: 10%">年</th>
             <th style="width: 10%">月</th>
             <th style="width: 61%">資格名</th>
-            <th style="width: 15%">結果</th>
+            <th style="width: 15%"></th>
             <th style="width: 4%"></th>
           </thead>
           <tbody>
             <tr formArrayName="qualifications" *ngFor="let row of qualificationRows.controls; let i = index;">
               <ng-container [formGroupName]="i">
-                <td><input type="text" class="form-control" formControlName="qualification_year"></td>
-                <td><input type="text" class="form-control" formControlName="qualification_month"></td>
+                <td><input maxlength="4" type="tel" class="form-control" formControlName="qualification_year"></td>
+                <td><input maxlength="2" type="text" class="form-control" formControlName="qualification_month"></td>
                 <td><input type="text" class="form-control" formControlName="qualification_name"></td>
                 <td><select class="custom-select" formControlName="qualification_result">
-                    <option value="入学">合格</option>
-                    <option value="卒業">合格</option>
+                    <option value="合格">合格</option>
+                    <option value="不合格">不合格</option>
                   </select>
                 </td>
                 <td>
@@ -178,7 +178,7 @@
   <div class="row">
     <div class="col-md-12">
       <form [formGroup]="commendationForm">
-        <h4>資格
+        <h4>表彰
             <button class="btn btn-sm btn-success" (click)="clearCommendationRow()">+</button>
         </h4>
         <table class="table table-bordered">
@@ -191,8 +191,8 @@
           <tbody>
             <tr formArrayName="commendations" *ngFor="let row of commendationRows.controls; let i = index;">
               <ng-container [formGroupName]="i">
-                <td><input type="text" class="form-control" formControlName="commendation_year"></td>
-                <td><input type="text" class="form-control" formControlName="commendation_month"></td>
+                <td><input maxlength="4" type="text" class="form-control" formControlName="commendation_year"></td>
+                <td><input maxlength="2" type="text" class="form-control" formControlName="commendation_month"></td>
                 <td><input type="text" class="form-control" formControlName="commendation_name"></td>
                 <td>
                     <button *ngIf="row.controls.commendationid.value" class="btn btn-sm btn-danger" (click)="removeCommendationRow(i)">x</button>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { CurriculumService } from '../curriculum.service';
 import { BsDatepickerConfig, BsDatepickerViewMode, BsLocaleService } from 'ngx-bootstrap/datepicker';
@@ -61,7 +61,7 @@ export class CurriculumInsertComponent implements OnInit {
     this.data$ = this.cvService.getPropertiesList()
     this.industryDropdown$ = this.cvService.getBusinessLogic()
 
-    if ((this._router.url).endsWith('shokumurirekisho/add')) {
+    if ((this._router.url).endsWith('shokumurirekisho/add')) { //profile
       this.title = '職務経歴書登録画面'
       this.button = '登録'
       this.loggedUser$ = this._profileService.cachedUser$
@@ -71,36 +71,46 @@ export class CurriculumInsertComponent implements OnInit {
           this.userid = t.shainId          
         })).subscribe()
       this.generateForm()
-    } else {
+      } else if (this._router.url.includes('/shokumurirekisho/edit/')) {
+        this.generateForm()
+        this.button = '更新'
+        this.title = '職務経歴書編集画面'
+        //verifica se o edit eh de alguem ou meu
+        if (this._route.snapshot.paramMap.get('uid') != null) {
+          this.loggedUser$ = this._profileService.getUserProfile(this._route.snapshot.paramMap.get('uid'))
+          this.userid = this._route.snapshot.paramMap.get('uid')
+        }
+        else this.loggedUser$ = this._profileService.cachedUser$
+        //fim do bloco
+        //comeco do map pra saber ql ta editando...
+        this.loggedUser$.pipe(
+          takeUntil(this.isAlive$),
+          map(t => {
+            if (this._route.snapshot.paramMap.get('shid') != null) {
+              t.curriculum.map((id, index) => {
+                if (id.id === parseInt(this._route.snapshot.paramMap.get('shid'))) {
+                  this.cvForm.patchValue(t.curriculum[index])
+                  console.log('Start ->' +t.curriculum[index].startdate)
+                  console.log('End ->' +t.curriculum[index].enddate)
+                  console.log(this.cvForm.value)
+                  this.cvForm.patchValue({
+                    employee_id: t.shainId,
+                    industryType: t.curriculum[index].industryTypeId,
+                    assignData: t.curriculum[index].assignData.id
+                  })
+                  this.changeChilds(t.curriculum[index].industryTypeId)
+                  this.cvForm.patchValue({ industryClass: t.curriculum[index].industryClassId })
+                }
+              })
+            }
+          })).subscribe()
+          // fim do bloco do edit...
+      } else { //termina com /id/add
+      this.title = '職務経歴書登録画面'
+      this.button = '登録'
+      this.loggedUser$ = this._profileService.getUserProfile(this._route.snapshot.paramMap.get('uid'))
+      this.userid = this._route.snapshot.paramMap.get('uid')
       this.generateForm()
-      this.title = '職務経歴書編集画面'
-      this.button = '更新'
-      if (this._route.snapshot.paramMap.get('uid') != null) {
-        this.loggedUser$ = this._profileService.getUserProfile(this._route.snapshot.paramMap.get('uid'))
-        this.userid = this._route.snapshot.paramMap.get('uid')
-      }
-      else this.loggedUser$ = this._profileService.cachedUser$
-      this.loggedUser$.pipe(
-        takeUntil(this.isAlive$),
-        map(t => {
-          if (this._route.snapshot.paramMap.get('shid') != null) {
-            t.curriculum.map((id, index) => {
-              if (id.id === parseInt(this._route.snapshot.paramMap.get('shid'))) {
-                this.cvForm.patchValue(t.curriculum[index])
-                console.log('Start ->' +t.curriculum[index].startdate)
-                console.log('End ->' +t.curriculum[index].enddate)
-                console.log(this.cvForm.value)
-                this.cvForm.patchValue({
-                  employee_id: t.shainId,
-                  industryType: t.curriculum[index].industryTypeId,
-                  assignData: t.curriculum[index].assignData.id
-                })
-                this.changeChilds(t.curriculum[index].industryTypeId)
-                this.cvForm.patchValue({ industryClass: t.curriculum[index].industryClassId })
-              }
-            })
-          }
-        })).subscribe()
     }
     this.bsConfig = Object.assign(
       { minMode: this.minMode },
@@ -111,6 +121,7 @@ export class CurriculumInsertComponent implements OnInit {
 
 
   ngOnDestroy(): void {
+    this.isAlive$.next()
   }
 
   industryForm(): FormGroup {
@@ -137,6 +148,7 @@ export class CurriculumInsertComponent implements OnInit {
       console.log(e)
     }
   }
+  
   redirect() {
     this._broadcastService.userAuthorization$.pipe((takeUntil(this.isAlive$)), map(auth => {
       if (auth === 'ADMIN' || auth === 'SOUMU') {

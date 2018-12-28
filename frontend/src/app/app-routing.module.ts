@@ -41,12 +41,18 @@ const routes: Routes = [
   //URL de direcionamento padrao de todos os usuarios
   {path: 'profile', children:[
     {path: '', component: EmployeeMasterComponent},
-    {path: 'shokumurirekisho', component: CurriculumDetailsComponent},
-    {path: 'shokumurirekisho/add', component: CurriculumInsertComponent},
-    {path: 'shokumurirekisho/edit/:shid', component: CurriculumInsertComponent},
+    {path: 'shokumurirekisho', children:[
+      {path: '', component: CurriculumDetailsComponent},
+      {path: 'add', component: CurriculumInsertComponent},
+      {path: 'edit/:uid/:shid', component: CurriculumInsertComponent},
+    ]},    
     {path: 'skillmap', component: SkillMapDetailsComponent},
     {path: 'qualifications', component: QualificationsComponent},
-    {path: 'studycourses', component: StudycourseComponent},
+    {path: 'studycourses', children:[
+      {path: '', component: StudycourseComponent},
+      {path: 'add', component: StudyCourseEditComponent},
+      {path: 'edit/:scid', component: StudyCourseEditComponent},
+    ]},
   ],canActivate:[AuthGuardService]},
 
   //URL de direcionamento pra quem tem permissoes de administrador...
@@ -67,7 +73,7 @@ const routes: Routes = [
       {path: 'shokumurirekisho', children:[
           {path: 'edit/:uid/:shid', component: CurriculumInsertComponent},
           {path: 'details/:id', component: CurriculumDetailsComponent},
-          {path: 'add', component: CurriculumInsertComponent},
+          {path: ':uid/add', component: CurriculumInsertComponent},
           {path: 'search', component: CurriculumSearchComponent},
           {path: 'list', component: CurriculumListComponent}
       ]},

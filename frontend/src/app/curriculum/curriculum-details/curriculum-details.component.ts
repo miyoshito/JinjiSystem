@@ -28,12 +28,11 @@ export class CurriculumDetailsComponent implements OnInit {
               private _curriculumService: CurriculumService) { }
 
   ngOnInit() {
-    this._route.parent.parent.url.pipe(takeUntil(this.isAlive$), map(url =>{
-      if (url[0].path === 'admin'){ //if you're navigating from /admin/ path        
+    if (this._router.url.startsWith('/admin')) {
       this.shainid = this._route.snapshot.paramMap.get('id')
       this.admin$ = true        
       this.profileSelected$ = this._profileService.getUserProfile(this.shainid)      
-    } else { //any another route that casts /profile/
+    } else {
       this.admin$ = false
       this._profileService.getLoggedInUserData()
       this.profileSelected$ = this._profileService.cachedUser$
@@ -41,10 +40,8 @@ export class CurriculumDetailsComponent implements OnInit {
         this.shainid = usr.shainId
       })).subscribe()
     }
-    })).subscribe()
-
-
   }
+  
   ngOnDestroy(){
     this.isAlive$.next();
   }
@@ -67,7 +64,7 @@ export class CurriculumDetailsComponent implements OnInit {
 
   editSR(id: number){
     this.admin$ ? this._router.navigate(['/admin/shokumurirekisho/edit/'+this.shainid+'/'+id]) :
-    this._router.navigate(['profile/shokumurirekisho/edit/'+id])
+    this._router.navigate(['profile/shokumurirekisho/edit/'+this.shainid+'/'+id])
   }
 
   addNewSR(){

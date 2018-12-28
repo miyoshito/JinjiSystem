@@ -9,6 +9,7 @@ import aimyamaguchi.co.jp.aimspringsql.files.ResumeFileDetails;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
@@ -39,9 +40,8 @@ public class ResumeModel {
     @Column(name="LOG_INSERTEDBY")
     private String insertedBy;
 
-    @OneToOne
-    @JsonBackReference
-    @JoinColumn(name="SHA_NO", nullable=false)
+    @JsonIgnore
+    @OneToOne(mappedBy="resume")
     private EmployeeMaster employee;
 
     @OneToMany(mappedBy="resume")

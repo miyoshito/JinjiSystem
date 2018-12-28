@@ -9,7 +9,7 @@ import { BroadcastService } from 'src/app/broadcast.service';
 import { ProfileService } from 'src/app/profile/profile.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from 'src/app/login/login.service';
-import { a } from '@angular/core/src/render3';
+import { BsDatepickerConfig, BsDatepickerViewMode, BsLocaleService } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-employee-master',
@@ -49,13 +49,20 @@ export class EmployeeMasterComponent implements OnInit {
 
   selectedUser$: Observable<Employee>
 
+  bsValue: String = new Date().toISOString().slice(0,10);
+  endValue: Date = new Date()
+  minMode: BsDatepickerViewMode = 'day';
+  bsConfig: Partial<BsDatepickerConfig>;
+
   constructor(private _fb: FormBuilder,
               private _employeeService: EmployeeMasterService,
               private _broadcastService: BroadcastService,
               private _profileService: ProfileService,
               private _route: ActivatedRoute,
               private _router: Router,
-              private _loginService: LoginService) { 
+              private _loginService: LoginService,
+              private localeService: BsLocaleService,) { 
+                localeService.use('ja')
                 this.passwordbutton = false
                 this.isInserting = false
                 this.isEditing = false
@@ -71,12 +78,18 @@ export class EmployeeMasterComponent implements OnInit {
   this.initializeForm()
   this.params$ = this._employeeService.getViewRendering()
   this.isLoggedIn$ = this._broadcastService.userAuthenticated$
+  this.bsConfig = Object.assign(
+    { minMode: this.minMode },
+    { containerClass: "theme-red" },
+    { dateInputFormat: 'YYYY/MMMM/dd' },
+    { dateRangeFormat: 'YYYY/MMMM/dd'});
   
   if ((this._router.url).endsWith('/edit')){    
       this.selectedUser$ = this._profileService.getUserProfile(this._route.snapshot.paramMap.get('id'))
       this.loadUserData()
       this.title = '社員マスタ編集画面'
       this.buttonLabel = '更新'
+      this.displayInsertButtons = true
       this.isEditing = true
       this.passwordbutton = true
   } else if ((this._router.url).endsWith('/profile')) {
@@ -101,6 +114,7 @@ export class EmployeeMasterComponent implements OnInit {
     console.log(r)
     this.selectedUser$ = this._employeeService.usr$
     this.loadUserData();
+    this.displayInsertButtons = true
     this.buttonLabel = '更新'
     this.passwordbutton = true
     }
@@ -122,7 +136,6 @@ export class EmployeeMasterComponent implements OnInit {
       data.shainRegisterDate != null ? this.employeeForm.patchValue({shainRegisterDate: data.shainRegisterDate.slice(0,10)}) : null
       data.shainRetiredDate != null ? this.employeeForm.patchValue({shainRetiredDate: data.shainRetiredDate.slice(0,10)}) : null
     })
-    this.displayInsertButtons = true
     this.iid = this.employeeForm.controls.shainId.value
   }
 

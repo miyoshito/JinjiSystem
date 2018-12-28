@@ -16,8 +16,8 @@
     <div class="row">
       <div class="col-md-3">
         <span>社員番号: </span>
-        <input type="text" maxlength="6" formControlName="shainId" class="form-control" *ngIf="isEditing || isProfile" readonly>
-        <input type="text" maxlength="6" formControlName="shainId" class="form-control" *ngIf="isInserting" (change)="onChange($event)">
+        <input type="tel" maxlength="6" formControlName="shainId" class="form-control no-ime" *ngIf="isEditing || isProfile" readonly>
+        <input type="tel" maxlength="6" formControlName="shainId" class="form-control no-ime" *ngIf="isInserting" (change)="onChange($event)">
       </div>
       <div class="col-md-3">
         <span>氏名: </span>
@@ -39,7 +39,15 @@
       <div class="col-md-3">
         <span>生年月日</span>
         <div>
-          <input type=date formControlName="shainBirthday" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.shainBirthday.errors }"> 
+            <input type="text"
+            placeholder="生年月日"
+            class="form-control"
+            [bsConfig]="bsConfig"
+            value = "{{f.shainBirthday.value | date:'yyyy/MM/dd'}}"
+            formControlName="shainBirthday"
+            [ngClass]="{ 'is-invalid': submitted && f.shainBirthday.errors }"
+            bsDatepicker>
+          <!--<input type="date" formControlName="shainBirthday" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.shainBirthday.errors }"> -->
         </div>
       </div>
       <div class="col-md-6">
@@ -192,5 +200,6 @@
     </div>
   </ng-container>
 </form>
+<pre>{{employeeForm.value | json}}</pre>
 </div>
 

@@ -21,13 +21,13 @@
         <tbody>
           <ng-container *ngIf="results$ | async; let results">
             <ng-container *ngFor="let user of results">
-              <tr *ngFor="let sc of user.educations">
+              <tr [ngClass]="{'retired-bg': user.shainRetired }" *ngFor="let sc of user.educations">
                 <td>{{sc.sponsor}}</td>
                 <td>{{sc.educationName}}</td>
                 <td>{{user.shainName}}</td>
                 <td>{{sc.startPeriod}}~<br />{{sc.endPeriod}}</td>
                 <td>{{sc.totalExpenses}}</td>
-                <td><input type="checkbox" value="{{user.shainActive}}" readonly></td>
+                <td><i *ngIf="user.shainRetired" class="material-icons">check_box</i></td>
                 <td><button class="btn btn-primary" (click)="details(user.shainId, sc.id)">詳細</button></td>
               </tr>
             </ng-container>
