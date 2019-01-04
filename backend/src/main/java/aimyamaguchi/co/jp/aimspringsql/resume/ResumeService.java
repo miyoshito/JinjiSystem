@@ -1,12 +1,8 @@
 package aimyamaguchi.co.jp.aimspringsql.resume;
 
-import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeRepository;
+import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.EmployeeRepository;
 import aimyamaguchi.co.jp.aimspringsql.util.CustomValidators;
-import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
@@ -14,7 +10,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +39,7 @@ public class ResumeService {
     @Autowired
     private CustomValidators valid;
 
+
     public void saveResume(ResumeModel resume, HttpServletRequest req) {
         if (resume.getEmployee() == null || resume.getEmployee().equals("")) {
             return;
@@ -57,14 +53,13 @@ public class ResumeService {
             insertDetails(res);
         } else {
             insertDetails(resume);
-            resumeRepo.saveAndFlush(resume);
+            resumeRepo.save(resume);
         }
     }
 
     private void insertDetails(ResumeModel resume) {
-
-        resume.getCareers().forEach((car) ->{
-            if (car.getCareerid() == null){
+        for (Career car : resume.getCareers()) {
+            if (car.getCareerid() == null) {
                 car.setActive(true);
                 car.setK_resume(resume);
                 career.save(car);
@@ -72,9 +67,9 @@ public class ResumeService {
                 car.setK_resume(resume);
                 career.save(car);
             }
-        });
-        resume.getQualifications().forEach(qual ->{
-            if( qual.getQualificationid() == null) {
+        }
+        for (Qualification qual : resume.getQualifications()) {
+            if (qual.getQualificationid() == null) {
                 qual.setActive(true);
                 qual.setS_resume(resume);
                 qualification.save(qual);
@@ -82,9 +77,9 @@ public class ResumeService {
                 qual.setS_resume(resume);
                 qualification.save(qual);
             }
-        });
-        resume.getCommendations().forEach(com -> {
-            if (com.getCommendationid() == null){
+        }
+        for (Commendation com : resume.getCommendations()) {
+            if (com.getCommendationid() == null) {
                 com.setActive(true);
                 com.setH_resume(resume);
                 commendation.save(com);
@@ -92,8 +87,8 @@ public class ResumeService {
                 com.setH_resume(resume);
                 commendation.save(com);
             }
-            });
         }
+    }
 
     public void deleteResumeDetails(Long id, String desc){
 
@@ -137,7 +132,7 @@ public class ResumeService {
         Query query = entityManager.createNativeQuery(
                 "SELECT DISTINCT sha.sha_no\n" +
                 "from \n" +
-                "m_shain sha join m_rirekisho ri on sha.sha_no = ri.sha_no\n" +
+                "m_shain sha join m_rirekisho ri on sha.sha_no = ri.ri_sha\n" +
                 "left join m_keireki kei on kei.rk_resume = ri.ri_id\n" +
                 "left join m_shikaku shi on shi.rs_resume = ri.ri_id\n" +
                 "left join m_hyosho hyo on hyo.rh_resume = ri.ri_id\n" +

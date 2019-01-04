@@ -1,15 +1,10 @@
-package aimyamaguchi.co.jp.aimspringsql.employee;
+package aimyamaguchi.co.jp.aimspringsql.employee.Repositories;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
-import org.springframework.data.domain.Sort;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.repository.query.QueryByExampleExecutor;
-import org.springframework.web.bind.annotation.RequestParam;
 
 public interface EmployeeRepository extends JpaRepository<EmployeeMaster, String>, QueryByExampleExecutor<EmployeeMaster> {
 

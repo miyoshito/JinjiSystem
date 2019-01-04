@@ -1,21 +1,15 @@
-package aimyamaguchi.co.jp.aimspringsql.controllers;
+package aimyamaguchi.co.jp.aimspringsql.controllers.security;
 
 
 import aimyamaguchi.co.jp.aimspringsql.authfilters.JwtTokenProvider;
-import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeService;
-import aimyamaguchi.co.jp.aimspringsql.security.Roles;
+import aimyamaguchi.co.jp.aimspringsql.employee.Services.AuthorizationService;
+import aimyamaguchi.co.jp.aimspringsql.employee.Services.EmployeeUpdateFunctions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Collection;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -23,14 +17,16 @@ import java.util.List;
 public class AuthenticationController {
 
     @Autowired
-    EmployeeService employeeService;
+    private AuthorizationService authorizationService;
+    @Autowired
+    private EmployeeUpdateFunctions euf;
 
     @Autowired
-    JwtTokenProvider jwtTokenProvider;
+    private JwtTokenProvider jwtTokenProvider;
 
     @PostMapping("/login")
     public ResponseEntity<String> loginAttempt(@RequestParam String username, @RequestParam String password) {
-        return employeeService.authenticationAttempt(username, password);
+        return authorizationService.authenticationAttempt(username, password);
 
     }
 
@@ -46,8 +42,6 @@ public class AuthenticationController {
         }
     }
 
-
-
     @PutMapping("/changepassword")
     public ResponseEntity<String> changePassword(
             @RequestParam(value = "id", required = true) String id,
@@ -55,7 +49,7 @@ public class AuthenticationController {
             @RequestParam(value = "npw", required = true) String newp,
             HttpServletRequest req){
         if (jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req)).equals(id)){
-            return employeeService.changePassword(id, oldp, newp);
+            return euf.changePassword(id, oldp, newp);
         } else {
             return new ResponseEntity<>("NULL", HttpStatus.UNAUTHORIZED);
         }

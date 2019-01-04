@@ -3,17 +3,20 @@ package aimyamaguchi.co.jp.aimspringsql.resume;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Where;
 
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 
 @Table(name="M_KEIREKI")
 @Entity
 @Data
-public class Career {
+@EqualsAndHashCode
+public class Career implements Serializable {
 
     @Id
     @Column(name = "RK_NO")

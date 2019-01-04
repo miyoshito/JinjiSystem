@@ -1,28 +1,31 @@
 package aimyamaguchi.co.jp.aimspringsql.resume;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
 import aimyamaguchi.co.jp.aimspringsql.files.ResumeFileDetails;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 @Data
 @Entity
 @Table(name="[M_RIREKISHO]", schema="[DBO]")
+@EqualsAndHashCode
 public class ResumeModel {
 
     @Id
     @Column(name="RI_ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long resumeId;
 
     @Column(name="RI_STUDY_AREA")
@@ -40,20 +43,22 @@ public class ResumeModel {
     @Column(name="LOG_INSERTEDBY")
     private String insertedBy;
 
-    @JsonIgnore
-    @OneToOne(mappedBy="resume")
+
+    @OneToOne
+    @JoinColumn(name="RI_SHA", nullable = false)
+    @MapsId
     private EmployeeMaster employee;
 
-    @OneToMany(mappedBy="resume")
-    private List<ResumeFileDetails> files;
+    @OneToMany(mappedBy="resume", fetch = FetchType.EAGER)
+    private Set<ResumeFileDetails> files;
 
-    @OneToMany(mappedBy="k_resume")
-    private List<Career> careers;
+    @OneToMany(mappedBy="k_resume", fetch = FetchType.EAGER)
+    private Set<Career> careers;
 
-    @OneToMany(mappedBy = "s_resume")
-    private List<Qualification> qualifications;
+    @OneToMany(mappedBy = "s_resume", fetch = FetchType.EAGER)
+    private Set<Qualification> qualifications;
 
-    @OneToMany(mappedBy = "h_resume")
-    private List<Commendation> commendations;
+    @OneToMany(mappedBy = "h_resume", fetch = FetchType.EAGER)
+    private Set<Commendation> commendations;
 
 }

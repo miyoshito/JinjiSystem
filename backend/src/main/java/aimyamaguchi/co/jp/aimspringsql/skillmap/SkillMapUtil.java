@@ -1,4 +1,4 @@
-package aimyamaguchi.co.jp.aimspringsql.curriculum;
+package aimyamaguchi.co.jp.aimspringsql.skillmap;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,7 +12,7 @@ import java.util.Map;
 //@NoArgsConstructor
 public class SkillMapUtil {
 
-    String description;
+    public String description;
 
-    Integer experience;
+    public Integer experience;
 }

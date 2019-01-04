@@ -117,7 +117,7 @@
           <tbody>
             <tr formArrayName="careers" *ngFor="let row of careerRows.controls; let i = index;">
               <ng-container [formGroupName]="i">
-                <td><input maxlength="2" type="tel" class="form-control" formControlName="career_year"></td>
+                <td><input maxlength="4" type="tel" class="form-control" formControlName="career_year"></td>
                 <td><input maxlength="2" type="tel" class="form-control" formControlName="career_month"></td>
                 <td><input type="text" class="form-control" formControlName="career_scwk"></td>
                 <td><input type="text" class="form-control" formControlName="career_dpaf"></td>
@@ -157,7 +157,7 @@
             <tr formArrayName="qualifications" *ngFor="let row of qualificationRows.controls; let i = index;">
               <ng-container [formGroupName]="i">
                 <td><input maxlength="4" type="tel" class="form-control" formControlName="qualification_year"></td>
-                <td><input maxlength="2" type="text" class="form-control" formControlName="qualification_month"></td>
+                <td><input maxlength="2" type="tel" class="form-control" formControlName="qualification_month"></td>
                 <td><input type="text" class="form-control" formControlName="qualification_name"></td>
                 <td><select class="custom-select" formControlName="qualification_result">
                     <option value="合格">合格</option>
@@ -191,8 +191,8 @@
           <tbody>
             <tr formArrayName="commendations" *ngFor="let row of commendationRows.controls; let i = index;">
               <ng-container [formGroupName]="i">
-                <td><input maxlength="4" type="text" class="form-control" formControlName="commendation_year"></td>
-                <td><input maxlength="2" type="text" class="form-control" formControlName="commendation_month"></td>
+                <td><input maxlength="4" type="tel" class="form-control" formControlName="commendation_year"></td>
+                <td><input maxlength="2" type="tel" class="form-control" formControlName="commendation_month"></td>
                 <td><input type="text" class="form-control" formControlName="commendation_name"></td>
                 <td>
                     <button *ngIf="row.controls.commendationid.value" class="btn btn-sm btn-danger" (click)="removeCommendationRow(i)">x</button>
@@ -213,4 +213,5 @@
       <button type="button" class="btn btn-outline-primary" [routerLink]="['/admin/rirekisho/search']" routerLinkActive="active" >詳細へ戻る</button>
   </div>
 </div>
+<pre>{{resumeForm.value | json }}</pre>
 </div>

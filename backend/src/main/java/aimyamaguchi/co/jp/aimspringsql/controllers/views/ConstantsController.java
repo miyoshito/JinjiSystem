@@ -1,40 +1,41 @@
-package aimyamaguchi.co.jp.aimspringsql.controllers;
+package aimyamaguchi.co.jp.aimspringsql.controllers.views;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
-import aimyamaguchi.co.jp.aimspringsql.authfilters.CustomException;
-import aimyamaguchi.co.jp.aimspringsql.curriculum.*;
+import aimyamaguchi.co.jp.aimspringsql.constants.ConstantsViewBuilder;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.models.INDUSTRYData;
-import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeService;
+import aimyamaguchi.co.jp.aimspringsql.curriculum.services.CvSearchService;
+import aimyamaguchi.co.jp.aimspringsql.employee.Services.AuthorizationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin(origins  = "*")
 @RequestMapping("/api")
 public class ConstantsController {
-    @Autowired
-    private CurriculumService cv;
 
     @Autowired
-    private EmployeeService es;
+    private ConstantsViewBuilder builder;
+
+    @Autowired
+    private CvSearchService cv;
+
+    @Autowired
+    private AuthorizationService es;
 
     @GetMapping("/public/cvparams")
     public Map<String,Object> getCvParams(){
-        return cv.generateCvMap();
+        return builder.generateCvMap();
     }
 
     @GetMapping("/public/employee-params")
-    public Map<String, Object> getEmpParams(){ return es.getEmpMasterParams(); }
+    public Map<String, Object> getEmpParams(){ return builder.getEmpMasterParams(); }
 
     @GetMapping("/public/industry-params")
-    public List<INDUSTRYData>  getIndustryList() { return cv.getIndustryList(); }
+    public List<INDUSTRYData>  getIndustryList() { return builder.getIndustryList(); }
 
-    @GetMapping("/se/skillmapbuilder")
+/*    @GetMapping("/se/skillmapbuilder")
     public ResponseEntity<List<SkillMap>> skillMapSearch(
             @RequestParam(value = "id", required = false) String id,
             @RequestParam(value = "nm", required = false) String name,
@@ -51,14 +52,10 @@ public class ConstantsController {
     {
         try {
             List<String> ids = cv.skillMapSearchParams(id, name, katakana, affiliation);
-
-
-
-
             return new ResponseEntity<>(cv.getSkillMap(ids, lang, os, dbms, tool, make, duty, inds), HttpStatus.OK);
         } catch (CustomException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-    }
+    }*/
 }

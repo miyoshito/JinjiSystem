@@ -1,6 +1,5 @@
 package aimyamaguchi.co.jp.aimspringsql.curriculum.models;
 
-import aimyamaguchi.co.jp.aimspringsql.curriculum.CurriculumModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 

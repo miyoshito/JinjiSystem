@@ -6,6 +6,7 @@ import { Subscription, Observable, Subject } from 'rxjs';
 import { Employee, Curriculum } from 'src/app/interfaces/employee';
 import { CurriculumService } from '../curriculum.service';
 import { takeUntil, map } from 'rxjs/operators';
+import { EmployeeMasterService } from 'src/app/admin/employee-master/employee-master.service';
 
 @Component({
   selector: 'app-curriculum-details',
@@ -23,6 +24,7 @@ export class CurriculumDetailsComponent implements OnInit {
   isAlive$: Subject<boolean> = new Subject<boolean>()
   constructor(private _profileService: ProfileService,
               private _broadcastService: BroadcastService,
+              private _employeeService: EmployeeMasterService,
               private _router: Router,
               private _route: ActivatedRoute,
               private _curriculumService: CurriculumService) { }
@@ -30,12 +32,19 @@ export class CurriculumDetailsComponent implements OnInit {
   ngOnInit() {
     if (this._router.url.startsWith('/admin')) {
       this.shainid = this._route.snapshot.paramMap.get('id')
-      this.admin$ = true        
-      this.profileSelected$ = this._profileService.getUserProfile(this.shainid)      
+      this.admin$ = true
+      this._employeeService.getShainData(this.shainid,true,false,false)
+      this.profileSelected$ = this._employeeService.employee$            
     } else {
       this.admin$ = false
       this._profileService.getLoggedInUserData()
-      this.profileSelected$ = this._profileService.cachedUser$
+      this.profileSelected$ = this._employeeService.employee$
+      this._profileService.cachedUser$.pipe(
+        takeUntil(this.isAlive$),
+        map(e => {
+          this._employeeService.getShainData(e.id, true, false, false)
+        })
+      ).subscribe()
       this.profileSelected$.pipe(takeUntil(this.isAlive$), map(usr =>{
         this.shainid = usr.shainId
       })).subscribe()

@@ -32,7 +32,7 @@
       <ng-container *ngIf="loggedUser$ | async; let user" class="d-flex">
               <button mat-button [matMenuTriggerFor]="accountmenu">
                 <mat-icon>face</mat-icon>
-                <span>{{user.shainName}}</span>
+                <span>{{user.fullName}}</span>
                 <mat-icon class="ml-1">arrow_drop_down</mat-icon>
               </button>
       </ng-container>

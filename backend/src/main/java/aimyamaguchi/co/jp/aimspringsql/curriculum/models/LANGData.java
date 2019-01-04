@@ -1,12 +1,10 @@
 package aimyamaguchi.co.jp.aimspringsql.curriculum.models;
 import java.util.List;
-import java.util.Optional;
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import aimyamaguchi.co.jp.aimspringsql.curriculum.CurriculumModel;
 import lombok.Data;
 
 @Data

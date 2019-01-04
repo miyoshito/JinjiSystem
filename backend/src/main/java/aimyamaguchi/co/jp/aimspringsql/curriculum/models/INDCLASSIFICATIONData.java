@@ -1,16 +1,9 @@
 package aimyamaguchi.co.jp.aimspringsql.curriculum.models;
 
-import aimyamaguchi.co.jp.aimspringsql.curriculum.IndustryKeys;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Data;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
 @Table(name="[M_GYKUBUN]", schema="[dbo]")

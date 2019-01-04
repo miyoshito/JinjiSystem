@@ -50,7 +50,6 @@ export class ResumeService {
       + '&qq=' + searchParam.qualification
       ,{observe: 'response'})
   }
-
   sendSearchResults(list: Employee[]){
     this.searchSource_.next(list)
   }

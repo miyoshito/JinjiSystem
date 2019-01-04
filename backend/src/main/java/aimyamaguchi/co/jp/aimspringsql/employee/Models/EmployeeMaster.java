@@ -1,21 +1,24 @@
-package aimyamaguchi.co.jp.aimspringsql.employee;
+package aimyamaguchi.co.jp.aimspringsql.employee.Models;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 
 import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseModel;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import aimyamaguchi.co.jp.aimspringsql.curriculum.CurriculumModel;
+import aimyamaguchi.co.jp.aimspringsql.curriculum.models.CurriculumModel;
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeModel;
 import aimyamaguchi.co.jp.aimspringsql.security.Roles;
 import lombok.Data;
@@ -24,6 +27,7 @@ import lombok.Data;
 @Entity
 @ToString
 @Table(name="[M_SHAIN]", schema="[DBO]")
+
 public class EmployeeMaster implements UserDetails, Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,9 +57,9 @@ public class EmployeeMaster implements UserDetails, Serializable {
     @Column(name="SHA_SEX", length=10, nullable=false)
     private String shainSex; //selectable key (hardcoded)
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="SHA_SHOZOKU")
-    private List<AFFILIATIONData> affiliation;
+    private Set<AFFILIATIONData> affiliation;
 
     @ManyToOne
     @JoinColumn(name="SHA_POSITION")
@@ -118,8 +122,7 @@ public class EmployeeMaster implements UserDetails, Serializable {
     @Column(name="SHA_DELETEFLG")
     private boolean shainDeletedFlag;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="SHA_RESUME", nullable=true)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "employee", optional = false)
     private ResumeModel resume;
 
     @OneToMany(mappedBy = "employee_id", fetch = FetchType.LAZY)
@@ -134,6 +137,7 @@ public class EmployeeMaster implements UserDetails, Serializable {
     }
 
     @Override
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public String getPassword() {
         return this.getShainPassword();
     }

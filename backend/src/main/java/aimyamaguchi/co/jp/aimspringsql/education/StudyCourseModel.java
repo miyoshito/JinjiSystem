@@ -1,6 +1,6 @@
 package aimyamaguchi.co.jp.aimspringsql.education;
 
-import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.ToString;

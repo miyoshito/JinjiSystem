@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, takeUntil } from 'rxjs/operators';
 import { BroadcastService } from 'src/app/broadcast.service';
+import { EmployeeMasterService } from 'src/app/admin/employee-master/employee-master.service';
 
 @Component({
   selector: 'app-curriculum-insert',
@@ -16,16 +17,17 @@ import { BroadcastService } from 'src/app/broadcast.service';
 })
 export class CurriculumInsertComponent implements OnInit {
 
-  constructor(private cvService: CurriculumService,
-    private _profileService: ProfileService,
-    private _fb: FormBuilder,
-    private localeService: BsLocaleService,
-    private _broadcastService: BroadcastService,
-    private _router: Router,
-    private _route: ActivatedRoute
-  ) {
-    localeService.use('ja')
-  }
+      constructor(private cvService: CurriculumService,
+        private _profileService: ProfileService,
+        private _fb: FormBuilder,
+        private _employeeService: EmployeeMasterService,
+        private localeService: BsLocaleService,
+        private _broadcastService: BroadcastService,
+        private _router: Router,
+        private _route: ActivatedRoute
+      ) {
+        localeService.use('ja')
+      }
 
   bsValue: Date = new Date(2017, 7);
   endValue: Date = new Date(2018, 10)
@@ -64,7 +66,13 @@ export class CurriculumInsertComponent implements OnInit {
     if ((this._router.url).endsWith('shokumurirekisho/add')) { //profile
       this.title = '職務経歴書登録画面'
       this.button = '登録'
-      this.loggedUser$ = this._profileService.cachedUser$
+      this._profileService.cachedUser$.pipe(
+        takeUntil(this.isAlive$),
+        map(e => {
+          this._employeeService.getShainData(e.id,true,false,false)
+        })
+      ).subscribe()
+      this.loggedUser$ = this._employeeService.employee$
       this.loggedUser$.pipe(
         takeUntil(this.isAlive$),
         map(t => {
@@ -77,10 +85,19 @@ export class CurriculumInsertComponent implements OnInit {
         this.title = '職務経歴書編集画面'
         //verifica se o edit eh de alguem ou meu
         if (this._route.snapshot.paramMap.get('uid') != null) {
-          this.loggedUser$ = this._profileService.getUserProfile(this._route.snapshot.paramMap.get('uid'))
+          this._employeeService.getShainData(this._route.snapshot.paramMap.get('uid'), true, false, false)
+          this.loggedUser$ = this._employeeService.employee$
           this.userid = this._route.snapshot.paramMap.get('uid')
         }
-        else this.loggedUser$ = this._profileService.cachedUser$
+        else {
+          this._profileService.cachedUser$.pipe(
+            takeUntil(this.isAlive$),
+            map(e => {
+              this._employeeService.getShainData(e.id,true,false,false)
+            })
+          ).subscribe()
+          this.loggedUser$ = this._employeeService.employee$
+        }
         //fim do bloco
         //comeco do map pra saber ql ta editando...
         this.loggedUser$.pipe(
@@ -108,7 +125,8 @@ export class CurriculumInsertComponent implements OnInit {
       } else { //termina com /id/add
       this.title = '職務経歴書登録画面'
       this.button = '登録'
-      this.loggedUser$ = this._profileService.getUserProfile(this._route.snapshot.paramMap.get('uid'))
+      this._employeeService.getShainData(this._route.snapshot.paramMap.get('uid'), true)
+      this.loggedUser$ = this._employeeService.employee$
       this.userid = this._route.snapshot.paramMap.get('uid')
       this.generateForm()
     }

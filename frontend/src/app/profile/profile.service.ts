@@ -5,7 +5,7 @@ import { EmployeeMasterComponent } from '../admin/employee-master/employee-maste
 
 import { API_URL, ADMIN_URL } from '../url-settings'
 import { AuthService } from '../guards/auth.service';
-import { Employee } from '../interfaces/employee';
+import { Employee, MinEmployee } from '../interfaces/employee';
 import { map, tap, takeUntil } from 'rxjs/operators';
 import { BroadcastService } from '../broadcast.service';
 import { Router } from '@angular/router';
@@ -16,12 +16,10 @@ import { LoginService } from '../login/login.service';
 })
 export class ProfileService {
 
-  employee$: Observable<Employee>
+  employee$: Observable<MinEmployee>
   isAuthenticated$: Subject<any>
 
-  employee: Employee// = new Employee(null,"","","","",null,"","",null,null,null,"","","","","","",null,null,null,null,"","",null,"",null,null)
-
-  private _cacheUserSource: ReplaySubject<Employee> = new ReplaySubject<Employee>(1)
+  private _cacheUserSource: ReplaySubject<MinEmployee> = new ReplaySubject<MinEmployee>(1)
   cachedUser$ = this._cacheUserSource.asObservable()
 
   constructor(private _http: HttpClient,
@@ -29,26 +27,18 @@ export class ProfileService {
               private _loginService: LoginService
               ) { }
 
+  //returns only the infos you need to stay logged in
   public getLoggedInUserData(){
-    return this._http.get<Employee>(API_URL+'/api/se/getmyinfos',
-    {observe: 'response'}).subscribe(data =>{
+    return this._http.get<MinEmployee>(API_URL+'/se/getmyinfos',{observe: 'response'}).subscribe(data =>{
     this._cacheUserSource.next(data.body)
     this._broadcastService.pushAuthentication(true)
-    this._broadcastService.pushAuthorization(data.body.role.roledesc)
+    this._broadcastService.pushAuthorization(data.body.role)
     },
     err =>{    
       this._loginService.logout()
-      console.log(err)
     })
-    //considerando que o HttpInterceptor vai mandar meu token pro sistema.
   }
   
-
-  public getUserProfile(id: string){
-    return this._http.get<Employee>(ADMIN_URL+'/getprofile/'+id)
-  }
-
-
   public clearLoggedUser(){
     this.isAuthenticated$.next()
     this._cacheUserSource.complete()//(new Employee(null,"","","","",null,"","",null,null,null,"","","","","","",null,null,null,null,"","",null,"",null))

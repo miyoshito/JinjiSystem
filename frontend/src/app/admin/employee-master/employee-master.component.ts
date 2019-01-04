@@ -85,7 +85,8 @@ export class EmployeeMasterComponent implements OnInit {
     { dateRangeFormat: 'YYYY/MMMM/dd'});
   
   if ((this._router.url).endsWith('/edit')){    
-      this.selectedUser$ = this._profileService.getUserProfile(this._route.snapshot.paramMap.get('id'))
+      this.selectedUser$ = this._employeeService.employee$
+      this._employeeService.getShainData(this._route.snapshot.paramMap.get('id'))      
       this.loadUserData()
       this.title = '社員マスタ編集画面'
       this.buttonLabel = '更新'
@@ -93,7 +94,13 @@ export class EmployeeMasterComponent implements OnInit {
       this.isEditing = true
       this.passwordbutton = true
   } else if ((this._router.url).endsWith('/profile')) {
-      this.selectedUser$ = this._profileService.cachedUser$
+    this.selectedUser$ = this._employeeService.employee$
+      this._profileService.cachedUser$.pipe(
+        takeUntil(this.unsub$),
+        map(e => {
+          this._employeeService.getShainData(e.id)
+        })
+      ).subscribe();
       this.title = 'プロフィール画面'
       this.isProfile = true
       this.buttonLabel = '更新'
@@ -112,7 +119,7 @@ export class EmployeeMasterComponent implements OnInit {
       map(r =>{
     if(r) {
     console.log(r)
-    this.selectedUser$ = this._employeeService.usr$
+    this.selectedUser$ = this._employeeService.employee$
     this.loadUserData();
     this.displayInsertButtons = true
     this.buttonLabel = '更新'
@@ -142,7 +149,6 @@ export class EmployeeMasterComponent implements OnInit {
   redirect(to: string){
     if(this.iid === '')
     this.iid = this._route.snapshot.paramMap.get('id')
-    console.log('/admin/'+to+'/details/'+this.iid)
     this._router.navigate(['/admin/'+to+'/details/'+this.iid])
   }
   

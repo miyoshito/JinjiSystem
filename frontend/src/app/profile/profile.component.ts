@@ -40,7 +40,7 @@ export class ProfileComponent implements OnInit {
       if (url[0].path === 'admin'){ //if you're navigating from /admin/ path        
         this.shainid = this._route.snapshot.paramMap.get('id')
         this.admin$ = true        
-        this.profileSelected$ = this._profileService.getUserProfile(this.shainid)
+        //this.profileSelected$ = this._profileService.getUserProfile(this.shainid)
         this.profileSelected$.subscribe(data =>{
           this.user = data
         })

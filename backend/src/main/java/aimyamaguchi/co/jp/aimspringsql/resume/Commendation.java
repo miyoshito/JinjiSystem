@@ -2,6 +2,7 @@ package aimyamaguchi.co.jp.aimspringsql.resume;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;

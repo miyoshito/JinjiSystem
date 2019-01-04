@@ -1,4 +1,4 @@
-package aimyamaguchi.co.jp.aimspringsql.curriculum;
+package aimyamaguchi.co.jp.aimspringsql.curriculum.models;
 
 
 

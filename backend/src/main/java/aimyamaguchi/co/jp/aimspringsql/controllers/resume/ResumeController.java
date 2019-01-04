@@ -1,11 +1,12 @@
-package aimyamaguchi.co.jp.aimspringsql.controllers;
+package aimyamaguchi.co.jp.aimspringsql.controllers.resume;
 
 
 import aimyamaguchi.co.jp.aimspringsql.authfilters.CustomException;
-import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
-import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeRepository;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.EmployeeRepository;
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeModel;
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeService;
+import aimyamaguchi.co.jp.aimspringsql.util.SearchFilters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,9 @@ public class ResumeController{
     @Autowired
     private EmployeeRepository er;
 
+    @Autowired
+    private SearchFilters sf;
+
     @GetMapping("/resume/search")
     public ResponseEntity<List<EmployeeMaster>> searchResults(
             @RequestParam (value="i", required = false) String id,
@@ -39,9 +43,9 @@ public class ResumeController{
             @RequestParam (value="qq", required = false)String qualification){
         try {
             List<String> list = rs.searchQueryBuilder(id, name, kata, recruit, age, study, bunri, career, qualification);
-            return new ResponseEntity<>(er.findByShainIdIn(list), HttpStatus.OK);
+            return new ResponseEntity<>(sf.getEmployeesWithResume(list), HttpStatus.OK);
         } catch (CustomException e) {
-            return  new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+            return  new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

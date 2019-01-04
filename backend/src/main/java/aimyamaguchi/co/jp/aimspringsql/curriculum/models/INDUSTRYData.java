@@ -20,7 +20,7 @@ public class INDUSTRYData {
     private String tdesc;
     @Column(name="ACTIVE")
     private boolean active;
-    @OneToMany(mappedBy = "id.industryid")
+    @OneToMany(mappedBy = "id.industryid", fetch = FetchType.EAGER)
     private List<INDCLASSIFICATIONData> industryClass = new ArrayList<>();
 
 }

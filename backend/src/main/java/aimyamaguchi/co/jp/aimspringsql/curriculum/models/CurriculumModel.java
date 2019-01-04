@@ -1,4 +1,4 @@
-package aimyamaguchi.co.jp.aimspringsql.curriculum;
+package aimyamaguchi.co.jp.aimspringsql.curriculum.models;
 
 import java.time.LocalDate;
 import java.time.Period;
@@ -9,7 +9,7 @@ import javax.persistence.*;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.models.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
 import lombok.Data;
 
 @Entity
@@ -87,36 +87,35 @@ public class CurriculumModel {
     @Column(name="CV_TARGETBUSINESS")
     private String targetbusiness;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="CV_MAKER")
-    private List<MAKERData> makerData;
+    private Set<MAKERData> makerData;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="CV_OS")
-    private List<OSData> osData;
+    private Set<OSData> osData;
     
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="CV_DBMS")
-    private List<DBMSData> dbmsData;
+    private Set<DBMSData> dbmsData;
     
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="CV_RESPONSE")
-    private List<DUTYData> responseData;
+    private Set<DUTYData> responseData;
     
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="CV_LANG")
-    private List<LANGData> langData;
+    private Set<LANGData> langData;
     
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="CV_TOOLS")
-    private List<TOOLSData> toolsData;
+    private Set<TOOLSData> toolsData;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="CV_ASSIGN")
     private ASSIGNData assignData;
 
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JsonIgnore
     @JoinColumn(name="SHA_NO", nullable=false)
     private EmployeeMaster employee_id;

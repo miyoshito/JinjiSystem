@@ -6,7 +6,6 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import aimyamaguchi.co.jp.aimspringsql.curriculum.CurriculumModel;
 import lombok.Data;
 
 @Data

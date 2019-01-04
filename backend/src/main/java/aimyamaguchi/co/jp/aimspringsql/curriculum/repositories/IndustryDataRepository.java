@@ -9,5 +9,4 @@ public interface IndustryDataRepository extends JpaRepository<INDUSTRYData, Long
 
     List<INDUSTRYData> findAll();
 
-
 }

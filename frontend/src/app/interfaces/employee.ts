@@ -2,6 +2,14 @@ import { Data } from "./data";
 import { Resume } from "../resume/resume-details-interface";
 import { studyCourse } from "./study-course"
 
+
+export interface MinEmployee {
+    id: string
+    fullName: string
+    group: string
+    role: string
+}
+
 export interface Employee {
     shainId: string
     shainPassword: string

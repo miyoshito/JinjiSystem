@@ -1,5 +1,7 @@
 package aimyamaguchi.co.jp.aimspringsql.security;
 
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import aimyamaguchi.co.jp.aimspringsql.authfilters.JwtTokenFilterConfigurer;
 import aimyamaguchi.co.jp.aimspringsql.authfilters.JwtTokenProvider;
 
+import static com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module.Feature.USE_TRANSIENT_ANNOTATION;
+
 
 @EnableWebSecurity
 @Configuration
@@ -29,6 +33,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override 
     public AuthenticationManager authenticationManagerBean() throws Exception { 
         return super.authenticationManagerBean(); 
+    }
+
+    @Bean
+    public Module module() {
+        Hibernate5Module h5m = new Hibernate5Module();
+        h5m.disable(USE_TRANSIENT_ANNOTATION);
+        return h5m;
     }
 
     @Bean

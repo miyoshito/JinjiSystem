@@ -2,15 +2,13 @@ package aimyamaguchi.co.jp.aimspringsql.controllers;
 
 import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseModel;
 import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseService;
-import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
-import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeRepository;
-import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeService;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 

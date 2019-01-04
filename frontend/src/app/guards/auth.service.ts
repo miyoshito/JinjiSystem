@@ -3,6 +3,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
 import { BehaviorSubject, Subject, ReplaySubject } from 'rxjs';
 import { BroadcastService } from '../broadcast.service';
+import { ProfileService } from '../profile/profile.service';
+import { map, takeUntil } from 'rxjs/operators';
 
 
 
@@ -11,9 +13,10 @@ import { BroadcastService } from '../broadcast.service';
 })
 export class AuthService{
 
+  unsub$: Subject<boolean> = new Subject<boolean>()
+
   constructor(private jwtHelper: JwtHelperService,
-              private _http: HttpClientModule,
-              private broadcastService: BroadcastService){}
+              private _profileService: ProfileService){}
 
   public isAuthenticated(): boolean{
     const token = localStorage.getItem('currentUser')
@@ -32,5 +35,6 @@ export class AuthService{
   isTokenExpired(token: string){
     return this.jwtHelper.isTokenExpired(token)
   }
-  
+
+
 }

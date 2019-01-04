@@ -86,9 +86,9 @@ export class ResumeAddComponent implements OnInit {
       this.idsearchbox = true
       this.title = '履歴書登録画面'
     } else {
-      this.title = '履歴書編集画面'
-      let id: string = this._route.snapshot.paramMap.get('id') 
-      this.selectedUser$ = this._profileService.getUserProfile(id)
+      this.title = '履歴書編集画面'      
+      this._employeeService.getShainData(this._route.snapshot.paramMap.get('id'),false,true,false)
+      this.selectedUser$ = this._employeeService.employee$      
       this.idsearchbox = false
       this.buildEditView(this.selectedUser$)
     }
@@ -99,7 +99,8 @@ export class ResumeAddComponent implements OnInit {
     if (shainid === '' || shainid === null || shainid === undefined) {
       this._router.navigate(['admin/employee-list'])
     } else {
-      this.selectedUser$ = this._profileService.getUserProfile(shainid)
+      this._employeeService.getShainData(shainid,false,true,false)
+      this.selectedUser$ = this._employeeService.employee$   
       this.buildEditView(this.selectedUser$)
     }
   }

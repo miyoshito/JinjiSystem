@@ -1,10 +1,11 @@
-package aimyamaguchi.co.jp.aimspringsql.curriculum;
+package aimyamaguchi.co.jp.aimspringsql.curriculum.models;
 
 import aimyamaguchi.co.jp.aimspringsql.curriculum.models.*;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 
 @Data
 public class CurriculumDAO {
@@ -18,12 +19,12 @@ public class CurriculumDAO {
     public Long industryClass;
     public Long industryType;
     private String targetbusiness;
-    private List<MAKERData> makerData;
-    private List<OSData> osData;
-    private List<DBMSData> dbmsData;
-    private List<DUTYData> responseData;
-    private List<LANGData> langData;
-    private List<TOOLSData> toolsData;
+    private Set<MAKERData> makerData;
+    private Set<OSData> osData;
+    private Set<DBMSData> dbmsData;
+    private Set<DUTYData> responseData;
+    private Set<LANGData> langData;
+    private Set<TOOLSData> toolsData;
     private Long assignData;
     private String employee_id;
 

@@ -1,8 +1,7 @@
-package aimyamaguchi.co.jp.aimspringsql.employee;
+package aimyamaguchi.co.jp.aimspringsql.employee.Models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
-import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.util.List;

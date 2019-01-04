@@ -10,9 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeMaster;
-import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeRepository;
-import aimyamaguchi.co.jp.aimspringsql.employee.EmployeeService;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.EmployeeRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -25,10 +24,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         EmployeeMaster employee = er.findByShainId(username);
         Set<Roles> authorities = new HashSet<Roles>();
         
-        if (employee.getShainId() == "") throw new UsernameNotFoundException("Could not find the user "+username);       
+        if (employee.getShainId().equals("")) throw new UsernameNotFoundException("Could not find the user "+username);
 
         authorities.add(employee.getRole());
-
 
         return new User(employee.getUsername(), employee.getPassword(), authorities);
 	}
