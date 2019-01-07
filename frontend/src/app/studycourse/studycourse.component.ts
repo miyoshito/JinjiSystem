@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ProfileService } from '../profile/profile.service';
 import { Employee } from '../interfaces/employee';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { StudycourseService } from './studycourse.service';
 import { Router } from '@angular/router';
+import { takeUntil, map } from 'rxjs/operators';
+import { EmployeeMasterService } from '../admin/employee-master/employee-master.service';
 
 @Component({
   selector: 'app-studycourse',
@@ -14,12 +16,21 @@ export class StudycourseComponent implements OnInit {
 
   constructor(private _profileService: ProfileService,
               private _scService: StudycourseService,
-              private _router: Router) { }
+              private _router: Router,
+              private _employeeService: EmployeeMasterService) { }
 
   cachedUser$: Observable<Employee>
 
+  isAlive$: Subject<boolean> = new Subject<boolean>()
+
   ngOnInit() {
-    this.cachedUser$ = this._profileService.cachedUser$    
+    this._profileService.cachedUser$.pipe(
+      takeUntil(this.isAlive$),
+      map(e => {
+        this._employeeService.getShainData(e.id,true,false,false)
+      })
+    ).subscribe()
+    this.cachedUser$ = this._employeeService.employee$
   }
 
   insertNewStudy(){

@@ -30,8 +30,9 @@
       <div class="col-md-3">
         <span>採用区分: </span>
         <select class="custom-select" formControlName="shainRecruit" [ngClass]="{ 'is-invalid': submitted && f.shainRecruit.errors }">
-          <option selected value="新卒">新卒</option>
-          <option value="キャリア">キャリア</option>
+          <option selected value="none">ー</option>
+          <option value="graduated">新卒</option>
+          <option value="career">キャリア</option>
         </select>
       </div>
     </div>

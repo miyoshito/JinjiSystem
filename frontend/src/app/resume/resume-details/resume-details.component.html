@@ -80,7 +80,7 @@
 <div class="row">
   <div class="col-md-8">
     <span>出身校</span>
-    <input type="text" class="form-control" value="{{user.resume?.universityName}}ー{{user.resume?.formation}}" readonly>
+    <input type="text" class="form-control" value="{{user.resume?.universityName}} ー {{user.resume?.formation}}" readonly>
   </div>
   <div class="col-md-4">
     <span>文理</span>
@@ -103,9 +103,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let career of user.resume?.careers">
-          <td>{{career.career_year}}</td>
-          <td>{{career.career_month}}</td>
-          <td>{{career.career_scwk}} {{career.career_dpaf}}　<b>{{career.career_result}}</b></td>
+          <td *ngIf="career.active">{{career.career_year}}</td>
+          <td *ngIf="career.active">{{career.career_month}}</td>
+          <td *ngIf="career.active">{{career.career_scwk}} {{career.career_dpaf}}　<b>{{career.career_result}}</b></td>
         </tr>        
       </tbody>
     </table>
@@ -127,9 +127,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let q of user.resume?.qualifications">
-          <td>{{q.qualification_year}}</td>
-          <td>{{q.qualification_month}}</td>
-          <td>{{q.qualification_name}} {{q.qualification_result}}</td>
+          <td *ngIf="q.active">{{q.qualification_year}}</td>
+          <td *ngIf="q.active">{{q.qualification_month}}</td>
+          <td *ngIf="q.active">{{q.qualification_name}} {{q.qualification_result}}</td>
         </tr>
       </tbody>
     </table>
@@ -150,9 +150,9 @@
       </thead>
       <tbody>
         <tr *ngFor="let ca of user.resume?.commendations">
-          <td>{{ca.commendation_year}}</td>
-          <td>{{ca.commendation_month}}</td>
-          <td>{{commendation_name}}</td>
+          <td *ngIf="ca.active">{{ca.commendation_year}}</td>
+          <td *ngIf="ca.active">{{ca.commendation_month}}</td>
+          <td *ngIf="ca.active">{{ca.commendation_name}}</td>
         </tr>
       </tbody>
     </table>
@@ -164,16 +164,16 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-10">
-    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5"></textarea>
+  <div class="col-md-12">
+    <textarea class="form-control" id="exampleFormControlTextarea1" rows="5" readonly></textarea>
   </div>
 </div>
 <div class="row">
   <div class="col-md-12 d-flex p-2 justify-content-around">
     <button type="button" class="btn btn-secundary" disabled>PDF表示</button>
     <button type="button" class="btn btn-secundary" disabled>CSV出力</button>
-    <button type="button" class="btn btn-primary" (click)="editScreen(user.shainId)">編集</button>    
-    <button type="button" class="btn btn-primary" [routerLink]="['/admin/rirekisho/search']">一覧へ戻る</button>
+    <button type="button" class="btn btn-primary" (click)="editScreen(user.shainId)">編集</button>  
+    <button type="button" class="btn btn-primary" onclick="history.back(-1)">一覧へ戻る</button>  
   </div>
 </div>
 </ng-container>

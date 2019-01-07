@@ -18,7 +18,7 @@ export class ResumeService {
               private _router: Router,
               private _loginService: LoginService) { }
 
-  private searchSource_ = new ReplaySubject<Employee[]>()
+  private searchSource_ = new ReplaySubject<Employee[]>(1)
   resumeSearchResult$ = this.searchSource_.asObservable();
 
   
@@ -37,6 +37,10 @@ export class ResumeService {
     })
   }
 
+  retrieveAllResumes(){
+    return this._httpClient.get<Employee[]>(ADMIN_URL + '/resume/getall', {observe: 'response'})
+  }
+
   searchResumeAttempt(searchParam: SearchForm){
     return this._httpClient.get<Employee[]>(ADMIN_URL
       + '/resume/search?i='+ searchParam.id
@@ -45,6 +49,7 @@ export class ResumeService {
       + '&r=' + searchParam.recruit
       + '&a=' + searchParam.age
       + '&st=' + searchParam.study
+      + '&sc=' +searchParam.school
       + '&b=' + searchParam.bunri
       + '&ca=' + searchParam.career
       + '&qq=' + searchParam.qualification

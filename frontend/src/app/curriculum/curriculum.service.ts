@@ -71,6 +71,20 @@ export class CurriculumService {
     })
   }
 
+  getAllShokumuRireki(){
+    return this._http.get<Employee[]>(ADMIN_URL + '/shokureki/getall', {observe: 'response'}).pipe(
+      map(rireki => {
+        if (!rireki.body.length) {
+          alert('結果が見つかりません')
+          return
+        } else {
+        this.userSource_.next(rireki.body)
+        this._router.navigate(['/admin/shokumurirekisho/list'])
+        }
+      })
+    ).subscribe()
+  }
+
   searchShokumuRireki(params: cvForm) {
     this._http.get<Employee[]>(ADMIN_URL + '/shokureki/search?'
       + 'id=' + params.id

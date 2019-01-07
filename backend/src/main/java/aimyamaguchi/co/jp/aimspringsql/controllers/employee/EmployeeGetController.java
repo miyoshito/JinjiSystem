@@ -51,14 +51,13 @@ public class EmployeeGetController {
             jwtValidator.validateToken(jwtValidator.resolveToken(req));
             String authorization = jwtValidator.getRole(jwtValidator.resolveToken(req));
             EmployeeMaster emp = sf.getEmployeeData(id);
-            System.out.println(emp.getShainId());
             //as 3 funcoes servem soh pra eu forcar o load, ja que os 2 sao lazy.
             if (cv) emp.getCurriculum().size();
             if (education) emp.getEducations().size();
             if (resume && authorization.equals("ADMIN")) {
                 sf.getResumeById(emp.getResume().getResumeId());
             }
-            return new ResponseEntity<>(emp, HttpStatus.OK);
+            return new ResponseEntity<>(sf.getEmployeeData(id), HttpStatus.OK);
         } catch (AuthenticationException e) {
            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

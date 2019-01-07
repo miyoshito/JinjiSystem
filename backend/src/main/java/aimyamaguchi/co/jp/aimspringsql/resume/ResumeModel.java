@@ -13,14 +13,14 @@ import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
+
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
 
 
-@Data
 @Entity
 @Table(name="[M_RIREKISHO]", schema="[DBO]")
-@EqualsAndHashCode
 public class ResumeModel {
 
     @Id
@@ -44,9 +44,13 @@ public class ResumeModel {
     private String insertedBy;
 
 
-    @OneToOne
-    @JoinColumn(name="RI_SHA", nullable = false)
-    @MapsId
+/*    @OneToOne(optional = false)
+    @JoinColumn(name="RI_SHA")
+    @JsonBackReference
+    private EmployeeMaster employee;*/
+
+    @LazyToOne(LazyToOneOption.NO_PROXY)
+    @OneToOne(mappedBy = "resume")
     private EmployeeMaster employee;
 
     @OneToMany(mappedBy="resume", fetch = FetchType.EAGER)
@@ -61,4 +65,92 @@ public class ResumeModel {
     @OneToMany(mappedBy = "h_resume", fetch = FetchType.EAGER)
     private Set<Commendation> commendations;
 
+    public Long getResumeId() {
+        return resumeId;
+    }
+
+    public void setResumeId(Long resumeId) {
+        this.resumeId = resumeId;
+    }
+
+    public String getFormation() {
+        return formation;
+    }
+
+    public void setFormation(String formation) {
+        this.formation = formation;
+    }
+
+    public String getUniversityName() {
+        return universityName;
+    }
+
+    public void setUniversityName(String universityName) {
+        this.universityName = universityName;
+    }
+
+    public String getBunri() {
+        return bunri;
+    }
+
+    public void setBunri(String bunri) {
+        this.bunri = bunri;
+    }
+
+    public Date getInsertDate() {
+        return insertDate;
+    }
+
+    public void setInsertDate(Date insertDate) {
+        this.insertDate = insertDate;
+    }
+
+    public String getInsertedBy() {
+        return insertedBy;
+    }
+
+    public void setInsertedBy(String insertedBy) {
+        this.insertedBy = insertedBy;
+    }
+
+    @JsonBackReference
+    public EmployeeMaster getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(EmployeeMaster employee) {
+        this.employee = employee;
+    }
+
+    public Set<ResumeFileDetails> getFiles() {
+        return files;
+    }
+
+    public void setFiles(Set<ResumeFileDetails> files) {
+        this.files = files;
+    }
+
+    public Set<Career> getCareers() {
+        return careers;
+    }
+
+    public void setCareers(Set<Career> careers) {
+        this.careers = careers;
+    }
+
+    public Set<Qualification> getQualifications() {
+        return qualifications;
+    }
+
+    public void setQualifications(Set<Qualification> qualifications) {
+        this.qualifications = qualifications;
+    }
+
+    public Set<Commendation> getCommendations() {
+        return commendations;
+    }
+
+    public void setCommendations(Set<Commendation> commendations) {
+        this.commendations = commendations;
+    }
 }

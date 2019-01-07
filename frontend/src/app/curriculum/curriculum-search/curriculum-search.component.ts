@@ -34,10 +34,15 @@ export class CurriculumSearchComponent implements OnInit {
 
   doSearch(){
     if (!this.searchForm.valid){
-      alert('少なくとも一つのフィールドは必要です。')
-      return
-    }
+      this.curriculumService.getAllShokumuRireki()
+    } else {
     this.curriculumService.searchShokumuRireki(this.searchForm.value)
+    }
+  }
+
+  reset(){
+    this.searchForm.reset()
+    this.buildSearchForm()
   }
 
 

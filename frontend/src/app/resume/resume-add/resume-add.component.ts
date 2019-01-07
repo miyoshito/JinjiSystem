@@ -8,7 +8,7 @@ import { Employee } from 'src/app/interfaces/employee';
 import { Observable, BehaviorSubject, Subscription, Subject } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
 import { Qualifications, Career, Commendations } from '../resume-details-interface';
-import { map, takeUntil } from 'rxjs/operators';
+import { map, takeUntil, flatMap } from 'rxjs/operators';
 import { ResumeService } from '../resume.service';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { CustomDialogComponent } from 'src/app/custom-dialog/custom-dialog.component';
@@ -49,8 +49,6 @@ export class ResumeAddComponent implements OnInit {
   commendationForm: FormGroup = this._fb.group({ 'commendations': this.commendationRows });
   shainForm: FormGroup = this._fb.group({ shainId: [''] })
 
-
-
   qualifications: Qualifications[] =
     [{
       qualificationid: null,
@@ -87,40 +85,33 @@ export class ResumeAddComponent implements OnInit {
       this.title = '履歴書登録画面'
     } else {
       this.title = '履歴書編集画面'      
-      this._employeeService.getShainData(this._route.snapshot.paramMap.get('id'),false,true,false)
-      this.selectedUser$ = this._employeeService.employee$      
+      this.selectedUser$ = this._employeeService.employee$
+      //this._employeeService.getShainData(this._route.snapshot.paramMap.get('id'),false,true,false)      
       this.idsearchbox = false
       this.buildEditView(this.selectedUser$)
     }
   }
-
-  selectEmployee(shainid: string) {
-    this.resetForms()
-    if (shainid === '' || shainid === null || shainid === undefined) {
-      this._router.navigate(['admin/employee-list'])
-    } else {
-      this._employeeService.getShainData(shainid,false,true,false)
-      this.selectedUser$ = this._employeeService.employee$   
-      this.buildEditView(this.selectedUser$)
-    }
-  }
-
 
   saveResume() {
     this.submitted = true
     try {
     this._resumeService.saveResumeAttempt(this.resumeForm.value)
     this._router.navigate(['/admin/rirekisho/details/'+ this._route.snapshot.paramMap.get('id')])
+    alert('終了しました。')
+    this._employeeService.getShainData(this._route.snapshot.paramMap.get('id'),false,true,false)
     } catch (err) {
       throw err
     }
   }
 
-  async buildEditView(withUser: Observable<Employee>){
-  this.resetForms()
+  buildEditView(withUser: Observable<Employee>){  
+    console.log('Resetting form...')
+    this.resetForms()
     withUser.pipe(
       takeUntil(this.destroySubject$),
-      map(val =>{
+      map((val, index) =>{
+        console.log('Map loop 1')
+        console.log(index)
         this.shainForm.patchValue({ shainId: val.shainId })
         if (!val.resume) {
           this.career.forEach((d: Career) => this.clearCareerRow(d))
@@ -133,24 +124,26 @@ export class ResumeAddComponent implements OnInit {
             universityName: val.resume.universityName,
             bunri: val.resume.bunri
           })
-          val.resume.careers.forEach((car) => {
-            (car.active) ? this.addCareerRow(car) : null
-           })
-          val.resume.qualifications.forEach((qua) => { 
-            (qua.active) ? this.addQualificationRow(qua) : null
-           })
-          val.resume.commendations.forEach((com) => { 
-          (com.active) ? this.addCommendationRow(com) : null
-           })
+          for (let i of val.resume.careers){
+            console.log(val.resume.careers.length)
+            console.log(i)
+            if (i.active) this.addCareerRow(i)
+          }
+          for (let j of val.resume.qualifications){
+            if (j.active) this.addQualificationRow(j)
+          }
+          for (let k of val.resume.commendations){
+            if (k.active) this.addCommendationRow(k)
+          }
           }
         })).subscribe()
   }    
     
   resetForms() {
-    if (this.careerRows.length > 0) {
-      this.careerRows.value.forEach(value => {
-        this.careerRows.removeAt(value)
-      });
+    if (this.careerRows.length > 0) {      
+      for (let c of this.careerRows.value){
+        this.careerRows.removeAt(c)
+      }
     }
 
     if (this.qualificationRows.length > 0) {
@@ -167,7 +160,6 @@ export class ResumeAddComponent implements OnInit {
 
     this.resumeForm.reset()
     this.shainForm.reset()
-
   }
 
   buildResumeForm() {
@@ -179,7 +171,8 @@ export class ResumeAddComponent implements OnInit {
       employee: this.shainForm,
       careers: this.careerRows,
       qualifications: this.qualificationRows,
-      commendations: this.commendationRows
+      commendations: this.commendationRows,
+      notes: ['']
     })
   }
 

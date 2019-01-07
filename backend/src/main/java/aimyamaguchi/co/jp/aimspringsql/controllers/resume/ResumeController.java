@@ -30,6 +30,11 @@ public class ResumeController{
     @Autowired
     private SearchFilters sf;
 
+    @GetMapping("/resume/getall")
+    public ResponseEntity<List<EmployeeMaster>> fullSearchResult(){
+        return new ResponseEntity<>(sf.getEmployeesWithResume(), HttpStatus.OK);
+    }
+
     @GetMapping("/resume/search")
     public ResponseEntity<List<EmployeeMaster>> searchResults(
             @RequestParam (value="i", required = false) String id,
@@ -38,11 +43,12 @@ public class ResumeController{
             @RequestParam (value="r", required = false) String recruit,
             @RequestParam (value="a", required = false) String age,
             @RequestParam (value="st", required = false)String study,
+            @RequestParam (value="sc", required = false)String school,
             @RequestParam (value="b", required = false) String bunri,
             @RequestParam (value="ca", required = false)String career,
             @RequestParam (value="qq", required = false)String qualification){
         try {
-            List<String> list = rs.searchQueryBuilder(id, name, kata, recruit, age, study, bunri, career, qualification);
+            List<String> list = rs.searchQueryBuilder(id, name, kata, recruit, age, school, study, bunri, career, qualification);
             return new ResponseEntity<>(sf.getEmployeesWithResume(list), HttpStatus.OK);
         } catch (CustomException e) {
             return  new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

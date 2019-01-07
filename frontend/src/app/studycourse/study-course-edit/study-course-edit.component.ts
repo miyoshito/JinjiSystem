@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
 import { ProfileService } from 'src/app/profile/profile.service';
+import { EmployeeMasterService } from 'src/app/admin/employee-master/employee-master.service';
 
 @Component({
   selector: 'app-study-course-edit',
@@ -16,7 +17,8 @@ export class StudyCourseEditComponent implements OnInit {
   constructor(private _fb: FormBuilder,
               private _studyCourseService: StudycourseService,
               private _router: Router,
-              private _profileService: ProfileService) { }
+              private _profileService: ProfileService,
+              private _employeeService: EmployeeMasterService) { }
 
   studyForm: FormGroup
 
@@ -29,9 +31,8 @@ export class StudyCourseEditComponent implements OnInit {
     this.title = "教育受講履歴編集画面"
 
     if(this._router.url.endsWith('/studycourses/add')){
-    this.title = "教育受講履歴登録画面"
-    this.selectedUser$ = this._profileService.cachedUser$    
-    console.log('i see what u doing here')
+    this.title = "教育受講履歴登録画面"    
+    this.selectedUser$ = this._employeeService.employee$
     }
 
 

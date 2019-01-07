@@ -7,7 +7,6 @@ import { LoginGuardService } from './guards/login-guard.service';
 import { ProfileComponent } from './profile/profile.component';
 import { EmployeeMasterComponent } from './admin/employee-master/employee-master.component';
 import { ResumeDetailsComponent } from './resume/resume-details/resume-details.component';
-import { ResumeListComponent } from './resume/resume-list/resume-list.component';
 import { CurriculumSearchComponent } from './curriculum/curriculum-search/curriculum-search.component';
 import { CurriculumListComponent } from './curriculum/curriculum-list/curriculum-list.component';
 import { CurriculumDetailsComponent } from './curriculum/curriculum-details/curriculum-details.component';
@@ -87,7 +86,6 @@ const routes: Routes = [
       {path: 'profile/:id', children:[
         {path: '', component: ProfileComponent},
         {path: 'edit', component: EmployeeMasterComponent},
-        {path: 'resume', component: ResumeListComponent},
         {path: 'resume/add', component: ResumeAddComponent},
         {path: 'resume/edit', component: ResumeAddComponent},
         {path: 'curriculum/add', component: CurriculumInsertComponent},

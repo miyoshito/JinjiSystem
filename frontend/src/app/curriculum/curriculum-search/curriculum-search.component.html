@@ -1,131 +1,136 @@
 <div class="container">
-<div class=row>
-  <div class="col-md-4">
-    <h3>職務経歴書検索画面</h3>
-  </div>
-</div>
-<form [formGroup]="searchForm">
-  <div class="row">
-    <div class="col-md-3">
-      <span>社員番号: </span>
-      <input type="text" class="form-control" formControlName="id">
-    </div>
-    <div class="col-md-3">
-      <span>氏名: </span>
-      <input type="text" class="form-control" formControlName="name">
-    </div>
-    <div class="col-md-3">
-      <span>フリガナ: </span>
-      <input type="text" class="form-control" formControlName="kana">
-    </div>
-    <div class="col-md-3">
-      <span>採用区分: </span>
-      <select class="custom-select custom-select" formControlName="recruit">
-        <option selected value="新卒">新卒</option>
-        <option value="キャリア">キャリア</option>
-      </select>
+  <div class=row>
+    <div class="col-md-4">
+      <h3>職務経歴書検索画面</h3>
     </div>
   </div>
+  <form [formGroup]="searchForm">
+    <div class="row">
+      <div class="col-md-3">
+        <span>社員番号: </span>
+        <input type="text" class="form-control" formControlName="id">
+      </div>
+      <div class="col-md-3">
+        <span>氏名: </span>
+        <input type="text" class="form-control" formControlName="name">
+      </div>
+      <div class="col-md-3">
+        <span>フリガナ: </span>
+        <input type="text" class="form-control" formControlName="kana">
+      </div>
+      <div class="col-md-3">
+        <span>採用区分: </span>
+        <select class="custom-select custom-select" formControlName="recruit">
+          <option selected value="新卒">新卒</option>
+          <option value="キャリア">キャリア</option>
+        </select>
+      </div>
+    </div>
 
-  <div class="row">
-    <div class="col-md-2">
-      <span>年代</span>
-      <select class="custom-select" formControlName="age">
-        <option *ngFor="let age of age" value="{{age}}">{{age}}才</option>
-      </select>
-    </div>
+    <div class="row">
+      <div class="col-md-2">
+        <span>年代</span>
+        <select class="custom-select" formControlName="age">
+          <option value="10">10才</option>
+          <option value="20">20才</option>
+          <option value="30">30才</option>
+          <option value="40">40才</option>
+          <option value="50">50才</option>
+        </select>
+      </div>
 
     <div class="col-md-4">
       <span>経験月数</span>
       <div class="input-group">
-        <input type="text" class="form-control" formControlName="experience">
+        <input type="tel" class="form-control" formControlName="experience">
         <div class="input-group-prepend">
-            <span class="input-group-text">年</span>
-          </div>
+          <span class="input-group-text">年</span>
+        </div>
         <select class="custom-select" formControlName="operator">
           <option selected value="greaterthan">以上</option>
           <option value="lessthan">以下</option>
         </select>
       </div>
     </div>
+</div>
+<ng-container *ngIf="industry$ | async; let industry">
+  <div class="row">
+    <div class="col-md-6">
+      <span>顧客名</span>
+      <input type="text" class="form-control" formControlName="customerName">
+    </div>
+    <div class="col-md-6">
+      <span>業種</span>
+      <select class="custom-select" formControlName="indType">
+        <option *ngFor="let ind of industry" value="{{ind.id}}">{{ind.tdesc}}</option>
+      </select>
+    </div>
   </div>
-    <ng-container *ngIf="industry$ | async; let industry">
-    <div class="row">
-      <div class="col-md-6">
-        <span>顧客名</span>
-        <input type="text" class="form-control" formControlName="customerName">
-      </div>
-      <div class="col-md-6">
-        <span>業種</span>
-        <select class="custom-select" formControlName="indType">
-          <option *ngFor="let ind of industry" value="{{ind.id}}">{{ind.tdesc}}</option>
-        </select>
-      </div>
+</ng-container>
+<ng-container *ngIf="data$ | async; let data">
+  <div class="row">
+    <div class="col-md-6">
+      <span>対象業務</span>
+      <input type="text" class="form-control" formControlName="targetBusiness">
     </div>
-    </ng-container>
-    <ng-container *ngIf="data$ | async; let data">
-    <div class="row">
-      <div class="col-md-6">
-        <span>対象業務</span>
-        <input type="text" class="form-control" formControlName="targetBusiness">
-      </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <span>開発機種／メーカー</span>
+      <ng-select [items]="data.MAKER" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindValue="id"
+        bindLabel="desc" placeholder="選択して下さい。" formControlName="maker">
+      </ng-select>
     </div>
-    <div class="row">
-      <div class="col-md-4">
-        <span>開発機種／メーカー</span>
-        <ng-select [items]="data.MAKER" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindValue="id" bindLabel="desc"
-          placeholder="何々を選択して下さい。" formControlName="maker">
-        </ng-select>
-      </div>
-      <div class="col-md-4">
-        <span>OS</span>
-        <ng-select [items]="data.OS" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindValue="id" bindLabel="desc"
-          placeholder="何々を選択して下さい。" formControlName="os">
-        </ng-select>
-      </div>
-      <div class="col-md-4">
-        <span>DBMS</span>
-        <ng-select [items]="data.DBMS" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindValue="id" bindLabel="desc"
-          placeholder="何々を選択して下さい。" formControlName="dbms">
-        </ng-select>
-      </div>
+    <div class="col-md-4">
+      <span>OS</span>
+      <ng-select [items]="data.OS" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindValue="id"
+        bindLabel="desc" placeholder="選択して下さい。" formControlName="os">
+      </ng-select>
     </div>
+    <div class="col-md-4">
+      <span>DBMS</span>
+      <ng-select [items]="data.DBMS" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindValue="id"
+        bindLabel="desc" placeholder="選択して下さい。" formControlName="dbms">
+      </ng-select>
+    </div>
+  </div>
 
-    <div class="row">
-      <div class="col-md-4">
-        <span>言語</span>
-        <ng-select [items]="data.LANG" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindValue="id" bindLabel="desc"
-          placeholder="何々を選択して下さい。" formControlName="lang">
-        </ng-select>
-      </div>
-      <div class="col-md-4">
-        <span>ツール</span>
-        <ng-select [items]="data.TOOLS" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindValue="id" bindLabel="desc"
-          placeholder="何々を選択して下さい。" formControlName="tools">
-        </ng-select>
-      </div>
-      <div class="col-md-4">
-        <span>担当作業</span>
-        <ng-select [items]="data.DUTY" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindValue="id" bindLabel="desc"
-          placeholder="何々を選択して下さい。" formControlName="response">
-        </ng-select>
-      </div>
-    </div>  
+  <div class="row">
+    <div class="col-md-4">
+      <span>言語</span>
+      <ng-select [items]="data.LANG" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindValue="id"
+        bindLabel="desc" placeholder="選択して下さい。" formControlName="lang">
+      </ng-select>
+    </div>
+    <div class="col-md-4">
+      <span>ツール</span>
+      <ng-select [items]="data.TOOLS" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindValue="id"
+        bindLabel="desc" placeholder="選択して下さい。" formControlName="tools">
+      </ng-select>
+    </div>
+    <div class="col-md-4">
+      <span>担当作業</span>
+      <ng-select [items]="data.DUTY" [multiple]="true" [closeOnSelect]="true" [hideSelected]="true" bindValue="id"
+        bindLabel="desc" placeholder="選択して下さい。" formControlName="response">
+      </ng-select>
+    </div>
+  </div>
 
   <div class="row">
     <div class="col-md-4">
       <span>役割</span>
       <select class="custom-select" formControlName="role">
-        <option *ngFor="let role of data.ASSIGN" value="{{role.desc}}">{{role.desc}}</option>        
+        <option *ngFor="let role of data.ASSIGN" value="{{role.desc}}">{{role.desc}}</option>
       </select>
     </div>
   </div>
 </ng-container>
 
-  <div class="row">
-    <div class="col-md-12">
-      <button type="button" class="btn btn-primary" (click)="doSearch()">検索</button>
-    </div>
+<div class="row">
+  <div class="col-md-12">
+    <button type="button" class="btn btn-primary" (click)="doSearch()">検索</button>
+    <button type="reset" class="btn btn-primary" (click)="reset()">クリア</button>
   </div>
+</div>
 </form>
 </div>

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Subscription, Observable } from 'rxjs';
 import { AuthService } from '../guards/auth.service';
 import { BroadcastService } from '../broadcast.service';
-import { Employee } from '../interfaces/employee';
+import { Employee, MinEmployee } from '../interfaces/employee';
 import { ProfileService } from '../profile/profile.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
     loggedIn: boolean
     employeeName: string
 
-    loggedUser$: Observable<Employee>
+    loggedUser$: Observable<MinEmployee>
     isLoggedIn$: Observable<boolean>
     authorities$: Observable<String>
     disconnect$: Observable<boolean>

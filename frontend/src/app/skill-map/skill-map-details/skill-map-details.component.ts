@@ -47,7 +47,7 @@ export class SkillMapDetailsComponent implements OnInit {
     if (this._router.url.startsWith('/profile')){
       this._profileService.cachedUser$.pipe(
         takeUntil(this.unsub$),
-        map(e => this._curriculumService.getSkillMaps(e.shainId))
+        map(e => this._curriculumService.getSkillMaps(e.id))
       ).subscribe()
     }
   }

@@ -90,6 +90,7 @@ export interface SearchForm{
     recruit: string,
     age: string,
     study: string,
+    school: string,
     bunri: string,
     career: string,
     qualification: string

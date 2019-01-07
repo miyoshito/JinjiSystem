@@ -52,6 +52,11 @@ public class CurriculumController {
         }
     }
 
+    @GetMapping("/shokureki/getall")
+    public ResponseEntity<List<EmployeeMaster>> getAllEmployeeCVs(){
+        return new ResponseEntity<>(search.getEmployeesWithCv(),HttpStatus.OK);
+    }
+
 
     @GetMapping("/shokureki/search")
     public ResponseEntity<List<EmployeeMaster>> searchCv(

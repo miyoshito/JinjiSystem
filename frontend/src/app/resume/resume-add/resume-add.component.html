@@ -82,15 +82,16 @@
   <div class="row">
     <div class="col-md-4">
       <span>出身校</span>
-      <input type="text" class="form-control" value="{{user?.resume?.formation}}" formControlName="formation">
+      <input type="text" class="form-control" value="{{user?.resume?.universityName}}" formControlName="formation">
     </div>
     <div class="col-md-4">
       <span>出身学部・学科</span>
-      <input type="text" class="form-control" value="{{user?.resume?.universityName}}" formControlName="universityName">
+      <input type="text" class="form-control" value="{{user?.resume?.formation}}" formControlName="universityName">
     </div>
     <div class="col-md-4">
       <span>文理</span>
       <select class="custom-select" value="{{user?.resume?.bunri}}" formControlName="bunri">
+        <option value="null">ー</option>
         <option>文系</option>
         <option>理系</option>
       </select>
@@ -185,7 +186,7 @@
           <thead>
             <th style="width: 10%">年</th>
             <th style="width: 10%">月</th>
-            <th style="width: 86%">資格名</th>
+            <th style="width: 86%">内容</th>
             <th style="width: 4%"></th>
           </thead>
           <tbody>
@@ -202,6 +203,14 @@
             </tr>
           </tbody>
         </table>
+        <div class="row">
+            <div class="col-md-12">
+              <h4>備考</h4>
+              <ng-container [formGroup]="resumeForm">
+              <textarea class="form-control" formControlName="notes" rows="5"></textarea>
+            </ng-container>
+            </div>
+          </div>
       </form>
     </div>
   </div>
@@ -210,7 +219,7 @@
       <button type="button" class="btn btn-outline-primary" disabled>PDF取込</button>
       <button type="button" class="btn btn-outline-primary" (click)="saveResume()">更新</button>
       <button type="button" class="btn btn-outline-primary" disabled>削除</button>
-      <button type="button" class="btn btn-outline-primary" [routerLink]="['/admin/rirekisho/search']" routerLinkActive="active" >詳細へ戻る</button>
+      <button type="button" class="btn btn-primary" onclick="history.back(-1)">詳細へ戻る</button>  
   </div>
 </div>
 <pre>{{resumeForm.value | json }}</pre>

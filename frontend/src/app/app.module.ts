@@ -22,7 +22,6 @@ import { LoginGuardService } from './guards/login-guard.service';
 import { ProfileComponent } from './profile/profile.component';
 import { EmployeeMasterComponent } from './admin/employee-master/employee-master.component';
 import { ResumeSearchComponent } from './resume/resume-search/resume-search.component';
-import { ResumeListComponent } from './resume/resume-list/resume-list.component';
 import { ResumeDetailsComponent } from './resume/resume-details/resume-details.component';
 import { CurriculumSearchComponent } from './curriculum/curriculum-search/curriculum-search.component';
 import { CurriculumListComponent } from './curriculum/curriculum-list/curriculum-list.component';
@@ -75,7 +74,6 @@ defineLocale('ja',jaLocale)
     ProfileComponent,
     EmployeeMasterComponent,
     ResumeSearchComponent,
-    ResumeListComponent,
     ResumeDetailsComponent,
     CurriculumSearchComponent,
     CurriculumListComponent,

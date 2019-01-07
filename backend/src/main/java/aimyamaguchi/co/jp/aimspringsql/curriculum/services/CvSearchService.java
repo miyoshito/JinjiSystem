@@ -60,7 +60,13 @@ public class CvSearchService {
         if (validator.isNullValidator(name)) queryParam.add("and m.sha_name like '%" + name + "%'\n");
         if (validator.isNullValidator(kana)) queryParam.add("and m.sha_kana like '%" + kana + "%'\n");
         if (validator.isNullValidator(recruit)) queryParam.add("and m.sha_recruit = '" + recruit + "'\n");
-        if (validator.isNullValidator(age)) queryParam.add("and year(getdate()) - year(m.sha_birthday) = " + age + "\n");
+
+        if (validator.isNullValidator(age)){
+            int start = Integer.parseInt(age);
+            int end = start + 9;
+            queryParam.add("and year(getdate()) - year(m.sha_birthday) between" +start+ " and " +end);
+            //queryParam.add("and year(getdate()) - year(m.sha_birthday) = " + age + "\n");
+        }
         if (validator.isNullValidator(customerName)) queryParam.add("and sho.cv_customer like '%" + customerName + "%'\n");
         if (validator.isNullValidator(targetBusiness)) queryParam.add("and sho.cv_targetbusiness like '%" + targetBusiness + "%'\n");
 

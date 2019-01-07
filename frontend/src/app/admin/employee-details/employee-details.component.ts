@@ -17,7 +17,7 @@ export class EmployeeDetailsComponent implements OnInit {
   selectedUser$: Observable<Employee>
 
   ngOnInit() {
-    this.selectedUser$ = this._profileService.getUserProfile(this._route.snapshot.paramMap.get('id'))
+    //this.selectedUser$ = this._profileService.getUserProfile(this._route.snapshot.paramMap.get('id'))
   }
 
 

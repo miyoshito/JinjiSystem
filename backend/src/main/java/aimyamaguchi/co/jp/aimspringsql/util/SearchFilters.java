@@ -36,7 +36,6 @@ public class SearchFilters {
     public EmployeeMaster getEmployeeData(String id){
         EmployeeMaster e = er.findByShainId(id);
         if (e != null) {
-            System.out.println("Eita carai");
             return e;
         } else
             return null;
@@ -77,8 +76,24 @@ public class SearchFilters {
         return le;
     }
 
+    public List<EmployeeMaster> getEmployeesWithCv() {
+        List<EmployeeMaster> le = er.findAll();
+        for(EmployeeMaster e: le){
+            e.getCurriculum().size();
+        }
+        return le;
+    }
+
     public List<EmployeeMaster> getEmployeesWithResume(List<String> ids) {
         List<EmployeeMaster> le = er.findByShainIdIn(ids);
+        for(EmployeeMaster e: le){
+            rr.findById(e.getResume().getResumeId());
+        }
+        return le;
+    }
+
+    public List<EmployeeMaster> getEmployeesWithResume() {
+        List<EmployeeMaster> le = er.findAll();
         for(EmployeeMaster e: le){
             rr.findById(e.getResume().getResumeId());
         }
@@ -103,7 +118,6 @@ public class SearchFilters {
     public ResumeModel getResumeById(Long id){
         return rr.findById(id).orElse(null);
     }
-
 
 
 

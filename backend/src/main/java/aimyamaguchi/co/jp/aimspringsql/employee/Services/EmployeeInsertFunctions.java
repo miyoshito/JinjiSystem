@@ -6,6 +6,7 @@ import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
 import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.EmployeeRepository;
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeModel;
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeRepository;
+import aimyamaguchi.co.jp.aimspringsql.util.SearchFilters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class EmployeeInsertFunctions {
     @Autowired
     private SequenceInterface seq;
     @Autowired
-    private ResumeRepository resumeRepository;
+    private SearchFilters sf;
 
 
     public void insertEmployee(EmployeeMaster employee, HttpServletRequest reqs){
@@ -31,6 +32,7 @@ public class EmployeeInsertFunctions {
         String token = reqs.getHeader("authorization");
 
         if (!employee.getShainId().equals("") && employeeRepository.findByShainId(employee.getShainId()) != null){
+            employee.setResume(sf.getEmployeeWithResume(employee.getShainId()).getResume());
             employeeRepository.save(employee);
         } else {
             if (employee.getShainId().equals("")) {
@@ -48,12 +50,11 @@ public class EmployeeInsertFunctions {
                 employee.setShainPassword(passwordEncoder.encode(employee.getPassword()));
             Date dt = new Date();
 
+            employee.setResume(new ResumeModel());
+
             employee.setShainRegisterDate(dt);
             employeeRepository.save(employee);
 
-            ResumeModel res = new ResumeModel();
-            res.setEmployee(employee);
-            resumeRepository.save(res);
         }
     }
 }

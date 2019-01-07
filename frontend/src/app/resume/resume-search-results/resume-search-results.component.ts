@@ -4,7 +4,7 @@ import { Employee } from 'src/app/interfaces/employee';
 import { ResumeService } from '../resume.service';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { Qualifications } from '../resume-details-interface';
+import { Qualifications, Career } from '../resume-details-interface';
 
 @Component({
   selector: 'app-resume-search-results',
@@ -32,12 +32,4 @@ export class ResumeSearchResultsComponent implements OnInit {
     this._router.navigate(['/admin/rirekisho/details/'+id])
   }
 
-}
-
-export interface resumeResults{
-  id: string,
-  name: string,
-  rectype: string,
-  school: string,
-  qualifications: Qualifications[]
 }

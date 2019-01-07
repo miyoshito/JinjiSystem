@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { SearchForm } from '../resume-details-interface';
 import { ResumeService } from '../resume.service';
@@ -19,7 +19,7 @@ export class ResumeSearchComponent implements OnInit {
 
   searchForm: FormGroup
 
-  active$: Subject<boolean>
+  active$: Subject<boolean> = new Subject<boolean>()
 
   searchParam: SearchForm
 
@@ -33,24 +33,31 @@ export class ResumeSearchComponent implements OnInit {
 
   ngOnInit() {
     this.initializeForm()
-    for (let i = 18; i <= 90; i++){
-      this.age.push(i)
-    }
+    this.age = [ '','10代','20代','30代','40代','50代']
+  }
+
+  resetForms(){
+    this.searchForm.reset()
   }
 
   
   searchAttempt(){
     if (!this.searchForm.valid)
     {
-      alert ('atleast 1 field needs to be filled')
-      return
-    }    
+      console.log('searching')
+      this._resumeService.retrieveAllResumes().pipe(
+      takeUntil(this.active$),
+      map(res => {
+        console.log(res.body)
+    this._resumeService.sendSearchResults(res.body)
+    this._router.navigate(['/admin/rirekisho/results'])
+    })).subscribe()
+    } else {
     this._resumeService.searchResumeAttempt(this.searchForm.value)
     .pipe(
+      takeUntil(this.active$),
       map(res => {
-      if (!res.body.length) {
-        alert('データーが見つかりません')
-      } else if (res.body.length > 1) {
+      if (res.body.length > 1) {
       this._resumeService.sendSearchResults(res.body)
       this._router.navigate(['/admin/rirekisho/results'])
       } else {
@@ -61,6 +68,7 @@ export class ResumeSearchComponent implements OnInit {
     err => {
       console.log(err)
     })
+    }
   }
 
   initializeForm(){
@@ -71,10 +79,15 @@ export class ResumeSearchComponent implements OnInit {
       recruit: [''],
       age: [''],
       study: [''],
+      school: [''],
       bunri: [''],
       career: [''],
       qualification: [''],
     }, {validator: atLeastOne(Validators.required)})
+  }
+
+  ngOnDestroy(){
+    this.active$.next()
   }
 
 
