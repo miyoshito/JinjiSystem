@@ -170,14 +170,14 @@ export class EmployeeMasterComponent implements OnInit {
       this._employeeService.insertShainAttempt(employee)
 
       if ((this._router.url).endsWith('/edit')){
-        alert('ユーザー更新されました。')
+        alert('更新しました')
           this._router.navigate(['admin/employee-search'])
       } else if ((this._router.url).endsWith('/profile')) {
-        alert('アップデート完了しました。')
+        alert('更新しました')
         this._profileService.getLoggedInUserData()
         this._router.navigate(['home'])        
       } else {
-        alert('ユーザーが挿入されました。')
+        alert('登録しました')
         this._router.navigate(['admin/employee-search'])
       }
       this.resetForms()

@@ -159,11 +159,30 @@
       </div>
       <div class="col-md-3">
         <span>入社日</span>
-        <input type="date" class="form-control " formControlName="shainJoinedDate" [ngClass]="{ 'is-invalid': submitted && f.shainJoinedDate.errors }">
+        <div>
+            <input type="text"
+            placeholder="入社日"
+            class="form-control"
+            [bsConfig]="bsConfig"
+            value = "{{f.shainJoinedDate.value | date:'yyyy/MM/dd'}}"
+            formControlName="shainJoinedDate"
+            [ngClass]="{ 'is-invalid': submitted && f.shainJoinedDate.errors }"
+            bsDatepicker>
+        </div>
+        <!--<input type="date" class="form-control " formControlName="shainJoinedDate" [ngClass]="{ 'is-invalid': submitted && f.shainJoinedDate.errors }">-->
       </div>
       <div class="col-md-3">
         <span>退社日</span>
-        <input type="date" class="form-control " formControlName="shainRetiredDate">
+        <div>
+            <input type="text"
+            placeholder="退社日"
+            class="form-control"
+            [bsConfig]="bsConfig"
+            value = "{{f.shainRetiredDate.value | date:'yyyy/MM/dd'}}"
+            formControlName="shainRetiredDate"
+            bsDatepicker>
+        </div>
+        <!--<input type="date" class="form-control " formControlName="shainRetiredDate">-->
       </div>
       <div class="col-md-3">
         <span>パスワード</span>

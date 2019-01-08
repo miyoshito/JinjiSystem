@@ -71,18 +71,14 @@ export class EmployeeMasterService {
       .subscribe(
     resp => {},
     err => {
-      alert("Something bad happened ! You gonna be disconnected for security purposes.")
+      alert("登録ときに問題が見つかりました。管理者に連絡してください。")
       throw err
     }
   )}
 
-  getAllShains(){
-    return this._http.get<Employee[]>(ADMIN_URL+'/employee-list', {observe: 'response'}).subscribe(
-      res => {
-        this.searchSource.next(res.body)
-      }
-    )
-  }  
+  getAllUsers(){
+    return this._http.get<Employee[]>(ADMIN_URL + '/admin/getallemployees', {observe: 'response'})
+  }
 
   searchShain(id: string, name: string, kana: string, aff: number[]){
     let affs = ''

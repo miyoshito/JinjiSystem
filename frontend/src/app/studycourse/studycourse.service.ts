@@ -4,6 +4,7 @@ import { studyCourse } from '../interfaces/study-course';
 import { API_URL, ADMIN_URL } from '../url-settings';
 import { Employee } from '../interfaces/employee';
 import { ReplaySubject } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 @Injectable({
@@ -18,6 +19,8 @@ export class StudycourseService {
 
   private _detailsSource: ReplaySubject<studyCourse> = new ReplaySubject<studyCourse>(1)
   details$ = this._detailsSource.asObservable()
+
+
 
 
   insertAttempt(sc: studyCourse){
@@ -41,14 +44,15 @@ export class StudycourseService {
     +'&exp=' +sf.expenses
     +'&st=' +sf.stdate
     +'&ed=' +sf.enddate
-    +'&op='+sf.op, {observe: 'response'}).subscribe(
-      res => {
-        if (!res.body) {
-        alert('何も見つかりません')
-        return
+    +'&op='+ sf.op ,{observe: 'response'}).pipe(
+      map(res => {
+        if (!res.body.length){
+         alert('') 
+         return
+        } else {
+          this._searchResultsSource.next(res.body)
         }
-        else this._searchResultsSource.next(res.body)
-      }
+      })
     )
   }
 }

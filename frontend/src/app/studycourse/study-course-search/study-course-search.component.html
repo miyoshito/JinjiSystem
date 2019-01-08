@@ -29,11 +29,27 @@
     <div class="col-md-6">
       <span>期間</span>
       <div class="input-group">
-        <input type="date" class="form-control" formControlName="stdate">
+        <div>
+            <input type="text"
+            placeholder="～から"
+            class="form-control"
+            [bsConfig]="bsConfig"
+            formControlName="stdate"
+            bsDatepicker>
+        </div>
+        <!--<input type="date" class="form-control" formControlName="stdate">-->
         <div class="input-group-prepend">
           <span class="input-group-text">~</span>
         </div>
-        <input type="date" class="form-control" formControlName="enddate">
+        <div>
+            <input type="text"
+            placeholder="～まで"
+            class="form-control"
+            [bsConfig]="bsConfig"
+            formControlName="enddate"
+            bsDatepicker>
+        </div>
+        <!--<input type="date" class="form-control" formControlName="enddate">-->
       </div>
     </div>
   </div>
@@ -46,6 +62,7 @@
           <span class="input-group-text">円</span>
         </div>
         <select class="custom-select" formControlName="op">
+          <option value="" selected ></option>
           <option value="grt" selected>以上</option>
           <option value="lst">以下</option>
         </select>

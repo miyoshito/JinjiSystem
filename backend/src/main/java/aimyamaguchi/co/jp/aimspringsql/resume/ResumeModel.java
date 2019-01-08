@@ -25,7 +25,7 @@ public class ResumeModel {
 
     @Id
     @Column(name="RI_ID")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long resumeId;
 
     @Column(name="RI_STUDY_AREA")
@@ -37,17 +37,14 @@ public class ResumeModel {
     @Column(name="RI_BUNRI")
     private String bunri;
 
+    @Column(name="RI_NOTES")
+    private String notes;
+
     @Column(name="LOG_REGISTERED")
     private Date insertDate;
 
     @Column(name="LOG_INSERTEDBY")
     private String insertedBy;
-
-
-/*    @OneToOne(optional = false)
-    @JoinColumn(name="RI_SHA")
-    @JsonBackReference
-    private EmployeeMaster employee;*/
 
     @LazyToOne(LazyToOneOption.NO_PROXY)
     @OneToOne(mappedBy = "resume")
@@ -152,5 +149,13 @@ public class ResumeModel {
 
     public void setCommendations(Set<Commendation> commendations) {
         this.commendations = commendations;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 }

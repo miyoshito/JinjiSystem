@@ -86,6 +86,7 @@ export class CurriculumService {
   }
 
   searchShokumuRireki(params: cvForm) {
+
     this._http.get<Employee[]>(ADMIN_URL + '/shokureki/search?'
       + 'id=' + params.id
       + '&n=' + params.name

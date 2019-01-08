@@ -51,7 +51,7 @@ public class ResumeController{
             List<String> list = rs.searchQueryBuilder(id, name, kata, recruit, age, school, study, bunri, career, qualification);
             return new ResponseEntity<>(sf.getEmployeesWithResume(list), HttpStatus.OK);
         } catch (CustomException e) {
-            return  new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

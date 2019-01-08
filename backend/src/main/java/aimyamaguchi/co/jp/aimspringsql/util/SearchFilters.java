@@ -3,6 +3,7 @@ package aimyamaguchi.co.jp.aimspringsql.util;
 import aimyamaguchi.co.jp.aimspringsql.authfilters.JwtTokenProvider;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.repositories.CurriculumRepository;
 import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseInterface;
+import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseModel;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
 import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.EmployeeRepository;
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeModel;
@@ -115,10 +116,19 @@ public class SearchFilters {
         } else return null;
     }
 
+    public List<EmployeeMaster> getEmployeesWithStudy(){
+        List<EmployeeMaster> le = er.findAll();
+        for (EmployeeMaster e: le){
+            e.getEducations().size();
+        }
+        return le;
+    }
+
+
+
     public ResumeModel getResumeById(Long id){
         return rr.findById(id).orElse(null);
     }
-
 
 
 

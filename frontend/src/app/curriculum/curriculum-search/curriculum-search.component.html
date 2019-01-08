@@ -21,7 +21,8 @@
       <div class="col-md-3">
         <span>採用区分: </span>
         <select class="custom-select custom-select" formControlName="recruit">
-          <option selected value="新卒">新卒</option>
+          <option selected value=""></option>
+          <option value="新卒">新卒</option>
           <option value="キャリア">キャリア</option>
         </select>
       </div>
@@ -31,6 +32,7 @@
       <div class="col-md-2">
         <span>年代</span>
         <select class="custom-select" formControlName="age">
+          <option value="" selected></option>
           <option value="10">10才</option>
           <option value="20">20才</option>
           <option value="30">30才</option>
@@ -47,7 +49,8 @@
           <span class="input-group-text">年</span>
         </div>
         <select class="custom-select" formControlName="operator">
-          <option selected value="greaterthan">以上</option>
+          <option selected value=""></option>
+          <option value="greaterthan">以上</option>
           <option value="lessthan">以下</option>
         </select>
       </div>
@@ -62,6 +65,7 @@
     <div class="col-md-6">
       <span>業種</span>
       <select class="custom-select" formControlName="indType">
+        <option value = ""></option>
         <option *ngFor="let ind of industry" value="{{ind.id}}">{{ind.tdesc}}</option>
       </select>
     </div>
@@ -120,6 +124,7 @@
     <div class="col-md-4">
       <span>役割</span>
       <select class="custom-select" formControlName="role">
+        <option value="" selected></option>
         <option *ngFor="let role of data.ASSIGN" value="{{role.desc}}">{{role.desc}}</option>
       </select>
     </div>
@@ -127,7 +132,7 @@
 </ng-container>
 
 <div class="row">
-  <div class="col-md-12">
+  <div class="col-md-12 d-flex p-2 justify-content-around">
     <button type="button" class="btn btn-primary" (click)="doSearch()">検索</button>
     <button type="reset" class="btn btn-primary" (click)="reset()">クリア</button>
   </div>

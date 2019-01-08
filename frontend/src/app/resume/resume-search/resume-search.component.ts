@@ -33,7 +33,6 @@ export class ResumeSearchComponent implements OnInit {
 
   ngOnInit() {
     this.initializeForm()
-    this.age = [ '','10代','20代','30代','40代','50代']
   }
 
   resetForms(){
@@ -44,20 +43,27 @@ export class ResumeSearchComponent implements OnInit {
   searchAttempt(){
     if (!this.searchForm.valid)
     {
-      console.log('searching')
       this._resumeService.retrieveAllResumes().pipe(
       takeUntil(this.active$),
       map(res => {
-        console.log(res.body)
+        if (!res.body){
+          alert("データーを見つかれません。")
+          return
+        } else {
     this._resumeService.sendSearchResults(res.body)
     this._router.navigate(['/admin/rirekisho/results'])
+    }
     })).subscribe()
     } else {
     this._resumeService.searchResumeAttempt(this.searchForm.value)
     .pipe(
       takeUntil(this.active$),
       map(res => {
-      if (res.body.length > 1) {
+        console.log(res)
+       if (!res.body || res.body.length < 1 || res.status == 500){
+          alert("データーを見つかれません。")
+          return
+      } else if (res.body.length > 1) {
       this._resumeService.sendSearchResults(res.body)
       this._router.navigate(['/admin/rirekisho/results'])
       } else {

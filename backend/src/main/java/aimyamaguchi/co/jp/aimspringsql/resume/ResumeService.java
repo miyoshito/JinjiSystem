@@ -56,6 +56,7 @@ public class ResumeService {
             res.setCareers(resume.getCareers());
             res.setQualifications(resume.getQualifications());
             res.setCommendations(resume.getCommendations());
+            res.setNotes(resume.getNotes());
             this.insertDetails(res);
             resumeRepo.save(res);
         }
@@ -131,6 +132,7 @@ public class ResumeService {
     public List<String> searchQueryBuilder(String id, String name, String kana, String recruit, String age, String school, String study, String bunri, String keireki, String shikaku){
 
         ArrayList<String> queryParam = new ArrayList<>();
+
         if (valid.isNullValidator(id)) queryParam.add("sha.sha_no = '"+id+"' and ");
         if (valid.isNullValidator(name)) queryParam.add("sha.sha_name like '%"+name+"%'");
         if (valid.isNullValidator(kana))queryParam.add("sha.sha_kana like '%"+kana+"%'");
@@ -160,7 +162,7 @@ public class ResumeService {
                 "left join m_keireki kei on kei.rk_resume = ri.ri_id\n" +
                 "left join m_shikaku shi on shi.rs_resume = ri.ri_id\n" +
                 "left join m_hyosho hyo on hyo.rh_resume = ri.ri_id\n" +
-                "where\n");
+                "where\n" + param);
 
         return query.getResultList();
     }

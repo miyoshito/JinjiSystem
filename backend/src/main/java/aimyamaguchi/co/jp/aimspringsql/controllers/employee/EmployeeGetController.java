@@ -36,6 +36,11 @@ public class EmployeeGetController {
         return sf.getEmployeeData(id);
     }
 
+    @GetMapping("/admin/getemployeelist")
+    public List<EmployeeMaster> getEmployeeList(){
+        return sf.getEmployeesWithStudy();
+    }
+
     @GetMapping("/se/data/{id}")
     public ResponseEntity<EmployeeMaster> getEmployeeData(
             HttpServletRequest req,

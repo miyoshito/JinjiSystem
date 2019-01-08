@@ -42,7 +42,10 @@ export class CurriculumSearchComponent implements OnInit {
 
   reset(){
     this.searchForm.reset()
-    this.buildSearchForm()
+  }
+
+  resetField(control: string){
+    this.searchForm.controls.control.reset()
   }
 
 

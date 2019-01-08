@@ -1,5 +1,6 @@
 package aimyamaguchi.co.jp.aimspringsql.controllers;
 
+import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseInterface;
 import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseModel;
 import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseService;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
@@ -21,14 +22,15 @@ public class StudyCourseController {
     StudyCourseService scs;
 
     @Autowired
+    StudyCourseInterface teste;
+
+    @Autowired
     EmployeeRepository er;
 
     @GetMapping("/admin/studycourse/get")
     public ResponseEntity<Optional<StudyCourseModel>> getSCModel(@RequestParam(value="id") String id){
         return new ResponseEntity<>(scs.findSCM(id),HttpStatus.OK);
     }
-
-
 
     @PostMapping("/se/studycourse/add")
     public ResponseEntity<String> addStudyCourse(StudyCourseModel scm){

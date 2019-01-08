@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StudycourseService } from '../studycourse.service';
 import { atLeastOne } from 'src/app/validators/atleastOne';
 import { Router } from '@angular/router';
+import { BsDatepickerConfig, BsDatepickerViewMode, BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { EmployeeMasterService } from 'src/app/admin/employee-master/employee-master.service';
 
 @Component({
   selector: 'app-study-course-search',
@@ -15,16 +17,30 @@ export class StudyCourseSearchComponent implements OnInit {
   title: string
   constructor(private _fb: FormBuilder,
               private _scService: StudycourseService,
-              private _router: Router) { }
+              private _router: Router,
+              private localeService: BsLocaleService,
+              private _employeeService: EmployeeMasterService) {
+                localeService.use('ja')
+               }
+
+  bsValue: String = new Date().toISOString().slice(0,10);
+  endValue: Date = new Date()
+  minMode: BsDatepickerViewMode = 'day';
+  bsConfig: Partial<BsDatepickerConfig>;
 
   ngOnInit() {
     this.title="教育受講履歴検索画面"
+    this.bsConfig = Object.assign(
+      { minMode: this.minMode },
+      { containerClass: "theme-red" },
+      { dateInputFormat: 'YYYY/MMMM/dd' },
+      { dateRangeFormat: 'YYYY/MMMM/dd'});
     this.buildForm()
   }
 
   searchAttempt(){
   if(!this.searchForm.valid){
-    alert ("Please fill atleast one field...")
+    this._employeeService.getAllUsers()    
   }
   try{
   this._scService.searchAttempt(this.searchForm.value)
