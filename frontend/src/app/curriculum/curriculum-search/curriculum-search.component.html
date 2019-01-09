@@ -44,14 +44,14 @@
     <div class="col-md-4">
       <span>経験月数</span>
       <div class="input-group">
-        <input type="tel" class="form-control" formControlName="experience">
+        <input type="tel" class="form-control" formControlName="experience" [ngClass]="{ 'is-invalid': !validExp }">
         <div class="input-group-prepend">
           <span class="input-group-text">年</span>
         </div>
-        <select class="custom-select" formControlName="operator">
+        <select class="custom-select" formControlName="operator" [ngClass]="{ 'is-invalid': !validExp }">
           <option selected value=""></option>
-          <option value="greaterthan">以上</option>
-          <option value="lessthan">以下</option>
+          <option value="gt">以上</option>
+          <option value="lt">以下</option>
         </select>
       </div>
     </div>
@@ -134,8 +134,9 @@
 <div class="row">
   <div class="col-md-12 d-flex p-2 justify-content-around">
     <button type="button" class="btn btn-primary" (click)="doSearch()">検索</button>
-    <button type="reset" class="btn btn-primary" (click)="reset()">クリア</button>
+    <button type="button" class="btn btn-primary" (click)="reset()">クリア</button>
   </div>
 </div>
 </form>
+<pre>{{searchForm.value | json}}</pre>
 </div>

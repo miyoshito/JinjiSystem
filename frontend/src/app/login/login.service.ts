@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpResponse, HttpParams } from "@angular/common/http";
 import { Observable, Subject, BehaviorSubject } from "rxjs";
 import { AUTH_URL } from '../url-settings'
 import { User } from './login.interface'
@@ -18,10 +18,12 @@ export class LoginService {
               private _router: Router) { }
 
   doLogin(authuser: User){
-    return this._http.post<any>(AUTH_URL+'/login?username=' + authuser.username + '&password=' + authuser.password, null,
-      {
-        observe: 'response'
-      })
+    let p: HttpParams = new HttpParams()
+    
+    p = p.append('username',authuser.username)
+    p = p.append('password',btoa(authuser.password))
+
+    return this._http.post<any>(AUTH_URL+'/login', null, {params: p, observe:'response'})
     }
 
   logout(): void {

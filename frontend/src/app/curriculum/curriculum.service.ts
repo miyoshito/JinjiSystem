@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, AsyncSubject, BehaviorSubject, ReplaySubject } from 'rxjs';
 import { Data, cvForm, SkillMap } from '../interfaces/data';
 import { map } from 'rxjs/operators';
@@ -22,8 +22,6 @@ export class CurriculumService {
   employee: Employee
   skillmap: SkillMapData
 
-
-
   private userSource_: BehaviorSubject<any> = new BehaviorSubject<any>(this.employee);
   selectedUser$ = this.userSource_.asObservable()
 
@@ -36,7 +34,6 @@ export class CurriculumService {
     return this._http.get<any[]>(PUBLIC_URL + '/cvparams')
   }
 
-  
   getBusinessLogic(): Observable<any[]> {
     return this._http.get<any[]>(PUBLIC_URL + '/industry-params')
   }
@@ -85,28 +82,19 @@ export class CurriculumService {
     ).subscribe()
   }
 
-  searchShokumuRireki(params: cvForm) {
+  searchShokumuRireki(map: Map<string, string>) {
+    
+    let par: HttpParams = new HttpParams();
 
-    this._http.get<Employee[]>(ADMIN_URL + '/shokureki/search?'
-      + 'id=' + params.id
-      + '&n=' + params.name
-      + '&k=' + params.kana
-      + '&r=' + params.recruit
-      + '&age=' + params.age
-      + '&op=' + params.operator
-      + '&exp=' + params.experience
-      + '&idt=' + params.indType
-      + '&db=' + params.dbms
-      + '&os=' + params.os
-      + '&lng=' + params.lang
-      + '&tls=' + params.tools
-      + '&res=' + params.response
-      + '&mkr=' + params.maker
-      + '&cm=' + params.customerName
-      + '&tb=' + params.targetBusiness
-      , {
-        observe: 'response'
-      }).subscribe(res => {
+    map.forEach((k,v) =>{
+      par = par.append(v,k)
+    })
+
+    
+
+    
+    this._http.get<Employee[]>(ADMIN_URL + '/shokureki/search', {observe: 'response', params: par})
+    .subscribe(res => {
         if (!res.body.length) {
           alert('結果が見つかりません')
           return

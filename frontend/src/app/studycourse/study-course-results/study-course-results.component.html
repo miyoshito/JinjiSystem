@@ -14,24 +14,20 @@
             <th>受講者</th>
             <th>期間</th>
             <th>費用</th>
-            <th>退職</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngIf="results$ | async; let results">
-            <ng-container *ngFor="let user of results">
-              <tr [ngClass]="{'retired-bg': user.shainRetired }" *ngFor="let sc of user.educations">
+          <ng-container *ngIf="profileUser$ | async; let user">
+            <tr [ngClass]="{'retired-bg': user.shainRetired }" *ngFor="let sc of user.educations">
                 <td>{{sc.sponsor}}</td>
                 <td>{{sc.educationName}}</td>
                 <td>{{user.shainName}}</td>
                 <td>{{sc.startPeriod}}~<br />{{sc.endPeriod}}</td>
                 <td>{{sc.totalExpenses}}</td>
-                <td><i *ngIf="user.shainRetired" class="material-icons">check_box</i></td>
                 <td><button class="btn btn-primary" (click)="details(user.shainId, sc.id)">詳細</button></td>
               </tr>
             </ng-container>
-          </ng-container>
         </tbody>
       </table>
     </div>

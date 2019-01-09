@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
 import { StudycourseService } from '../studycourse.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { EmployeeMasterService } from 'src/app/admin/employee-master/employee-master.service';
+import { ProfileService } from 'src/app/profile/profile.service';
+import { takeUntil, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-study-course-results',
@@ -12,13 +15,28 @@ import { Router } from '@angular/router';
 export class StudyCourseResultsComponent implements OnInit {
 
   constructor(private _scService: StudycourseService,
-              private _router: Router
+              private _profileService: ProfileService,
+              private _router: Router,
+              private _route: ActivatedRoute,
+              private _employeeService: EmployeeMasterService
     ) { }
 
-  results$: Observable<Employee[]> = new Observable<Employee[]>()
+  //results$: Observable<Employee[]> = new Observable<Employee[]>()
+  isAlive$: Subject<boolean> = new Subject<boolean>()
+
+  profileUser$: Observable<Employee> = new Observable<Employee>()
 
   ngOnInit() {
-    this.results$ = this._scService.searchResults$
+    if (this._router.url.startsWith('/profile')){
+      this._profileService.cachedUser$.pipe(takeUntil(this.isAlive$),
+      map(e =>{
+        this._employeeService.getShainData(e.id,false, false, true)
+      })).subscribe()
+      this.profileUser$ = this._employeeService.employee$
+    } else if (this._router.url.endsWith('/details')) {
+      this._employeeService.getShainData(this._route.snapshot.paramMap.get('id'), false, false, true)
+      this.profileUser$ = this._employeeService.employee$
+    }
   }
 
   details(uid: string, scid: string){

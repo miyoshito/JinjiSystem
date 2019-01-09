@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -42,6 +44,19 @@ public class CurriculumController {
         }
     }
 
+    @GetMapping("/shokureki/search")
+    public ResponseEntity<List<EmployeeMaster>> searchCvIn( @RequestParam Map<String, String> allParams ){
+        try {
+            if (allParams.size() < 1) {
+                return new ResponseEntity<>(search.getEmployeesWithCv(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(search.getEmployeesWithCv(cs.getCvSearchResults(allParams)), HttpStatus.OK);
+            }
+        } catch (CustomException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PutMapping("/shokureki/delete")
     public ResponseEntity<String> deleteShokumu(@RequestParam(value="sid", required = true) Long sid){
     try {
@@ -57,31 +72,4 @@ public class CurriculumController {
         return new ResponseEntity<>(search.getEmployeesWithCv(),HttpStatus.OK);
     }
 
-
-    @GetMapping("/shokureki/search")
-    public ResponseEntity<List<EmployeeMaster>> searchCv(
-            @RequestParam(value = "id", required = false) String id,
-            @RequestParam(value = "n", required = false) String name,
-            @RequestParam(value = "k", required = false) String kata,
-            @RequestParam(value = "r", required = false) String recruit,
-            @RequestParam(value = "age", required = false) String age,
-            @RequestParam(value = "op", required = false) String operator,
-            @RequestParam(value = "exp", required = false) String experience,
-            @RequestParam(value = "idt", required = false) String indType,
-            @RequestParam(value = "db", required = false) List<String> dbms,
-            @RequestParam(value = "os", required = false) List<String> os,
-            @RequestParam(value = "lng", required = false) List<String> lang,
-            @RequestParam(value = "tls", required = false) List<String> tools,
-            @RequestParam(value = "res", required = false) List<String> response,
-            @RequestParam(value = "mkr", required = false) List<String> maker,
-            @RequestParam(value = "cm", required = false) String customerName,
-            @RequestParam(value = "tb", required = false) String targetBusiness
-    ) {
-        try {
-            List<String> results = cs.searchForCV(id, name, kata, recruit, age, operator, experience, indType, dbms, os, lang, tools, response, maker, customerName, targetBusiness);
-            return new ResponseEntity<>(search.getEmployeesWithCv(results), HttpStatus.OK);
-        } catch (CustomException err) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
 }

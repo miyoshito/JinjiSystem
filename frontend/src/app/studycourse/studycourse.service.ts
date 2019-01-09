@@ -20,11 +20,8 @@ export class StudycourseService {
   private _detailsSource: ReplaySubject<studyCourse> = new ReplaySubject<studyCourse>(1)
   details$ = this._detailsSource.asObservable()
 
-
-
-
   insertAttempt(sc: studyCourse){
-    return this._http.post<studyCourse>(API_URL+'/se/studycourse/add',sc,{observe: 'response'})
+    return this._http.post<studyCourse>(API_URL+'/se/studycourse/add',sc,{observe: 'response'}).subscribe()
   }
 
   getDetails(id: string){

@@ -79,7 +79,6 @@ export class EmployeeMasterComponent implements OnInit {
   this.params$ = this._employeeService.getViewRendering()
   this.isLoggedIn$ = this._broadcastService.userAuthenticated$
   this.bsConfig = Object.assign(
-    { minMode: this.minMode },
     { containerClass: "theme-red" },
     { dateInputFormat: 'YYYY/MMMM/dd' },
     { dateRangeFormat: 'YYYY/MMMM/dd'});
@@ -134,8 +133,7 @@ export class EmployeeMasterComponent implements OnInit {
 
   loadUserData(){
     this.selectedUser$.pipe(takeUntil(this.unsub$))
-    .subscribe(data =>{
-      console.log(data.position)
+    .subscribe(data =>{      
       this.myPosition = data.position.desc
       this.employeeForm.patchValue(data)      
       data.shainJoinedDate != null ? this.employeeForm.patchValue({shainJoinedDate: data.shainJoinedDate.slice(0,10)}) : null

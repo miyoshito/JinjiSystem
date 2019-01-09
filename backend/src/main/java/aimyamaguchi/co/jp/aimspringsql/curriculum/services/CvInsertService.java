@@ -8,8 +8,10 @@ import aimyamaguchi.co.jp.aimspringsql.curriculum.repositories.AssignRepository;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.repositories.CurriculumRepository;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.repositories.IndustryDataRepository;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.repositories.IndustryRepository;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
 import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.EmployeeRepository;
 import aimyamaguchi.co.jp.aimspringsql.util.CustomValidators;
+import aimyamaguchi.co.jp.aimspringsql.util.SearchFilters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +35,9 @@ public class CvInsertService {
 
     @Autowired
     private CurriculumRepository cr;
+
+    @Autowired
+    private SearchFilters sf;
 
     public void insertCV(CurriculumDAO cv) {
         CurriculumModel shokureki = new CurriculumModel();
@@ -65,5 +70,10 @@ public class CvInsertService {
         shokureki.setMakerData(cv.getMakerData());
 
         cr.save(shokureki);
+
+        EmployeeMaster em = sf.getEmployeeWithCv(cv.getEmployee_id());
+        em.setTotalExperienceTime();
+        er.save(em);
+
     }
 }

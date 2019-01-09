@@ -1,5 +1,6 @@
 package aimyamaguchi.co.jp.aimspringsql.employee.Services;
 
+import java.nio.charset.Charset;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
@@ -43,10 +44,15 @@ public class AuthorizationService {
 
     //login system
     public ResponseEntity<String> authenticationAttempt(String username, String password){
+
+        System.out.println(password);
         EmployeeMaster user = employeeRepository.findByShainId(username);
+        byte[] pwd = Base64.getDecoder().decode(password);
+        String decoded = new String(pwd, Charset.forName("UTF-8"));
+        System.out.println(decoded);
         HttpHeaders responseHeaders = new HttpHeaders();
         try {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, decoded));
         responseHeaders.add("Authorization", jwtTokenProvider.createToken(username, user.getRole()));
         return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
         } catch (AuthenticationException e) {

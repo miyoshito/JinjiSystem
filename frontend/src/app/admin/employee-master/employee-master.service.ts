@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpInterceptor } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpInterceptor, HttpParams } from '@angular/common/http';
 import { Observable, Subject, ReplaySubject } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
 import { API_URL, PUBLIC_URL, ADMIN_URL } from '../../url-settings'
@@ -27,13 +27,15 @@ export class EmployeeMasterService {
 
   
   getShainData(id: string, cv?: boolean, rs?:boolean, edu?: boolean){
+    let param: HttpParams = new HttpParams()
     if(cv == undefined || cv == null) cv = false
     if(rs == undefined || rs == null) rs = false
-    if(edu == undefined || edu == null) edu = false    
+    if(edu == undefined || edu == null) edu = false  
+    
     return this._http.get<Employee>(API_URL + '/se/data/' + id
     +'?cv='+cv
     +'&rs='+rs
-    +'&cv='+edu, {observe: 'response'}).pipe(
+    +'&ed='+edu, {observe: 'response'}).pipe(
       map(res => {
         if (!res.body || res.body == null){
           return

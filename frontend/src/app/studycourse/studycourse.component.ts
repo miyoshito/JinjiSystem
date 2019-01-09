@@ -27,7 +27,7 @@ export class StudycourseComponent implements OnInit {
     this._profileService.cachedUser$.pipe(
       takeUntil(this.isAlive$),
       map(e => {
-        this._employeeService.getShainData(e.id,true,false,false)
+        this._employeeService.getShainData(e.id,false,false,true)
       })
     ).subscribe()
     this.cachedUser$ = this._employeeService.employee$

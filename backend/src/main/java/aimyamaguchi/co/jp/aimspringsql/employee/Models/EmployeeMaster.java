@@ -1,6 +1,7 @@
 package aimyamaguchi.co.jp.aimspringsql.employee.Models;
 
 import java.io.Serializable;
+import java.time.Period;
 import java.util.*;
 
 import javax.persistence.*;
@@ -33,8 +34,8 @@ public class EmployeeMaster implements UserDetails, Serializable{
     @Id
     @Column(name="SHA_NO", length=6, nullable=false)
     private String shainId;
+
     @Column(name="SHA_PASSWORD", length=100, nullable=false)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String shainPassword;
 
     @Column(name="SHA_NAME", length=60, nullable=false)
@@ -132,7 +133,31 @@ public class EmployeeMaster implements UserDetails, Serializable{
     private List<CurriculumModel> curriculum;
 
     @OneToMany(mappedBy ="employee", fetch = FetchType.LAZY)
-    private List<StudyCourseModel> educations;
+    private Set<StudyCourseModel> educations;
+
+    @Column(name = "SHA_EXPERIENCETIME")
+    private Integer totalExperienceTime;
+
+    public Integer getTotalExperienceTime(){
+        return this.totalExperienceTime;
+    }
+
+    public void setTotalExperienceTime(){
+
+        final Integer[] tt = {0};
+        if (this.getCurriculum().size() > 0) {
+            this.getCurriculum().stream().forEach(cv -> {
+                Period period = Period.between(cv.getStartdate().withDayOfMonth(1), cv.getEnddate().withDayOfMonth(1));
+                if (period.getYears() > 0) {
+                    tt[0] += period.getMonths() + (period.getYears() * 12);
+                } else {
+                    tt[0] += period.getMonths();
+                }
+
+            });
+        }
+        this.totalExperienceTime = tt[0];
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -183,6 +208,7 @@ public class EmployeeMaster implements UserDetails, Serializable{
         this.shainId = shainId;
     }
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public String getShainPassword() {
         return shainPassword;
     }
@@ -200,14 +226,7 @@ public class EmployeeMaster implements UserDetails, Serializable{
     }
 
     public String getShainRecruit() {
-        switch (shainRecruit) {
-            case "career":
-                return "キャリア";
-            case "graduated":
-                return "新卒";
-            default:
-                return "ー";
-        }
+        return shainRecruit;
     }
 
     public void setShainRecruit(String shainRecruit) {
@@ -432,11 +451,11 @@ public class EmployeeMaster implements UserDetails, Serializable{
         this.curriculum = curriculum;
     }
 
-    public List<StudyCourseModel> getEducations() {
+    public Set<StudyCourseModel> getEducations() {
         return educations;
     }
 
-    public void setEducations(List<StudyCourseModel> educations) {
+    public void setEducations(Set<StudyCourseModel> educations) {
         this.educations = educations;
     }
 

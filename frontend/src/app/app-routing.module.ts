@@ -48,7 +48,7 @@ const routes: Routes = [
     {path: 'skillmap', component: SkillMapDetailsComponent},
     {path: 'qualifications', component: QualificationsComponent},
     {path: 'studycourses', children:[
-      {path: '', component: StudycourseComponent},
+      {path: '', component: StudyCourseResultsComponent},
       {path: 'add', component: StudyCourseEditComponent},
       {path: 'edit/:scid', component: StudyCourseEditComponent},
     ]},

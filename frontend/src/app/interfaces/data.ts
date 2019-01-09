@@ -39,6 +39,45 @@ export interface cvForm{
     role: string
   }
 
+  export class cvForm {
+    constructor(
+    id: string,
+    name: string,
+    kana: string,
+    recruit: string,
+    age: string,
+    operator: string,
+    experience: string,
+    customerName: string,
+    indType: string,
+    targetBusiness: string,
+    dbms: number[],
+    os: number[],
+    lang: number[],
+    tools: number[],
+    response: number[],
+    maker: number[],
+    role: string
+    ){
+      this.id  = id
+      this.name = name
+      this.kana = kana
+      this.recruit = recruit
+      this.age = age
+      this.operator = operator
+      this.experience = experience
+      this.customerName = customerName
+      this.indType = indType
+      this.targetBusiness = targetBusiness
+      this.dbms = dbms
+      this.os = os
+      this.lang = lang
+      this.tools = tools
+      this.response = response
+      this.maker = maker
+      this.role = role}
+  }
+
   export interface SkillMap {
     DBMS: Childs[]
     OS: Childs[]
