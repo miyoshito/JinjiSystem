@@ -1,16 +1,19 @@
 package aimyamaguchi.co.jp.aimspringsql.controllers;
 
+import aimyamaguchi.co.jp.aimspringsql.authfilters.CustomException;
 import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseInterface;
 import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseModel;
 import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseService;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
 import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.EmployeeRepository;
+import aimyamaguchi.co.jp.aimspringsql.util.SearchFilters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -19,13 +22,13 @@ import java.util.Optional;
 public class StudyCourseController {
 
     @Autowired
-    StudyCourseService scs;
+    private StudyCourseService scs;
 
     @Autowired
-    StudyCourseInterface teste;
+    private StudyCourseInterface teste;
 
     @Autowired
-    EmployeeRepository er;
+    private SearchFilters sf;
 
     @GetMapping("/admin/studycourse/get")
     public ResponseEntity<Optional<StudyCourseModel>> getSCModel(@RequestParam(value="id") String id){
@@ -40,21 +43,19 @@ public class StudyCourseController {
     }
 
     @GetMapping("/admin/studycourse/search")
-    public ResponseEntity<List<EmployeeMaster>> searchSC(
-            @RequestParam(value = "id", required = false) String id,
-            @RequestParam(value = "nm", required = false) String name,
-            @RequestParam(value = "kn", required = false) String kana,
-            @RequestParam(value = "spo", required = false) String sponsor,
-            @RequestParam(value = "exp", required = false) Integer expenses,
-            @RequestParam(value = "st", required = false) String start,
-            @RequestParam(value = "ed", required = false) String end,
-            @RequestParam(value = "op", required = false) String biop
-    ){
-        List<String> results = scs.searchSC(id, name, kana, sponsor, expenses, start, end, biop);
-        if (results.size() < 1) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<List<EmployeeMaster>> searchSC(@RequestParam Map<String, String> allParams){
+
+        if (allParams.size() == 0)
+            return new ResponseEntity<>(sf.getEmployeesWithStudy(),HttpStatus.OK);
+        try {
+            List<String> results = scs.StudyCourseSearchResults(allParams);
+            if (results.size() < 1) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(sf.getEmployeesWithStudy(results), HttpStatus.OK);
+        } catch (CustomException e) {
+            throw e;
         }
-        return new ResponseEntity<>(er.findByShainIdIn(results), HttpStatus.OK);
     }
 
 

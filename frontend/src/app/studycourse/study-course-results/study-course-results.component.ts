@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
-import { StudycourseService } from '../studycourse.service';
+import { StudycourseService } from 'src/app/services/studycourse.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { EmployeeMasterService } from 'src/app/admin/employee-master/employee-master.service';
-import { ProfileService } from 'src/app/profile/profile.service';
+import { EmployeeMasterService } from 'src/app/services/employee-master.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { takeUntil, map } from 'rxjs/operators';
+import { Data } from 'src/app/interfaces/data';
 
 @Component({
   selector: 'app-study-course-results',
@@ -24,25 +25,25 @@ export class StudyCourseResultsComponent implements OnInit {
   //results$: Observable<Employee[]> = new Observable<Employee[]>()
   isAlive$: Subject<boolean> = new Subject<boolean>()
 
-  profileUser$: Observable<Employee> = new Observable<Employee>()
+
+  usersResult$: Observable<Employee[]> = new Observable<Employee[]>()
 
   ngOnInit() {
-    if (this._router.url.startsWith('/profile')){
-      this._profileService.cachedUser$.pipe(takeUntil(this.isAlive$),
-      map(e =>{
-        this._employeeService.getShainData(e.id,false, false, true)
-      })).subscribe()
-      this.profileUser$ = this._employeeService.employee$
-    } else if (this._router.url.endsWith('/details')) {
-      this._employeeService.getShainData(this._route.snapshot.paramMap.get('id'), false, false, true)
-      this.profileUser$ = this._employeeService.employee$
+   if (this._router.url.endsWith('/list')) {
+      this.usersResult$ = this._scService.searchResults$
     }
   }
 
-  details(uid: string, scid: string){
-    console.log('/admin/studycourse/details/'+uid+'/'+scid)
-    this._scService.getDetails(scid)
-    this._router.navigate(['/admin/studycourse/details/'+uid+'/'+scid])
+  details(uid: string){
+    this._router.navigate(['/admin/studycourse/details/'+uid])
+  }
+
+  aff(aff?: Data[]){
+    let a: Array<String> = []
+    for (let i of aff){
+      a.push(i.desc)
+    }
+    return a;
   }
 
 }

@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router'
 import { LoginComponent } from 'src/app/login/login.component'
 import { HomeComponent } from './home/home.component';
-import { AuthGuardService } from './guards/auth-guard.service';
-import { LoginGuardService } from './guards/login-guard.service';
+import { AuthGuardService } from 'src/app/services/guards/auth-guard.service';
+import { LoginGuardService } from 'src/app/services/guards/login-guard.service';
 import { ProfileComponent } from './profile/profile.component';
 import { EmployeeMasterComponent } from './admin/employee-master/employee-master.component';
 import { ResumeDetailsComponent } from './resume/resume-details/resume-details.component';
@@ -19,7 +19,7 @@ import { SkillMapComponent } from './skill-map/skill-map.component';
 import { SystemSettingsComponent } from './admin/system-settings/system-settings.component';
 import { QualificationsComponent } from './qualifications/qualifications.component';
 import { StudycourseComponent } from './studycourse/studycourse.component';
-import { RoleGuardService } from './guards/role-guard.service';
+import { RoleGuardService } from 'src/app/services/guards/role-guard.service';
 import { ResumeSearchResultsComponent } from './resume/resume-search-results/resume-search-results.component';
 import { EmployeeSearchComponent } from './admin/employee-search/employee-search.component';
 import { SkillMapDetailsComponent } from './skill-map/skill-map-details/skill-map-details.component';
@@ -77,11 +77,11 @@ const routes: Routes = [
           {path: 'list', component: CurriculumListComponent}
       ]},
       {path: 'studycourse', children: [
-          {path: 'add', component: StudyCourseEditComponent},
-          {path: 'details/:uid/:scid', component: StudyCourseDetailsComponent},
-          {path: 'list', component: StudyCourseResultsComponent},
-          {path: 'search', component: StudyCourseSearchComponent},
-          {path: 'edit/:uid/:scid', component: StudyCourseEditComponent}
+          {path: 'search', component: StudyCourseSearchComponent},          
+          {path: 'details/:uid', component: StudyCourseDetailsComponent}, //me leva pra todos os sc da pessoa
+          {path: 'list', component: StudyCourseResultsComponent}, //me leva pra lista de pessoas          
+          {path: 'edit/:uid/:scid', component: StudyCourseEditComponent},
+          {path: 'add', component: StudyCourseEditComponent}
       ]},
       {path: 'profile/:id', children:[
         {path: '', component: ProfileComponent},

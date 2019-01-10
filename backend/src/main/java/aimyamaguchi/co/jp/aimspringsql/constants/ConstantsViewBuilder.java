@@ -2,20 +2,29 @@ package aimyamaguchi.co.jp.aimspringsql.constants;
 
 import aimyamaguchi.co.jp.aimspringsql.curriculum.models.INDUSTRYData;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.repositories.*;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.POSITIONData;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.QPOSITIONData;
 import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.AffiliationRepository;
 import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.CarmodelRepository;
 import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.PositionRepository;
 import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.WorkAreaRepository;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ConstantsViewBuilder {
 
+    @PersistenceContext
+    private EntityManager entityManager;
     @Autowired
     private AffiliationRepository affiliation;
     @Autowired
@@ -46,10 +55,12 @@ public class ConstantsViewBuilder {
 
     public Map<String, Object> getEmpMasterParams(){
 
-        Map<String,Object> map = new HashMap<>();
+        QPOSITIONData pos = QPOSITIONData.pOSITIONData;
 
+        Map<String,Object> map = new HashMap<>();
+        JPAQuery<POSITIONData> positions = new JPAQueryFactory(entityManager).selectFrom(pos).where(pos.id.loe(900000));
         map.put("AREA", workarea.findAll());
-        map.put("POSITION", position.findAll());
+        map.put("POSITION", positions.fetch());
         map.put("AFFILIATION", affiliation.findAll());
         map.put("CARMODEL", carmodel.findAll());
 

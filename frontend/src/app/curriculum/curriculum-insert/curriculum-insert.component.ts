@@ -1,14 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { CurriculumService } from '../curriculum.service';
+import { CurriculumService } from 'src/app/services/curriculum.service';
 import { BsDatepickerConfig, BsDatepickerViewMode, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { Employee } from 'src/app/interfaces/employee';
-import { ProfileService } from 'src/app/profile/profile.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, takeUntil } from 'rxjs/operators';
-import { BroadcastService } from 'src/app/broadcast.service';
-import { EmployeeMasterService } from 'src/app/admin/employee-master/employee-master.service';
+import { BroadcastService } from 'src/app/services/broadcast.service';
+import { EmployeeMasterService } from 'src/app/services/employee-master.service';
 
 @Component({
   selector: 'app-curriculum-insert',
@@ -168,7 +168,8 @@ export class CurriculumInsertComponent implements OnInit {
   
   redirect() {
     this._broadcastService.userAuthorization$.pipe((takeUntil(this.isAlive$)), map(auth => {
-      if (auth === 'ADMIN' || auth === 'SOUMU') {
+      if (auth === 'ADMIN') {
+        this._employeeService.getShainData(this.userid, true)
         this._router.navigate(['admin/shokumurirekisho/details/' + this.userid])
       } else this._router.navigate(['home'])
     })).subscribe()

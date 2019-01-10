@@ -1,6 +1,6 @@
 <header>
     <mat-toolbar color="warn" class="header-box-shadow">
-        <a routerLink="/home" routerLinkActive="active">
+        <a routerLink="/home" routerLinkActive="active" *ngIf="!(_route.url === '/home')">
             <button mat-button>
                 <mat-icon class="ml-1">home</mat-icon> ホームページ
             </button>

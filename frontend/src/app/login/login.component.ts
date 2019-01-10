@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LoginService } from './login.service';
-import { User } from './login.interface';
+import { LoginService } from 'src/app/services/login.service';
+import { User } from 'src/app/interfaces/login.interface';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { AuthService } from '../guards/auth.service';
-import { BroadcastService } from '../broadcast.service';
+import { AuthService } from 'src/app/services/guards/auth.service';
+import { BroadcastService } from 'src/app/services/broadcast.service';
 import { Observable, Subscription } from 'rxjs';
-import { ProfileService } from '../profile/profile.service';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-login',
@@ -49,13 +49,14 @@ export class LoginComponent implements OnInit {
 
   login(){    
     if(localStorage.getItem('currentUser') != null){localStorage.removeItem('currentUser')}
-    const form: User = this.loginform.value
+    let form: User = new User('','')
+    form.username =  this.loginform.get("username").value
+    form.password = btoa(this.loginform.get("password").value)
     this.sub = this.loginService.doLogin(form)    
     .subscribe(res => {
         localStorage.setItem('currentUser', res.headers.get('Authorization'))        
         this.authFailed$ = false;
         this.redirecting$ = true;
-        
         this.profileService.getLoggedInUserData() //soh roda no login, as proximas qm fica responsavel eh o app.component.ts
         this.broadcastService.pushAuthentication(true);
         this.route.navigate(['home'])

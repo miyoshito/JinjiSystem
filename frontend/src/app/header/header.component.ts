@@ -1,11 +1,11 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { LoginService } from '../login/login.service';
+import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
-import { Subscription, Observable } from 'rxjs';
-import { AuthService } from '../guards/auth.service';
-import { BroadcastService } from '../broadcast.service';
+import { Subscription, Observable, BehaviorSubject } from 'rxjs';
+import { AuthService } from 'src/app/services/guards/auth.service';
+import { BroadcastService } from 'src/app/services/broadcast.service';
 import { Employee, MinEmployee } from '../interfaces/employee';
-import { ProfileService } from '../profile/profile.service';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-header',
@@ -24,10 +24,12 @@ export class HeaderComponent implements OnInit {
     
     menuStyle: string
 
+    home$: Observable<boolean> = new Observable<boolean>()
+
     subs: Subscription
 
     constructor(private _loginService: LoginService,
-                private _route: Router,
+                public _route: Router,
                 private _broadcastService: BroadcastService,
                 private _profileService: ProfileService,
                 private _tokenVerify: AuthService) {
@@ -35,7 +37,7 @@ export class HeaderComponent implements OnInit {
                   this.menuStyle = ''
                 }
 
-  ngOnInit() {    
+  ngOnInit() {
     this.subs = this._broadcastService.userAuthorization$.subscribe(auth =>{     
         this.menuStyle = auth
     })

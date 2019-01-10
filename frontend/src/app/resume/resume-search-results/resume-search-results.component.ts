@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
-import { ResumeService } from '../resume.service';
+import { ResumeService } from 'src/app/services/resume.service';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
-import { Qualifications, Career } from '../resume-details-interface';
+import { Qualifications, Career } from 'src/app/interfaces/resume-details-interface';
 
 @Component({
   selector: 'app-resume-search-results',

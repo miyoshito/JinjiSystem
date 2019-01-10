@@ -1,13 +1,13 @@
 import { Component, OnInit, AfterViewInit, AfterViewChecked, ElementRef, Renderer2, ViewChildren, ViewContainerRef, QueryList } from '@angular/core';
 import { Employee } from 'src/app/interfaces/employee';
 import { Observable, Subject } from 'rxjs';
-import { ProfileService } from 'src/app/profile/profile.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { map, takeUntil } from 'rxjs/operators';
-import { CurriculumService } from 'src/app/curriculum/curriculum.service';
-import { EmployeeMasterService } from 'src/app/admin/employee-master/employee-master.service';
+import { CurriculumService } from 'src/app/services/curriculum.service';
+import { EmployeeMasterService } from 'src/app/services/employee-master.service';
 import { SkillMapData, SkillMapParams } from 'src/app/interfaces/skillmap';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from 'src/app/guards/auth.service';
+import { AuthService } from 'src/app/services/guards/auth.service';
 import { t } from '@angular/core/src/render3';
 
 
@@ -41,7 +41,7 @@ export class SkillMapDetailsComponent implements OnInit {
   
 
   ngOnInit() {
-    this.columnCount$ = this._curriculumService.getPropertiesList()
+    /*this.columnCount$ = this._curriculumService.getPropertiesList()
     this.mapping$ = this._curriculumService.SkillMapSearchResults$
     this.gambiarradoida()
     if (this._router.url.startsWith('/profile')){
@@ -49,7 +49,7 @@ export class SkillMapDetailsComponent implements OnInit {
         takeUntil(this.unsub$),
         map(e => this._curriculumService.getSkillMaps(e.id))
       ).subscribe()
-    }
+    }*/
   }
 
   ngAfterViewInit(){

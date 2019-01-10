@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { studyCourse } from '../interfaces/study-course';
-import { API_URL, ADMIN_URL } from '../url-settings';
-import { Employee } from '../interfaces/employee';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { studyCourse } from 'src/app/interfaces/study-course';
+import { API_URL, ADMIN_URL } from 'src/app/url-settings';
+import { Employee } from 'src/app/interfaces/employee';
 import { ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -20,6 +20,8 @@ export class StudycourseService {
   private _detailsSource: ReplaySubject<studyCourse> = new ReplaySubject<studyCourse>(1)
   details$ = this._detailsSource.asObservable()
 
+  
+
   insertAttempt(sc: studyCourse){
     return this._http.post<studyCourse>(API_URL+'/se/studycourse/add',sc,{observe: 'response'}).subscribe()
   }
@@ -32,24 +34,17 @@ export class StudycourseService {
       })
   }
 
-  searchAttempt(sf: any){
-    return this._http.get<Employee[]>(ADMIN_URL+'/studycourse/search?'
-    +'id='+sf.id
-    +'&nm='+sf.name
-    +'&kn=' +sf.kana
-    +'&spo=' +sf.sponsor
-    +'&exp=' +sf.expenses
-    +'&st=' +sf.stdate
-    +'&ed=' +sf.enddate
-    +'&op='+ sf.op ,{observe: 'response'}).pipe(
-      map(res => {
-        if (!res.body.length){
-         alert('') 
-         return
-        } else {
-          this._searchResultsSource.next(res.body)
-        }
-      })
-    )
+  searchAttempt(map: Map<string, string>){
+    let param: HttpParams = new HttpParams()
+
+    map.forEach((k,v) =>{
+      param = param.append(v,k)
+    })
+    return this._http.get<Employee[]>(ADMIN_URL+'/studycourse/search',{params: param, observe: 'response'})
   }
+
+  pushSearchResults(emp: Employee[]){
+    this._searchResultsSource.next(emp)
+  }
+
 }

@@ -99,8 +99,8 @@
     </div>
     -->
     <div class="row d-flex justify-content-around">
-      <button class="btn btn-outline-secondary">CSV出力</button>
-      <button class="btn btn-primary" onclick="history.back(-1)">一覧へ戻る</button>
+      <button class="btn btn-outline-secondary"  *ngIf="displayButton" >CSV出力</button>
+      <button class="btn btn-primary" *ngIf="displayButton" [routerLink]="['/admin/shokumurirekisho/list']">一覧へ戻る</button>
     </div>
   </div>
 </div>

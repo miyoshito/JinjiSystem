@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpInterceptor, HttpParams } from '@angular/common/http';
 import { Observable, Subject, ReplaySubject } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
-import { API_URL, PUBLIC_URL, ADMIN_URL } from '../../url-settings'
+import { API_URL, PUBLIC_URL, ADMIN_URL } from 'src/app/url-settings'
 import { catchError, map } from 'rxjs/operators';
-import { TokenInterceptorService } from 'src/app/guards/token-interceptor.service';
+import { TokenInterceptorService } from 'src/app/services/guards/token-interceptor.service';
 import { Router } from '@angular/router';
 
 

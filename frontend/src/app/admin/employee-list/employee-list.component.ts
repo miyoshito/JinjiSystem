@@ -1,9 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource, MatPaginator } from '@angular/material';
-import { EmployeeMasterService } from '../employee-master/employee-master.service';
+import { EmployeeMasterService } from 'src/app/services/employee-master.service';
 import { Employee } from 'src/app/interfaces/employee';
 import { Observable } from 'rxjs';
-import { ProfileService } from 'src/app/profile/profile.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { Router } from '@angular/router';
 
 @Component({

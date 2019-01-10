@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CurriculumService } from '../curriculum.service';
+import { CurriculumService } from 'src/app/services/curriculum.service';
 import { Observable } from 'rxjs';
 import { Employee, Curriculum } from 'src/app/interfaces/employee';
 import { Router } from '@angular/router';
@@ -27,7 +27,7 @@ export class CurriculumListComponent implements OnInit {
   }
 
 
-  sumOf(cv: Curriculum[]): number{
+  sumOf(cv?: Curriculum[]): number{
     let total: number = 0
     for(let c of cv){
       if (!c.deleted){
@@ -37,7 +37,7 @@ export class CurriculumListComponent implements OnInit {
     return total
   }
 
-  getOsandDb(cv: Curriculum[]) {
+  getOsandDb(cv?: Curriculum[]) {
     let data: String[] = []
     
     for(let c of cv){
@@ -50,7 +50,7 @@ export class CurriculumListComponent implements OnInit {
     return correctedData
   }
 
-  getToolsandLang(cv: Curriculum[]) {
+  getToolsandLang(cv?: Curriculum[]) {
     let data: String[] = []
     for(let c of cv){
       if (!c.deleted){

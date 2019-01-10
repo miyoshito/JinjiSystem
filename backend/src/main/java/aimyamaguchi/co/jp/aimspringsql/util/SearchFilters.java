@@ -123,6 +123,13 @@ public class SearchFilters {
         }
         return le;
     }
+    public List<EmployeeMaster> getEmployeesWithStudy(List<String> users){
+        List<EmployeeMaster> le = er.findByShainIdIn(users);
+        for (EmployeeMaster e: le){
+            e.getEducations().size();
+        }
+        return le;
+    }
 
 
 

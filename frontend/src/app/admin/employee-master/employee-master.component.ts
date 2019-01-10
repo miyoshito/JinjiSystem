@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { EmployeeMasterService } from './employee-master.service';
+import { EmployeeMasterService } from 'src/app/services/employee-master.service';
 import { Observable, Subscription, Subject, of } from 'rxjs';
 import { map, tap, takeUntil } from 'rxjs/operators';
 import { Data } from 'src/app/interfaces/data';
 import { Employee } from 'src/app/interfaces/employee';
-import { BroadcastService } from 'src/app/broadcast.service';
-import { ProfileService } from 'src/app/profile/profile.service';
+import { BroadcastService } from 'src/app/services/broadcast.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoginService } from 'src/app/login/login.service';
+import { LoginService } from 'src/app/services/login.service';
 import { BsDatepickerConfig, BsDatepickerViewMode, BsLocaleService } from 'ngx-bootstrap/datepicker';
 
 @Component({
@@ -191,6 +191,7 @@ export class EmployeeMasterComponent implements OnInit {
     this.initializeForm()
     this.passwordbutton = false
     this.isInserting = true
+    this.displayInsertButtons = false
     this.isEditing = false
     this.buttonLabel = '登録'
   }

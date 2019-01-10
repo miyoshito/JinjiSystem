@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BroadcastService } from 'src/app/broadcast.service';
-import { ProfileService } from 'src/app/profile/profile.service';
+import { BroadcastService } from 'src/app/services/broadcast.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { Subscription, Observable, Subject } from 'rxjs';
 import { Employee, Curriculum } from 'src/app/interfaces/employee';
-import { CurriculumService } from '../curriculum.service';
+import { CurriculumService } from 'src/app/services/curriculum.service';
 import { takeUntil, map } from 'rxjs/operators';
-import { EmployeeMasterService } from 'src/app/admin/employee-master/employee-master.service';
+import { EmployeeMasterService } from 'src/app/services/employee-master.service';
 
 @Component({
   selector: 'app-curriculum-details',
@@ -20,6 +20,7 @@ export class CurriculumDetailsComponent implements OnInit {
   profileSelected$: Observable<Employee>
   admin$: boolean
   shainid: string
+  displayButton: boolean
   user: Employee  
   isAlive$: Subject<boolean> = new Subject<boolean>()
   constructor(private _profileService: ProfileService,
@@ -29,14 +30,16 @@ export class CurriculumDetailsComponent implements OnInit {
               private _route: ActivatedRoute,
               private _curriculumService: CurriculumService) { }
 
-  ngOnInit() {
+  ngOnInit() {    
     if (this._router.url.startsWith('/admin')) {
       this.shainid = this._route.snapshot.paramMap.get('id')
       this.admin$ = true
+      this.displayButton = true
       this._employeeService.getShainData(this.shainid,true,false,false)
       this.profileSelected$ = this._employeeService.employee$            
     } else {
       this.admin$ = false
+      this.displayButton = false
       this._profileService.getLoggedInUserData()
       this.profileSelected$ = this._employeeService.employee$
       this._profileService.cachedUser$.pipe(
@@ -55,7 +58,7 @@ export class CurriculumDetailsComponent implements OnInit {
     this.isAlive$.next();
   }
 
-  sumOf(cv: Curriculum[]): string{
+  sumOf(cv?: Curriculum[]): string{
     let total: number = 0
     let years: number = 0
     for(let c of cv){
@@ -78,7 +81,7 @@ export class CurriculumDetailsComponent implements OnInit {
 
   addNewSR(){
     this._broadcastService.userAuthorization$.pipe(takeUntil(this.isAlive$), map(auth =>{
-      if (auth === 'ADMIN' || auth === 'SOUMU') {
+      if (auth === 'ADMIN') {
         this._router.navigate(['admin/shokumurirekisho/'+this.shainid+'/add'])
       } else this._router.navigate(['profile/shokumurirekisho/add'])
     })).subscribe()

@@ -59,28 +59,24 @@ public class CvSearchService {
         Integer experience = 0;
 
         JPAQuery<String> filteredUsers = new JPAQueryFactory(entityManager).selectDistinct(e.shainId);
-        BooleanBuilder b = new BooleanBuilder();
         filteredUsers
                 .from(e)
-                .join(e.curriculum, c)
-                .join(c.industryClassData, indc)
-                .join(indc.id.industryid, indt);
+                .leftJoin(e.curriculum, c);
 
 
         map.entrySet().stream()
                 .forEach(f -> {
                     switch (f.getKey()){
                         case "id":
-                            System.out.println(f.getValue());
                             filteredUsers.where(e.shainId.eq(f.getValue()));
                             break;
-                        case "n":
+                        case "name":
                             filteredUsers.where(e.shainName.contains(f.getValue()));
                             break;
-                        case "k":
+                        case "kana":
                             filteredUsers.where(e.shainKana.contains(f.getValue()));
                             break;
-                        case "r":
+                        case "recruit":
                             filteredUsers.where(e.shainRecruit.contains(f.getValue()));
                             break;
                         case "age":
@@ -102,17 +98,20 @@ public class CvSearchService {
                                     break;
                             }
                             break;
-                        case "idt":
+                        case "indType":
+                            filteredUsers
+                                .leftJoin(c.industryClassData, indc)
+                                .leftJoin(indc.id.industryid, indt);
                             filteredUsers.where(c.industryClassData.id.industryid.id.eq(Long.valueOf(f.getValue())));
                             break;
-                        case "cm":
+                        case "customerName":
                             filteredUsers.where(c.customer.contains(f.getValue()));
                             break;
-                        case "tb":
+                        case "targetBusiness":
                             filteredUsers.where(c.targetbusiness.contains(f.getValue()));
                             break;
                             // Array cases ~
-                        case "db":
+                        case "dbms":
                             filteredUsers.join(c.dbmsData, dbms);
                             Collection<Long> cdb = Stream.of(f.getValue().split(","))
                                     .map(Long::parseLong)
@@ -126,35 +125,32 @@ public class CvSearchService {
                                     .collect(Collectors.toList());
                             filteredUsers.where(os.id.in(cos));
                             break;
-                        case "as":
+                        case "role":
                             filteredUsers.join(c.assignData, assign);
                             Collection<Long> cas = Stream.of(f.getValue().split(","))
                                     .map(Long::parseLong)
                                     .collect(Collectors.toList());
                             filteredUsers.where(assign.id.in(cas));
                             break;
-                        case "dt":
+                        case "response":
                             filteredUsers.join(c.responseData, duty);
-                            Collection<Long> cdt = Stream.of(f.getValue().split(","))
-                                    .map(Long::parseLong)
-                                    .collect(Collectors.toList());
-                            filteredUsers.where(duty.id.in(cdt));
+                            filteredUsers.where(duty.id.eq(Long.valueOf(f.getValue())));
                             break;
-                        case "lng":
+                        case "lang":
                             filteredUsers.join(c.langData, lang);
                             Collection<Long> clg = Stream.of(f.getValue().split(","))
                                     .map(Long::parseLong)
                                     .collect(Collectors.toList());
                             filteredUsers.where(lang.id.in(clg));
                             break;
-                        case "mk":
+                        case "maker":
                             filteredUsers.join(c.makerData, maker);
                             Collection<Long> cmk = Stream.of(f.getValue().split(","))
                                     .map(Long::parseLong)
                                     .collect(Collectors.toList());
                             filteredUsers.where(maker.id.in(cmk));
                             break;
-                        case "tl":
+                        case "tools":
                             filteredUsers.join(c.toolsData, tools);
                             Collection<Long> ctl = Stream.of(f.getValue().split(","))
                                     .map(Long::parseLong)

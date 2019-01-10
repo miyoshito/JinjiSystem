@@ -1,5 +1,5 @@
 import { Data } from "./data";
-import { Resume } from "../resume/resume-details-interface";
+import { Resume } from "src/app/interfaces/resume-details-interface";
 import { studyCourse } from "./study-course"
 
 

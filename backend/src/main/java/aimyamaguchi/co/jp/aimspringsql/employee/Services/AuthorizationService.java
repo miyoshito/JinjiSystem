@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
 import java.lang.CharSequence;
+import java.util.stream.Collectors;
 
 
 import javax.persistence.EntityManager;
@@ -13,6 +14,7 @@ import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
 
 import aimyamaguchi.co.jp.aimspringsql.constants.Sequences;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.AFFILIATIONData;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
 import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.*;
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeModel;
@@ -44,8 +46,6 @@ public class AuthorizationService {
 
     //login system
     public ResponseEntity<String> authenticationAttempt(String username, String password){
-
-        System.out.println(password);
         EmployeeMaster user = employeeRepository.findByShainId(username);
         byte[] pwd = Base64.getDecoder().decode(password);
         String decoded = new String(pwd, Charset.forName("UTF-8"));
@@ -53,7 +53,8 @@ public class AuthorizationService {
         HttpHeaders responseHeaders = new HttpHeaders();
         try {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, decoded));
-        responseHeaders.add("Authorization", jwtTokenProvider.createToken(username, user.getRole()));
+        List<Long> area = user.getAffiliation().stream().map(AFFILIATIONData::getId).collect(Collectors.toList());
+        responseHeaders.add("Authorization", jwtTokenProvider.createToken(username, user.getRole(), area));
         return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
         } catch (AuthenticationException e) {
             return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);

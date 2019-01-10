@@ -42,6 +42,9 @@ public class CurriculumModel {
     @Transient
     public Integer getExperienceTime(){
         Period period = Period.between(this.startdate.withDayOfMonth(1), this.enddate.withDayOfMonth(1));
+        if (period.getDays() >= 30 && period.getMonths() < 1){
+            return 1;
+        }
         if(period.getYears() > 0){
             return (period.getMonths() + (period.getYears() * 12));
         }

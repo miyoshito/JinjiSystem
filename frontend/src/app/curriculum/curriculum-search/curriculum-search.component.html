@@ -125,7 +125,7 @@
       <span>役割</span>
       <select class="custom-select" formControlName="role">
         <option value="" selected></option>
-        <option *ngFor="let role of data.ASSIGN" value="{{role.desc}}">{{role.desc}}</option>
+        <option *ngFor="let role of data.ASSIGN" value="{{role.id}}">{{role.desc}}</option>
       </select>
     </div>
   </div>
@@ -138,5 +138,4 @@
   </div>
 </div>
 </form>
-<pre>{{searchForm.value | json}}</pre>
 </div>

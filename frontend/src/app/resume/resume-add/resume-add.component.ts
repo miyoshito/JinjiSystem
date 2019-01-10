@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { API_URL } from '../../url-settings'
 import { Router, ActivatedRoute } from '@angular/router';
-import { EmployeeMasterService } from 'src/app/admin/employee-master/employee-master.service';
-import { ProfileService } from 'src/app/profile/profile.service';
+import { EmployeeMasterService } from 'src/app/services/employee-master.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { Employee } from 'src/app/interfaces/employee';
 import { Observable, BehaviorSubject, Subscription, Subject } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
-import { Qualifications, Career, Commendations } from '../resume-details-interface';
+import { Qualifications, Career, Commendations } from 'src/app/interfaces/resume-details-interface';
 import { map, takeUntil, flatMap } from 'rxjs/operators';
-import { ResumeService } from '../resume.service';
+import { ResumeService } from 'src/app/services/resume.service';
 import { MatDialog, MatDialogConfig } from '@angular/material';
-import { CustomDialogComponent } from 'src/app/custom-dialog/custom-dialog.component';
+import { CustomDialogComponent } from 'src/app/resume/custom-dialog/custom-dialog.component';
 
 @Component({
   selector: 'app-resume-add',

@@ -70,8 +70,9 @@ public class CvInsertService {
         shokureki.setMakerData(cv.getMakerData());
 
         cr.save(shokureki);
-
+        //this update the total_experience_time field on shain table.
         EmployeeMaster em = sf.getEmployeeWithCv(cv.getEmployee_id());
+        em.setShainPassword(em.getShainPassword());
         em.setTotalExperienceTime();
         er.save(em);
 

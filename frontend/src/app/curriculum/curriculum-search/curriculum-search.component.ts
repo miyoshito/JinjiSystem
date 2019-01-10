@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CurriculumService } from '../curriculum.service';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { atLeastOne } from 'src/app/validators/atleastOne';
+import { CurriculumService } from 'src/app/services/curriculum.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
-import { map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-curriculum-search',
@@ -26,26 +25,19 @@ export class CurriculumSearchComponent implements OnInit {
                 this.validExp=true;
                }
 
-  ngOnInit() {
-    for (let i = 18; i <= 90; i++){
-      this.age.push(i)
-    }
+  ngOnInit() {    
     this.buildSearchForm()
     this.data$ = this.curriculumService.getPropertiesList()    
     this.industry$ = this.curriculumService.getBusinessLogic()
   }
 
-  doSearch(){
-    if (!this.validExp){
-      return;
-    }
-
+  doSearch(){    
     let map: Map<string, string> = new Map<string, string>()
 
     Object.keys(this.searchForm.value)
       .filter(f => this.searchForm.value[f] != '')
       .forEach(k => map.set(k,this.searchForm.value[k]));
-
+      //temporary until i figure out some way to validate exp and operator fields.
       if(map.get("operator")) map.delete("operator")
       if(map.get("experience")){
         if (this.searchForm.controls.operator.value != ''){
@@ -58,18 +50,14 @@ export class CurriculumSearchComponent implements OnInit {
       }
     this.curriculumService.searchShokumuRireki(map)
   }
-
+  // in case of clear button, sets all fields to '' for search filter purposes
   reset(){
     this.searchForm.reset()
     this.buildSearchForm()
   }
-
-
   resetField(control: string){
     this.searchForm.controls.control.reset()
   }
-
-
   buildSearchForm(){
     this.searchForm = this._fb.group({
       id: [''],
@@ -91,25 +79,4 @@ export class CurriculumSearchComponent implements OnInit {
       role: ['']
     })
   }
-}
-
-
-export interface cvSearchForm{
-  id: string,
-  name: string,
-  kana: string,
-  recruit: string,
-  age: string
-  operator: string
-  experience: string
-  customerName: string,
-  indType: string,
-  targetBusiness: string,
-  dbms: number[]
-  os: number[]
-  lang: number[]
-  tools: number[]
-  response: number[]
-  maker: number[]
-  role: string
 }

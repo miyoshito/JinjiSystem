@@ -4,7 +4,9 @@ import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.EmployeeRepository;
 import aimyamaguchi.co.jp.aimspringsql.util.CustomValidators;
 import aimyamaguchi.co.jp.aimspringsql.util.SearchFilters;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -108,8 +110,7 @@ public class ResumeService {
         }
     }
 
-    public void deleteResumeDetails(Long id, String desc){
-
+    public void deleteResumeDetails(String desc, Long id){
         switch(desc){
             case "career":
                 Career ca = career.findBycareerid(id);

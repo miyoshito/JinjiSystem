@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService } from '../profile/profile.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { Employee } from '../interfaces/employee';
 import { Observable, Subject } from 'rxjs';
-import { StudycourseService } from './studycourse.service';
+import { StudycourseService } from 'src/app/services/studycourse.service';
 import { Router } from '@angular/router';
 import { takeUntil, map } from 'rxjs/operators';
-import { EmployeeMasterService } from '../admin/employee-master/employee-master.service';
+import { EmployeeMasterService } from 'src/app/services/employee-master.service';
 
 @Component({
   selector: 'app-studycourse',

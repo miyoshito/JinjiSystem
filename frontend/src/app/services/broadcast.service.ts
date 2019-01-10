@@ -4,6 +4,11 @@ import {BehaviorSubject, Subject,  ReplaySubject,} from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+ * This service tracks if user is logged in and his role when he reload the page.
+ * All the information is based on token contents.
+ */
 export class BroadcastService {
 
   constructor() { }

@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService } from './profile.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { EmployeeMasterComponent } from '../admin/employee-master/employee-master.component';
 import { takeUntil, takeWhile, map } from 'rxjs/operators';
 import { Observable, Subject, BehaviorSubject, Subscription } from 'rxjs';
-import { BroadcastService } from '../broadcast.service';
+import { BroadcastService } from 'src/app/services/broadcast.service';
 import { Employee } from '../interfaces/employee';
 import { MAT_SORT_HEADER_INTL_PROVIDER } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
-import { EmployeeMasterService } from '../admin/employee-master/employee-master.service';
+import { EmployeeMasterService } from 'src/app/services/employee-master.service';
 
 @Component({
   selector: 'app-profile',

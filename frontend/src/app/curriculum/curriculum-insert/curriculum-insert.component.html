@@ -30,13 +30,14 @@
       <div class="col-md-4">
         <span>業種</span>
         <select (change)="changeChilds($event.target.value)" [ngClass]="{ 'is-invalid': submitted && f.industryType.errors }" class="custom-select" formControlName="industryType">
-          <option value="999999" disabled>業種を選んで下さい</option>
+          <option *ngIf="!type" selected >業種を選んで下さい</option>
           <option *ngFor="let i of industry" value="{{i.id}}">{{i.tdesc}}</option>
         </select>
       </div>
       <div class="col-md-4">
         <span>業務区分</span>
         <select class="custom-select" *ngIf="typeSelected$ | async" [ngClass]="{ 'is-invalid': submitted && f.industryClass.errors }" formControlName="industryClass">
+          <option selected></option>
           <option *ngFor="let icss of industry[type].industryClass" value="{{icss.classId}}">{{icss.desc}}</option>
         </select>
         <input type="text" class="form-control" *ngIf="!(typeSelected$ | async)" value="業種を選んで下さい" readonly>

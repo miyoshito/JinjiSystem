@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
-import { ProfileService } from 'src/app/profile/profile.service';
-import { BroadcastService } from 'src/app/broadcast.service';
+import { ProfileService } from 'src/app/services/profile.service';
+import { BroadcastService } from 'src/app/services/broadcast.service';
 import { Router } from '@angular/router';
-import { LoginService } from 'src/app/login/login.service';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-admin-header',

@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { SearchForm } from '../resume-details-interface';
-import { ResumeService } from '../resume.service';
+import { SearchForm } from 'src/app/interfaces/resume-details-interface';
+import { ResumeService } from 'src/app/services/resume.service';
 import { Router } from '@angular/router';
-import { BroadcastService } from 'src/app/broadcast.service';
+import { BroadcastService } from 'src/app/services/broadcast.service';
 import { Subject } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
-import { ProfileService } from 'src/app/profile/profile.service';
-import { LoginService } from 'src/app/login/login.service';
+import { ProfileService } from 'src/app/services/profile.service';
+import { LoginService } from 'src/app/services/login.service';
 import { atLeastOne } from 'src/app/validators/atleastOne';
 
 @Component({
@@ -25,6 +25,9 @@ export class ResumeSearchComponent implements OnInit {
 
   age = new Array
 
+  map:Map<string, string> = new Map<string,string>()
+
+
   constructor(private _fb: FormBuilder,
               private _resumeService: ResumeService,
               private _profileService: ProfileService,
@@ -37,44 +40,34 @@ export class ResumeSearchComponent implements OnInit {
 
   resetForms(){
     this.searchForm.reset()
+    this.initializeForm()
   }
 
   
   searchAttempt(){
-    if (!this.searchForm.valid)
-    {
-      this._resumeService.retrieveAllResumes().pipe(
+    this.map.clear()
+    Object.keys(this.searchForm.value)
+    .filter(f => this.searchForm.value[f] != '')
+    .forEach(k => this.map.set(k,this.searchForm.value[k]))
+    
+    this._resumeService.searchResumeAttempt(this.map).pipe(
       takeUntil(this.active$),
-      map(res => {
-        if (!res.body){
-          alert("データーを見つかれません。")
-          return
-        } else {
-    this._resumeService.sendSearchResults(res.body)
-    this._router.navigate(['/admin/rirekisho/results'])
-    }
-    })).subscribe()
-    } else {
-    this._resumeService.searchResumeAttempt(this.searchForm.value)
-    .pipe(
-      takeUntil(this.active$),
-      map(res => {
-        console.log(res)
-       if (!res.body || res.body.length < 1 || res.status == 500){
-          alert("データーを見つかれません。")
-          return
-      } else if (res.body.length > 1) {
-      this._resumeService.sendSearchResults(res.body)
-      this._router.navigate(['/admin/rirekisho/results'])
-      } else {
-      this._router.navigate(['/admin/rirekisho/details/'+res.body[0].shainId])
+      map(e =>{
+        if (e.status == 500){
+        alert('許可されていません')
+        return
       }
-    })).subscribe(
-    res => {},
-    err => {
-      console.log(err)
-    })
-    }
+        if (!e.body){
+        alert('データーが見つかれません')
+        return
+      }      
+      if (e.body.length == 1){
+          this._router.navigate(['/admin/rirekisho/details/'+e.body[0].shainId])
+        } else {
+        this._resumeService.sendSearchResults(e.body)
+        this._router.navigate(['/admin/rirekisho/results'])
+        }
+      })).subscribe()
   }
 
   initializeForm(){

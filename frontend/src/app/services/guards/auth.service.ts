@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { HttpClientModule } from '@angular/common/http';
 import { BehaviorSubject, Subject, ReplaySubject } from 'rxjs';
-import { BroadcastService } from '../broadcast.service';
-import { ProfileService } from '../profile/profile.service';
+import { BroadcastService } from 'src/app/services/broadcast.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { map, takeUntil } from 'rxjs/operators';
 
 

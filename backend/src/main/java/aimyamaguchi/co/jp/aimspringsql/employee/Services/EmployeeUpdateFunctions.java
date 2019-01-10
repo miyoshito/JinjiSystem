@@ -26,7 +26,10 @@ public class EmployeeUpdateFunctions {
         }
     }
 
-    public ResponseEntity<String>resetPassword(){
-        return null;
+    public void resetPassword(String id){
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        EmployeeMaster user = employeeRepository.findByShainId(id);
+        user.setShainPassword(passwordEncoder.encode("aim123456"));
+        employeeRepository.save(user);
     }
 }

@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-4">
-      <h3>教育受講履歴一覧画面</h3>
+      <h3>社員一覧画面</h3>
     </div>
   </div>
   <div class="row">
@@ -9,27 +9,26 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <th>主催</th>
-            <th>教育名</th>
-            <th>受講者</th>
-            <th>期間</th>
-            <th>費用</th>
+            <th>社員番号</th>
+            <th>氏名</th>            
+            <th>採用区分</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngIf="profileUser$ | async; let user">
-            <tr [ngClass]="{'retired-bg': user.shainRetired }" *ngFor="let sc of user.educations">
-                <td>{{sc.sponsor}}</td>
-                <td>{{sc.educationName}}</td>
-                <td>{{user.shainName}}</td>
-                <td>{{sc.startPeriod}}~<br />{{sc.endPeriod}}</td>
-                <td>{{sc.totalExpenses}}</td>
-                <td><button class="btn btn-primary" (click)="details(user.shainId, sc.id)">詳細</button></td>
+          <ng-container *ngIf="usersResult$ | async; let results">
+            <tr [ngClass]="{'retired-bg': user.shainRetired }" *ngFor="let user of results">
+                <td>{{user.shainId}}</td>
+                <td>{{user.shainName}}<br/>{{user.shainKana}}</td>
+                <td>{{aff(user.affiliation)}}</td>                
+                <td><button class="btn btn-primary" (click)="details(user.shainId)">詳細</button></td>
               </tr>
             </ng-container>
         </tbody>
       </table>
     </div>
   </div>
+  <div class="row d-flex justify-content-around">
+      <button class="btn btn-primary" [routerLink]="['/admin/studycourse/search']">検索へ戻る</button>
+    </div>
 </div>

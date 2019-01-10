@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
-import { ProfileService } from 'src/app/profile/profile.service';
-import { EmployeeMasterService } from 'src/app/admin/employee-master/employee-master.service';
+import { ProfileService } from 'src/app/services/profile.service';
+import { EmployeeMasterService } from 'src/app/services/employee-master.service';
 
 @Component({
   selector: 'app-resume-details',

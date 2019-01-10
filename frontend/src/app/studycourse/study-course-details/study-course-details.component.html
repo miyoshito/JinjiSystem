@@ -1,77 +1,41 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-4">
-      <h3>{{title}}</h3>
-    </div>
-  </div>
+<div class="container-fluid">
     <div class="row">
-      <div class="col-md-3">
-        <span style="font-weight: 600">社員番号: </span><span>{{data.shainId}}</span>
-      </div>
-      <div class="col-md-3">
-        <span style="font-weight: 600">社員氏名: </span><span>{{data.shainName}}</span>
-      </div>
-      <div class="col-md-3">
-        <span style="font-weight: 600">社員カナ: </span><span>{{data.shainKana}}</span>
-      </div>
-      <div class="col-md-3">
-        <span style="font-weight: 600">採用区分: </span><span></span>
+      <div class="col-md-4">
+        <h3>教育受講履歴一覧画面</h3>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-9">
-        <span>主催</span>
-        <input type="text" class="form-control" value="{{education.sponsor}}" readonly>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-9">
-        <span>教育名</span>
-        <input type="text" class="form-control" value="{{education.educationName}}" readonly>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <span><span>期間</span></span>
-        <div class="input-group">
-          <input type="text" class="form-control" value="{{education.startPeriod}}" readonly>
-          <div class="input-group-prepend">
-            <span class="input-group-text">~</span>
-          </div>
-          <input type="text" class="form-control" value="{{education.endPeriod}}" readonly>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-9">
-        <span>開催場所</span>
-        <input type="text" class="form-control" value="{{education.venue}}" readonly>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3">
-        <span>受講料</span>
-        <input type="text" class="form-control" value="{{education.tuitionFee}}" readonly>
-      </div>
-      <div class="col-md-3">
-        <span>交通費</span>
-        <input type="text" class="form-control" value="{{education.transportExpenses}}" readonly>
-      </div>
-      <div class="col-md-3">
-        <span>滞在費</span>
-        <input type="text" class="form-control" value="{{education.hotelExpenses}}" readonly>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <span>概要</span>
-        <textarea class="form-control" value="{{education.overview}}" readonly></textarea>
-      </div>
+      
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>主催</th>
+              <th>教育名</th>
+              <th>受講者</th>
+              <th>期間</th>
+              <th>費用</th>              
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngIf="user$ | async; let user">
+            <tr *ngFor="let sc of user.educations">
+              <ng-container *ngIf="sc.active">
+              <td>{{sc.sponsor}}</td>
+              <td>{{sc.educationName}}</td>
+              <td>{{user.shainName}}</td>
+              <td>{{sc.startPeriod}}~<br/>{{sc.endPeriod}}</td>
+              <td>{{sc.totalExpenses}}</td>              
+              <td><button class="btn btn-primary" (click)="edit(user.shainId,sc.id)">詳細</button></td>
+            </ng-container>
+          </tr>
+        </ng-container>
+          </tbody>
+        </table>
+      
     </div>
     <div class="row d-flex justify-content-around">
-      <button class="btn btn-primary">実施記録取込</button>
-      <button class="btn btn-primary">更新</button>
-      <button class="btn btn-primary">削除</button>
-      <button class="btn btn-primary">詳細へ戻る</button>
+      <button type="button" class="btn btn-primary" [routerLink]="['/admin/studycourse/list']">検索結果へ戻る</button>
+      <button class="btn btn-primary">新教育履歴を登録</button>
     </div>
-</div>
+  </div>

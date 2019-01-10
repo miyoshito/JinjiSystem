@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse, HttpParams } from "@angular/common/http";
 import { Observable, Subject, BehaviorSubject } from "rxjs";
-import { AUTH_URL } from '../url-settings'
-import { User } from './login.interface'
-import { EmployeeMasterComponent } from '../admin/employee-master/employee-master.component';
-import { BroadcastService } from '../broadcast.service';
+import { AUTH_URL } from 'src/app/url-settings'
+import { User } from 'src/app/interfaces/login.interface'
+import { EmployeeMasterComponent } from 'src/app/admin/employee-master/employee-master.component';
+import { BroadcastService } from 'src/app/services/broadcast.service';
 import { tap, catchError, map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -17,14 +17,9 @@ export class LoginService {
               private broadcastService: BroadcastService,
               private _router: Router) { }
 
-  doLogin(authuser: User){
-    let p: HttpParams = new HttpParams()
-    
-    p = p.append('username',authuser.username)
-    p = p.append('password',btoa(authuser.password))
-
-    return this._http.post<any>(AUTH_URL+'/login', null, {params: p, observe:'response'})
-    }
+  doLogin(authuser: User){    
+    return this._http.post<User>(AUTH_URL+'/login', authuser, {observe:'response'})
+  }
 
   logout(): void {
     // clear token remove user from local storage to log user out
@@ -32,4 +27,5 @@ export class LoginService {
     localStorage.removeItem('currentUser')
     this.broadcastService.pushAuthentication(false)
   }
+
 }

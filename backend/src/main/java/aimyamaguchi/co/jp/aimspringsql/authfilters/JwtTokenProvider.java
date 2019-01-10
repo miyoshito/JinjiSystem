@@ -2,6 +2,7 @@ package aimyamaguchi.co.jp.aimspringsql.authfilters;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,18 +36,20 @@ public class JwtTokenProvider {
   private UserDetailsServiceImpl myUserDetails;
 
 
-  public String createToken(String username, Roles roles) {
+  public String createToken(String username, Roles roles, List<Long> areas) {
   long validityInMilliseconds = 259200000;
     Date now = new Date();
     Date validity = new Date(now.getTime() + validityInMilliseconds);
+    Long[] arr = areas.stream().toArray(Long[]::new);
 
-      String token = JWT.create()
+    String token = JWT.create()
       .withSubject(username)
       .withClaim("role", roles.getRoledesc())
+      .withArrayClaim("area", arr)
       .withIssuedAt(now)
       .withExpiresAt(validity)
       .sign(kee);  
-    return "Bearer "+token;  
+    return "Bearer "+token;
 
   }
 
@@ -55,7 +58,12 @@ public class JwtTokenProvider {
     return claim.asString();
   }
 
-    public Authentication getAuthentication(String token) {
+  public List<Long> getAreas(String token){
+      Claim claim = JWT.decode(token).getClaim("area");
+      return claim.asList(Long.class);
+  }
+
+  public Authentication getAuthentication(String token) {
         UserDetails userDetails = myUserDetails.loadUserByUsername(getUsername(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
   }

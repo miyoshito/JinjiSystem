@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Resume, SearchForm } from './resume-details-interface';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { Resume, SearchForm } from 'src/app/interfaces/resume-details-interface';
 
 import { ADMIN_URL } from 'src/app/url-settings'
 import { takeUntil, map } from 'rxjs/operators';
 import { Subject, Observable, BehaviorSubject, ReplaySubject } from 'rxjs';
 import { Router } from '@angular/router';
-import { Employee } from '../interfaces/employee';
-import { LoginService } from '../login/login.service';
+import { Employee } from 'src/app/interfaces/employee';
+import { LoginService } from 'src/app/services/login.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +20,8 @@ export class ResumeService {
 
   private searchSource_ = new ReplaySubject<Employee[]>(1)
   resumeSearchResult$ = this.searchSource_.asObservable();
+
+  
 
   
 
@@ -41,20 +43,14 @@ export class ResumeService {
     return this._httpClient.get<Employee[]>(ADMIN_URL + '/resume/getall', {observe: 'response'})
   }
 
-  searchResumeAttempt(searchParam: SearchForm){
-    return this._httpClient.get<Employee[]>(ADMIN_URL
-      + '/resume/search?i='+ searchParam.id
-      + '&n=' + searchParam.name
-      + '&k=' + searchParam.kana
-      + '&r=' + searchParam.recruit
-      + '&a=' + searchParam.age
-      + '&st=' + searchParam.study
-      + '&sc=' +searchParam.school
-      + '&b=' + searchParam.bunri
-      + '&ca=' + searchParam.career
-      + '&qq=' + searchParam.qualification
-      ,{observe: 'response'})
+  searchResumeAttempt(map: Map<string, string>){
+    let params: HttpParams = new HttpParams()
+    map.forEach((k,v) =>{
+      params = params.append(v,k)
+    })    
+    return this._httpClient.get<Employee[]>(ADMIN_URL+'/resume/search',{params: params, observe: 'response'})
   }
+  
   sendSearchResults(list: Employee[]){
     this.searchSource_.next(list)
   }

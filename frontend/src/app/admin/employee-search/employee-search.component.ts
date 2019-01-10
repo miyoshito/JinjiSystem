@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { EmployeeMasterService } from '../employee-master/employee-master.service';
+import { EmployeeMasterService } from 'src/app/services/employee-master.service';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
 

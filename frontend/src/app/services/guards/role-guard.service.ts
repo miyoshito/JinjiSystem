@@ -3,9 +3,9 @@ import { CanActivate, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { AuthService } from './auth.service';
 import { Observable } from 'rxjs';
-import { BroadcastService } from '../broadcast.service';
-import { LoginService } from '../login/login.service';
-import { ProfileService } from '../profile/profile.service';
+import { BroadcastService } from 'src/app/services/broadcast.service';
+import { LoginService } from 'src/app/services/login.service';
+import { ProfileService } from 'src/app/services/profile.service';
 import { map } from 'rxjs/operators';
 
 @Injectable({

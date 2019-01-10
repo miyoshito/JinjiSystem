@@ -14,11 +14,11 @@ import {
 } from '@angular/material'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { LoginService } from './login/login.service';
+import { LoginService } from 'src/app/services/login.service';
 import { HomeComponent } from './home/home.component';
-import { AuthGuardService } from './guards/auth-guard.service';
+import { AuthGuardService } from 'src/app/services/guards/auth-guard.service';
 import { JwtModule } from '@auth0/angular-jwt';
-import { LoginGuardService } from './guards/login-guard.service';
+import { LoginGuardService } from 'src/app/services/guards/login-guard.service';
 import { ProfileComponent } from './profile/profile.component';
 import { EmployeeMasterComponent } from './admin/employee-master/employee-master.component';
 import { ResumeSearchComponent } from './resume/resume-search/resume-search.component';
@@ -28,26 +28,23 @@ import { CurriculumListComponent } from './curriculum/curriculum-list/curriculum
 import { CurriculumDetailsComponent } from './curriculum/curriculum-details/curriculum-details.component';
 import { CurriculumInsertComponent } from './curriculum/curriculum-insert/curriculum-insert.component';
 import { NotFoundComponent } from './errors/not-found/not-found.component';
-import { TokenInterceptorService } from './guards/token-interceptor.service';
+import { TokenInterceptorService } from 'src/app/services/guards/token-interceptor.service';
 import { EmployeeListComponent } from './admin/employee-list/employee-list.component';
 import { ResumeAddComponent } from './resume/resume-add/resume-add.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { SkillMapComponent } from './skill-map/skill-map.component';
 import { SystemSettingsComponent } from './admin/system-settings/system-settings.component';
 import { SkillMapSearchComponent } from './skill-map/skill-map-search/skill-map-search.component';
-import { ValidatorsComponent } from './validators/validators.component';
 import { StudycourseComponent } from './studycourse/studycourse.component';
 import { QualificationsComponent } from './qualifications/qualifications.component';
 import { AdminHeaderComponent } from './header/admin-header/admin-header.component';
 import { UserHeaderComponent } from './header/user-header/user-header.component';
 import { ManagerHeaderComponent } from './header/manager-header/manager-header.component';
-import { BooleanPipe } from './boolean-pipe';
-import { CustomDialogComponent } from './custom-dialog/custom-dialog.component';
+import { BooleanPipe } from 'src/app/pipes/boolean-pipe';
+import { CustomDialogComponent } from 'src/app/resume/custom-dialog/custom-dialog.component';
 import { ResumeSearchResultsComponent } from './resume/resume-search-results/resume-search-results.component';
 import { LoadingDialogComponent } from './loading-dialog/loading-dialog.component';
 import { EmployeeSearchComponent } from './admin/employee-search/employee-search.component';
-import { EmployeeDetailsComponent } from './admin/employee-details/employee-details.component';
-import { MonthPickerComponent } from './utils/month-picker/month-picker.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker'
 import { defineLocale } from 'ngx-bootstrap/chronos';
 import { jaLocale } from 'ngx-bootstrap/locale';
@@ -56,7 +53,6 @@ import { SmLangColumnComponent } from './skill-map/skill-map-headers/sm-lang-col
 import { StudyCourseSearchComponent } from './studycourse/study-course-search/study-course-search.component';
 import { StudyCourseEditComponent } from './studycourse/study-course-edit/study-course-edit.component';
 import { StudyCourseResultsComponent } from './studycourse/study-course-results/study-course-results.component';
-import { InsertsSubmenuComponent } from './admin/inserts-submenu/inserts-submenu.component';
 import { StudyCourseDetailsComponent } from './studycourse/study-course-details/study-course-details.component';
 
 export function tokenGetter() {
@@ -84,7 +80,6 @@ defineLocale('ja',jaLocale)
     ResumeAddComponent,
     SkillMapComponent,
     SystemSettingsComponent,
-    ValidatorsComponent,
     StudycourseComponent,
     QualificationsComponent,
     AdminHeaderComponent,
@@ -95,15 +90,12 @@ defineLocale('ja',jaLocale)
     ResumeSearchResultsComponent,
     LoadingDialogComponent,
     EmployeeSearchComponent,
-    EmployeeDetailsComponent,
-    MonthPickerComponent,
     SkillMapDetailsComponent,
     SkillMapSearchComponent,
     SmLangColumnComponent,
     StudyCourseSearchComponent,
     StudyCourseEditComponent,
     StudyCourseResultsComponent,
-    InsertsSubmenuComponent,
     StudyCourseDetailsComponent
   ],
   imports: [

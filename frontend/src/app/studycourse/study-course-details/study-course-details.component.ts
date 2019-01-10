@@ -1,11 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
-import { StudycourseService } from '../studycourse.service';
-import { ActivatedRoute } from '@angular/router';
-import { map, filter, takeUntil } from 'rxjs/operators';
+import { StudycourseService } from 'src/app/services/studycourse.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { map, takeUntil } from 'rxjs/operators';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { studyCourse } from 'src/app/interfaces/study-course';
+import { EmployeeMasterService } from 'src/app/services/employee-master.service';
+import { ProfileService } from 'src/app/services/profile.service';
+import { BroadcastService } from 'src/app/services/broadcast.service';
 
 
 @Component({
@@ -16,34 +19,52 @@ import { studyCourse } from 'src/app/interfaces/study-course';
 export class StudyCourseDetailsComponent implements OnInit {
 
   constructor(private _scService: StudycourseService,
+              private _profileService: ProfileService,
+              private _router: Router,
               private _route: ActivatedRoute,
-              private _fb: FormBuilder) { }
+              private _fb: FormBuilder,
+              private _employeeService: EmployeeMasterService,
+              private _broadcastService: BroadcastService) { }
 
-  results$: Observable<Employee[]>
+  user$: Observable<Employee>
   isAlive$: Subject<boolean> = new Subject<boolean>()
   data: Employee
   education: studyCourse
   education$: Observable<studyCourse>
   studyForm: FormGroup
 
-  title: string = "教育履歴詳細画面"
+    title: string = "教育履歴詳細画面"
+
+  urlparam: string
 
   ngOnInit() {
-    this.education$ = this._scService.details$
-    this.results$ = this._scService.searchResults$
-    this.results$.pipe(
-      takeUntil(this.isAlive$),
+    console.log(this._router.url)
+    if (this._router.url.startsWith('/admin')){      
+      this._employeeService.getShainData(this._route.snapshot.paramMap.get('uid'),false,false,true)
+      this.user$ = this._employeeService.employee$
+    }
+
+    if(this._router.url.endsWith('/studycourses')){
+      this._profileService.cachedUser$.pipe(takeUntil(this.isAlive$),
       map(e => {
-        this.data = e.find(usr => usr.shainId === this._route.snapshot.paramMap.get('uid'))       
-        e.filter(f => {
-        this.education = f.educations.find(ed => ed.id == this._route.snapshot.paramMap.get('scid'))
-        })
-      })
-    ).subscribe()
+        this._employeeService.getShainData(e.id,false,false,true)
+      })).subscribe()
+      this.user$ = this._employeeService.employee$
+    }
   }
 
   ngOnDestroy(){
     this.isAlive$.next();
+  }
+
+  edit(uid: number, scid: number){
+    if (this._router.url.startsWith('/admin')) this._router.navigate(['/admin/studycourse/edit/'+uid+'/'+scid])
+    else this._router.navigate(['/profile/studycourses/edit/'+scid])
+  }
+
+  add(uid: number){
+    if (this._router.url.startsWith('/admin')) this._router.navigate(['/admin/studycourse/add/'+uid])
+    else this._router.navigate(['/profile/studycourses/add'])
   }
 }
 
