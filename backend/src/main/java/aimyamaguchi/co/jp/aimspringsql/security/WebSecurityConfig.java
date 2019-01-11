@@ -29,6 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     JwtTokenProvider jwtTokenProvider;
 
+
     @Bean 
     @Override 
     public AuthenticationManager authenticationManagerBean() throws Exception { 
@@ -49,17 +50,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable()
-        .cors()
-                .and()
+        httpSecurity
+        .csrf().disable()
+                .cors().and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .apply(new JwtTokenFilterConfigurer(jwtTokenProvider))
-        .and().authorizeRequests()
-                .antMatchers("POST", "/api/auth/**").permitAll()
-                .antMatchers("*","/api/admin/**").authenticated()
-                .antMatchers("*","/api/se/**").authenticated()
-                .antMatchers("/**").permitAll();
+                .apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
     }
 
     @Override

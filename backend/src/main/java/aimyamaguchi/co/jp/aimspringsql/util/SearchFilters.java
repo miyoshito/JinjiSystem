@@ -5,14 +5,23 @@ import aimyamaguchi.co.jp.aimspringsql.curriculum.repositories.CurriculumReposit
 import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseInterface;
 import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseModel;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.QAFFILIATIONData;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.QEmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.QPOSITIONData;
 import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.EmployeeRepository;
+import aimyamaguchi.co.jp.aimspringsql.resume.QResumeModel;
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeModel;
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeRepository;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SearchFilters {
@@ -32,6 +41,9 @@ public class SearchFilters {
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
 
     public EmployeeMaster getEmployeeData(String id){
@@ -70,11 +82,11 @@ public class SearchFilters {
     }
 
     public List<EmployeeMaster> getEmployeesWithCv(List<String> ids) {
-        List<EmployeeMaster> le = er.findByShainIdIn(ids);
-        for(EmployeeMaster e: le){
-            e.getCurriculum().size();
-        }
-        return le;
+            List<EmployeeMaster> le = er.findByShainIdIn(ids);
+            for (EmployeeMaster e : le) {
+                e.getCurriculum().size();
+            }
+            return le;
     }
 
     public List<EmployeeMaster> getEmployeesWithCv() {
@@ -136,6 +148,7 @@ public class SearchFilters {
     public ResumeModel getResumeById(Long id){
         return rr.findById(id).orElse(null);
     }
+    public StudyCourseModel getStudyCourseById(Long id) {return sr.findById(id).orElse(null);}
 
 
 

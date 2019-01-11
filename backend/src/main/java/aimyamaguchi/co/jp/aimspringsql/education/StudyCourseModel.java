@@ -27,11 +27,11 @@ public class StudyCourseModel {
 
     private String venue;
 
-    private Integer tuitionFee = 0;
+    private Integer tuitionFee;
 
-    private Integer transportExpenses = 0;
+    private Integer transportExpenses;
 
-    private Integer hotelExpenses = 0;
+    private Integer hotelExpenses;
 
     private String overview;
 
@@ -40,6 +40,10 @@ public class StudyCourseModel {
     private LocalDate updated;
 
     private String updatedby;
+
+    //for insert purposes only
+    @Transient
+    private String employee_id;
 
     @Transient
     private Integer totalExpenses = 0;
@@ -168,6 +172,14 @@ public class StudyCourseModel {
 
     public void setEmployee(EmployeeMaster employee) {
         this.employee = employee;
+    }
+
+    public String getEmployee_id() {
+        return employee_id;
+    }
+
+    public void setEmployee_id(String employee_id) {
+        this.employee_id = employee_id;
     }
 }
 

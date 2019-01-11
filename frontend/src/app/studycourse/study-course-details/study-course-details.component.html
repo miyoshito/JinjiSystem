@@ -1,11 +1,11 @@
 <div class="container-fluid">
+    <ng-container *ngIf="user$ | async; let user">
     <div class="row">
       <div class="col-md-4">
         <h3>教育受講履歴一覧画面</h3>
       </div>
     </div>
-    <div class="row">
-      
+    <div class="row">      
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
@@ -17,8 +17,7 @@
               <th></th>
             </tr>
           </thead>
-          <tbody>
-            <ng-container *ngIf="user$ | async; let user">
+          <tbody>            
             <tr *ngFor="let sc of user.educations">
               <ng-container *ngIf="sc.active">
               <td>{{sc.sponsor}}</td>
@@ -28,14 +27,14 @@
               <td>{{sc.totalExpenses}}</td>              
               <td><button class="btn btn-primary" (click)="edit(user.shainId,sc.id)">詳細</button></td>
             </ng-container>
-          </tr>
-        </ng-container>
+          </tr>        
           </tbody>
         </table>
       
     </div>
     <div class="row d-flex justify-content-around">
-      <button type="button" class="btn btn-primary" [routerLink]="['/admin/studycourse/list']">検索結果へ戻る</button>
-      <button class="btn btn-primary">新教育履歴を登録</button>
+      <button *ngIf="displayReturnButton" type="button" class="btn btn-primary" onclick="history.back(-1)">戻る</button>
+      <button class="btn btn-primary" (click)="add(user.shainId)">新教育履歴を登録</button>
     </div>
+  </ng-container>
   </div>

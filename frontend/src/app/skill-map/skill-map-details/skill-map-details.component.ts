@@ -8,7 +8,6 @@ import { EmployeeMasterService } from 'src/app/services/employee-master.service'
 import { SkillMapData, SkillMapParams } from 'src/app/interfaces/skillmap';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/guards/auth.service';
-import { t } from '@angular/core/src/render3';
 
 
 @Component({

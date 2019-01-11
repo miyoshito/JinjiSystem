@@ -5,18 +5,19 @@
     </div>
   </div>
 <form [formGroup]="studyForm">
+  <ng-container *ngIf="selectedUser$ | async; let user">
   <div class="row">
     <div class="col-md-3">
-      <span style="font-weight: 600">社員番号: </span><span></span>
+      <span style="font-weight: 600">社員番号:</span><span> {{user.shainId}}</span>
     </div>
     <div class="col-md-3">
-      <span style="font-weight: 600">社員氏名: </span><span></span>
+      <span style="font-weight: 600">社員氏名:</span><span> {{user.shainName}}</span>
     </div>
     <div class="col-md-3">
-      <span style="font-weight: 600">社員カナ: </span><span>user.shainKana</span>
+      <span style="font-weight: 600">社員カナ: </span><span>{{user.shainKana}}</span>
     </div>
     <div class="col-md-3">
-      <span style="font-weight: 600">採用区分: </span><span>user.shainRecruit</span>
+      <span style="font-weight: 600">採用区分: </span><span>{{user.shainRecruit}}</span>
     </div>
   </div>
   <div class="row">
@@ -35,11 +36,21 @@
     <div class="col-md-6">
       <span><span>期間</span></span>
       <div class="input-group">
-        <input type="date" class="form-control" formControlName="startPeriod">
+              <input type="text"
+              placeholder="開始日"
+              class="form-control"
+              [bsConfig]="bsConfig"
+              formControlName="startPeriod"
+              bsDatepicker>
         <div class="input-group-prepend">
           <span class="input-group-text">~</span>
         </div>
-        <input type="date" class="form-control" formControlName="endPeriod">
+        <input type="text"
+        placeholder="終了日"
+        class="form-control"
+        [bsConfig]="bsConfig"
+        formControlName="endPeriod"
+        bsDatepicker>
       </div>
     </div>
   </div>
@@ -52,15 +63,15 @@
   <div class="row">
     <div class="col-md-3">
         <span>受講料</span>
-        <input type="text" class="form-control" formControlName="tuitionFee">
+        <input type="text" class="form-control" formControlName="tuitionFee" [ngClass]="{ 'is-invalid': submitted && f.tuitionFee.errors }">
     </div>
     <div class="col-md-3">
         <span>交通費</span>
-        <input type="text" class="form-control" formControlName="transportExpenses">
+        <input type="text" class="form-control" formControlName="transportExpenses" [ngClass]="{ 'is-invalid': submitted && f.transportExpenses.errors }">
     </div>
     <div class="col-md-3">
         <span>滞在費</span>
-        <input type="text" class="form-control" formControlName="hotelExpenses">
+        <input type="text" class="form-control" formControlName="hotelExpenses" [ngClass]="{ 'is-invalid': submitted && f.hotelExpenses.errors }">
     </div>
   </div>
   <div class="row">
@@ -69,11 +80,13 @@
       <textarea class="form-control" formControlName="overview"></textarea>
     </div>
   </div>
+
   <div class="row d-flex justify-content-around">
-    <button class="btn btn-primary">実施記録取込</button>
-    <button class="btn btn-primary" (click)="insertAttempt()">insert</button>
-    <button class="btn btn-primary">削除</button>
-    <button class="btn btn-primary">詳細へ戻る</button>
+    <button class="btn btn-primary" disabled>実施記録取込</button>
+    <button class="btn btn-primary" (click)="insertAttempt()">{{buttonText}}</button>
+    <button class="btn btn-primary" disabled>削除</button>
+    <button class="btn btn-primary" onclick="history.back(-1)">戻る</button>
   </div>
+</ng-container>
 </form>
 </div>

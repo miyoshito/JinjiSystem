@@ -1,9 +1,7 @@
 package aimyamaguchi.co.jp.aimspringsql.authfilters;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -36,7 +34,7 @@ public class JwtTokenProvider {
   private UserDetailsServiceImpl myUserDetails;
 
 
-  public String createToken(String username, Roles roles, List<Long> areas) {
+  public String createToken(String username, Roles roles, List<Long> areas, Long level) {
   long validityInMilliseconds = 259200000;
     Date now = new Date();
     Date validity = new Date(now.getTime() + validityInMilliseconds);
@@ -45,6 +43,7 @@ public class JwtTokenProvider {
     String token = JWT.create()
       .withSubject(username)
       .withClaim("role", roles.getRoledesc())
+      .withClaim("level", level)
       .withArrayClaim("area", arr)
       .withIssuedAt(now)
       .withExpiresAt(validity)
@@ -57,10 +56,19 @@ public class JwtTokenProvider {
     Claim claim = JWT.decode(token).getClaim("role");
     return claim.asString();
   }
+  public Optional<String> getRolee(String token){
+    Claim claim = JWT.decode(token).getClaim("role");
+    return Optional.of(claim.asString());
+  }
 
   public List<Long> getAreas(String token){
       Claim claim = JWT.decode(token).getClaim("area");
       return claim.asList(Long.class);
+  }
+
+  public Long getAuthority(String token){
+    Claim claim = JWT.decode(token).getClaim("level");
+    return claim.asLong();
   }
 
   public Authentication getAuthentication(String token) {

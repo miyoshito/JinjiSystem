@@ -34,7 +34,7 @@ export class CurriculumService {
   }
   //insert attempt -> validation is made on component.
   insertShokumuAttempt(cv: any) {
-    return this._http.post<any>(ADMIN_URL + '/shokureki/add', cv, { observe: 'response' }).subscribe()
+    return this._http.post<any>(API_URL + '/se/shokureki/add', cv, { observe: 'response' }).subscribe()
   }
   //delete attempt DO NOT remove data, just set to inactive.
   deleteShokumuAttempt(sid: number) {
@@ -46,9 +46,9 @@ export class CurriculumService {
     map.forEach((k,v) =>{
       par = par.append(v,k)
     })
-    this._http.get<Employee[]>(ADMIN_URL + '/shokureki/search', {observe: 'response', params: par})
+    this._http.get<Employee[]>(API_URL + '/se/shokureki/search', {observe: 'response', params: par})
     .subscribe(res => {
-        if (res.body.length == 0) {
+        if (!res.body || res.body.length == 0) {
           alert('結果が見つかりません')
           return
         } else {

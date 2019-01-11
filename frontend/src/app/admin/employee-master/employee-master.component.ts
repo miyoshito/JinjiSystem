@@ -80,8 +80,8 @@ export class EmployeeMasterComponent implements OnInit {
   this.isLoggedIn$ = this._broadcastService.userAuthenticated$
   this.bsConfig = Object.assign(
     { containerClass: "theme-red" },
-    { dateInputFormat: 'YYYY/MMMM/dd' },
-    { dateRangeFormat: 'YYYY/MMMM/dd'});
+    { dateInputFormat: 'YYYY/MM/DD' },
+    { dateRangeFormat: 'YYYY/MM/DD'});
   
   if ((this._router.url).endsWith('/edit')){    
       this.selectedUser$ = this._employeeService.employee$

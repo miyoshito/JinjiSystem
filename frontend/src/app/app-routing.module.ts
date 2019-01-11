@@ -48,9 +48,9 @@ const routes: Routes = [
     {path: 'skillmap', component: SkillMapDetailsComponent},
     {path: 'qualifications', component: QualificationsComponent},
     {path: 'studycourses', children:[
-      {path: '', component: StudyCourseResultsComponent},
+      {path: '', component: StudyCourseDetailsComponent},
       {path: 'add', component: StudyCourseEditComponent},
-      {path: 'edit/:scid', component: StudyCourseEditComponent},
+      {path: ':scid/edit', component: StudyCourseEditComponent},
     ]},
   ],canActivate:[AuthGuardService]},
 
@@ -80,8 +80,8 @@ const routes: Routes = [
           {path: 'search', component: StudyCourseSearchComponent},          
           {path: 'details/:uid', component: StudyCourseDetailsComponent}, //me leva pra todos os sc da pessoa
           {path: 'list', component: StudyCourseResultsComponent}, //me leva pra lista de pessoas          
-          {path: 'edit/:uid/:scid', component: StudyCourseEditComponent},
-          {path: 'add', component: StudyCourseEditComponent}
+          {path: ':uid/:scid/edit', component: StudyCourseEditComponent},
+          {path: ':uid/add', component: StudyCourseEditComponent}
       ]},
       {path: 'profile/:id', children:[
         {path: '', component: ProfileComponent},

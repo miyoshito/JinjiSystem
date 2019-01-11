@@ -23,7 +23,7 @@ export class StudycourseService {
   
 
   insertAttempt(sc: studyCourse){
-    return this._http.post<studyCourse>(API_URL+'/se/studycourse/add',sc,{observe: 'response'}).subscribe()
+    return this._http.post<studyCourse>(API_URL+'/se/studycourse/add',sc,{observe: 'response'})
   }
 
   getDetails(id: string){

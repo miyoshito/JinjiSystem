@@ -1,7 +1,9 @@
 package aimyamaguchi.co.jp.aimspringsql.education;
 
+import aimyamaguchi.co.jp.aimspringsql.authfilters.JwtTokenProvider;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.QEmployeeMaster;
 import aimyamaguchi.co.jp.aimspringsql.util.CustomValidators;
+import aimyamaguchi.co.jp.aimspringsql.util.SearchFilters;
 import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.core.types.dsl.SimpleExpression;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
+import javax.servlet.http.HttpServletRequest;
 import java.io.UncheckedIOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -30,13 +33,30 @@ public class StudyCourseService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    private SearchFilters sf;
+
+    @Autowired
+    JwtTokenProvider jwt;
 
 
-    public boolean insertSCAttempt(StudyCourseModel scm){
+
+    public boolean insertSCAttempt(StudyCourseModel scm, HttpServletRequest req){
         LocalDate now = LocalDate.now();
+                if(scm.getId() != null) scm.setUpdatedby(jwt.getUsername(jwt.resolveToken(req)));
+                scm.setEmployee(sf.getEmployeeData(scm.getEmployee_id()));
                 scm.setUpdated(now);
                 sci.save(scm);
                 return true;
+    }
+
+    public boolean softDeleteSC(Long id){
+        if(sf.getStudyCourseById(id) != null){
+            StudyCourseModel scm = sf.getStudyCourseById(id);
+            scm.setActive(false);
+            sci.save(scm);
+            return true;
+        } else return false;
     }
 
     public List<String> StudyCourseSearchResults(Map<String, String> map){
@@ -72,7 +92,7 @@ public class StudyCourseService {
                                 qscm.hotelExpenses
                                 .add(qscm.tuitionFee)
                                 .add(qscm.transportExpenses)
-                                .as("total").goe(Integer.parseInt(f.getValue().substring(2))));
+                                .goe(Integer.parseInt(f.getValue().substring(2))));
                                 break;
                                 case "lt":
                                     filteredUsers
@@ -80,19 +100,19 @@ public class StudyCourseService {
                                 qscm.hotelExpenses
                                 .add(qscm.tuitionFee)
                                 .add(qscm.transportExpenses)
-                                .as("total").loe(Integer.parseInt(f.getValue().substring(2))));
+                                .loe(Integer.parseInt(f.getValue().substring(2))));
                                     break;
                                 default:
                                     break;
                             }
                             break;
-                        case "sd":
+                        case "stdate":
                             LocalDate from = LocalDate.parse(f.getValue());
-                            filteredUsers.where(qscm.startPeriod.after(from));
+                            filteredUsers.where(qscm.startPeriod.goe(from));
                             break;
-                        case "ed":
+                        case "enddate":
                             LocalDate to = LocalDate.parse(f.getValue());
-                            filteredUsers.where(qscm.endPeriod.before(to));
+                            filteredUsers.where(qscm.endPeriod.loe(to));
 
                     }
                 });

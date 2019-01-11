@@ -130,7 +130,8 @@ export class CurriculumInsertComponent implements OnInit {
       this.userid = this._route.snapshot.paramMap.get('uid')
       this.generateForm()
     }
-    this.bsConfig = Object.assign(      
+    this.bsConfig = Object.assign(
+      { minMode: this.minMode},      
       { containerClass: "theme-red" },
       { dateInputFormat: 'YYYY/MMMM' },
       { dateRangeFormat: 'YYYY/MMMM'});

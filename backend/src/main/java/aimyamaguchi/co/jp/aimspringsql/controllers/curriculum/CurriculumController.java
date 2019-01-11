@@ -1,6 +1,7 @@
 package aimyamaguchi.co.jp.aimspringsql.controllers.curriculum;
 
 import aimyamaguchi.co.jp.aimspringsql.authfilters.CustomException;
+import aimyamaguchi.co.jp.aimspringsql.authfilters.JwtTokenProvider;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.models.CurriculumDAO;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.services.CvSearchService;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.services.CvDeleteService;
@@ -12,12 +13,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/se")
 @CrossOrigin(origins  = "*")
 public class CurriculumController {
 
@@ -33,6 +35,9 @@ public class CurriculumController {
     @Autowired
     private SearchFilters search;
 
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
     @PostMapping("/shokureki/add")
     public ResponseEntity<String> insertcv(@RequestBody CurriculumDAO cv){
 
@@ -45,12 +50,17 @@ public class CurriculumController {
     }
 
     @GetMapping("/shokureki/search")
-    public ResponseEntity<List<EmployeeMaster>> searchCvIn( @RequestParam Map<String, String> allParams ){
+    public ResponseEntity<List<EmployeeMaster>> searchCvIn(@RequestParam Map<String, String> allParams, HttpServletRequest req){
         try {
-            if (allParams.size() < 1) {
+            if
+            (allParams.size() < 1
+                    && jwtTokenProvider.getRole(jwtTokenProvider.resolveToken(req)).equals("ADMIN")
+                    || jwtTokenProvider.getRole(jwtTokenProvider.resolveToken(req)).equals("SOUMU")
+            ){
                 return new ResponseEntity<>(search.getEmployeesWithCv(), HttpStatus.OK);
             } else {
-                return new ResponseEntity<>(search.getEmployeesWithCv(cs.getCvSearchResults(allParams)), HttpStatus.OK);
+                List<String> f = cs.getCvSearchResults(allParams,jwtTokenProvider.resolveToken(req));
+                return new ResponseEntity<>(search.getEmployeesWithCv(f), HttpStatus.OK);
             }
         } catch (CustomException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

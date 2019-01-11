@@ -24,27 +24,31 @@ export class StudyCourseDetailsComponent implements OnInit {
               private _route: ActivatedRoute,
               private _fb: FormBuilder,
               private _employeeService: EmployeeMasterService,
-              private _broadcastService: BroadcastService) { }
+              private _broadcastService: BroadcastService
+              ){}
 
-  user$: Observable<Employee>
+  user$: Observable<Employee> = new Observable<Employee>()
   isAlive$: Subject<boolean> = new Subject<boolean>()
   data: Employee
   education: studyCourse
   education$: Observable<studyCourse>
   studyForm: FormGroup
+  displayReturnButton: boolean
 
-    title: string = "教育履歴詳細画面"
+  title: string = "教育履歴詳細画面"
 
   urlparam: string
 
   ngOnInit() {
     console.log(this._router.url)
     if (this._router.url.startsWith('/admin')){      
+      this.displayReturnButton = true
       this._employeeService.getShainData(this._route.snapshot.paramMap.get('uid'),false,false,true)
       this.user$ = this._employeeService.employee$
     }
 
     if(this._router.url.endsWith('/studycourses')){
+      this.displayReturnButton = false
       this._profileService.cachedUser$.pipe(takeUntil(this.isAlive$),
       map(e => {
         this._employeeService.getShainData(e.id,false,false,true)
@@ -58,13 +62,14 @@ export class StudyCourseDetailsComponent implements OnInit {
   }
 
   edit(uid: number, scid: number){
-    if (this._router.url.startsWith('/admin')) this._router.navigate(['/admin/studycourse/edit/'+uid+'/'+scid])
-    else this._router.navigate(['/profile/studycourses/edit/'+scid])
+    if (this._router.url.startsWith('/admin')) this._router.navigate(['/admin/studycourse/'+uid+'/'+scid+'/edit'])
+    else this._router.navigate(['/profile/studycourses/'+scid+'/edit'])
   }
 
   add(uid: number){
-    if (this._router.url.startsWith('/admin')) this._router.navigate(['/admin/studycourse/add/'+uid])
+    if (this._router.url.startsWith('/admin')) this._router.navigate(['/admin/studycourse/'+uid+'/add'])
     else this._router.navigate(['/profile/studycourses/add'])
   }
+
 }
 

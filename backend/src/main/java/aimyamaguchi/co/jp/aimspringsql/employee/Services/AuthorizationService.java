@@ -54,7 +54,7 @@ public class AuthorizationService {
         try {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, decoded));
         List<Long> area = user.getAffiliation().stream().map(AFFILIATIONData::getId).collect(Collectors.toList());
-        responseHeaders.add("Authorization", jwtTokenProvider.createToken(username, user.getRole(), area));
+        responseHeaders.add("Authorization", jwtTokenProvider.createToken(username, user.getRole(), area, user.getPosition().getId()));
         return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
         } catch (AuthenticationException e) {
             return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);

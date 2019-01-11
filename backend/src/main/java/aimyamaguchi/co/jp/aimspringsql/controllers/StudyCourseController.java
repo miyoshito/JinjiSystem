@@ -1,6 +1,7 @@
 package aimyamaguchi.co.jp.aimspringsql.controllers;
 
 import aimyamaguchi.co.jp.aimspringsql.authfilters.CustomException;
+import aimyamaguchi.co.jp.aimspringsql.authfilters.JwtTokenProvider;
 import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseInterface;
 import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseModel;
 import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseService;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -30,16 +32,32 @@ public class StudyCourseController {
     @Autowired
     private SearchFilters sf;
 
+    @Autowired
+    private JwtTokenProvider jwt;
+
+        @PutMapping("/admin/studycourse/softdelete")
+    public ResponseEntity<String> softDeleteSC(@RequestParam(value="id", required = true) Long id, HttpServletRequest req){
+        if (!jwt.getRole(jwt.resolveToken(req)).equals("ADMIN")){
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        if (scs.softDeleteSC(id))
+            return new ResponseEntity<>(HttpStatus.OK);
+            else return new ResponseEntity<>("NOTFOUND",HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @GetMapping("/admin/studycourse/get")
     public ResponseEntity<Optional<StudyCourseModel>> getSCModel(@RequestParam(value="id") String id){
         return new ResponseEntity<>(scs.findSCM(id),HttpStatus.OK);
     }
 
     @PostMapping("/se/studycourse/add")
-    public ResponseEntity<String> addStudyCourse(StudyCourseModel scm){
-       if (scs.insertSCAttempt(scm))
-           return new ResponseEntity<>(HttpStatus.OK);
-                else return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    public ResponseEntity<String> addStudyCourse(@RequestBody StudyCourseModel scm, HttpServletRequest req){
+        try {
+            scs.insertSCAttempt(scm, req);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (CustomException e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @GetMapping("/admin/studycourse/search")

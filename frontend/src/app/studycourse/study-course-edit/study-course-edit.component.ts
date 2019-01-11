@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StudycourseService } from 'src/app/services/studycourse.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
@@ -7,6 +7,7 @@ import { Employee } from 'src/app/interfaces/employee';
 import { ProfileService } from 'src/app/services/profile.service';
 import { EmployeeMasterService } from 'src/app/services/employee-master.service';
 import { takeUntil, map } from 'rxjs/operators';
+import { BsDatepickerConfig, BsDatepickerViewMode, BsLocaleService } from 'ngx-bootstrap/datepicker';
 
 @Component({
   selector: 'app-study-course-edit',
@@ -20,39 +21,79 @@ export class StudyCourseEditComponent implements OnInit {
               private _router: Router,
               private _route: ActivatedRoute,
               private _profileService: ProfileService,
-              private _employeeService: EmployeeMasterService) { }
+              private _employeeService: EmployeeMasterService,
+              private localeService: BsLocaleService) {
+                localeService.use('ja')
+               }
 
   studyForm: FormGroup
 
   title: String
 
+  submitted: boolean
+  buttonText: string
+  displayButton: boolean
+
   isAlive$: Subject<boolean> = new Subject<boolean>()
 
   selectedUser$: Observable<Employee>
+  bsConfig: Partial<BsDatepickerConfig>;
 
   ngOnInit() {
     this.buildForm()
+    this.bsConfig = Object.assign(
+      { containerClass: "theme-red" },
+      { dateInputFormat: 'YYYY/MM/DD' },
+      { dateRangeFormat: 'YYYY/MM/DD'});
 
-    if (this._router.url.startsWith('/admin') && this._router.url.includes('edit')){
+    if (this._router.url.endsWith('/edit')){
     this.title = "教育受講履歴編集画面"
+    this.buttonText = '編集'
     this.selectedUser$ = this._employeeService.employee$
     this.patchData(this.selectedUser$)
     }
-
-    if(this._router.url.endsWith('/studycourses/add')){
+    else if(this._router.url.endsWith('/add')){
     this.title = "教育受講履歴登録画面"
+    this.buttonText = '登録'
+      this.selectedUser$ = this._employeeService.employee$
+      this.selectedUser$.pipe(takeUntil(this.isAlive$),map(u => this.studyForm.get('employee_id').patchValue(u.shainId))).subscribe()
     }
   }
 
   insertAttempt(){
-    this._studyCourseService.insertAttempt(this.studyForm.value)    
+    this.submitted = true
+    if(!this.studyForm.valid){
+      return      
+    } else {
+      this._studyCourseService.insertAttempt(this.studyForm.value).pipe(takeUntil(this.isAlive$),
+      map(res =>{
+        if (res.status === 200){
+          alert(this.buttonText+'しました')
+          this.redirect()
+        }
+      })).subscribe()
+    }
+    
+  }
+
+  ngOnDestroy(): void {
+    this.isAlive$.next()
+  }
+
+  get f(){return this.studyForm.controls}
+
+  redirect(){
+    if(this._router.url.startsWith('/profile'))
+      this._router.navigate(['/profile/studycourses'])
+    if(this._router.url.startsWith('/admin'))
+      this._router.navigate(['/admin/studycourse/details/'+this._route.snapshot.paramMap.get('uid')])
   }
 
   patchData(e: Observable<Employee>){
     e.pipe(takeUntil(this.isAlive$),
     map(em =>{
-      em.educations.find(id => this._route.snapshot.paramMap.get('uscid') == id.id)
-      this.studyForm.patchValue(em)      
+      this.studyForm.patchValue(em.educations.find(id => this._route.snapshot.paramMap.get('scid') == id.id))
+      this.studyForm.get('employee_id').patchValue(em.shainId)
     })).subscribe()
   }
 
@@ -64,11 +105,11 @@ export class StudyCourseEditComponent implements OnInit {
       startPeriod: [''],
       endPeriod: [''],
       venue: [''],
-      tuitionFee: [''],
-      transportExpenses: [''],
-      hotelExpenses: [''],
+      tuitionFee: [0, Validators.required],
+      transportExpenses: [0, Validators.required],
+      hotelExpenses: [0, Validators.required],
       overview: [''],
-      active: [''],
+      active: true,
       updated: [''],
       updatedBy: [''],
       employee_id: ['']

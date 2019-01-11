@@ -1,8 +1,11 @@
 package aimyamaguchi.co.jp.aimspringsql.curriculum.services;
+import aimyamaguchi.co.jp.aimspringsql.authfilters.JwtTokenProvider;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.models.*;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.repositories.*;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.QAFFILIATIONData;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.QEmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.QPOSITIONData;
 import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.EmployeeRepository;
 import aimyamaguchi.co.jp.aimspringsql.util.CustomValidators;
 import com.querydsl.core.BooleanBuilder;
@@ -39,7 +42,10 @@ public class CvSearchService {
     @Autowired
     private CustomValidators validator;
 
-    public List<String> getCvSearchResults(Map<String, String> map) {
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
+    public List<String> getCvSearchResults(Map<String, String> map, String token) {
 
         QEmployeeMaster e = QEmployeeMaster.employeeMaster;
         QCurriculumModel c = QCurriculumModel.curriculumModel;
@@ -55,6 +61,7 @@ public class CvSearchService {
         QTOOLSData tools = QTOOLSData.tOOLSData;
 
 
+
         String operator = "=";
         Integer experience = 0;
 
@@ -62,6 +69,20 @@ public class CvSearchService {
         filteredUsers
                 .from(e)
                 .leftJoin(e.curriculum, c);
+        System.out.println("Get role " +token);
+        System.out.println("Get role " +jwtTokenProvider.getRole(token));
+
+        QAFFILIATIONData af = QAFFILIATIONData.aFFILIATIONData;
+        QPOSITIONData pos = QPOSITIONData.pOSITIONData;
+
+        if(!jwtTokenProvider.getRole(token).equals("ADMIN") && !jwtTokenProvider.getRole(token).equals("SOUMU")){
+            filteredUsers.where(e.shainDeletedFlag.isFalse())
+                    .join(e.affiliation,af)
+                    .join(e.position,pos)
+                    .where(af.id.in(jwtTokenProvider.getAreas(token)))
+                    .where(pos.id.goe(jwtTokenProvider.getAuthority(token)))
+                    .where(pos.id.loe(900000));
+        }
 
 
         map.entrySet().stream()

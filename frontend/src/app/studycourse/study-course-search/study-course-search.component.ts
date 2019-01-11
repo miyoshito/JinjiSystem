@@ -22,13 +22,13 @@ export class StudyCourseSearchComponent implements OnInit {
               private _router: Router,
               private localeService: BsLocaleService,
               private _employeeService: EmployeeMasterService) {
-                localeService.use('ja')
+                this.localeService.use('ja')
                }
 
-  bsValue: String = new Date().toISOString().slice(0,10);
-  endValue: Date = new Date()
   minMode: BsDatepickerViewMode = 'day';
   bsConfig: Partial<BsDatepickerConfig>;
+  stValue = new Date()
+  edValue = new Date()
 
   isAlive$: Subject<boolean> = new Subject<boolean>()
 
@@ -37,25 +37,36 @@ export class StudyCourseSearchComponent implements OnInit {
   ngOnInit() {
     this.title="教育受講履歴検索画面"
     this.bsConfig = Object.assign(
-      { minMode: this.minMode },
       { containerClass: "theme-red" },
-      { dateInputFormat: 'YYYY/MMMM/dd' },
-      { dateRangeFormat: 'YYYY/MMMM/dd'});
+      { dateInputFormat: 'YYYY/MM/DD' },
+      { dateRangeFormat: 'YYYY/MM/DD' });
     this.buildForm()
+    
+    this.searchForm.valueChanges.subscribe(val =>{
+      if(val.stdate != ''){
+        this.stValue = this.searchForm.get('stdate').value         
+      }
+      if(val.enddate != ''){
+        this.edValue = this.searchForm.get('enddate').value
+      }
+    })
   }
 
   searchAttempt(){
-    console.log('calling' +this.map.size)
     this.map.clear()
-    console.log('after clear' +this.map.size)
     Object.keys(this.searchForm.value)
       .filter(f => this.searchForm.value[f] != '')
-      .forEach(k =>this.map.set(k,this.searchForm.value[k]))
+      .forEach(k => {
+          this.map.set(k,this.searchForm.value[k])
+      })
 
-      if(this.map.get("operator")) this.map.delete("operator")
+      if(this.map.get("stdate")) this.map.set("stdate",this.stValue.toISOString().substring(0,10))
+      if(this.map.get("enddate")) this.map.set("enddate",this.edValue.toISOString().substring(0,10))
+      
+      if(this.map.get("op")) this.map.delete("op")
       if(this.map.get("expenses")){
-        if (this.searchForm.controls.operator.value != ''){
-        let s = this.searchForm.controls.operator.value+this.searchForm.controls.expenses.value
+        if (this.searchForm.get('op').value != ''){
+        let s = this.searchForm.get('op').value+this.searchForm.controls.expenses.value
         this.map.set("expenses", s)
         } else {
         let s = 'eq'+this.searchForm.controls.expenses.value
