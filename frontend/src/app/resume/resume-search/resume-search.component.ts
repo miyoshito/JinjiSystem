@@ -51,23 +51,28 @@ export class ResumeSearchComponent implements OnInit {
     .forEach(k => this.map.set(k,this.searchForm.value[k]))
     
     this._resumeService.searchResumeAttempt(this.map).pipe(
-      takeUntil(this.active$),
-      map(e =>{
+      takeUntil(this.active$))
+      .subscribe(e =>{
         if (e.status == 500){
         alert('許可されていません')
         return
-      }
-        if (!e.body){
+        }
+        else if (e.status == 401){
+          alert ('You are not authorized to do this...')
+          this._router.navigate(['/home'])
+        return
+        }
+        else if (!e.body){
         alert('データーが見つかれません')
         return
-      }      
-      if (e.body.length == 1){
+      }
+        else if (e.body.length == 1){
           this._router.navigate(['/admin/rirekisho/details/'+e.body[0].shainId])
         } else {
         this._resumeService.sendSearchResults(e.body)
         this._router.navigate(['/admin/rirekisho/results'])
         }
-      })).subscribe()
+      }, err => console.log(err))
   }
 
   initializeForm(){

@@ -104,7 +104,7 @@ public class CvSearchService {
                                     .where(DateTimeExpression.currentTimestamp().year()
                                             .subtract(e.shainBirthday.year())
                                             .between(Integer.parseInt(f.getValue()),
-                                                     Integer.parseInt(f.getValue() + 9)));
+                                                     Integer.parseInt(f.getValue()) + 9));
                             break;
                         case "experience":
                             switch (f.getValue().substring(0, 2)) {

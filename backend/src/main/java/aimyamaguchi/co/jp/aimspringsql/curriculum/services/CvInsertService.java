@@ -51,8 +51,8 @@ public class CvInsertService {
         shokureki.setCustomer(cv.getCustomer());
         shokureki.setAssignData(assign.getOne(cv.getAssignData()));
         shokureki.setEmployee_id(er.findByShainId(cv.getEmployee_id()));
-        shokureki.setStartdate(cv.getStartdate());
-        shokureki.setEnddate(cv.getEnddate());
+        shokureki.setStartdate(cv.getStartdate().plusDays(1));
+        shokureki.setEnddate(cv.getEnddate().plusDays(1));
         shokureki.setTargetbusiness(cv.getTargetbusiness());
         shokureki.setActive(true);
 

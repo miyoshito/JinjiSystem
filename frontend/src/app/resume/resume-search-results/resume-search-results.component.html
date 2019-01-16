@@ -20,7 +20,7 @@
         <tr *ngFor="let user of results$ | async; let i = index">
           <td>{{user.shainId}}</td>
           <td>{{user.shainName}}({{user.shainKana}})</td>
-          <td>{{user.shainRecruit}}</td>
+          <td>{{user.shainRecruit?.desc}}</td>
           <td>{{user.resume?.universityName}}<br/>{{user.resume?.formation}}</td>
           <td><ng-container *ngFor="let qualifications of user.resume?.qualifications">
            <span *ngIf="qualifications.active">{{qualifications.qualification_name}}<br/></span>

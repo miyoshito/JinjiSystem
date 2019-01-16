@@ -317,7 +317,7 @@ export class ResumeAddComponent implements OnInit {
 
     }
   }
-
+  
   softDelete(type: string, id: number) {
     this._resumeService.softDeleteDetail(type, id).pipe(
       takeUntil(this.destroySubject$)

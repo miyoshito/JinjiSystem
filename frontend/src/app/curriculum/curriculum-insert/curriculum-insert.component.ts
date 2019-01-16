@@ -29,8 +29,6 @@ export class CurriculumInsertComponent implements OnInit {
         localeService.use('ja')
       }
 
-  bsValue: Date = new Date(2017, 7);
-  endValue: Date = new Date(2018, 10)
   minMode: BsDatepickerViewMode = 'month';
   bsConfig: Partial<BsDatepickerConfig>;
 
@@ -106,10 +104,7 @@ export class CurriculumInsertComponent implements OnInit {
             if (this._route.snapshot.paramMap.get('shid') != null) {
               t.curriculum.map((id, index) => {
                 if (id.id === parseInt(this._route.snapshot.paramMap.get('shid'))) {
-                  this.cvForm.patchValue(t.curriculum[index])
-                  console.log('Start ->' +t.curriculum[index].startdate)
-                  console.log('End ->' +t.curriculum[index].enddate)
-                  console.log(this.cvForm.value)
+                  this.cvForm.patchValue(t.curriculum[index])                  
                   this.cvForm.patchValue({
                     employee_id: t.shainId,
                     industryType: t.curriculum[index].industryTypeId,
@@ -133,8 +128,10 @@ export class CurriculumInsertComponent implements OnInit {
     this.bsConfig = Object.assign(
       { minMode: this.minMode},      
       { containerClass: "theme-red" },
-      { dateInputFormat: 'YYYY/MMMM' },
-      { dateRangeFormat: 'YYYY/MMMM'});
+      { dateInputFormat: 'YYYY/MM' },
+      { dateRangeFormat: 'YYYY/MM' },
+      { showWeekNumbers: false}
+      );
   }
 
 

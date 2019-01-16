@@ -54,11 +54,13 @@ public class ResumeSearchService {
                             filteredUsers.where(qrt.id.eq(Long.valueOf(f.getValue())));
                             break;
                         case "age":
+                            System.out.println("From ->" +f.getValue());
+                            System.out.println("To -> " +f.getValue() + 9);
                             filteredUsers
                                     .where(DateTimeExpression.currentTimestamp().year()
                                             .subtract(e.shainBirthday.year())
                                             .between(Integer.parseInt(f.getValue()),
-                                                    Integer.parseInt(f.getValue() + 9)));
+                                                     Integer.parseInt(f.getValue()) + 9));
                             break;
                         case "study":
                             filteredUsers.where(res.formation.contains(f.getValue()));

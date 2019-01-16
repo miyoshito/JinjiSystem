@@ -4,6 +4,7 @@ import aimyamaguchi.co.jp.aimspringsql.curriculum.models.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -11,8 +12,8 @@ import java.util.Set;
 public class CurriculumDAO {
 
     private Long id;
-    private LocalDate startdate;
-    private LocalDate enddate;
+    private LocalDateTime startdate;
+    private LocalDateTime enddate;
     private String customer;
     private boolean active;
     private boolean deleted;

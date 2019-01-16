@@ -27,7 +27,7 @@ export class EmployeeMasterComponent implements OnInit {
   employeeForm: FormGroup
   
   sex: string[] = ['女','男'];
-  bloodType: String[] = ['A+型','B+型','O+型','AB+型','A-型','B-型','O-型','AB-型']
+  bloodType: String[] = ['A型','B型','O型','AB型']
 
   submitted: boolean
   title: string

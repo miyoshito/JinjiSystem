@@ -21,7 +21,7 @@
         <tr>
           <td>{{user.shainId}}</td>
           <td>{{user.shainName}}<br/>({{user.shainKana}})</td>
-          <td>{{user.shainRecruit}}</td>
+          <td>{{user.shainRecruit?.desc}}</td>
           <td><span>{{ sumOf(user.curriculum) }}</span></td>
           <td>{{getOsandDb(user.curriculum)}}</td>
           <td>{{getToolsandLang(user.curriculum)}}</td>

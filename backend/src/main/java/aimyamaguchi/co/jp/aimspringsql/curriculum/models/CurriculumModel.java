@@ -1,6 +1,7 @@
 package aimyamaguchi.co.jp.aimspringsql.curriculum.models;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.*;
 
@@ -23,10 +24,10 @@ public class CurriculumModel {
     private Long id;
 
     @Column(name="CV_START")
-    private LocalDate startdate;
+    private LocalDateTime startdate;
 
     @Column(name="CV_END")
-    private LocalDate enddate;
+    private LocalDateTime enddate;
 
     @Column(name="CV_CUSTOMER")
     private String customer; //(isso pode ser um m2m no futuro)
@@ -41,7 +42,9 @@ public class CurriculumModel {
     private Long experienceTime;
     @Transient
     public Integer getExperienceTime(){
-        Period period = Period.between(this.startdate.withDayOfMonth(1), this.enddate.withDayOfMonth(1));
+
+
+        Period period = Period.between(this.startdate.withDayOfMonth(1).toLocalDate(), this.enddate.withDayOfMonth(1).toLocalDate());
         if (period.getDays() >= 30 && period.getMonths() < 1){
             return 1;
         }

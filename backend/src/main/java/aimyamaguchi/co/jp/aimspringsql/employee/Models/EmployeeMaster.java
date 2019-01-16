@@ -152,7 +152,7 @@ public class EmployeeMaster implements UserDetails, Serializable{
         final Integer[] tt = {0};
         if (this.getCurriculum().size() > 0) {
             this.getCurriculum().stream().forEach(cv -> {
-                Period period = Period.between(cv.getStartdate().withDayOfMonth(1), cv.getEnddate().withDayOfMonth(1));
+                Period period = Period.between(cv.getStartdate().withDayOfMonth(1).toLocalDate(), cv.getEnddate().withDayOfMonth(1).toLocalDate());
                 if (period.getYears() > 0) {
                     tt[0] += period.getMonths() + (period.getYears() * 12);
                 } else {

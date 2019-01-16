@@ -17,9 +17,9 @@ INSERT INTO m_dbms (dbms_id, active, dbms_desc) VALUES (4, 1, N'SQL Server')
 INSERT INTO m_dbms (dbms_id, active, dbms_desc) VALUES (5, 1, N'PostgreSQL')
 INSERT INTO m_dbms (dbms_id, active, dbms_desc) VALUES (6, 1, N'その他')
 
-INSERT INTO m_kuruma (id, active, car_desc) VALUES (1, 1, N'ー')
-INSERT INTO m_kuruma (id, active, car_desc) VALUES (2, 1, N'軽自動車')
-INSERT INTO m_kuruma (id, active, car_desc) VALUES (3, 1, N'普通自動車')
+INSERT INTO m_kuruma (car_id, active, car_desc) VALUES (1, 1, N'ー')
+INSERT INTO m_kuruma (car_id, active, car_desc) VALUES (2, 1, N'軽自動車')
+INSERT INTO m_kuruma (car_id, active, car_desc) VALUES (3, 1, N'普通自動車')
 
 INSERT INTO m_lang (lang_id, active, lang_desc) VALUES (1, 1, N'Java')
 INSERT INTO m_lang (lang_id, active, lang_desc) VALUES (2, 1, N'JavaScript')

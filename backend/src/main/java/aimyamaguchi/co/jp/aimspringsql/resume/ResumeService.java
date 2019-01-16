@@ -129,46 +129,4 @@ public class ResumeService {
                 break;
         }
     }
-
-    public List<String> searchQueryBuilder(String id, String name, String kana, String recruit, String age, String school, String study, String bunri, String keireki, String shikaku){
-
-        ArrayList<String> queryParam = new ArrayList<>();
-
-        if (valid.isNullValidator(id)) queryParam.add("sha.sha_no = '"+id+"' and ");
-        if (valid.isNullValidator(name)) queryParam.add("sha.sha_name like '%"+name+"%'");
-        if (valid.isNullValidator(kana))queryParam.add("sha.sha_kana like '%"+kana+"%'");
-        if (valid.isNullValidator(recruit))queryParam.add("sha.sha_recruit = '"+recruit+"' ");
-
-        if (valid.isNullValidator(age)) {
-            int start = Integer.parseInt(age);
-            int end = start + 9;
-            queryParam.add("year(getdate()) - year(sha.sha_birthday) between "+start+" and "+end);
-        }
-        if (valid.isNullValidator(study))queryParam.add("ri.ri_study_area like '%"+study+"%' ");
-        if (valid.isNullValidator(bunri))queryParam.add("ri.ri_bunri like '%"+bunri+"%' ");
-        if (valid.isNullValidator(keireki))queryParam.add("kei.rk_school_work like '%"+keireki+"%' or kei.rk_department_affiliation like '%"+keireki+"%'");
-
-
-
-        if (valid.isNullValidator(shikaku))queryParam.add("shi.rs_qualification like '%"+shikaku+"%'");
-        if (valid.isNullValidator(school)) queryParam.add("ri.ri_universityname like '%"+school+"%'");
-        String param = String.join(" and\n", queryParam);
-
-
-
-        Query query = entityManager.createNativeQuery(
-                "SELECT DISTINCT sha.sha_no\n" +
-                "from \n" +
-                "m_shain sha join m_rirekisho ri on sha.sha_rireki = ri.ri_id\n" +
-                "left join m_keireki kei on kei.rk_resume = ri.ri_id\n" +
-                "left join m_shikaku shi on shi.rs_resume = ri.ri_id\n" +
-                "left join m_hyosho hyo on hyo.rh_resume = ri.ri_id\n" +
-                "where\n" + param);
-
-        return query.getResultList();
-    }
-
-
-
-
     }
