@@ -1,6 +1,7 @@
 package aimyamaguchi.co.jp.aimspringsql.employee.Models;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
 
@@ -10,16 +11,16 @@ import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
-import org.hibernate.engine.spi.PersistentAttributeInterceptable;
+
 import org.hibernate.engine.spi.PersistentAttributeInterceptor;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import aimyamaguchi.co.jp.aimspringsql.curriculum.models.CurriculumModel;
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeModel;
 import aimyamaguchi.co.jp.aimspringsql.security.Roles;
+
 
 @Entity
 @Table(name="[M_SHAIN]", schema="[DBO]")
@@ -41,8 +42,9 @@ public class EmployeeMaster implements UserDetails, Serializable{
     @Column(name="SHA_NAME", length=60, nullable=false)
     private String shainName;
 
-    @Column(name="SHA_RECRUIT", length=20, nullable=false)
-    private String shainRecruit; //selectable key (hardcoded)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "SHA_RECRUIT", nullable=false)
+    private RecruitTypeModel shainRecruit;
 
     @Column(name="SHA_KANA", length=60, nullable=false)
     private String shainKana;
@@ -51,14 +53,10 @@ public class EmployeeMaster implements UserDetails, Serializable{
     private Date shainBirthday;
 
     @Column(name="SHA_BLOOD", length=10)
-    private String shainBloodType; //selectable key (hardcoded)
+    private String shainBloodType;
 
     @Column(name="SHA_SEX", length=10, nullable=false)
-    private String shainSex; //selectable key (hardcoded)
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name="SHA_SHOZOKU")
-    private Set<AFFILIATIONData> affiliation;
+    private String shainSex;
 
     @ManyToOne
     @JoinColumn(name="SHA_POSITION")
@@ -118,18 +116,25 @@ public class EmployeeMaster implements UserDetails, Serializable{
     @Column(name="SHA_RESISTER", length=10)
     private String shainRegisteredBy; //userid
 
+    @Column (name="SHA_LASTUPDATE")
+    private LocalDate shainLastUpdated;
+
+    @Column (name="SHA_UPDATEDBY")
+    private String shainUpdatedBy;
+
     @Column(name="SHA_DELETEFLG")
     private boolean shainDeletedFlag;
 
-/*    @LazyToOne(LazyToOneOption.NO_PROXY)
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "employee", optional = true)
-    private ResumeModel resume;*/
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="SHA_SHOZOKU")
+    private Set<AFFILIATIONData> affiliation;
 
     @OneToOne(optional = false, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="SHA_RIREKI")
     private ResumeModel resume;
 
     @OneToMany(mappedBy = "employee_id", fetch = FetchType.LAZY)
+    @OrderBy("enddate DESC")
     private List<CurriculumModel> curriculum;
 
     @OneToMany(mappedBy ="employee", fetch = FetchType.LAZY)
@@ -225,11 +230,11 @@ public class EmployeeMaster implements UserDetails, Serializable{
         this.shainName = shainName;
     }
 
-    public String getShainRecruit() {
+    public RecruitTypeModel getShainRecruit() {
         return shainRecruit;
     }
 
-    public void setShainRecruit(String shainRecruit) {
+    public void setShainRecruit(RecruitTypeModel shainRecruit) {
         this.shainRecruit = shainRecruit;
     }
 
@@ -459,4 +464,19 @@ public class EmployeeMaster implements UserDetails, Serializable{
         this.educations = educations;
     }
 
+    public LocalDate getShainLastUpdated() {
+        return shainLastUpdated;
+    }
+
+    public void setShainLastUpdated(LocalDate shainLastUpdated) {
+        this.shainLastUpdated = shainLastUpdated;
+    }
+
+    public String getShainUpdatedBy() {
+        return shainUpdatedBy;
+    }
+
+    public void setShainUpdatedBy(String shainUpdatedBy) {
+        this.shainUpdatedBy = shainUpdatedBy;
+    }
 }

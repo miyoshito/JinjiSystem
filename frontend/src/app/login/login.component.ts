@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
     if(localStorage.getItem('currentUser') != null){localStorage.removeItem('currentUser')}
     let form: User = new User('','')
     form.username =  this.loginform.get("username").value
-    form.password = btoa(this.loginform.get("password").value)
+    form.password = this.loginform.get("password").value
     this.sub = this.loginService.doLogin(form)    
     .subscribe(res => {
         localStorage.setItem('currentUser', res.headers.get('Authorization'))        

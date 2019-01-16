@@ -4,10 +4,7 @@ import aimyamaguchi.co.jp.aimspringsql.curriculum.models.INDUSTRYData;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.repositories.*;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.POSITIONData;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.QPOSITIONData;
-import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.AffiliationRepository;
-import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.CarmodelRepository;
-import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.PositionRepository;
-import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.WorkAreaRepository;
+import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.*;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +48,8 @@ public class ConstantsViewBuilder {
     private IndustryRepository indListr;
     @Autowired
     private AssignRepository assignr;
+    @Autowired
+    private RecruitRepository recruit;
 
 
     public Map<String, Object> getEmpMasterParams(){
@@ -63,6 +62,7 @@ public class ConstantsViewBuilder {
         map.put("POSITION", positions.fetch());
         map.put("AFFILIATION", affiliation.findAll());
         map.put("CARMODEL", carmodel.findAll());
+        map.put("RECRUIT", recruit.findAll());
 
         return map;
     }

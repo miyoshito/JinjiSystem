@@ -2,6 +2,7 @@ package aimyamaguchi.co.jp.aimspringsql.resume;
 
 
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.QEmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.QRecruitTypeModel;
 import com.querydsl.core.types.dsl.DateTimeExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -28,6 +29,7 @@ public class ResumeSearchService {
         QCommendation com = QCommendation.commendation;
         QQualification qlf = QQualification.qualification;
         QCareer crr = QCareer.career;
+        QRecruitTypeModel qrt = QRecruitTypeModel.recruitTypeModel;
 
         JPAQuery<String> filteredUsers = new JPAQueryFactory(entityManager).selectDistinct(e.shainId);
 
@@ -48,7 +50,8 @@ public class ResumeSearchService {
                             filteredUsers.where(e.shainKana.contains(f.getValue()));
                             break;
                         case "recruit":
-                            filteredUsers.where(e.shainRecruit.contains(f.getValue()));
+                            filteredUsers.join(e.shainRecruit, qrt);
+                            filteredUsers.where(qrt.id.eq(Long.valueOf(f.getValue())));
                             break;
                         case "age":
                             filteredUsers

@@ -122,7 +122,8 @@ export class ResumeAddComponent implements OnInit {
             resumeId: val.resume.resumeId,
             formation: val.resume.formation,
             universityName: val.resume.universityName,
-            bunri: val.resume.bunri
+            bunri: val.resume.bunri,
+            notes: val.resume.notes
           })
           for (let i of val.resume.careers){
             console.log(val.resume.careers.length)

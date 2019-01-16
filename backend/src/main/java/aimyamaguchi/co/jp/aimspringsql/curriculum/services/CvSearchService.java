@@ -2,10 +2,7 @@ package aimyamaguchi.co.jp.aimspringsql.curriculum.services;
 import aimyamaguchi.co.jp.aimspringsql.authfilters.JwtTokenProvider;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.models.*;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.repositories.*;
-import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
-import aimyamaguchi.co.jp.aimspringsql.employee.Models.QAFFILIATIONData;
-import aimyamaguchi.co.jp.aimspringsql.employee.Models.QEmployeeMaster;
-import aimyamaguchi.co.jp.aimspringsql.employee.Models.QPOSITIONData;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.*;
 import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.EmployeeRepository;
 import aimyamaguchi.co.jp.aimspringsql.util.CustomValidators;
 import com.querydsl.core.BooleanBuilder;
@@ -48,6 +45,7 @@ public class CvSearchService {
     public List<String> getCvSearchResults(Map<String, String> map, String token) {
 
         QEmployeeMaster e = QEmployeeMaster.employeeMaster;
+        QRecruitTypeModel qrt = QRecruitTypeModel.recruitTypeModel;
         QCurriculumModel c = QCurriculumModel.curriculumModel;
         QINDUSTRYData indt = QINDUSTRYData.iNDUSTRYData;        //tem a list<>
         QINDCLASSIFICATIONData indc = QINDCLASSIFICATIONData.iNDCLASSIFICATIONData; //tem a ck
@@ -98,7 +96,8 @@ public class CvSearchService {
                             filteredUsers.where(e.shainKana.contains(f.getValue()));
                             break;
                         case "recruit":
-                            filteredUsers.where(e.shainRecruit.contains(f.getValue()));
+                            filteredUsers.leftJoin(e.shainRecruit, qrt);
+                            filteredUsers.where(qrt.id.eq(Long.valueOf(f.getValue())));
                             break;
                         case "age":
                             filteredUsers

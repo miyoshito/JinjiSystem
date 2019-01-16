@@ -47,12 +47,9 @@ public class AuthorizationService {
     //login system
     public ResponseEntity<String> authenticationAttempt(String username, String password){
         EmployeeMaster user = employeeRepository.findByShainId(username);
-        byte[] pwd = Base64.getDecoder().decode(password);
-        String decoded = new String(pwd, Charset.forName("UTF-8"));
-        System.out.println(decoded);
         HttpHeaders responseHeaders = new HttpHeaders();
         try {
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, decoded));
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
         List<Long> area = user.getAffiliation().stream().map(AFFILIATIONData::getId).collect(Collectors.toList());
         responseHeaders.add("Authorization", jwtTokenProvider.createToken(username, user.getRole(), area, user.getPosition().getId()));
         return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);

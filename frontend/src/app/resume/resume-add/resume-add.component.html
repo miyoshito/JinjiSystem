@@ -82,11 +82,11 @@
   <div class="row">
     <div class="col-md-4">
       <span>出身校</span>
-      <input type="text" class="form-control" value="{{user?.resume?.universityName}}" formControlName="formation">
+      <input type="text" class="form-control" value="{{user?.resume?.universityName}}" formControlName="universityName">
     </div>
     <div class="col-md-4">
       <span>出身学部・学科</span>
-      <input type="text" class="form-control" value="{{user?.resume?.formation}}" formControlName="universityName">
+      <input type="text" class="form-control" value="{{user?.resume?.formation}}" formControlName="formation">
     </div>
     <div class="col-md-4">
       <span>文理</span>
@@ -162,7 +162,7 @@
                 <td><input type="text" class="form-control" formControlName="qualification_name"></td>
                 <td><select class="custom-select" formControlName="qualification_result">
                     <option value="合格">合格</option>
-                    <option value="不合格">不合格</option>
+                    <option value="取得">取得</option>
                   </select>
                 </td>
                 <td>

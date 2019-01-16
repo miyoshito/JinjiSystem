@@ -1,5 +1,6 @@
 package aimyamaguchi.co.jp.aimspringsql.employee.Services;
 
+import aimyamaguchi.co.jp.aimspringsql.authfilters.JwtTokenProvider;
 import aimyamaguchi.co.jp.aimspringsql.constants.SequenceInterface;
 import aimyamaguchi.co.jp.aimspringsql.constants.Sequences;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
@@ -12,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Service
@@ -24,17 +26,28 @@ public class EmployeeInsertFunctions {
     @Autowired
     private SearchFilters sf;
 
+    @Autowired
+    private JwtTokenProvider jwt;
 
-    public void insertEmployee(EmployeeMaster employee, HttpServletRequest reqs){
+
+    public void insertEmployee(EmployeeMaster employee, HttpServletRequest req){
 
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-        String token = reqs.getHeader("authorization");
+        String token = req.getHeader("authorization");
 
         if (!employee.getShainId().equals("") && employeeRepository.findByShainId(employee.getShainId()) != null){
+
+            employee.setShainLastUpdated(LocalDate.now());
+            employee.setShainUpdatedBy(jwt.getUsername(jwt.resolveToken(req)));
+
             employee.setResume(sf.getEmployeeWithResume(employee.getShainId()).getResume());
             employee.setShainPassword(sf.getEmployeeData(employee.getShainId()).getShainPassword());
             employeeRepository.save(employee);
+
+
+
+
         } else {
             if (employee.getShainId().equals("")) {
                 String nextSeq = seq.findBySeqTablename("m_shain").getSeqValue();

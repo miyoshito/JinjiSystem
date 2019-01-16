@@ -230,13 +230,12 @@ export class EmployeeMasterComponent implements OnInit {
       shainRetiredDate: [''],
       shainRetired: false,
       shainCarModel: this.carForm,
-      role: this._fb.group ({roleid: 2}), //SE
+      role: this._fb.group ({roleid: 3}), //SE
       shainNotes: [''],
       shainRegisterDate: [''],
       shainRegisteredBy: [''],
       shainDeletedFlag: false
     })
-
   }
 }
 

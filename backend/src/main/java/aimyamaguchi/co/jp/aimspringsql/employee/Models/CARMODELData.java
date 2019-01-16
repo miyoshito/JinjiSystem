@@ -12,10 +12,10 @@ import java.util.List;
 public class CARMODELData {
 
     @Id
-    @Column(name="id")
+    @Column(name="CAR_ID")
     private Long id;
     @Column(name="car_desc")
-    private String tdesc;
+    private String desc;
     @Column(name="active")
     private boolean active;
 

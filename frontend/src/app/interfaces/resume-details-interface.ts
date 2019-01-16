@@ -9,6 +9,7 @@ export interface Resume {
     qualifications: Qualifications[]
     commendations: Commendations[]
     employee: miniEmployee
+    notes: string
 }
 
 export interface miniEmployee{
@@ -23,7 +24,8 @@ export class Resume {
         employee: miniEmployee,
         @Optional() careers: Career[],
         @Optional() qualifications: Qualifications[],
-        @Optional() commendations: Commendations[]
+        @Optional() commendations: Commendations[],
+        notes: string
     ){
         this.resumeId = resumeId
         this.universityName = universityName
@@ -33,6 +35,7 @@ export class Resume {
         this.commendations = commendations
         this.bunri = bunri
         this.employee = employee
+        this.notes = notes
     }
 }
 
