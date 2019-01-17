@@ -10,6 +10,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 import { BsDatepickerConfig, BsDatepickerViewMode, BsLocaleService } from 'ngx-bootstrap/datepicker';
+import * as url from 'src/app/url-settings';
 
 @Component({
   selector: 'app-employee-master',
@@ -83,7 +84,7 @@ export class EmployeeMasterComponent implements OnInit {
     { dateInputFormat: 'YYYY/MM/DD' },
     { dateRangeFormat: 'YYYY/MM/DD'});
   
-  if ((this._router.url).endsWith('/edit')){    
+  if ((this._router.url).endsWith('/edit')){
       this.selectedUser$ = this._employeeService.employee$
       this._employeeService.getShainData(this._route.snapshot.paramMap.get('id'))      
       this.loadUserData()
@@ -199,18 +200,20 @@ export class EmployeeMasterComponent implements OnInit {
   get f() { return this.employeeForm.controls }
   get p() { return this.positionForm.controls }
   get a() {return this.areaForm.controls}
+  get r() { return this.recruitForm.controls }
   get car() {return this.carForm.controls}
   
   positionForm: FormGroup = this._fb.group({id: ['',Validators.required]})
   areaForm: FormGroup = this._fb.group({id: ['',Validators.required]})
   carForm: FormGroup = this._fb.group({id: [1,Validators.required]})
+  recruitForm: FormGroup = this._fb.group({id: ['',Validators.required]})
   
   initializeForm(){
     this.employeeForm = this._fb.group({
       shainId: [''],
       shainPassword: [''],
       shainName: ['', Validators.required],
-      shainRecruit: ['', Validators.required],
+      shainRecruit: this.recruitForm,
       shainKana: ['', Validators.required],
       shainBirthday: ['', Validators.required],
       shainBloodType: [''],

@@ -6,6 +6,8 @@ import { Employee, MinEmployee } from 'src/app/interfaces/employee';
 import { BroadcastService } from 'src/app/services/broadcast.service';
 import { LoginService } from 'src/app/services/login.service';
 
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -26,7 +28,8 @@ export class ProfileService {
     return this._http.get<MinEmployee>(API_URL + '/se/getmyinfos', { observe: 'response' }).subscribe(data => {
       this._cacheUserSource.next(data.body)
       this._broadcastService.pushAuthentication(true)
-      this._broadcastService.pushAuthorization(data.body.role)
+      this._broadcastService.pushAuthorization(data.body.admin)
+      this._broadcastService.pushGroup(data.body.group)
     },
       err => {
         this._loginService.logout()

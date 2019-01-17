@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 
-@Table(name="M_KEIREKI")
+@Table(name="RRS_KEIREKI")
 @Entity
 @Data
 public class Career implements Serializable {

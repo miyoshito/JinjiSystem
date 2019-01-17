@@ -23,6 +23,9 @@ export class CurriculumDetailsComponent implements OnInit {
   displayButton: boolean
   user: Employee  
   isAlive$: Subject<boolean> = new Subject<boolean>()
+
+ 
+
   constructor(private _profileService: ProfileService,
               private _broadcastService: BroadcastService,
               private _employeeService: EmployeeMasterService,
@@ -31,6 +34,7 @@ export class CurriculumDetailsComponent implements OnInit {
               private _curriculumService: CurriculumService) { }
 
   ngOnInit() {    
+    
     if (this._router.url.startsWith('/admin')) {
       this.shainid = this._route.snapshot.paramMap.get('id')
       this.admin$ = true
@@ -75,15 +79,15 @@ export class CurriculumDetailsComponent implements OnInit {
   }
 
   editSR(id: number){
-    this.admin$ ? this._router.navigate(['/admin/shokumurirekisho/edit/'+this.shainid+'/'+id]) :
-    this._router.navigate(['profile/shokumurirekisho/edit/'+this.shainid+'/'+id])
+    this.admin$ ? this._router.navigate(['/public/shokumurirekisho/edit/'+this.shainid+'/'+id]) :
+    this._router.navigate(['/public/shokumurirekisho/edit/'+this.shainid+'/'+id])
   }
 
   addNewSR(){
     this._broadcastService.userAuthorization$.pipe(takeUntil(this.isAlive$), map(auth =>{
-      if (auth === 'ADMIN') {
-        this._router.navigate(['admin/shokumurirekisho/'+this.shainid+'/add'])
-      } else this._router.navigate(['profile/shokumurirekisho/add'])
+      if (auth) {
+        this._router.navigate(['public/shokumurirekisho/'+this.shainid+'/add'])
+      } else this._router.navigate(['public/shokumurirekisho/add'])
     })).subscribe()
   }
 

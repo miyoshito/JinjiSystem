@@ -19,16 +19,15 @@
       <div class="col-md-3">
         <span>フリガナ: </span>
         <input type="text" class="form-control" formControlName="kana">
-      </div>
-      <div class="col-md-3">
-        <span>採用区分: </span>
-        <select class="custom-select custom-select" formControlName="recruit">
-          <option selected value=""></option>
-          <option value="none">ー</option>
-          <option value="graduated">新卒</option>
-          <option value="career">キャリア</option>
-        </select>
-      </div>
+      </div>      
+      <ng-container *ngIf="params$ | async; let data">
+          <div class="col-md-3">
+            <span>採用区分: </span>
+            <select class="custom-select custom-select" formControlName="recruit">
+              <option *ngFor="let rec of data.RECRUIT" value="{{rec.id}}">{{rec.desc}}</option>
+            </select>
+          </div>
+        </ng-container>      
     </div>
 
     <div class="row">

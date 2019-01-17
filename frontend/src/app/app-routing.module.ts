@@ -27,71 +27,62 @@ import { StudyCourseSearchComponent } from './studycourse/study-course-search/st
 import { StudyCourseEditComponent } from './studycourse/study-course-edit/study-course-edit.component';
 import { StudyCourseResultsComponent } from './studycourse/study-course-results/study-course-results.component';
 import { StudyCourseDetailsComponent } from './studycourse/study-course-details/study-course-details.component';
+import { SoumuGuardService } from './services/guards/soumu-guard.service';
+import { AdminGuardService } from './services/guards/admin-guard.service';
 
 const routes: Routes = [
   // Login routes
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: '404', component: NotFoundComponent},
-  {path: 'home', component: HomeComponent},
-  
+  {path: 'home', component: HomeComponent},  
   {path: 'login', component: LoginComponent, canActivate:[LoginGuardService]},
   // User parent routes
 
-  //URL de direcionamento padrao de todos os usuarios
-  {path: 'profile', children:[
-    {path: '', component: EmployeeMasterComponent},
+  {path: 'public', children:[
+    {path: 'skillmap', component: SkillMapDetailsComponent},
+    {path: 'qualifications', component: QualificationsComponent},
+
+    {path: 'profile', component: EmployeeMasterComponent},
+
     {path: 'shokumurirekisho', children:[
       {path: '', component: CurriculumDetailsComponent},
       {path: 'add', component: CurriculumInsertComponent},
-      {path: 'edit/:uid/:shid', component: CurriculumInsertComponent},
-    ]},    
-    {path: 'skillmap', component: SkillMapDetailsComponent},
-    {path: 'qualifications', component: QualificationsComponent},
-    {path: 'studycourses', children:[
+      {path: 'search', component: CurriculumSearchComponent, canActivate: [RoleGuardService]},
+      {path: 'list', component: CurriculumListComponent, canActivate: [RoleGuardService]},
+      {path: ':uid/add', component: CurriculumInsertComponent, canActivate: [RoleGuardService]},
+      {path: 'details/:id', component: CurriculumDetailsComponent, canActivate: [RoleGuardService]},
+      {path: 'edit/:uid/:shid', component: CurriculumInsertComponent}
+    ]},
+
+    {path: 'studycourse', children:[
       {path: '', component: StudyCourseDetailsComponent},
       {path: 'add', component: StudyCourseEditComponent},
       {path: ':scid/edit', component: StudyCourseEditComponent},
+      {path: 'search', component: StudyCourseSearchComponent, canActivate: [RoleGuardService]},          
+      {path: 'details/:uid', component: StudyCourseDetailsComponent, canActivate: [RoleGuardService]},
+      {path: 'list', component: StudyCourseResultsComponent, canActivate: [RoleGuardService]},
+      {path: ':uid/:scid/edit', component: StudyCourseEditComponent, canActivate: [RoleGuardService]},
+      {path: ':uid/add', component: StudyCourseEditComponent, canActivate: [RoleGuardService]}
     ]},
-  ],canActivate:[AuthGuardService]},
+  ]},
+
+  {path: 'soumu', children:[
+    {path: 'rirekisho', children:[
+      {path: 'add', component: ResumeAddComponent},
+      {path: 'edit/:id', component: ResumeAddComponent},
+      {path: 'search', component: ResumeSearchComponent},
+      {path: 'results', component: ResumeSearchResultsComponent},
+      {path: 'details/:id', component: ResumeDetailsComponent}
+    ]}
+  ], canActivate: [SoumuGuardService]},
 
   //URL de direcionamento pra quem tem permissoes de administrador...
-  {path: 'admin',
-    children:[
+  {path: 'admin', children:[
       {path: 'employee-master', component: EmployeeMasterComponent},
       {path: 'employee-list', component: EmployeeListComponent},
       {path: 'employee-search', component: EmployeeSearchComponent},
-      {path: 'skillmap', component: SkillMapDetailsComponent},
-      {path: 'systemsettings', component: SystemSettingsComponent},
-      {path: 'rirekisho', children:[
-          {path: 'add', component: ResumeAddComponent},
-          {path: 'edit/:id', component: ResumeAddComponent},
-          {path: 'search', component: ResumeSearchComponent},
-          {path: 'results', component: ResumeSearchResultsComponent},
-          {path: 'details/:id', component: ResumeDetailsComponent}
-      ]},
-      {path: 'shokumurirekisho', children:[
-          {path: 'edit/:uid/:shid', component: CurriculumInsertComponent},
-          {path: 'details/:id', component: CurriculumDetailsComponent},
-          {path: ':uid/add', component: CurriculumInsertComponent},
-          {path: 'search', component: CurriculumSearchComponent},
-          {path: 'list', component: CurriculumListComponent}
-      ]},
-      {path: 'studycourse', children: [
-          {path: 'search', component: StudyCourseSearchComponent},          
-          {path: 'details/:uid', component: StudyCourseDetailsComponent}, //me leva pra todos os sc da pessoa
-          {path: 'list', component: StudyCourseResultsComponent}, //me leva pra lista de pessoas          
-          {path: ':uid/:scid/edit', component: StudyCourseEditComponent},
-          {path: ':uid/add', component: StudyCourseEditComponent}
-      ]},
-      {path: 'profile/:id', children:[
-        {path: '', component: ProfileComponent},
-        {path: 'edit', component: EmployeeMasterComponent},
-        {path: 'resume/add', component: ResumeAddComponent},
-        {path: 'resume/edit', component: ResumeAddComponent},
-        {path: 'curriculum/add', component: CurriculumInsertComponent},
-        {path: 'curriculum/edit', component: CurriculumInsertComponent}
-      ]}
-  ],canActivate:[RoleGuardService]},
+      {path: 'systemsettings', component: SystemSettingsComponent}
+  ], canActivate: [AdminGuardService]},
   //mapeando o direcionamento pra paginas inexistentes...
   {path: '**', redirectTo: '404' }
 ]

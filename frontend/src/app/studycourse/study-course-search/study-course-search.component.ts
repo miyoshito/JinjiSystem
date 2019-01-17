@@ -82,10 +82,10 @@ export class StudyCourseSearchComponent implements OnInit {
         return
       } else if (res.body.length == 1) {
         this._employeeService.getShainData(res.body[0].shainId,false,false,true)
-        this._router.navigate(['/admin/studycourse/details/'+res.body[0].shainId])
+        this._router.navigate(['/public/studycourse/details/'+res.body[0].shainId])
       } else {
         this._scService.pushSearchResults(res.body)
-        this._router.navigate(['/admin/studycourse/list'])
+        this._router.navigate(['/public/studycourse/list'])
       }
     })).subscribe()
   }

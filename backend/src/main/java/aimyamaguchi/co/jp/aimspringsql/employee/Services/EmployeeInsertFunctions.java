@@ -37,10 +37,6 @@ public class EmployeeInsertFunctions {
         String token = req.getHeader("authorization");
 
         if (!employee.getShainId().equals("") && employeeRepository.findByShainId(employee.getShainId()) != null){
-
-            employee.setShainLastUpdated(LocalDate.now());
-            employee.setShainUpdatedBy(jwt.getUsername(jwt.resolveToken(req)));
-
             employee.setResume(sf.getEmployeeWithResume(employee.getShainId()).getResume());
             employee.setShainPassword(sf.getEmployeeData(employee.getShainId()).getShainPassword());
             employeeRepository.save(employee);
@@ -58,15 +54,12 @@ public class EmployeeInsertFunctions {
                 sequence.setSeqValue(i.toString());
                 seq.save(sequence);
             }
-            if(employee.getPassword().equals("") || employee.getPassword() == null)
+            if(employee.getShainPassword().equals("") || employee.getShainPassword() == null)
                 employee.setShainPassword(passwordEncoder.encode("aim123456"));
             else
-                employee.setShainPassword(passwordEncoder.encode(employee.getPassword()));
+                employee.setShainPassword(passwordEncoder.encode(employee.getShainPassword()));
             Date dt = new Date();
-
             employee.setResume(new ResumeModel());
-
-            employee.setShainRegisterDate(dt);
             employeeRepository.save(employee);
 
         }

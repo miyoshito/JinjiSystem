@@ -23,7 +23,7 @@ export class CurriculumListComponent implements OnInit {
   }
 
   showRirekisho(id: string){
-    this._router.navigate(['/admin/shokumurirekisho/details/'+id])
+    this._router.navigate(['/public/shokumurirekisho/details/'+id])
   }
 
 

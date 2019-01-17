@@ -1,7 +1,7 @@
 <div>
   <span fxShow.lt-md="false" fxShow.gt-sm="true">
 
-    <button mat-button [matMenuTriggerFor]="resume">
+    <button *ngIf="displayRirekisho" mat-button [matMenuTriggerFor]="resume">
       履歴書
       <mat-icon class="ml-1">arrow_drop_down</mat-icon>
     </button>
@@ -44,7 +44,7 @@
   </span>
 
   <mat-menu #resume="matMenu" overlapTrigger="false">
-    <a routerLink="/admin/rirekisho/search" routerLinkActive="active">
+    <a routerLink="/soumu/rirekisho/search" routerLinkActive="active">
       <button mat-menu-item>
         <span>検索</span>
       </button>
@@ -52,25 +52,11 @@
   </mat-menu>
 
   <mat-menu #curriculum="matMenu" overlapTrigger="false">
-    <a routerLink="/admin/shokumurirekisho/search" routerLinkActive="active">
+    <a routerLink="/public/shokumurirekisho/search" routerLinkActive="active">
       <button mat-menu-item>
         <span>検索</span>
       </button>
-    </a>
-    <!--
-    <a routerLink="/admin/shokumurirekisho/list" routerLinkActive="active">
-      <button mat-menu-item>
-        <span>リスト</span>
-      </button>
-    </a>
-    -->
-    <!--
-    <a routerLink="/admin/shokumurirekisho/add" routerLinkActive="active">
-      <button mat-menu-item>
-        <span>登録</span>
-      </button>
-    </a>
-    -->
+    </a>   
   </mat-menu>
   
   <mat-menu #credentials="matMenu" overlapTrigger="false">
@@ -82,7 +68,7 @@
   </mat-menu>
 
   <mat-menu #educational="matMenu" overlapTrigger="false">
-    <a routerLink="/admin/studycourse/search" routerLinkActive="active">
+    <a routerLink="/public/studycourse/search" routerLinkActive="active">
       <button mat-menu-item>
         <span>検索</span>
       </button>
@@ -99,9 +85,7 @@
       </button>
     </a>
     -->
-    
   </mat-menu>
-
   
     <mat-menu #skillmap="matMenu" overlapTrigger="false">
     <a routerLink="404" routerLinkActive="active">
@@ -130,7 +114,7 @@
   </mat-menu>
 
   <mat-menu #accountmenu="matMenu" overlapTrigger="false">
-    <a routerLink="/profile" routerLinkActive="active">
+    <a routerLink="/public/profile" routerLinkActive="active">
       <button mat-menu-item>
         <span>プロフィールを見る</span>
       </button>

@@ -29,11 +29,11 @@
       </div>
       <div class="col-md-3">
         <span>採用区分: </span>
-        <select class="custom-select" formControlName="shainRecruit" [ngClass]="{ 'is-invalid': submitted && f.shainRecruit.errors }">
-          <option value="ー">ー</option>
-          <option value="新卒">新卒</option>
-          <option value="キャリア">キャリア</option>
+        <div formGroupName="shainRecruit">
+        <select class="custom-select" formControlName="id" [ngClass]="{ 'is-invalid': submitted && r.id.errors }">
+          <option *ngFor="let rectype of data.RECRUIT" value = "{{rectype.id}}">{{rectype.desc}}</option>
         </select>
+      </div>
       </div>
     </div>
     <div class="row">
@@ -153,7 +153,7 @@
         <span>車種</span>
         <div formGroupName="shainCarModel">
           <select class="custom-select" formControlName="id" [ngClass]="{ 'is-invalid': submitted && car.id.errors }">
-            <option *ngFor="let cars of data.CARMODEL" value="{{cars.id}}">{{cars.tdesc}}</option>
+            <option *ngFor="let cars of data.CARMODEL" value="{{cars.id}}">{{cars.desc}}</option>
           </select>
         </div>
       </div>

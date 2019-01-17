@@ -1,11 +1,12 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { LoginService } from 'src/app/services/login.service';
 import { Router } from '@angular/router';
-import { Subscription, Observable, BehaviorSubject } from 'rxjs';
+import { Subscription, Observable, BehaviorSubject, Subject } from 'rxjs';
 import { AuthService } from 'src/app/services/guards/auth.service';
 import { BroadcastService } from 'src/app/services/broadcast.service';
 import { Employee, MinEmployee } from '../interfaces/employee';
 import { ProfileService } from 'src/app/services/profile.service';
+import { takeUntil, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -18,15 +19,19 @@ export class HeaderComponent implements OnInit {
     employeeName: string
 
     loggedUser$: Observable<MinEmployee>
+
     isLoggedIn$: Observable<boolean>
-    authorities$: Observable<String>
+    isAdmin$: Observable<boolean>
+
+    userGroups : Observable<number[]>
+
+    isAlive$: Subject<boolean> = new Subject<boolean>()
+
     disconnect$: Observable<boolean>
     
     menuStyle: string
 
     home$: Observable<boolean> = new Observable<boolean>()
-
-    subs: Subscription
 
     constructor(private _loginService: LoginService,
                 public _route: Router,
@@ -38,9 +43,12 @@ export class HeaderComponent implements OnInit {
                 }
 
   ngOnInit() {
-    this.subs = this._broadcastService.userAuthorization$.subscribe(auth =>{     
-        this.menuStyle = auth
-    })
+    
+    this._broadcastService.userAuthorization$.pipe(takeUntil(this.isAlive$), map(auth =>{
+      if (auth){
+        this.menuStyle = 'ADMIN'
+      } else this.menuStyle = 'USER'
+    })).subscribe()
     this.isLoggedIn$ = this._broadcastService.userAuthenticated$  
     this.loggedUser$ = this._profileService.cachedUser$
   }
@@ -48,7 +56,7 @@ export class HeaderComponent implements OnInit {
   logout(trying: boolean) {
     if (trying){
     this._broadcastService.pushAuthentication(false)
-    this.subs.unsubscribe()
+    this.isAlive$.next(true)
     this._route.navigate(['/'])
     this._loginService.logout()
     }

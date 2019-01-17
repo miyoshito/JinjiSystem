@@ -37,7 +37,7 @@ public class StudyCourseController {
 
         @PutMapping("/admin/studycourse/softdelete")
     public ResponseEntity<String> softDeleteSC(@RequestParam(value="id", required = true) Long id, HttpServletRequest req){
-        if (!jwt.getRole(jwt.resolveToken(req)).equals("ADMIN")){
+        if (!jwt.isAdmin(jwt.resolveToken(req))){
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         if (scs.softDeleteSC(id))

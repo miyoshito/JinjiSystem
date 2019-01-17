@@ -53,7 +53,7 @@ export class CurriculumService {
           return
         } else {
           this.userSource_.next(res.body)
-          this._router.navigate(['/admin/shokumurirekisho/list'])
+          this._router.navigate(['/public/shokumurirekisho/list'])
         }
     })
   }

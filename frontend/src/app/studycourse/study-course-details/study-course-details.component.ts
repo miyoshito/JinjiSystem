@@ -62,13 +62,13 @@ export class StudyCourseDetailsComponent implements OnInit {
   }
 
   edit(uid: number, scid: number){
-    if (this._router.url.startsWith('/admin')) this._router.navigate(['/admin/studycourse/'+uid+'/'+scid+'/edit'])
-    else this._router.navigate(['/profile/studycourses/'+scid+'/edit'])
+    if (this._router.url.startsWith('/public')) this._router.navigate(['/public/studycourse/'+uid+'/'+scid+'/edit'])
+    else this._router.navigate(['/public/studycourses/'+scid+'/edit'])
   }
 
   add(uid: number){
-    if (this._router.url.startsWith('/admin')) this._router.navigate(['/admin/studycourse/'+uid+'/add'])
-    else this._router.navigate(['/profile/studycourses/add'])
+    if (this._router.url.startsWith('/public')) this._router.navigate(['/public/studycourse/'+uid+'/add'])
+    else this._router.navigate(['/public/studycourses/add'])
   }
 
 }

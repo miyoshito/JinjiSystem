@@ -54,12 +54,11 @@ public class EmployeeGetController {
          */
         try {
             jwtValidator.validateToken(jwtValidator.resolveToken(req));
-            String authorization = jwtValidator.getRole(jwtValidator.resolveToken(req));
             EmployeeMaster emp = sf.getEmployeeData(id);
             //as 3 funcoes servem soh pra eu forcar o load, ja que os 2 sao lazy.
             if (cv) emp.getCurriculum().size();
             if (education) emp.getEducations().size();
-            if (resume && authorization.equals("ADMIN")) { //garantindo que pra dar um get nisso, a role tem que ser admin!
+            if (resume && jwtValidator.getAreas(jwtValidator.resolveToken(req)).contains(3)) {
                 sf.getResumeById(emp.getResume().getResumeId());
             }
             return new ResponseEntity<>(sf.getEmployeeData(id), HttpStatus.OK);
@@ -78,9 +77,9 @@ public class EmployeeGetController {
                 EmployeeMin em = new EmployeeMin();
                 em.setId(e.getShainId());
                 em.setFullName(e.getShainName());
-                String affiliation = String.join("/", e.getAffiliation().stream().map(AFFILIATIONData::getDesc).collect(Collectors.toList()));
-                em.setGroup(affiliation);
-                em.setRole(e.getRole().getRoledesc());
+                //String affiliation = String.join("/", e.getAffiliation().stream().map(AFFILIATIONData::getDesc).collect(Collectors.toList()));
+                em.setGroup(e.getAffiliation());
+                em.setAdmin(e.isAdmin());
                 return new ResponseEntity<>(em, HttpStatus.OK);
             }
     }
@@ -95,7 +94,7 @@ public class EmployeeGetController {
     ){
         try {
             EmployeeMaster e = sf.getEmployeeData(id);
-            if (resume && jwtValidator.getRole(jwtValidator.resolveToken(req)).equals("ADMIN")) {
+            if (resume && jwtValidator.isAdmin(jwtValidator.resolveToken(req))) {
                 sf.getResumeById(e.getResume().getResumeId());
             }
             if (cv) {

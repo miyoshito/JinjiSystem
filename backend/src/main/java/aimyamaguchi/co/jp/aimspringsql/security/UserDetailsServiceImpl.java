@@ -22,13 +22,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         EmployeeMaster employee = er.findByShainId(username);
-        Set<Roles> authorities = new HashSet<Roles>();
-        
+
         if (employee.getShainId().equals("")) throw new UsernameNotFoundException("Could not find the user "+username);
-
-        authorities.add(employee.getRole());
-
-        return new User(employee.getUsername(), employee.getPassword(), authorities);
+        return new User(employee.getShainId(), employee.getShainPassword(), new HashSet<>());
 	}
 
 }

@@ -35,7 +35,7 @@ export class StudyCourseResultsComponent implements OnInit {
   }
 
   details(uid: string){
-    this._router.navigate(['/admin/studycourse/details/'+uid])
+    this._router.navigate(['/public/studycourse/details/'+uid])
   }
 
   aff(aff?: Data[]){

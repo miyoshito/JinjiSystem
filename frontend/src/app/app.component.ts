@@ -16,7 +16,7 @@ import { LoginService } from 'src/app/services/login.service';
 export class AppComponent implements OnInit{
 
   loggedUser$: Observable<Employee>
-  isLoggedIn$: Boolean
+  isLoggedIn$: boolean
   authorities$: Observable<String>
   
   constructor(private _broadcastService: BroadcastService,

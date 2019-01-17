@@ -32,7 +32,7 @@ public class AuthenticationController {
 
     @PutMapping("/resetpassword")
     public ResponseEntity<String> resetPassword(@RequestParam(value="id", required = true) String id, HttpServletRequest req){
-        if(jwtTokenProvider.getRole(jwtTokenProvider.resolveToken(req)).equals("ADMIN")){
+        if(jwtTokenProvider.isAdmin(jwtTokenProvider.resolveToken(req))){
             euf.resetPassword(id);
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

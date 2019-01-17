@@ -17,7 +17,7 @@ public class EmployeeUpdateFunctions {
     public ResponseEntity<String> changePassword(String shainid, String oldPassword, String newPassword){
         EmployeeMaster user = employeeRepository.findByShainId(shainid);
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        if(passwordEncoder.matches((CharSequence) oldPassword, user.getPassword())) {
+        if(passwordEncoder.matches((CharSequence) oldPassword, user.getShainPassword())) {
             user.setShainPassword(passwordEncoder.encode(newPassword));
             employeeRepository.save(user);
             return new ResponseEntity<>(HttpStatus.OK);

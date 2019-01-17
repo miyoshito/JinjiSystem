@@ -44,7 +44,7 @@ export class CurriculumInsertComponent implements OnInit {
   title: string
   button: string
 
-  authority: string
+  authority: boolean
 
   typeSelected$: Subject<boolean> = new Subject<boolean>()
   type: number
@@ -166,9 +166,9 @@ export class CurriculumInsertComponent implements OnInit {
   
   redirect() {
     this._broadcastService.userAuthorization$.pipe((takeUntil(this.isAlive$)), map(auth => {
-      if (auth === 'ADMIN') {
+      if (auth) {
         this._employeeService.getShainData(this.userid, true)
-        this._router.navigate(['admin/shokumurirekisho/details/' + this.userid])
+        this._router.navigate(['public/shokumurirekisho/details/' + this.userid])
       } else this._router.navigate(['home'])
     })).subscribe()
   }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Subject,  ReplaySubject,} from 'rxjs';
+import { Employee, MinEmployee, group } from 'src/app/interfaces/employee';
 
 @Injectable({
   providedIn: 'root'
@@ -15,18 +16,26 @@ export class BroadcastService {
 
 private  _userAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-private  _UserAuthorizations: ReplaySubject<string> = new ReplaySubject<string>()
+private  _UserAuthorization: ReplaySubject<boolean> = new ReplaySubject<boolean>()
+
+private _UserGroup: ReplaySubject<group[]> = new ReplaySubject<group[]>()
 
   userAuthenticated$ = this._userAuthenticated.asObservable();
 
-  userAuthorization$ = this._UserAuthorizations.asObservable();
+  userAuthorization$ = this._UserAuthorization.asObservable();
+
+  userGroup$ = this._UserGroup.asObservable();
 
   pushAuthentication(auth: boolean){
     this._userAuthenticated.next(auth)
   }
   
-  pushAuthorization(auth: string){
-    this._UserAuthorizations.next(auth)    
+  pushAuthorization(auth: boolean){
+    this._UserAuthorization.next(auth)    
+  }
+
+  pushGroup(auth: group[]){
+    this._UserGroup.next(auth)
   }
 
 }

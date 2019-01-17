@@ -4,11 +4,12 @@ import { SearchForm } from 'src/app/interfaces/resume-details-interface';
 import { ResumeService } from 'src/app/services/resume.service';
 import { Router } from '@angular/router';
 import { BroadcastService } from 'src/app/services/broadcast.service';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
 import { ProfileService } from 'src/app/services/profile.service';
 import { LoginService } from 'src/app/services/login.service';
 import { atLeastOne } from 'src/app/validators/atleastOne';
+import { EmployeeMasterService } from 'src/app/services/employee-master.service';
 
 @Component({
   selector: 'app-resume-search',
@@ -23,6 +24,8 @@ export class ResumeSearchComponent implements OnInit {
 
   searchParam: SearchForm
 
+  params$: Observable<any>
+
   age = new Array
 
   map:Map<string, string> = new Map<string,string>()
@@ -32,9 +35,11 @@ export class ResumeSearchComponent implements OnInit {
               private _resumeService: ResumeService,
               private _profileService: ProfileService,
               private _router: Router,
+              private _employeeService: EmployeeMasterService,
               private _loginService: LoginService) { }
 
   ngOnInit() {
+    this.params$ = this._employeeService.getViewRendering()
     this.initializeForm()
   }
 
@@ -53,13 +58,11 @@ export class ResumeSearchComponent implements OnInit {
     this._resumeService.searchResumeAttempt(this.map).pipe(
       takeUntil(this.active$))
       .subscribe(e =>{
+        console.log(e.status)
+        console.log(e.statusText)
+        console.log(e.headers)
         if (e.status == 500){
         alert('許可されていません')
-        return
-        }
-        else if (e.status == 401){
-          alert ('You are not authorized to do this...')
-          this._router.navigate(['/home'])
         return
         }
         else if (!e.body){
@@ -72,7 +75,11 @@ export class ResumeSearchComponent implements OnInit {
         this._resumeService.sendSearchResults(e.body)
         this._router.navigate(['/admin/rirekisho/results'])
         }
-      }, err => console.log(err))
+      }, err => {
+        console.log(err)
+        alert('err')
+        return
+      })
   }
 
   initializeForm(){

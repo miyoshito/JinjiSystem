@@ -67,17 +67,21 @@ public class CvSearchService {
         filteredUsers
                 .from(e)
                 .leftJoin(e.curriculum, c);
-        System.out.println("Get role " +token);
-        System.out.println("Get role " +jwtTokenProvider.getRole(token));
+
 
         QAFFILIATIONData af = QAFFILIATIONData.aFFILIATIONData;
         QPOSITIONData pos = QPOSITIONData.pOSITIONData;
+        List<Long> groups = new ArrayList<>();
 
-        if(!jwtTokenProvider.getRole(token).equals("ADMIN") && !jwtTokenProvider.getRole(token).equals("SOUMU")){
+        jwtTokenProvider.getAreas(token).stream().forEach(ar ->{
+            groups.add(Long.valueOf(ar));
+        });
+
+        if(!jwtTokenProvider.isAdmin(token)){
             filteredUsers.where(e.shainDeletedFlag.isFalse())
                     .join(e.affiliation,af)
                     .join(e.position,pos)
-                    .where(af.id.in(jwtTokenProvider.getAreas(token)))
+                    .where(af.id.in(groups))
                     .where(pos.id.goe(jwtTokenProvider.getAuthority(token)))
                     .where(pos.id.loe(900000));
         }

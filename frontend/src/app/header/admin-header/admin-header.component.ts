@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
 import { ProfileService } from 'src/app/services/profile.service';
 import { BroadcastService } from 'src/app/services/broadcast.service';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
+import { takeUntil, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-header',
@@ -21,13 +22,28 @@ export class AdminHeaderComponent implements OnInit {
 
   @Output('logout')
   logout = new EventEmitter<boolean>()
+  
+  isAlive$: Subject<any> = new Subject<any>();
+
+  displayRirekisho: boolean
 
   constructor(private _profileService: ProfileService,
     private _broadcastService: BroadcastService,
     private _route: Router,
-    private _loginService: LoginService) { }
+    private _loginService: LoginService) {
+      this.displayRirekisho = false
+     }
 
   ngOnInit() {
+    this._broadcastService.userGroup$.pipe(
+      takeUntil(this.isAlive$),
+      map(groups => {   
+        groups.forEach(e =>{
+          if (e.id == 3)
+          this.displayRirekisho = true
+        })
+      })
+    ).subscribe()
   }
 
   doLogout(){

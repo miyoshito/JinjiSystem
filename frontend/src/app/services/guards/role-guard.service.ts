@@ -13,20 +13,16 @@ import { map } from 'rxjs/operators';
 })
 export class RoleGuardService implements CanActivate {
 
-  constructor(private jwtHelper: JwtHelperService,
-              public auth: AuthService,
-              public _broadcastService: BroadcastService,
-              public _profileService: ProfileService,
-              public router: Router) { }
+  constructor(public _broadcastService: BroadcastService) { }
 
-  authority: string
+  authority: boolean
 
   canActivate() {  
   this._broadcastService.userAuthorization$.pipe(
     map(auth =>{
       this.authority = auth
     })).subscribe()
-  if (this.authority === 'ADMIN' || this.authority === 'SOUMU')
+  if (this.authority)
   {
     return true
   }

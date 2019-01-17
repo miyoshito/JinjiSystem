@@ -5,6 +5,9 @@ import { Employee } from 'src/app/interfaces/employee';
 import { Observable } from 'rxjs';
 import { ProfileService } from 'src/app/services/profile.service';
 import { Router } from '@angular/router';
+import * as url_config from 'src/app/url-settings';
+
+
 
 @Component({
   selector: 'app-employee-list',
@@ -22,9 +25,9 @@ export class EmployeeListComponent implements OnInit {
     this.employees$ = this.employeeService.searchResults$
   } 
   
-  editShain(id: string){
-    console.log('/admin/profile/'+id+'/edit')
-    this._router.navigate(['/admin/profile/'+id+'/edit'])
+  editShain(id: string){    
+    //this._router.navigate(['/admin/profile/'+id+'/edit'])
+    
   }
 
 }

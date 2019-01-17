@@ -7,28 +7,15 @@
         </a>
         <!-- fill-remaining-space pusha os botoes pra direita-->
         <span class="example-fill-remaining-space"></span>
-        <ng-container *ngIf="menuStyle === 'ADMIN' || menuStyle === 'SOUMU'; then admin"></ng-container>
-        <ng-container *ngIf="menuStyle === 'USER'; then normaluser"></ng-container>
-        <ng-container *ngIf="menuStyle === 'MANAGER'; then managers"></ng-container>
-        <ng-container *ngIf="menuStyle === ''; then err"></ng-container>
+        <ng-container *ngIf="menuStyle === 'ADMIN'; then admin"></ng-container>
+        <ng-container *ngIf="menuStyle === 'USER'; then normalusers"></ng-container>
 
         <ng-template #admin>
             <app-admin-header [isLoggedIn]="isLoggedIn$" [loggedUser]="loggedUser$" (logout)="logout($event)"></app-admin-header>
         </ng-template>
         <!-- OK !-->
-        <ng-template #normaluser>
+        <ng-template #normalusers>
             <app-user-header [isLoggedIn]="isLoggedIn$" [loggedUser]="loggedUser$" (logout)="logout($event)"></app-user-header>
-        </ng-template>
-
-        <ng-template #managers>
-            <div>
-            </div>
-        </ng-template>
-
-        <ng-template #err>
-                <button mat-menu-item (click)="logout(true)">
-                        <span>ログアウト</span>
-                </button>
-        </ng-template>
+        </ng-template>      
     </mat-toolbar>
 </header>

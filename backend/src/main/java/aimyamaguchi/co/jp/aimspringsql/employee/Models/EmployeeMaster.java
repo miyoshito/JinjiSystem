@@ -8,29 +8,22 @@ import java.util.*;
 import javax.persistence.*;
 
 import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseModel;
+import aimyamaguchi.co.jp.aimspringsql.qualifications.QualificationsModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.hibernate.engine.spi.PersistentAttributeInterceptor;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
 import aimyamaguchi.co.jp.aimspringsql.curriculum.models.CurriculumModel;
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeModel;
-import aimyamaguchi.co.jp.aimspringsql.security.Roles;
+
 
 
 @Entity
 @Table(name="[M_SHAIN]", schema="[DBO]")
 
-public class EmployeeMaster implements UserDetails, Serializable{
+public class EmployeeMaster implements Serializable{
 
     private static final long serialVersionUID = 1L;
-
-    @Transient
-    private PersistentAttributeInterceptor persistentAttributeInterceptor;
 
     @Id
     @Column(name="SHA_NO", length=6, nullable=false)
@@ -41,10 +34,6 @@ public class EmployeeMaster implements UserDetails, Serializable{
 
     @Column(name="SHA_NAME", length=60, nullable=false)
     private String shainName;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "SHA_RECRUIT", nullable=false)
-    private RecruitTypeModel shainRecruit;
 
     @Column(name="SHA_KANA", length=60, nullable=false)
     private String shainKana;
@@ -58,10 +47,6 @@ public class EmployeeMaster implements UserDetails, Serializable{
     @Column(name="SHA_SEX", length=10, nullable=false)
     private String shainSex;
 
-    @ManyToOne
-    @JoinColumn(name="SHA_POSITION")
-    private POSITIONData position;
-    
     @Column(name="SHA_SUPPORT", nullable=false)
     private boolean shainSupport;
 
@@ -86,10 +71,6 @@ public class EmployeeMaster implements UserDetails, Serializable{
     @Column(name="SHA_ADDRESS", length=100, nullable=false)
     private String shainAddress;
 
-    @ManyToOne
-    @JoinColumn(name="SHA_AVALIABLEAREA")
-    private WorkAreaData shainArea;
-
     @Column(name="SHA_ENTRYDAY", nullable=false)
     private Date shainJoinedDate;
     
@@ -99,31 +80,30 @@ public class EmployeeMaster implements UserDetails, Serializable{
     @Column(name="SHA_RETIREFLG", nullable=false)
     private boolean shainRetired;
 
-    @JoinColumn(name="SHA_CARMODEL")
-    @ManyToOne
-    private CARMODELData shainCarModel;
-
-    @JoinColumn(name="SHA_AUTHFLAG")
-    @ManyToOne
-    private Roles role;
+    @Column(name="SHA_ADMIN")
+    private boolean admin;
 
     @Column(name="SHA_NOTES", length=200)
     private String shainNotes;
 
-    @Column(name="SHA_RESIST")
-    private Date shainRegisterDate;
-
-    @Column(name="SHA_RESISTER", length=10)
-    private String shainRegisteredBy; //userid
-
-    @Column (name="SHA_LASTUPDATE")
-    private LocalDate shainLastUpdated;
-
-    @Column (name="SHA_UPDATEDBY")
-    private String shainUpdatedBy;
-
     @Column(name="SHA_DELETEFLG")
     private boolean shainDeletedFlag;
+
+    @JoinColumn(name="SHA_CARMODEL")
+    @ManyToOne
+    private CARMODELData shainCarModel;
+
+    @ManyToOne
+    @JoinColumn(name="SHA_POSITION")
+    private POSITIONData position;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "SHA_RECRUIT", nullable=false)
+    private RecruitTypeModel shainRecruit;
+
+    @ManyToOne
+    @JoinColumn(name="SHA_AVALIABLEAREA")
+    private WorkAreaData shainArea;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="SHA_SHOZOKU")
@@ -137,11 +117,15 @@ public class EmployeeMaster implements UserDetails, Serializable{
     @OrderBy("enddate DESC")
     private List<CurriculumModel> curriculum;
 
+    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
+    private Set<QualificationsModel> qualifications;
+
     @OneToMany(mappedBy ="employee", fetch = FetchType.LAZY)
     private Set<StudyCourseModel> educations;
 
     @Column(name = "SHA_EXPERIENCETIME")
     private Integer totalExperienceTime;
+
 
     public Integer getTotalExperienceTime(){
         return this.totalExperienceTime;
@@ -163,46 +147,6 @@ public class EmployeeMaster implements UserDetails, Serializable{
         }
         this.totalExperienceTime = tt[0];
     }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    public String getPassword() {
-        return this.getShainPassword();
-    }
-
-    @Override
-    public String getUsername() {
-        return this.getShainId();
-    }
-
-    @Override
-    @JsonIgnore
-    public boolean isAccountNonExpired() {
-        return false;
-    }
-
-    @Override
-    @JsonIgnore
-    public boolean isAccountNonLocked() {
-        return false;
-    }
-
-    @Override
-    @JsonIgnore
-    public boolean isCredentialsNonExpired() {
-        return false;
-    }
-
-    @Override
-    @JsonIgnore
-    public boolean isEnabled() {
-		return !this.isShainRetired();
-	}
 
 
     public String getShainId() {
@@ -390,36 +334,12 @@ public class EmployeeMaster implements UserDetails, Serializable{
         this.shainCarModel = shainCarModel;
     }
 
-    public Roles getRole() {
-        return role;
-    }
-
-    public void setRole(Roles role) {
-        this.role = role;
-    }
-
     public String getShainNotes() {
         return shainNotes;
     }
 
     public void setShainNotes(String shainNotes) {
         this.shainNotes = shainNotes;
-    }
-
-    public Date getShainRegisterDate() {
-        return shainRegisterDate;
-    }
-
-    public void setShainRegisterDate(Date shainRegisterDate) {
-        this.shainRegisterDate = shainRegisterDate;
-    }
-
-    public String getShainRegisteredBy() {
-        return shainRegisteredBy;
-    }
-
-    public void setShainRegisteredBy(String shainRegisteredBy) {
-        this.shainRegisteredBy = shainRegisteredBy;
     }
 
     public boolean isShainDeletedFlag() {
@@ -432,19 +352,10 @@ public class EmployeeMaster implements UserDetails, Serializable{
 
     @JsonManagedReference
     public ResumeModel getResume() {
-        /*if(persistentAttributeInterceptor != null){
-            return (ResumeModel) persistentAttributeInterceptor.readObject(this, "resume", resume);
-        }*/
         return resume;
     }
 
     public void setResume(ResumeModel resume) {
-        /*
-        resume.setEmployee(this);
-
-        if (persistentAttributeInterceptor != null) {
-            this.resume = (ResumeModel) persistentAttributeInterceptor.writeObject(this, "resume", resume, resume);
-        } else {*/
             this.resume = resume;
     }
 
@@ -464,19 +375,11 @@ public class EmployeeMaster implements UserDetails, Serializable{
         this.educations = educations;
     }
 
-    public LocalDate getShainLastUpdated() {
-        return shainLastUpdated;
+    public boolean isAdmin() {
+        return admin;
     }
 
-    public void setShainLastUpdated(LocalDate shainLastUpdated) {
-        this.shainLastUpdated = shainLastUpdated;
-    }
-
-    public String getShainUpdatedBy() {
-        return shainUpdatedBy;
-    }
-
-    public void setShainUpdatedBy(String shainUpdatedBy) {
-        this.shainUpdatedBy = shainUpdatedBy;
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }

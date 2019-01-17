@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { CurriculumService } from 'src/app/services/curriculum.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
+import { EmployeeMasterService } from 'src/app/services/employee-master.service';
 
 
 @Component({
@@ -19,13 +20,17 @@ export class CurriculumSearchComponent implements OnInit {
   age = new Array
   validExp: boolean
 
+  params$: Observable<any>
+
   constructor(private curriculumService: CurriculumService,
               private _fb: FormBuilder,
+              private _employeeService: EmployeeMasterService,
               private _router: Router) {
                 this.validExp=true;
                }
 
   ngOnInit() {    
+    this.params$ = this._employeeService.getViewRendering()
     this.buildSearchForm()
     this.data$ = this.curriculumService.getPropertiesList()    
     this.industry$ = this.curriculumService.getBusinessLogic()

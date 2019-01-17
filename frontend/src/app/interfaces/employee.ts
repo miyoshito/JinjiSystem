@@ -6,8 +6,12 @@ import { studyCourse } from "./study-course"
 export interface MinEmployee {
     id: string
     fullName: string
-    group: string
-    role: string
+    group: group[]
+    admin: boolean
+}
+export interface group{
+    id: number
+    desc: string
 }
 
 export interface Employee {

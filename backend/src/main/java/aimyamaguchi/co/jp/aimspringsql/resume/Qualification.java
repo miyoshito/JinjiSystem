@@ -6,7 +6,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 
-@Table(name="M_SHIKAKU")
+@Table(name="RRS_SHIKAKU")
 @Entity
 @Data
 public class Qualification {

@@ -62,7 +62,7 @@ public class ResumeController {
 
     @PostMapping("/resume/save")
     public ResponseEntity<String> saveResume(@RequestBody ResumeModel resume, HttpServletRequest req) {
-        if (!jwt.getRole(jwt.resolveToken(req)).equals("ADMIN")) {
+        if (!jwt.isAdmin(jwt.resolveToken(req))) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {
             try {
@@ -76,7 +76,7 @@ public class ResumeController {
 
     @PutMapping("/resume/delete")
     public ResponseEntity<String> deleteResumeDetails(@RequestParam(name = "type", required = true) String type, @RequestParam(name = "id", required = true) Long id, HttpServletRequest http) {
-        if (!jwt.getRole(jwt.resolveToken(http)).equals("ADMIN")) {
+        if (!jwt.isAdmin(jwt.resolveToken(http))) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {
             try {
