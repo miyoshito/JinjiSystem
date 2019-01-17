@@ -38,6 +38,7 @@ public class EmployeeInsertFunctions {
 
         if (!employee.getShainId().equals("") && employeeRepository.findByShainId(employee.getShainId()) != null){
             employee.setResume(sf.getEmployeeWithResume(employee.getShainId()).getResume());
+            employee.setAdmin(employee.isAdmin());
             employee.setShainPassword(sf.getEmployeeData(employee.getShainId()).getShainPassword());
             employeeRepository.save(employee);
 

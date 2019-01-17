@@ -382,4 +382,12 @@ public class EmployeeMaster implements Serializable{
     public void setAdmin(boolean admin) {
         this.admin = admin;
     }
+
+    public Set<QualificationsModel> getQualifications() {
+        return qualifications;
+    }
+
+    public void setQualifications(Set<QualificationsModel> qualifications) {
+        this.qualifications = qualifications;
+    }
 }
