@@ -43,7 +43,6 @@ export class HeaderComponent implements OnInit {
                 }
 
   ngOnInit() {
-    
     this._broadcastService.userAuthorization$.pipe(takeUntil(this.isAlive$), map(auth =>{
       if (auth){
         this.menuStyle = 'ADMIN'

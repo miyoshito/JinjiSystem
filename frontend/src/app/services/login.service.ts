@@ -26,6 +26,7 @@ export class LoginService {
     this._router.navigate(['login'])
     localStorage.removeItem('currentUser')
     this.broadcastService.pushAuthentication(false)
+    this.broadcastService.pushAuthorization(false)
   }
 
 }

@@ -5,6 +5,7 @@ import { API_URL, ADMIN_URL } from 'src/app/url-settings'
 import { Employee, MinEmployee } from 'src/app/interfaces/employee';
 import { BroadcastService } from 'src/app/services/broadcast.service';
 import { LoginService } from 'src/app/services/login.service';
+import { map } from 'rxjs/operators';
 
 
 
@@ -25,14 +26,12 @@ export class ProfileService {
 
   //returns only the infos you need to stay logged in
   public getLoggedInUserData() {
-    return this._http.get<MinEmployee>(API_URL + '/se/getmyinfos', { observe: 'response' }).subscribe(data => {
+    return this._http.get<MinEmployee>(API_URL + '/se/getmyinfos', { observe: 'response' })
+    .pipe(map(data => {
       this._cacheUserSource.next(data.body)
       this._broadcastService.pushAuthentication(true)
       this._broadcastService.pushAuthorization(data.body.admin)
       this._broadcastService.pushGroup(data.body.group)
-    },
-      err => {
-        this._loginService.logout()
-      })
+    })).subscribe()
   }
 }

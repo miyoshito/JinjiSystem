@@ -16,9 +16,9 @@ export class BroadcastService {
 
 private  _userAuthenticated: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-private  _UserAuthorization: ReplaySubject<boolean> = new ReplaySubject<boolean>()
+private  _UserAuthorization: ReplaySubject<boolean> = new ReplaySubject<boolean>(1)
 
-private _UserGroup: ReplaySubject<group[]> = new ReplaySubject<group[]>()
+private _UserGroup: ReplaySubject<group[]> = new ReplaySubject<group[]>(1)
 
   userAuthenticated$ = this._userAuthenticated.asObservable();
 

@@ -26,24 +26,55 @@ export class AdminHeaderComponent implements OnInit {
   isAlive$: Subject<any> = new Subject<any>();
 
   displayRirekisho: boolean
+  displayAdminMasterMenu: boolean
+
+  isSoumu: boolean
+  isAdmin: boolean
 
   constructor(private _profileService: ProfileService,
     private _broadcastService: BroadcastService,
     private _route: Router,
     private _loginService: LoginService) {
       this.displayRirekisho = false
+      this.displayAdminMasterMenu = false
      }
 
   ngOnInit() {
+    this.checkIfAdmin()
+    this.checkIfSoumu()
+    this.displayAdminMenu()
+  }
+
+  checkIfAdmin(){
+    this._broadcastService.userAuthorization$.pipe(takeUntil(this.isAlive$),
+    map(auth =>{
+      console.log(auth)
+      this.isAdmin = auth
+    })).subscribe()
+
+  }
+
+  checkIfSoumu(){
     this._broadcastService.userGroup$.pipe(
       takeUntil(this.isAlive$),
-      map(groups => {   
-        groups.forEach(e =>{
-          if (e.id == 3)
+      map(groups => {
+        if (groups.find(e => e.id == 3)){
           this.displayRirekisho = true
-        })
-      })
-    ).subscribe()
+          this.isSoumu = true
+        }
+      })).subscribe()
+  }
+
+  displayAdminMenu(){    
+    if(this.isAdmin && this.isSoumu) {
+      this.displayAdminMasterMenu = true
+      console.log('authorized.....')
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.isAlive$.next()
+    
   }
 
   doLogout(){

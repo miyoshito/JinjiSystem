@@ -97,7 +97,7 @@
 
   <mat-menu #adminmenu="matMenu" overlapTrigger="false">
     <a routerLink="/admin/systemsettings" routerLinkActive="active">
-      <button mat-menu-item>
+      <button mat-menu-item *ngIf="displayAdminMasterMenu">
         <span>アカウント管理画面</span>
       </button>
     </a>
