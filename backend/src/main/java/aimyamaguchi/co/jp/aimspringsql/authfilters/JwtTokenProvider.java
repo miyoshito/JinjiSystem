@@ -59,10 +59,6 @@ public class JwtTokenProvider {
     Claim claim = JWT.decode(token).getClaim("authFlag");
     return claim.asBoolean();
   }
-  public Optional<String> getRolee(String token){
-    Claim claim = JWT.decode(token).getClaim("role");
-    return Optional.of(claim.asString());
-  }
 
   public List<Integer> getAreas(String token){
       Claim claim = JWT.decode(token).getClaim("area");

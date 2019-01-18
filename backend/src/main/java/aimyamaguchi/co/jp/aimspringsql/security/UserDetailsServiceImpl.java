@@ -25,6 +25,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         if (employee.getShainId().equals("")) throw new UsernameNotFoundException("Could not find the user "+username);
         return new User(employee.getShainId(), employee.getShainPassword(), new HashSet<>());
-	}
+    }
 
 }

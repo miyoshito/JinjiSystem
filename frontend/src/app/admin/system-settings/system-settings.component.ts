@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { EmployeeMasterService } from 'src/app/services/employee-master.service';
+import { Observable } from 'rxjs';
+import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-system-settings',
@@ -7,9 +10,48 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SystemSettingsComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _employeeMasterService: EmployeeMasterService,
+              private _fb: FormBuilder) { }
+
+  users$: Observable<userXAuth[]> = new Observable<userXAuth[]>()
+  changedUsers: userXAuth[] = []
 
   ngOnInit() {
+    
+    this._employeeMasterService.getUserAuthorities();
+    this.users$ = this._employeeMasterService.userAuthSettings$
   }
 
+  addRow(id: string, e){
+    if (this.changedUsers.find(a => a.id == id)){
+        this.changedUsers[this.changedUsers.findIndex(e => e.id == id)].admin = e.target.checked
+      } else {
+      this.changedUsers.push(new userXAuth(id,'','',e.target.checked))
+    }
+    console.log(this.changedUsers);
+  }
+
+  saveSettings(){
+    this._employeeMasterService.saveUserAuthoritiesChanges(this.changedUsers)
+  }
+  
+}
+export interface userXAuth{
+  id: string
+  name: string
+  area: string
+  admin: boolean
+}
+export class userXAuth{
+  constructor(
+    id: string,
+    name: string,
+    area: string,
+    admin: boolean
+  ){
+    this.id = id
+    this.name = name
+    this.area = area
+    this.admin = admin
+  }
 }

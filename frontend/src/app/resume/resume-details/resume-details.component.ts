@@ -25,7 +25,7 @@ export class ResumeDetailsComponent implements OnInit {
   }
 
   editScreen(id: number){
-    this._router.navigate(['/admin/rirekisho/edit/'+id])
+    this._router.navigate(['/soumu/rirekisho/edit/'+id])
   }
 
 }

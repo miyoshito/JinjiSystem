@@ -1,6 +1,7 @@
 package aimyamaguchi.co.jp.aimspringsql.qualifications;
 
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -35,6 +36,7 @@ public class QualificationsModel {
 
     @ManyToOne
     @JoinColumn(name = "SH_SHAINID")
+    @JsonIgnore
     private EmployeeMaster employee;
 
 

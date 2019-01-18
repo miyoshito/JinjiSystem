@@ -27,7 +27,7 @@ import static com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module.Feature
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    JwtTokenProvider jwtTokenProvider;
+    private JwtTokenProvider jwtTokenProvider;
 
 
     @Bean 

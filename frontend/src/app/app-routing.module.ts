@@ -17,8 +17,6 @@ import { EmployeeListComponent } from './admin/employee-list/employee-list.compo
 import { ResumeAddComponent } from './resume/resume-add/resume-add.component';
 import { SkillMapComponent } from './skill-map/skill-map.component';
 import { SystemSettingsComponent } from './admin/system-settings/system-settings.component';
-import { QualificationsComponent } from './qualifications/qualifications.component';
-import { StudycourseComponent } from './studycourse/studycourse.component';
 import { RoleGuardService } from 'src/app/services/guards/role-guard.service';
 import { ResumeSearchResultsComponent } from './resume/resume-search-results/resume-search-results.component';
 import { EmployeeSearchComponent } from './admin/employee-search/employee-search.component';
@@ -29,6 +27,7 @@ import { StudyCourseResultsComponent } from './studycourse/study-course-results/
 import { StudyCourseDetailsComponent } from './studycourse/study-course-details/study-course-details.component';
 import { SoumuGuardService } from './services/guards/soumu-guard.service';
 import { AdminGuardService } from './services/guards/admin-guard.service';
+import { QualificationsSearchComponent } from './qualifications/qualifications-search/qualifications-search.component';
 
 const routes: Routes = [
   // Login routes
@@ -36,14 +35,15 @@ const routes: Routes = [
   {path: '404', component: NotFoundComponent},
   {path: 'home', component: HomeComponent},  
   {path: 'login', component: LoginComponent, canActivate:[LoginGuardService]},
+  
   // User parent routes
 
   {path: 'public', children:[
     {path: 'skillmap', component: SkillMapDetailsComponent},
-    {path: 'qualifications', component: QualificationsComponent},
-
     {path: 'profile', component: EmployeeMasterComponent},
-
+    {path: 'qualifications', children:[
+      {path: 'search', component: QualificationsSearchComponent}
+    ]},
     {path: 'shokumurirekisho', children:[
       {path: '', component: CurriculumDetailsComponent},
       {path: 'add', component: CurriculumInsertComponent},
@@ -81,7 +81,9 @@ const routes: Routes = [
       {path: 'employee-master', component: EmployeeMasterComponent},
       {path: 'employee-list', component: EmployeeListComponent},
       {path: 'employee-search', component: EmployeeSearchComponent},
-      {path: 'systemsettings', component: SystemSettingsComponent}
+      {path: 'systemsettings', component: SystemSettingsComponent},
+      {path: 'profile/:id/edit', component: EmployeeMasterComponent},
+      {path: 'systemsettings', component: SystemSettingsComponent }
   ], canActivate: [AdminGuardService]},
   //mapeando o direcionamento pra paginas inexistentes...
   {path: '**', redirectTo: '404' }

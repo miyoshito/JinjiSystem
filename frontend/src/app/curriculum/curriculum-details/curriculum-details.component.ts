@@ -33,9 +33,8 @@ export class CurriculumDetailsComponent implements OnInit {
               private _route: ActivatedRoute,
               private _curriculumService: CurriculumService) { }
 
-  ngOnInit() {    
-    
-    if (this._router.url.startsWith('/admin')) {
+  ngOnInit() {
+    if(this._route.snapshot.paramMap.get('id') != null){
       this.shainid = this._route.snapshot.paramMap.get('id')
       this.admin$ = true
       this.displayButton = true

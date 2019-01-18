@@ -48,6 +48,8 @@ export class HeaderComponent implements OnInit {
       if (auth){
         this.menuStyle = 'ADMIN'
       } else this.menuStyle = 'USER'
+    })).subscribe()    
+    this._broadcastService.userGroup$.pipe(takeUntil(this.isAlive$), map(groups =>{
     })).subscribe()
     this.isLoggedIn$ = this._broadcastService.userAuthenticated$  
     this.loggedUser$ = this._profileService.cachedUser$

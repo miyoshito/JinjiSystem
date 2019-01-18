@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -110,13 +111,13 @@ public class EmployeeGetController {
     }
 
     @GetMapping("/admin/search-employee")
-    public ResponseEntity<List<EmployeeMaster>> searchEmployee(
-            @RequestParam(value="id", required = false) String id,
-            @RequestParam(value="name", required = false) String name,
-            @RequestParam(value="kana", required = false) String kana,
-            @RequestParam(value="affiliation", required = false) List<String> affiliation){
+    public ResponseEntity<List<EmployeeMaster>> searchEmployee(@RequestParam Map<String, String> allParameters){
         try {
-            return new ResponseEntity<>(esr.searchResults(id, name, kana, affiliation), HttpStatus.OK);
+            if (allParameters.size() < 1){
+                return new ResponseEntity<>(sf.getAllEmployees(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(sf.getEmployeesIn(esr.searchResults(allParameters)), HttpStatus.OK);
+            }
         } catch (CustomException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

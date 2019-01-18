@@ -73,7 +73,7 @@ public class CvInsertService {
         //this update the total_experience_time field on shain table.
         EmployeeMaster em = sf.getEmployeeWithCv(cv.getEmployee_id());
         em.setShainPassword(em.getShainPassword());
-        em.setTotalExperienceTime();
+        //em.setTotalExperienceTime();
         er.save(em);
 
     }

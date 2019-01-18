@@ -35,8 +35,6 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { SkillMapComponent } from './skill-map/skill-map.component';
 import { SystemSettingsComponent } from './admin/system-settings/system-settings.component';
 import { SkillMapSearchComponent } from './skill-map/skill-map-search/skill-map-search.component';
-import { StudycourseComponent } from './studycourse/studycourse.component';
-import { QualificationsComponent } from './qualifications/qualifications.component';
 import { AdminHeaderComponent } from './header/admin-header/admin-header.component';
 import { UserHeaderComponent } from './header/user-header/user-header.component';
 import { ManagerHeaderComponent } from './header/manager-header/manager-header.component';
@@ -54,6 +52,11 @@ import { StudyCourseSearchComponent } from './studycourse/study-course-search/st
 import { StudyCourseEditComponent } from './studycourse/study-course-edit/study-course-edit.component';
 import { StudyCourseResultsComponent } from './studycourse/study-course-results/study-course-results.component';
 import { StudyCourseDetailsComponent } from './studycourse/study-course-details/study-course-details.component';
+import { QualificationsSearchComponent } from './qualifications/qualifications-search/qualifications-search.component';
+import { QualificationsResultsComponent } from './qualifications/qualifications-results/qualifications-results.component';
+import { QualificationsAddComponent } from './qualifications/qualifications-add/qualifications-add.component';
+import { QualificationsDetailsComponent } from './qualifications/qualifications-details/qualifications-details.component';
+import { SoumuHeaderComponent } from './header/soumu-header/soumu-header.component';
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -79,9 +82,7 @@ defineLocale('ja',jaLocale)
     EmployeeListComponent,
     ResumeAddComponent,
     SkillMapComponent,
-    SystemSettingsComponent,
-    StudycourseComponent,
-    QualificationsComponent,
+    SystemSettingsComponent,    
     AdminHeaderComponent,
     UserHeaderComponent,
     ManagerHeaderComponent,
@@ -96,7 +97,12 @@ defineLocale('ja',jaLocale)
     StudyCourseSearchComponent,
     StudyCourseEditComponent,
     StudyCourseResultsComponent,
-    StudyCourseDetailsComponent
+    StudyCourseDetailsComponent,
+    QualificationsSearchComponent,
+    QualificationsResultsComponent,
+    QualificationsAddComponent,
+    QualificationsDetailsComponent,
+    SoumuHeaderComponent
   ],
   imports: [
     BrowserModule,

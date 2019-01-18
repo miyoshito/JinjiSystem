@@ -136,7 +136,8 @@ export class EmployeeMasterComponent implements OnInit {
     this.selectedUser$.pipe(takeUntil(this.unsub$))
     .subscribe(data =>{      
       this.myPosition = data.position.desc
-      this.employeeForm.patchValue(data)      
+      this.employeeForm.patchValue(data)
+      if(this.isProfile) this.employeeForm.controls.affiliation.disable()
       data.shainJoinedDate != null ? this.employeeForm.patchValue({shainJoinedDate: data.shainJoinedDate.slice(0,10)}) : null
       data.shainBirthday != null ? this.employeeForm.patchValue({shainBirthday: data.shainBirthday.slice(0,10)}) : null
       data.shainRegisterDate != null ? this.employeeForm.patchValue({shainRegisterDate: data.shainRegisterDate.slice(0,10)}) : null
@@ -243,7 +244,7 @@ export class EmployeeMasterComponent implements OnInit {
 }
 
 export interface affiliation{
-  affiliation_id: number
+  id: number
   active: boolean
-  affiliation_desc: string
+  desc: string
 }

@@ -1,16 +1,21 @@
 package aimyamaguchi.co.jp.aimspringsql.employee.Services;
 
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.QAFFILIATIONData;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.QEmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.QPOSITIONData;
 import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.EmployeeRepository;
+import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class EmployeeSearchFunctions {
@@ -22,31 +27,42 @@ public class EmployeeSearchFunctions {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public List<EmployeeMaster> searchResults(String id, String name, String kana, List<String> aff){
-        ArrayList<String> queryParam = new ArrayList<>();
-        Optional.ofNullable(id).ifPresent((p) -> {if (!p.equals("")) queryParam.add("m.sha_no = "+p+" and");});
-        Optional.ofNullable(name).ifPresent((p) -> {if (!p.equals("")) queryParam.add("m.sha_name like '%"+p+"%' and");});
-        Optional.ofNullable(kana).ifPresent((p) -> {if (!p.equals("")) queryParam.add("m.sha_kana like '%"+p+"%' and");});
+    public List<String> searchResults(Map<String, String> map) {
 
-        if(aff.size() > 0) {
-            String in = String.join(",", aff);
-            queryParam.add("sho.affiliation_affiliation_id in (" + in + ") and");
-        }
-        String param = String.join(" ", queryParam);
-        Query query = entityManager.createNativeQuery(
-                "select distinct\n"
-                        +"m.sha_no\n"
-                        +"from\n"
-                        +"m_shain m full join sha_shozoku sho on\n"
-                        +"m.sha_no = sho.employee_sha_no\n"
-                        +"where\n "
-                        + param.substring(0, param.length() -4)
-        );
-        List<String> results = query.getResultList();
-        if(results.size() > 0){
-            return employeeRepository.findByShainIdIn(results);
-        }
-        else return null;
+        QEmployeeMaster e = QEmployeeMaster.employeeMaster;
+        QAFFILIATIONData q = QAFFILIATIONData.aFFILIATIONData;
+
+        JPAQuery<String> filteredUsers = new JPAQueryFactory(entityManager).selectDistinct(e.shainId).from(e);
+
+        map.entrySet().stream()
+                .forEach(param -> {
+                    switch (param.getKey()) {
+                        case "id":
+                            filteredUsers.where(e.shainId.eq(param.getValue()));
+                            break;
+                        case "name":
+                            filteredUsers.where(e.shainName.contains(param.getValue()));
+                            break;
+                        case "kana":
+                            filteredUsers.where(e.shainKana.contains(param.getValue()));
+                            break;
+                        case "affiliation":
+                            filteredUsers.leftJoin(e.affiliation, q);
+                            Collection<Long> aff = Stream.of(param.getValue().split(","))
+                                    .map(Long::parseLong)
+                                    .collect(Collectors.toList());
+                            filteredUsers.where(q.id.in(aff));
+                            break;
+                        default:
+                            break;
+                    }
+
+                });
+
+        return filteredUsers.fetch();
     }
+
+
+
 
 }

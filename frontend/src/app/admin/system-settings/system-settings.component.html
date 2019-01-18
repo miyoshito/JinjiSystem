@@ -1,3 +1,24 @@
-<p>
-  system-settings works!
-</p>
+
+<div class="container">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>社員番号</th>
+        <th>氏名</th>
+        <th>所属</th>
+        <th>管理者アカウント</th>
+      </tr>
+    </thead>
+    <tbody>        
+    <ng-container *ngIf="users$ | async; let users">      
+      <tr *ngFor="let u of users" >        
+        <td>{{u.id}}</td>
+        <td>{{u.name}}</td>
+        <td>{{u.areas}}</td>
+        <td><input type="checkbox" [checked]="u.admin" value="" (change)="addRow(u.id, $event)"></td>
+      </tr>    
+    </ng-container>
+    </tbody>
+  </table>
+  <button type="button" class="btn btn-danger" (click)="saveSettings()">save</button>
+</div>

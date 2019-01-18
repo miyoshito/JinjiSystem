@@ -25,9 +25,8 @@ export class EmployeeListComponent implements OnInit {
     this.employees$ = this.employeeService.searchResults$
   } 
   
-  editShain(id: string){    
-    //this._router.navigate(['/admin/profile/'+id+'/edit'])
-    
+  editShain(id: string){
+    this._router.navigate(['/admin/profile/'+id+'/edit'])
   }
 
 }

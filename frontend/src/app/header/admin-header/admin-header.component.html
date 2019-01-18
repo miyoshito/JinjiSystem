@@ -11,8 +11,7 @@
       <mat-icon class="ml-1">arrow_drop_down</mat-icon>
     </button>
 
-    <button mat-button [matMenuTriggerFor]="credentials">
-      
+    <button mat-button [matMenuTriggerFor]="qualifications">
       資格検索
       <mat-icon class="ml-1">arrow_drop_down</mat-icon>
     </button>
@@ -59,8 +58,8 @@
     </a>   
   </mat-menu>
   
-  <mat-menu #credentials="matMenu" overlapTrigger="false">
-    <a routerLink="/404" routerLinkActive="active">
+  <mat-menu #qualifications="matMenu" overlapTrigger="false">
+    <a routerLink="/public/qualifications/search" routerLinkActive="active">
       <button mat-menu-item>
         <span>検索</span>
       </button>
@@ -97,7 +96,7 @@
   
 
   <mat-menu #adminmenu="matMenu" overlapTrigger="false">
-    <a routerLink="404" routerLinkActive="active">
+    <a routerLink="/admin/systemsettings" routerLinkActive="active">
       <button mat-menu-item>
         <span>アカウント管理画面</span>
       </button>

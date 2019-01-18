@@ -143,6 +143,10 @@ public class SearchFilters {
         return le;
     }
 
+    public List<EmployeeMaster> getAllEmployees(){
+        return er.findAll();
+    }
+
 
 
     public ResumeModel getResumeById(Long id){

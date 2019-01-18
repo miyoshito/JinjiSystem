@@ -1,15 +1,15 @@
 package aimyamaguchi.co.jp.aimspringsql.employee.Models;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.Period;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import javax.persistence.*;
 
 import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseModel;
 import aimyamaguchi.co.jp.aimspringsql.qualifications.QualificationsModel;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -128,24 +128,39 @@ public class EmployeeMaster implements Serializable{
 
 
     public Integer getTotalExperienceTime(){
-        return this.totalExperienceTime;
-    }
-
-    public void setTotalExperienceTime(){
 
         final Integer[] tt = {0};
         if (this.getCurriculum().size() > 0) {
-            this.getCurriculum().stream().forEach(cv -> {
-                Period period = Period.between(cv.getStartdate().withDayOfMonth(1).toLocalDate(), cv.getEnddate().withDayOfMonth(1).toLocalDate());
-                if (period.getYears() > 0) {
-                    tt[0] += period.getMonths() + (period.getYears() * 12);
-                } else {
-                    tt[0] += period.getMonths();
-                }
 
-            });
+            Integer minYear;
+            Integer maxYear;
+
+            minYear = this.getCurriculum()
+                    .stream()
+                    .map(sy -> sy.getStartdate().getYear())
+                    .min(Integer::compareTo).get();
+            maxYear = this.getCurriculum()
+                    .stream()
+                    .map(my -> my.getEnddate().getYear())
+                    .max(Integer::compareTo).get();
+
+
+            System.out.println(minYear);
+            System.out.println(maxYear);
+
+            this.getCurriculum().stream().
+                    forEach(cv -> {
+                        Period period = Period.between(cv.getStartdate().withDayOfMonth(1).toLocalDate(), cv.getEnddate().withDayOfMonth(1).toLocalDate());
+                        if (period.getYears() > 0) {
+                            tt[0] += period.getMonths() + (period.getYears() * 12);
+                        } else {
+                            tt[0] += period.getMonths();
+                        }
+
+                    });
         }
         this.totalExperienceTime = tt[0];
+        return tt[0];
     }
 
 

@@ -65,19 +65,17 @@ export class ResumeSearchComponent implements OnInit {
         alert('許可されていません')
         return
         }
-        else if (!e.body){
+        else if (!e.body || e.body.length < 1){
         alert('データーが見つかれません')
         return
       }
         else if (e.body.length == 1){
-          this._router.navigate(['/admin/rirekisho/details/'+e.body[0].shainId])
+          this._router.navigate(['/soumu/rirekisho/details/'+e.body[0].shainId])
         } else {
         this._resumeService.sendSearchResults(e.body)
-        this._router.navigate(['/admin/rirekisho/results'])
+        this._router.navigate(['/soumu/rirekisho/results'])
         }
       }, err => {
-        console.log(err)
-        alert('err')
         return
       })
   }

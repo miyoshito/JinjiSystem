@@ -25,11 +25,11 @@ export class ResumeSearchResultsComponent implements OnInit {
   }
 
   editRirekisho(id: number){
-    this._router.navigate(['/admin/rirekisho/edit/'+id])
+    this._router.navigate(['/soumu/rirekisho/edit/'+id])
   }
 
   showRirekisho(id: number){
-    this._router.navigate(['/admin/rirekisho/details/'+id])
+    this._router.navigate(['/soumu/rirekisho/details/'+id])
   }
 
 }

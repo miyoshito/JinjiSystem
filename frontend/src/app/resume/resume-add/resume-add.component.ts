@@ -96,7 +96,7 @@ export class ResumeAddComponent implements OnInit {
     this.submitted = true
     try {
     this._resumeService.saveResumeAttempt(this.resumeForm.value)
-    this._router.navigate(['/admin/rirekisho/details/'+ this._route.snapshot.paramMap.get('id')])
+    this._router.navigate(['/soumu/rirekisho/details/'+ this._route.snapshot.paramMap.get('id')])
     alert('更新しました')
     this._employeeService.getShainData(this._route.snapshot.paramMap.get('id'),false,true,false)
     } catch (err) {

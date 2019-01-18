@@ -6,6 +6,7 @@ import { API_URL, PUBLIC_URL, ADMIN_URL } from 'src/app/url-settings'
 import { catchError, map } from 'rxjs/operators';
 import { TokenInterceptorService } from 'src/app/services/guards/token-interceptor.service';
 import { Router } from '@angular/router';
+import { userXAuth } from '../admin/system-settings/system-settings.component';
 
 
 @Injectable({
@@ -24,6 +25,9 @@ export class EmployeeMasterService {
   //resultado da busca por ID, retorna o user em um Observavel que pode ser lido por qualquer tela.
   usrSource: ReplaySubject<Employee> = new ReplaySubject<Employee>(1)
   employee$ = this.usrSource.asObservable()
+
+  private usrAuthSettingsSource: ReplaySubject<userXAuth[]> = new ReplaySubject<userXAuth[]>()
+  userAuthSettings$ = this.usrAuthSettingsSource.asObservable();
 
   
   getShainData(id: string, cv?: boolean, rs?:boolean, edu?: boolean){
@@ -97,6 +101,31 @@ export class EmployeeMasterService {
       this._router.navigate(['/admin/employee-list'])
       this.searchSource.next(res.body)
     })
+  }
+
+  saveUserAuthoritiesChanges(users: any[]){
+    return this._http.put<any[]>(API_URL + '/auth/changeuserpermissions',users, {observe: 'response'})
+    .pipe(map(res =>{
+      if (res.status == 200){
+        alert('変更しました')
+        this._router.navigate(['/home'])
+        return
+      }
+    })).subscribe()
+  }
+
+  getUserAuthorities(id?: string){
+     let p: HttpParams = new HttpParams()
+      if(id) p.append("id", id)
+    return this._http.get<userXAuth[]>(API_URL + '/auth/loaduserpermissions',{params: p, observe: 'response'}).pipe(
+      map(m =>{
+        if (m.body.length == 0){
+          alert('nothing found')
+          return;
+        }
+        else this.usrAuthSettingsSource.next(m.body)
+      })
+    ).subscribe()
   }
 
 

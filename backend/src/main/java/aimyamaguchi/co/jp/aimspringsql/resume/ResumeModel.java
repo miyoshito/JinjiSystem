@@ -54,12 +54,15 @@ public class ResumeModel {
     private Set<ResumeFileDetails> files;
 
     @OneToMany(mappedBy="k_resume", fetch = FetchType.EAGER)
+    @OrderBy("RK_YYYY DESC")
     private Set<Career> careers;
 
     @OneToMany(mappedBy = "s_resume", fetch = FetchType.EAGER)
+    @OrderBy("RS_YYYY DESC")
     private Set<Qualification> qualifications;
 
     @OneToMany(mappedBy = "h_resume", fetch = FetchType.EAGER)
+    @OrderBy("RH_YYYY DESC")
     private Set<Commendation> commendations;
 
     public Long getResumeId() {

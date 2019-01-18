@@ -30,43 +30,17 @@ public class SkillMapService {
     @Autowired
     private CustomValidators validator;
 
-    public List<String> skillMapSearchParams(String id, String name, String kana, Integer affiliation) {
-        ArrayList<String> queryParam = new ArrayList<>();
-
-        if (validator.isNullValidator(id)) queryParam.add("sha.sha_no = " + id + " and");
-        if (validator.isNullValidator(name)) queryParam.add("sha.sha_name like '%" + name + "%' and");
-        if (validator.isNullValidator(kana)) queryParam.add("sha.sha_kana like '%" + kana + "%' and");
-        if (validator.isNullValidator(affiliation)) queryParam.add("sho.affiliation_id = " + affiliation + " and");
-
-        String param = String.join("\n", queryParam);
-
-        Query query = entityManager.createNativeQuery(
-                "SELECT DISTINCT\n" +
-                        "sha_no\n" +
-                        "from\n" +
-                        "m_shain sha left join sha_shozoku ss\n" +
-                        "on sha.sha_no = ss.employee_sha_no\n" +
-                        "left join m_shozoku sho on ss.affiliation_affiliation_id = sho.affiliation_id\n" +
-                        "where\n" + param.substring(0, param.length() - 4));
-
-        return query.getResultList();
+    public List<String> skillMapSearchParams(Map<String, String> map) {
+        return null;
     }
 
-    public List<SkillMap> getSkillMap(List<String> id, boolean lang, boolean os, boolean dbms, boolean tools, boolean maker, boolean duty, List<Integer> industries) {
-        List<SkillMap> lsm = new ArrayList<>();
-        List<EmployeeMaster> eml = er.findByShainIdIn(id);
-        String affiliation;
-        for (EmployeeMaster em : eml) {
-            affiliation = String.join("/", em.getAffiliation().stream().map(AFFILIATIONData::getDesc).collect(Collectors.toList()));
-            System.out.println(em.getShainId());
-            lsm.add(new SkillMap(em.getShainId(), em.getShainName(), affiliation, buildSkillMapList(em, lang, os, dbms, tools, maker, duty, industries)));
-        }
-        return lsm;
+    public List<SkillMap> getSkillMap() {
+        return null;
     }
 
-    private Map<String, List<SkillMapUtil>> buildSkillMapList(EmployeeMaster em, boolean lang, boolean osy, boolean dbms, boolean tools, boolean maker, boolean duty, List<Integer> inds) {
-
-        Map<String, List<SkillMapUtil>> fml = new HashMap<>();
+    private Map<String, List<SkillMapUtil>> buildSkillMapList() {
+    return null;
+    /*    Map<String, List<SkillMapUtil>> fml = new HashMap<>();
         List<SkillMapUtil> langMap = new ArrayList<>();
         List<SkillMapUtil> makerMap = new ArrayList<>();
         List<SkillMapUtil> osMap = new ArrayList<>();
@@ -126,6 +100,6 @@ public class SkillMapService {
             toolsMap.stream().collect(Collectors.groupingBy(SkillMapUtil::getDescription, Collectors.collectingAndThen(reducing((a, b) -> new SkillMapUtil(a.description, (a.experience += b.experience))), Optional::get)));
             fml.put("TOOLS", toolsMap);
         }
-        return fml;
+        return fml;*/
     }
 }

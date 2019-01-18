@@ -51,6 +51,7 @@
           <!--<input type="date" formControlName="shainBirthday" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.shainBirthday.errors }"> -->
         </div>
       </div>
+      <ng-container *ngIf="isEditing || isInserting; else blockAff">
       <div class="col-md-6">
         <span>所属</span>
         <ng-select
@@ -62,11 +63,23 @@
         placeholder="..."
         formControlName="affiliation">
         </ng-select>
-        <!--<select class="custom-select custom-select-sm" formControlName="id">
-      <option *ngFor="let item of affiliation" value="{{item.tid}}">{{item.as}}</option>
-    </select>
-    -->
       </div>
+      </ng-container>
+      <ng-template #blockAff>
+        <div class="col-md-6">
+            <span>所属</span>
+            <ng-select
+            [items]="data.AFFILIATION"
+            [multiple]="true"
+            [closeOnSelect]="true"
+            [hideSelected]="true"
+            bindLabel="desc"
+            placeholder="!!"
+            formControlName="affiliation">
+            </ng-select >
+      </div>
+      </ng-template>
+
       <div class="col-md-3">
         <div formGroupName="position">
           <span>役職</span>          
