@@ -1,7 +1,12 @@
 <app-header *ngIf="isLoggedIn$"></app-header>
 <main>
-    <div class="container-fluid">        
-            <router-outlet (activate)="authValidate()"></router-outlet>        
+    <div class="container">
+        <div class="row d-flex justify-content-end">
+            <app-displaydate></app-displaydate>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <router-outlet (activate)="authValidate()"></router-outlet>
     </div>
 </main>
 <app-footer></app-footer>

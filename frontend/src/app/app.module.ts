@@ -57,6 +57,7 @@ import { QualificationsResultsComponent } from './qualifications/qualifications-
 import { QualificationsAddComponent } from './qualifications/qualifications-add/qualifications-add.component';
 import { QualificationsDetailsComponent } from './qualifications/qualifications-details/qualifications-details.component';
 import { SoumuHeaderComponent } from './header/soumu-header/soumu-header.component';
+import { DisplaydateComponent } from './utils/displaydate/displaydate.component';
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -102,7 +103,8 @@ defineLocale('ja',jaLocale)
     QualificationsResultsComponent,
     QualificationsAddComponent,
     QualificationsDetailsComponent,
-    SoumuHeaderComponent
+    SoumuHeaderComponent,
+    DisplaydateComponent
   ],
   imports: [
     BrowserModule,

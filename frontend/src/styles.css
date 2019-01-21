@@ -75,6 +75,7 @@ html, body {
 main {
   /* flex: 1; would be enough but IE has different defaults (surprise!) */
   flex: 1 1 auto;
+  background-color: #e6ffe6;
 }
 
 .app{

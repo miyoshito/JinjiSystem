@@ -42,6 +42,7 @@ public class AuthorizationService {
             if (bCrypt.matches(password,user.getShainPassword())){
                 List<Long> area = user.getAffiliation().stream().map(AFFILIATIONData::getId).collect(Collectors.toList());
                 responseHeaders.add("Authorization", jwtTokenProvider.createToken(username, user.isAdmin(), area, user.getPosition().getId()));
+
                 return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
             } else {
                 return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);

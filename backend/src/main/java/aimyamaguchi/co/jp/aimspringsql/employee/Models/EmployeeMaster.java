@@ -10,6 +10,7 @@ import javax.persistence.*;
 
 import aimyamaguchi.co.jp.aimspringsql.education.StudyCourseModel;
 import aimyamaguchi.co.jp.aimspringsql.qualifications.QualificationsModel;
+import aimyamaguchi.co.jp.aimspringsql.security.AuditableModel;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -21,7 +22,7 @@ import aimyamaguchi.co.jp.aimspringsql.resume.ResumeModel;
 @Entity
 @Table(name="[M_SHAIN]", schema="[DBO]")
 
-public class EmployeeMaster implements Serializable{
+public class EmployeeMaster extends AuditableModel implements Serializable{
 
     private static final long serialVersionUID = 1L;
 
