@@ -7,6 +7,7 @@ import aimyamaguchi.co.jp.aimspringsql.employee.Models.AFFILIATIONData;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
 import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.EmployeeRepository;
 import aimyamaguchi.co.jp.aimspringsql.util.CustomValidators;
+import aimyamaguchi.co.jp.aimspringsql.util.SearchFilters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +31,9 @@ public class SkillMapService {
     @Autowired
     private CustomValidators validator;
 
+    @Autowired
+    private SearchFilters sf;
+
     public List<String> skillMapSearchParams(Map<String, String> map) {
         return null;
     }
@@ -38,9 +42,25 @@ public class SkillMapService {
         return null;
     }
 
-    private Map<String, List<SkillMapUtil>> buildSkillMapList() {
-    return null;
-    /*    Map<String, List<SkillMapUtil>> fml = new HashMap<>();
+    /*private Map<String, List<SkillMapUtil>> buildSkillMapList(EmployeeMaster e, Map<String, Boolean> map) {
+
+
+        map.entrySet()
+                .stream().forEach(k -> {
+                    switch(k.getKey()){
+                        case "lang":
+                            Map<String, e.getCurriculum().stream()
+
+
+
+
+
+                    }
+                });
+
+
+
+      Map<String, List<SkillMapUtil>> fml = new HashMap<>();
         List<SkillMapUtil> langMap = new ArrayList<>();
         List<SkillMapUtil> makerMap = new ArrayList<>();
         List<SkillMapUtil> osMap = new ArrayList<>();
@@ -100,6 +120,6 @@ public class SkillMapService {
             toolsMap.stream().collect(Collectors.groupingBy(SkillMapUtil::getDescription, Collectors.collectingAndThen(reducing((a, b) -> new SkillMapUtil(a.description, (a.experience += b.experience))), Optional::get)));
             fml.put("TOOLS", toolsMap);
         }
-        return fml;*/
-    }
+        return fml;
+    }*/
 }

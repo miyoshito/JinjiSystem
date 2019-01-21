@@ -149,7 +149,11 @@ export class EmployeeMasterComponent implements OnInit {
   redirect(to: string){
     if(this.iid === '')
     this.iid = this._route.snapshot.paramMap.get('id')
-    this._router.navigate(['/admin/'+to+'/details/'+this.iid])
+    if (to == 'rirekisho'){
+      this._router.navigate(['/soumu/rirekisho/details/'+this.iid])
+    } else {
+      this._router.navigate(['/public/'+to+'/details/'+this.iid])
+    }
   }
   
   show: boolean
@@ -238,7 +242,8 @@ export class EmployeeMasterComponent implements OnInit {
       shainNotes: [''],
       shainRegisterDate: [''],
       shainRegisteredBy: [''],
-      shainDeletedFlag: false
+      shainDeletedFlag: false,
+      admin: ['']
     })
   }
 }

@@ -114,7 +114,7 @@ public class EmployeeMaster implements Serializable{
     private ResumeModel resume;
 
     @OneToMany(mappedBy = "employee_id", fetch = FetchType.LAZY)
-    @OrderBy("enddate DESC")
+    @OrderBy("startdate DESC")
     private List<CurriculumModel> curriculum;
 
     @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
@@ -132,8 +132,13 @@ public class EmployeeMaster implements Serializable{
         final Integer[] tt = {0};
         if (this.getCurriculum().size() > 0) {
 
+            //getCurriculum sempre vai trazer por DESC no comeco
+
+
             Integer minYear;
             Integer maxYear;
+
+
 
             minYear = this.getCurriculum()
                     .stream()
@@ -143,10 +148,6 @@ public class EmployeeMaster implements Serializable{
                     .stream()
                     .map(my -> my.getEnddate().getYear())
                     .max(Integer::compareTo).get();
-
-
-            System.out.println(minYear);
-            System.out.println(maxYear);
 
             this.getCurriculum().stream().
                     forEach(cv -> {
@@ -161,6 +162,11 @@ public class EmployeeMaster implements Serializable{
         }
         this.totalExperienceTime = tt[0];
         return tt[0];
+
+    }
+
+    public void setTotalExperienceTime(Integer experience){
+        this.totalExperienceTime = experience;
     }
 
 

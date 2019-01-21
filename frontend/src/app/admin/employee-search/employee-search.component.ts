@@ -14,6 +14,8 @@ export class EmployeeSearchComponent implements OnInit {
   
   searchForm: FormGroup
 
+  map: Map<string, string> = new Map<string, string>()
+
   constructor(private _employeeService: EmployeeMasterService,
               private _fb: FormBuilder) { }
 
@@ -23,12 +25,12 @@ export class EmployeeSearchComponent implements OnInit {
   }
 
   testSearch(){
-    let param: searchParam = this.searchForm.value
-    try {
-    this._employeeService.searchShain(param.id, param.name, param.kana, param.affiliation)
-    } catch (e){
-      alert('algo errado n esta certo')
-    }
+    this.map.clear()
+    Object.keys(this.searchForm.value)
+      .filter(f => this.searchForm.value[f] != '')
+      .forEach(k => this.map.set(k,this.searchForm.value[k]));
+
+      this._employeeService.searchShain(this.map)
   }
 
 

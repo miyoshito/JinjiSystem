@@ -23,4 +23,8 @@ export class QualificationsSearchComponent implements OnInit {
       { dateRangeFormat: 'YYYY/MM/DD'});
   }
 
+  doSearch(){
+    alert('開発中です')
+  }
+
 }

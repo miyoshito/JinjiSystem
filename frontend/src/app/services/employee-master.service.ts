@@ -83,21 +83,25 @@ export class EmployeeMasterService {
   )}
 
   getAllUsers(){
-    return this._http.get<Employee[]>(ADMIN_URL + '/admin/getallemployees', {observe: 'response'})
+    return this._http.get<Employee[]>(ADMIN_URL + '/getallemployees', {observe: 'response'})
   }
 
-  searchShain(id: string, name: string, kana: string, aff: number[]){
-    let affs = ''
-    if (aff.length > 0) {
-     affs = aff.map(s => s).join(',')
-    console.log(affs)
-    }
-    return this._http.get<Employee[]>(ADMIN_URL+
-    '/search-employee?id='+id
-    +'&name='+name
-    +'&kana='+kana
-    +'&affiliation='+affs,
-    {observe: 'response'}).subscribe(res =>{
+  searchShain(map: Map<string, string>){
+
+    let httpParams: HttpParams = new HttpParams()
+
+    map.forEach((k,v) =>{
+      httpParams = httpParams.append(v,k)
+    })
+
+  
+    return this._http.get<Employee[]>(ADMIN_URL + '/search-employee',
+    {params: httpParams, observe: 'response'}).subscribe(res =>{
+
+      if (res.body == null){
+        alert('データーが見つかりません。')  
+        return
+      }
       this._router.navigate(['/admin/employee-list'])
       this.searchSource.next(res.body)
     })

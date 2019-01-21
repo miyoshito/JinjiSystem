@@ -20,6 +20,8 @@ export class CurriculumSearchComponent implements OnInit {
   age = new Array
   validExp: boolean
 
+  map: Map<string, string> = new Map<string, string>()
+
   params$: Observable<any>
 
   constructor(private curriculumService: CurriculumService,
@@ -37,23 +39,22 @@ export class CurriculumSearchComponent implements OnInit {
   }
 
   doSearch(){    
-    let map: Map<string, string> = new Map<string, string>()
-
+    this.map.clear()
     Object.keys(this.searchForm.value)
       .filter(f => this.searchForm.value[f] != '')
-      .forEach(k => map.set(k,this.searchForm.value[k]));
+      .forEach(k => this.map.set(k,this.searchForm.value[k]));
       //temporary until i figure out some way to validate exp and operator fields.
-      if(map.get("operator")) map.delete("operator")
-      if(map.get("experience")){
+      if(this.map.get("operator")) this.map.delete("operator")
+      if(this.map.get("experience")){
         if (this.searchForm.controls.operator.value != ''){
         let s = this.searchForm.controls.operator.value+this.searchForm.controls.experience.value
-        map.set("experience", s)
+        this.map.set("experience", s)
         } else {
         let s = 'eq'+this.searchForm.controls.experience.value
-        map.set("experience", s)
+        this.map.set("experience", s)
         }
       }
-    this.curriculumService.searchShokumuRireki(map)
+    this.curriculumService.searchShokumuRireki(this.map)
   }
   // in case of clear button, sets all fields to '' for search filter purposes
   reset(){

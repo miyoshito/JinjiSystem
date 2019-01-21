@@ -41,13 +41,13 @@ export class StudyCourseDetailsComponent implements OnInit {
 
   ngOnInit() {
     console.log(this._router.url)
-    if (this._router.url.startsWith('/admin')){      
+    if (this._router.url.includes('/details/')){      
       this.displayReturnButton = true
       this._employeeService.getShainData(this._route.snapshot.paramMap.get('uid'),false,false,true)
       this.user$ = this._employeeService.employee$
     }
 
-    if(this._router.url.endsWith('/studycourses')){
+    if(this._router.url.endsWith('/studycourse')){
       this.displayReturnButton = false
       this._profileService.cachedUser$.pipe(takeUntil(this.isAlive$),
       map(e => {
@@ -62,13 +62,13 @@ export class StudyCourseDetailsComponent implements OnInit {
   }
 
   edit(uid: number, scid: number){
-    if (this._router.url.startsWith('/public')) this._router.navigate(['/public/studycourse/'+uid+'/'+scid+'/edit'])
-    else this._router.navigate(['/public/studycourses/'+scid+'/edit'])
+    if (this._router.url.includes('/details/')) this._router.navigate(['/public/studycourse/'+uid+'/'+scid+'/edit'])
+    else this._router.navigate(['/public/studycourse/'+scid+'/edit'])
   }
 
   add(uid: number){
-    if (this._router.url.startsWith('/public')) this._router.navigate(['/public/studycourse/'+uid+'/add'])
-    else this._router.navigate(['/public/studycourses/add'])
+    if (this._router.url.includes('/details/')) this._router.navigate(['/public/studycourse/'+uid+'/add'])
+    else this._router.navigate(['/public/studycourse/add'])
   }
 
 }

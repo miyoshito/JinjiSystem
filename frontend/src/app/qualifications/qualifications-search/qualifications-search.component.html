@@ -4,7 +4,7 @@
       <h3>{{title}}</h3>
     </div>
   </div>
-  <form [formGroup]="searchForm">
+  
     <div class="row">
       <div class="col-md-3">
         <span>社員番号</span>
@@ -66,9 +66,9 @@
         </div>
       </div>
     </div>
-  </form>
+
 
   <div class="row d-flex justify-content-around">
-    <button class="btn btn-primary">検索</button>
+    <button class="btn btn-primary" (click)="doSearch()">検索</button>
     <button class="btn btn-primary">クリア</button>
   </div>

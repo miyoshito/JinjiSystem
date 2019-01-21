@@ -83,10 +83,11 @@ export class StudyCourseEditComponent implements OnInit {
   get f(){return this.studyForm.controls}
 
   redirect(){
-    if(this._router.url.startsWith('/profile'))
-      this._router.navigate(['/profile/studycourses'])
-    if(this._router.url.startsWith('/admin'))
-      this._router.navigate(['/admin/studycourse/details/'+this._route.snapshot.paramMap.get('uid')])
+    if(this._router.url.includes(this._route.snapshot.paramMap.get('uid')))
+      this._router.navigate(['/public/studycourse/details/'+this._route.snapshot.paramMap.get('uid')])    
+      else
+      this._router.navigate(['/public/studycourse'])
+    
   }
 
   patchData(e: Observable<Employee>){

@@ -86,28 +86,4 @@ public class CurriculumController {
         return new ResponseEntity<>(search.getEmployeesWithCv(),HttpStatus.OK);
     }
 
-    @GetMapping("/se/skillmapbuilder")
-    public ResponseEntity<List<SkillMap>> skillMapSearch(
-            @RequestParam(value = "id", required = false) String id,
-            @RequestParam(value = "nm", required = false) String name,
-            @RequestParam(value = "kt", required = false) String katakana,
-            @RequestParam(value = "sh", required = false) Integer affiliation,
-            @RequestParam(value = "lang", required = true) boolean lang,
-            @RequestParam(value = "os", required = true) boolean os,
-            @RequestParam(value = "dbms", required = true) boolean dbms,
-            @RequestParam(value = "tool", required = true) boolean tool,
-            @RequestParam(value = "make", required = true) boolean make,
-            @RequestParam(value = "duty", required = true) boolean duty,
-            @RequestParam(value = "ind", required = false) List<Integer> inds
-    )
-    {
-        try {
-            List<String> ids = skillMapService.skillMapSearchParams(id, name, katakana, affiliation);
-
-            return new ResponseEntity<>(skillMapService.getSkillMap(ids, lang, os, dbms, tool, make, duty, inds), HttpStatus.OK);
-        } catch (CustomException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
 }
