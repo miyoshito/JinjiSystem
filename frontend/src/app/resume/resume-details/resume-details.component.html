@@ -1,27 +1,27 @@
 <div class="container">
 <ng-container *ngIf="userSelected$ | async; let user">
 <div class="row">
-  <div class="col-md-6">
-    <h3>履歴書詳細画面</h3>
-  </div>
+  <span class="col-md-6" align="right">
+    <h3>履歴書詳細画面</h3><br>
+  </span>
   <div class="col-md-3"></div>
   <div class="col-md-3">
     <span>登録日：開発中です</span><br />
     <span>更新日：開発中です</span>
   </div>
 </div>
-<div class="row">
+<div class="rowhead">
   <div class="col-md-3">
-    <span>社員番号: </span><span>{{user.shainId}}</span>
+    <span class="font-bold">社員番号: </span><span>{{user.shainId}}</span>
   </div>
   <div class="col-md-3">
-    <span>氏名: </span><span>{{user.shainName}}</span>
+    <span class="font-bold">氏名: </span><span>{{user.shainName}}</span>
   </div>
   <div class="col-md-3">
-    <span>フリガナ: </span><span>{{user.shainKana}}</span>
+    <span class="font-bold">フリガナ: </span><span>{{user.shainKana}}</span>
   </div>
   <div class="col-md-3">
-    <span>採用区分: </span><span>{{user.shainRecruit?.desc}}</span>
+    <span class="font-bold">採用区分: </span><span>{{user.shainRecruit?.desc}}</span>
   </div>
 </div>
 <div class="row">
@@ -90,7 +90,7 @@
 
 <div class="row">
   <div class=col-md-2>
-    <span>※経歴※</span>
+    <span class="font-bold">※経歴※</span>
   </div>
 </div>
 <div class="row">
@@ -113,8 +113,8 @@
 </div>
 
 <div class="row">
-  <div class=col-md-2>
-    <span>※資格※</span>
+  <div class="col-md-2 col-" >
+    <span class="font-bold">※資格※</span>
   </div>
 </div>
 <div class="row">
@@ -137,7 +137,7 @@
 </div>
 <div class="row">
   <div class=col-md-2>
-    <span>※表彰※</span>
+    <span class="font-bold">※表彰※</span>
   </div>
 </div>
 <div class="row">
