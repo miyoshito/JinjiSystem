@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class StudyCourseService {
@@ -43,11 +44,23 @@ public class StudyCourseService {
 
     public boolean insertSCAttempt(StudyCourseModel scm, HttpServletRequest req){
         LocalDate now = LocalDate.now();
+
                 if(scm.getId() != null) scm.setUpdatedby(jwt.getUsername(jwt.resolveToken(req)));
                 scm.setEmployee(sf.getEmployeeData(scm.getEmployee_id()));
                 scm.setUpdated(now);
                 sci.save(scm);
                 return true;
+    }
+
+    public List<String> getSCSponsorList(){
+        return sci.findAll().stream()
+                .map(StudyCourseModel::getSponsor)
+                .collect(Collectors.toList());
+    }
+    public List<String> getSCEduNameList(){
+        return sci.findAll().stream()
+                .map(StudyCourseModel::getEducationName)
+                .collect(Collectors.toList());
     }
 
     public boolean softDeleteSC(Long id){
@@ -83,7 +96,8 @@ public class StudyCourseService {
                             filteredUsers.where(e.shainKana.contains(f.getValue()));
                             break;
                         case "sponsor":
-                            filteredUsers.where(qscm.sponsor.contains(f.getValue()));
+                            filteredUsers.where(qscm.sponsor.eq(f.getValue()));
+                            break;
                         case "expenses":
                             switch(f.getValue().substring(0,2)) {
                                 case "gt":

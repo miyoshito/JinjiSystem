@@ -60,6 +60,16 @@ public class StudyCourseController {
         }
     }
 
+    @GetMapping("/se/studycourse/sponsorlist")
+    public List<String> getStudySponsors(){
+            return scs.getSCSponsorList();
+    }
+
+    @GetMapping("/se/studycourse/edulist")
+    public List<String> getStudyEdu(){
+            return scs.getSCEduNameList();
+    }
+
     @GetMapping("/admin/studycourse/search")
     public ResponseEntity<List<EmployeeMaster>> searchSC(@RequestParam Map<String, String> allParams){
 
