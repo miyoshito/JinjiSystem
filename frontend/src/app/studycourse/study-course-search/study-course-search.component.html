@@ -1,24 +1,10 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-4">
-      <h3>{{title}}</h3>
-    </div>
+      <div class="col-md-12 d-flex justify-content-center">
+          <h3>{{title}}</h3>
+        </div>
   </div>
 <form [formGroup]="searchForm">
-  <div class="row">
-    <div class="col-md-3">
-      <span>社員番号</span>
-      <input type="text" class="form-control" formControlName="id">
-    </div>
-    <div class="col-md-3">
-      <span>氏名</span>
-      <input type="text" class="form-control" formControlName="name">
-    </div>
-    <div class="col-md-3">
-      <span>フリガナ</span>
-      <input type="text" class="form-control" formControlName="kana">
-    </div>
-  </div>
   <div class="row">
     <div class="col-md-6">
       <span>主催</span>
@@ -69,6 +55,20 @@
       </div>
     </div>
   </div>　
+  <div class="row">
+      <div class="col-md-3">
+        <span>社員番号</span>
+        <input type="text" class="form-control" formControlName="id">
+      </div>
+      <div class="col-md-3">
+        <span>氏名</span>
+        <input type="text" class="form-control" formControlName="name">
+      </div>
+      <div class="col-md-3">
+        <span>フリガナ</span>
+        <input type="text" class="form-control" formControlName="kana">
+      </div>
+  </div>
 
   <div class="row d-flex justify-content-around">
     <button class="btn btn-primary" (click)="searchAttempt()">検索</button>

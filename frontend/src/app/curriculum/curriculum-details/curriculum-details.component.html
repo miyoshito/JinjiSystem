@@ -1,36 +1,39 @@
 <div *ngIf="profileSelected$ | async; let user">
   <div class="container">
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-4">
+      </div>
+      <div class="col-md-4">
         <h3>職務経歴書一覧画面</h3>
       </div>
-      <div class="col-md-3"></div>
-      <div class="col-md-3">
+      <div class="col-md-4">
         <span>登録日：開発中です</span><br />
         <span>更新日：開発中です</span>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-3">
-        <span><b>社員番号:</b> </span><span>{{user.shainId}}</span>
+    <div class="col-md-12 border border-dark">
+      <div class="row">
+        <div class="col-md-3">
+          <span><b>社員番号:</b> </span><span>{{user.shainId}}</span>
+        </div>
+        <div class="col-md-3">
+          <span><b>氏名:</b> </span><span>{{user.shainName}}</span>
+        </div>
+        <div class="col-md-3">
+          <span><b>フリガナ:</b> </span><span>{{user.shainKana}}</span>
+        </div>
+        <div class="col-md-3">
+          <span><b>採用区分:</b> </span><span>{{user.shainRecruit?.desc}}</span>
+        </div>
       </div>
-      <div class="col-md-3">
-        <span><b>氏名:</b> </span><span>{{user.shainName}}</span>
-      </div>
-      <div class="col-md-3">
-        <span><b>フリガナ:</b> </span><span>{{user.shainKana}}</span>
-      </div>
-      <div class="col-md-3">
-        <span><b>採用区分:</b> </span><span>{{user.shainRecruit?.desc}}</span>
-      </div>
-    </div>
-    <br />
-    <div class="row">
-      <div class="col-md-3">
-        <span><b>住所:</b> </span><span>{{user?.shainArea?.desc}}{{user.shainAddress}}</span>
-      </div>
-      <div class="col-md-3">
-        <span><b>経験年数:</b> </span><span>{{sumOf(user.curriculum)}}</span>
+      <br />
+      <div class="row">
+        <div class="col-md-3">
+          <span><b>住所:</b> </span><span>{{user?.shainArea?.desc}}{{user.shainAddress}}</span>
+        </div>
+        <div class="col-md-3">
+          <span><b>経験年数:</b> </span><span>{{sumOf(user.curriculum)}}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -92,12 +95,12 @@
           保有資格
         </thead>
         <tbody>
-            <tr *ngFor="let qualifications of user.qualifications">
-              <td>{{qualifications?.qName}}</td>
-            </tr>
-            <tr *ngFor="let sc of user.educations">
-              <td>{{sc?.educationName}}</td>
-            </tr>
+          <tr *ngFor="let qualifications of user.qualifications">
+            <td>{{qualifications?.qName}}</td>
+          </tr>
+          <tr *ngFor="let sc of user.educations">
+            <td>{{sc?.educationName}}</td>
+          </tr>
         </tbody>
       </table>
     </div>

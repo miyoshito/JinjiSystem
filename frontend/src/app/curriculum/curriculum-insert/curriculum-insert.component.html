@@ -1,11 +1,11 @@
 <div class="container">
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-12 d-flex justify-content-center">
     <h3>{{title}}</h3>
   </div>
 </div>
 <div *ngIf="loggedUser$ | async; let user">
-  <div class="row">
+  <div class="row border border-dark">
     <div class="col-md-3">
       <span>社員番号: </span><span>{{user.shainId}}</span>
     </div>

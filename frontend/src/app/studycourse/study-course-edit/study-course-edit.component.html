@@ -6,7 +6,7 @@
   </div>
 <form [formGroup]="studyForm">
   <ng-container *ngIf="selectedUser$ | async; let user">
-  <div class="row">
+  <div class="row border border-dark">
     <div class="col-md-3">
       <span style="font-weight: 600">社員番号:</span><span> {{user.shainId}}</span>
     </div>

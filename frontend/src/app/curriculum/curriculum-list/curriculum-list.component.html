@@ -1,6 +1,6 @@
 <div class="container-fluid">
 <div class="row">
-  <div class="col-md-6">
+  <div class="col-md-12 d-flex justify-content-center">
     <h3>職務経歴書一覧画面</h3>
   </div>
 </div>
@@ -15,7 +15,7 @@
         <th>OS/DBMS</th>
         <th>LANG/TOOLS</th>
         <th> </th>
-      </thead>      
+      </thead>
       <ng-container *ngFor="let user of selectedUsers$ | async; let i = index">
       <tbody>
         <tr>
