@@ -13,7 +13,7 @@ export class DisplaydateComponent implements OnInit {
 
   settings: Moment
 
-  options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'short' };
 
   now: String = new Date().toLocaleDateString('ja-JP', this.options)
 

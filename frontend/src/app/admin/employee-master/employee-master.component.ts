@@ -82,7 +82,8 @@ export class EmployeeMasterComponent implements OnInit {
   this.bsConfig = Object.assign(
     { containerClass: "theme-red" },
     { dateInputFormat: 'YYYY/MM/DD' },
-    { dateRangeFormat: 'YYYY/MM/DD'});
+    { dateRangeFormat: 'YYYY/MM/DD'},
+    { showWeekNumbers: false });
   
   if ((this._router.url).endsWith('/edit')){
       this.selectedUser$ = this._employeeService.employee$
@@ -168,6 +169,7 @@ export class EmployeeMasterComponent implements OnInit {
     let employee: Employee = this.employeeForm.value
     if (this.employeeForm.invalid) {
       this.submitted = true
+      alert('必須項目が未入力です。')
       return;
     }
     try {

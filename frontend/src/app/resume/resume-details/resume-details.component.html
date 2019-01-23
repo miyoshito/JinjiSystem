@@ -1,16 +1,16 @@
 <div class="container">
 <ng-container *ngIf="userSelected$ | async; let user">
 <div class="row">
-  <span class="col-md-6" align="right">
-    <h3>履歴書詳細画面</h3><br>
-  </span>
-  <div class="col-md-3"></div>
-  <div class="col-md-3">
+  <div class="col-md-4">
+  </div>
+  <div class="col-md-4"><h3>履歴書詳細画面</h3></div>
+  <div class="col-md-4">
     <span>登録日：開発中です</span><br />
     <span>更新日：開発中です</span>
   </div>
 </div>
-<div class="rowhead">
+<div class="row border border-dark">
+
   <div class="col-md-3">
     <span class="font-bold">社員番号: </span><span>{{user.shainId}}</span>
   </div>

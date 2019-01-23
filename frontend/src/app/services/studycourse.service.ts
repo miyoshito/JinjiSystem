@@ -47,4 +47,12 @@ export class StudycourseService {
     this._searchResultsSource.next(emp)
   }
 
+  getSponsorList(){
+    return this._http.get<string[]>(API_URL + '/se/studycourse/sponsorlist', {observe: 'response'})
+  }
+
+  getEducationsList(){
+    return this._http.get<string[]>(API_URL + '/se/studycourse/edulist', {observe: 'response'})
+  }
+
 }

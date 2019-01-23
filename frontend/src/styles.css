@@ -31,7 +31,7 @@ thead {
 }
 
 .retired-bg{
-  background-color: salmon;
+  background-color: rgba(255, 206, 206, 0.979);
 }
 /*
 .vertical-text{
@@ -89,7 +89,17 @@ main {
   display: flex;
   align-content: center;
   justify-content: flex-end;
+  background-color: #e6ffe6;
 }
+
+h3 {
+  color: blue;
+}
+
+.bs-datepicker-body thead {
+  background-color: white;
+}
+
 
 
 

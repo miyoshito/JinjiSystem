@@ -5,7 +5,7 @@ import { atLeastOne } from 'src/app/validators/atleastOne';
 import { Router } from '@angular/router';
 import { BsDatepickerConfig, BsDatepickerViewMode, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { EmployeeMasterService } from 'src/app/services/employee-master.service';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
 
 @Component({
@@ -30,6 +30,9 @@ export class StudyCourseSearchComponent implements OnInit {
   stValue = new Date()
   edValue = new Date()
 
+  sponsorsList$: string[]
+  educationList$: string[]
+
   isAlive$: Subject<boolean> = new Subject<boolean>()
 
   map: Map<string, string> = new Map<string, string>()
@@ -50,6 +53,15 @@ export class StudyCourseSearchComponent implements OnInit {
         this.edValue = this.searchForm.get('enddate').value
       }
     })
+
+    this._scService.getEducationsList().pipe(takeUntil(this.isAlive$), map(res =>{
+      this.educationList$ = res.body
+    })).subscribe()
+
+    this._scService.getSponsorList().pipe(takeUntil(this.isAlive$), map(res =>{
+      this.sponsorsList$ = res.body
+    })).subscribe()
+
   }
 
   searchAttempt(){
@@ -101,6 +113,7 @@ export class StudyCourseSearchComponent implements OnInit {
       name: [''], 
       kana: [''],
       sponsor: [''],
+      educationName: [''],
       expenses: [''],
       stdate: [''],
       enddate: [''],
