@@ -8,8 +8,10 @@
   flex-wrap: wrap;
   margin-right: -15px;
   margin-left: -15px;
-  border: 5px solid violet;
 }
 .font-bold {
-	font-weight: bold;
+  font-weight: bold;
+}
+.color-violet {
+	  border: 5px solid violet;	
 }
