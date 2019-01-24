@@ -129,7 +129,7 @@
           </select>
         </div>
       </div>
-      <div class="row d-flex justify-content-end" *ngIf="includeRetired">
+      <div class="row d-flex justify-content-end" *ngIf="displayIncludeBox">
         <div class="col-md-2 d-flex align-items-end justify-content-end border border-dark">
           <div class="custom-control custom-checkbox">
             <input type="checkbox" (change)="includeRetiredShains($event)" class="custom-control-input" id="customCheck1">

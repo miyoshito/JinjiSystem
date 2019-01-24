@@ -43,6 +43,7 @@ export class StudyCourseSearchComponent implements OnInit {
   map: Map<string, string> = new Map<string, string>()
 
   ngOnInit() {
+    this.checkIfSoumu()
     this.title = "教育受講履歴検索画面"
     this.bsConfig = Object.assign(
       { containerClass: "theme-red" },
@@ -77,7 +78,9 @@ export class StudyCourseSearchComponent implements OnInit {
     this._broadcastService.userGroup$.pipe(
       takeUntil(this.isAlive$),
       map(groups => {
+        console.log(groups)
         if (groups.find(e => e.id == 3)) {
+          console.log('aimeuzovo')
           this.displayIncludeBox = true
         }
       })).subscribe()
