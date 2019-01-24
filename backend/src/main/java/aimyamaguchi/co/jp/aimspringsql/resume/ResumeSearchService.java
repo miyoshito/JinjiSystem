@@ -22,7 +22,7 @@ public class ResumeSearchService {
 
     public List<String> getResumeSearchResults(Map<String, String> map){
 
-        System.out.println(map);
+
 
         QEmployeeMaster e = QEmployeeMaster.employeeMaster;
         QResumeModel res = QResumeModel.resumeModel;
@@ -54,8 +54,6 @@ public class ResumeSearchService {
                             filteredUsers.where(qrt.id.eq(Long.valueOf(f.getValue())));
                             break;
                         case "age":
-                            System.out.println("From ->" +f.getValue());
-                            System.out.println("To -> " +f.getValue() + 9);
                             filteredUsers
                                     .where(DateTimeExpression.currentTimestamp().year()
                                             .subtract(e.shainBirthday.year())
@@ -79,6 +77,12 @@ public class ResumeSearchService {
                             filteredUsers.leftJoin(res.qualifications, qlf);
                             filteredUsers.where(qlf.qualification_name.contains(f.getValue()));
                             break;
+                        case "retired":
+                            if(f.getValue().equals("false")){
+                                filteredUsers.where(e.shainRetired.isFalse());
+                            }
+                            break;
+                        default: break;
                     }
                 });
         return filteredUsers.fetch();

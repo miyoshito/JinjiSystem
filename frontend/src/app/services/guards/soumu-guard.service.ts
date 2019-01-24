@@ -19,11 +19,8 @@ export class SoumuGuardService implements CanActivate {
 
   
 
-  async canActivate() { 
-    console.log('after >' +this.isSoumu)
-    await this.checkGroup()
-    console.log('before >' +this.isSoumu)
-    
+  async canActivate() {     
+    await this.checkGroup()    
     return this.isSoumu
    }
 

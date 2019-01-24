@@ -23,9 +23,7 @@ export class CurriculumDetailsComponent implements OnInit {
   displayButton: boolean
   user: Employee  
   isAlive$: Subject<boolean> = new Subject<boolean>()
-
- 
-
+  
   constructor(private _profileService: ProfileService,
               private _broadcastService: BroadcastService,
               private _employeeService: EmployeeMasterService,

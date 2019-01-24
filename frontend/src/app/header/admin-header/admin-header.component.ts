@@ -48,7 +48,6 @@ export class AdminHeaderComponent implements OnInit {
   checkIfAdmin(){
     this._broadcastService.userAuthorization$.pipe(takeUntil(this.isAlive$),
     map(auth =>{
-      console.log(auth)
       this.isAdmin = auth
     })).subscribe()
 
@@ -68,7 +67,6 @@ export class AdminHeaderComponent implements OnInit {
   displayAdminMenu(){    
     if(this.isAdmin && this.isSoumu) {
       this.displayAdminMasterMenu = true
-      console.log('authorized.....')
     }
   }
 

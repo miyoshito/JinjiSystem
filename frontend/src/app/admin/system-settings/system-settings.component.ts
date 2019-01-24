@@ -28,7 +28,6 @@ export class SystemSettingsComponent implements OnInit {
       } else {
       this.changedUsers.push(new userXAuth(id,'','',e.target.checked))
     }
-    console.log(this.changedUsers);
   }
 
   saveSettings(){

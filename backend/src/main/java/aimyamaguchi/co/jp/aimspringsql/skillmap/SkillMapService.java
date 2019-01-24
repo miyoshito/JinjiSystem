@@ -98,7 +98,6 @@ public class SkillMapService {
         }
 
         if (validator.isNullValidator(langMap.size())) {
-            System.out.println("Eita rapaz...");
         }
         if (validator.isNullValidator(makerMap.size())) {
             makerMap.stream().collect(Collectors.groupingBy(SkillMapUtil::getDescription, Collectors.collectingAndThen(reducing((a, b) -> new SkillMapUtil(a.description, (a.experience += b.experience))), Optional::get)));

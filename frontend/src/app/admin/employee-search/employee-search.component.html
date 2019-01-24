@@ -35,6 +35,12 @@
       formControlName="affiliation">
       </ng-select>
   </div>
+  <div class="col-md-4 d-flex align-items-around justify-content-end" *ngIf="displayIncludeBox">
+      <div class="custom-control custom-checkbox">
+          <input type="checkbox" (change)="includeRetiredShains($event)" class="custom-control-input" id="customCheck1">
+          <label class="custom-control-label" for="customCheck1">退職者を含む</label>
+        </div>
+  </div>
   </ng-container>
 </div>
 </form>

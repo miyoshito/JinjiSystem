@@ -11,13 +11,20 @@
                 <th>社員番号</th>
                 <th>社員氏名</th>
                 <th>所属</th>
+                <th>退職</th>
                 <th> </th>
             </thead>
             <tbody>
-                <tr *ngFor="let employees of employees$ | async; let i = index">
+                <tr [ngClass]="{'retired-bg': employees.shainRetired }" *ngFor="let employees of employees$ | async; let i = index">
                     <td>{{employees.shainId}}</td>
                     <td>{{employees.shainName}}<br/>{{employees.shainKana}}</td>                    
-                    <td> <span *ngFor="let affs of employees.affiliation">{{affs.desc}}<br/></span></td>
+                    <td><span *ngFor="let affs of employees.affiliation">{{affs.desc}}<br/></span></td>
+                    <ng-container *ngIf="employees.shainRetired; else notRetired">
+                    <td style="color: red">退職</td>
+                    </ng-container>
+                    <ng-template #notRetired>
+                    <td> </td>
+                    </ng-template>
                     <td>
                         <button class="btn btn-primary" (click)="editShain(employees.shainId)">編集</button>
                     </td>

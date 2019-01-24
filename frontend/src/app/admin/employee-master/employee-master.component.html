@@ -6,12 +6,17 @@
               <h3>{{title}}</h3>
           </div>
       </div>
-      <div class="row">      
-          <div class="col-md-12 d-flex justify-content-end align-items-end">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" formControlName="shainRetired" class="custom-control-input" id="customCheck1">
-              <label class="custom-control-label" for="customCheck1">退職フラグ</label>
-            </div>
+      <div class="row d-flex justify-content-end">      
+        <div class="col-md-4" *ngIf="isRetired | async" >
+          <div class="alert alert-danger d-flex justify-content-center" role="alert">
+              退職
+          </div>
+        </div>
+          <div *ngIf="displayRetired | async" class="col-md-8 d-flex justify-content-end align-items-end">                                            
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" (change)="updateRetiredDate($event)" formControlName="shainRetired" class="custom-control-input" id="customCheck1">
+                    <label class="custom-control-label" for="customCheck1">退職フラグ</label>
+                  </div>                
           </div>
         </div>
     <div class="row">
@@ -192,6 +197,7 @@
             placeholder="退社日"
             class="form-control"
             [bsConfig]="bsConfig"
+            [ngClass]="{ 'is-invalid': submitted && f.shainRetiredDate.errors }"
             value = "{{f.shainRetiredDate.value | date:'yyyy/MM/dd'}}"
             formControlName="shainRetiredDate"
             bsDatepicker>

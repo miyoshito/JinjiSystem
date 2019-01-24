@@ -53,6 +53,11 @@ public class EmployeeSearchFunctions {
                                     .collect(Collectors.toList());
                             filteredUsers.where(q.id.in(aff));
                             break;
+                        case "retired":
+                            if(param.getValue().equals("false")){
+                                filteredUsers.where(e.shainRetired.isFalse());
+                            }
+                            break;
                         default:
                             break;
                     }

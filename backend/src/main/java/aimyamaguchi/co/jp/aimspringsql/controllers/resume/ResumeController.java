@@ -46,7 +46,7 @@ public class ResumeController {
 
     @GetMapping("/resume/search")
     public ResponseEntity<List<EmployeeMaster>> searchResults(@RequestParam Map<String, String> allParams, HttpServletRequest http) {
-        System.out.println(jwt.getAreas(jwt.resolveToken(http)));
+
         if (!jwt.getAreas(jwt.resolveToken(http)).contains(3)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {

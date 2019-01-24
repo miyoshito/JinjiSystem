@@ -14,10 +14,11 @@
         <th>採用区分</th>
         <th>出身校</th>
         <th>資格</th>
+        <th>退職</th>
         <th> </th>
       </thead>
       <tbody>        
-        <tr *ngFor="let user of results$ | async; let i = index">
+        <tr *ngFor="let user of results$ | async; let i = index" [ngClass]="{'retired-bg': user.shainRetired }">
           <td>{{user.shainId}}</td>
           <td>{{user.shainName}}({{user.shainKana}})</td>
           <td>{{user.shainRecruit?.desc}}</td>
@@ -25,6 +26,12 @@
           <td><ng-container *ngFor="let qualifications of user.resume?.qualifications">
            <span *ngIf="qualifications.active">{{qualifications.qualification_name}}<br/></span>
           </ng-container></td>
+          <ng-container *ngIf="user.shainRetired; else notRetired">
+              <td style="color: red">退職</td>
+          </ng-container>
+          <ng-template #notRetired>
+              <td> </td>
+          </ng-template>
           <td>
             <button class="btn btn-primary" (click)="showRirekisho(user.shainId)">詳細</button>
           </td>
