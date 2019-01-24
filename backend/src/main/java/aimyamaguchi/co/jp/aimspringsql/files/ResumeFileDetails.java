@@ -13,6 +13,7 @@ import javax.persistence.*;
 public class ResumeFileDetails {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long fileid;
 
     @Transient

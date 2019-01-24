@@ -11,6 +11,7 @@ import java.util.Set;
 public class RecruitTypeModel {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name = "RECRUIT_ID")
     private Long id;
 

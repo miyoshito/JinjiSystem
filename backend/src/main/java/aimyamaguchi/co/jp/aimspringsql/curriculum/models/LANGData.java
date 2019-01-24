@@ -13,6 +13,7 @@ import lombok.Data;
 public class LANGData{
     
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="LANG_ID")
     private Long id;
     @Column(name="LANG_DESC")

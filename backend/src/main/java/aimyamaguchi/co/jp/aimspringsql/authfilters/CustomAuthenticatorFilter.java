@@ -16,13 +16,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
-public class CustomAuthenticationFilter extends GenericFilterBean {
+public class CustomAuthenticatorFilter extends GenericFilterBean {
 
     private JwtTokenProvider jwtTokenProvider;
 
     private CustomAuthenticationProvider customAuthenticationProvider;
 
-    public CustomAuthenticationFilter(JwtTokenProvider jwtTokenProvider) {
+    public CustomAuthenticatorFilter(JwtTokenProvider jwtTokenProvider) {
       this.jwtTokenProvider = jwtTokenProvider;
     }
   

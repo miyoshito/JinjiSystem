@@ -14,6 +14,7 @@ public class INDUSTRYData {
 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="INDUSTRY_TYPE_ID")
     private Long id;
     @Column(name="INDUSTRY_TYPE_DESC")

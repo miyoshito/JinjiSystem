@@ -14,6 +14,7 @@ import lombok.Data;
 public class MAKERData{
     
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="MAKER_ID")
     private Long id;
     @Column(name="MAKER_DESC")

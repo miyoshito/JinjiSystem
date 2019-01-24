@@ -15,6 +15,7 @@ import lombok.Data;
 public class OSData{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="OS_ID")
     private Long id;
     @Column(name="OS_DESC")

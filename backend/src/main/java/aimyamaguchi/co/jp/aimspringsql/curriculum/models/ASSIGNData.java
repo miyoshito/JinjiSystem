@@ -12,6 +12,7 @@ import java.util.List;
 public class ASSIGNData {
 
         @Id
+        @GeneratedValue(strategy = GenerationType.SEQUENCE)
         @Column(name="ASSIGN_ID")
         private Long id;
         @Column(name="ASSIGN_DESC")

@@ -22,7 +22,7 @@ import aimyamaguchi.co.jp.aimspringsql.resume.ResumeModel;
 @Entity
 @Table(name="[M_SHAIN]", schema="[DBO]")
 
-public class EmployeeMaster implements Serializable{
+public class EmployeeMaster extends AuditableModel implements Serializable{
 
     private static final long serialVersionUID = 1L;
 

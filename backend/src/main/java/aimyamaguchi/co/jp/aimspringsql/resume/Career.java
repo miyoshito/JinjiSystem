@@ -16,7 +16,7 @@ public class Career implements Serializable {
 
     @Id
     @Column(name = "RK_NO")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long careerid;
 
     @Column(name="RK_YYYY")

@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 
@@ -18,18 +19,23 @@ import java.util.Optional;
 @EnableJpaAuditing
 public class SpringSecurityAuditorAware {
 
-    @Autowired
-    JwtTokenProvider jwtTokenProvider;
+
 
     @Bean
     public AuditorAware<String> auditorProvider() {
         return new SpringSecurityAuditAwareImpl();
     }
 }
+
 class SpringSecurityAuditAwareImpl implements AuditorAware<String>{
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @Override
     public Optional<String> getCurrentAuditor() {
+
+
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if (authentication == null ||

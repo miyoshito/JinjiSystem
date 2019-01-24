@@ -3,6 +3,8 @@ package aimyamaguchi.co.jp.aimspringsql.controllers.curriculum;
 import aimyamaguchi.co.jp.aimspringsql.authfilters.CustomException;
 import aimyamaguchi.co.jp.aimspringsql.authfilters.JwtTokenProvider;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.models.CurriculumDAO;
+import aimyamaguchi.co.jp.aimspringsql.curriculum.models.DBMSData;
+import aimyamaguchi.co.jp.aimspringsql.curriculum.repositories.DbmsRepository;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.services.CvSearchService;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.services.CvDeleteService;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.services.CvInsertService;
@@ -42,6 +44,9 @@ public class CurriculumController {
 
     @Autowired
     private SkillMapService skillMapService;
+
+    @Autowired
+    private DbmsRepository dbmsRepository;
 
     @PostMapping("/shokureki/add")
     public ResponseEntity<String> insertcv(@RequestBody CurriculumDAO cv){

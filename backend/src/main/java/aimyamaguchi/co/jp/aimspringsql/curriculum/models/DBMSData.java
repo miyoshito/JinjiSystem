@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import aimyamaguchi.co.jp.aimspringsql.security.AuditableModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
@@ -11,8 +12,10 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="[M_DBMS]", schema="[dbo]")
-public class DBMSData{
+public class DBMSData {
+
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="DBMS_ID")
     private Long id;
     @Column(name="DBMS_DESC")

@@ -1,6 +1,4 @@
 package aimyamaguchi.co.jp.aimspringsql.employee.Services;
-import java.nio.charset.Charset;
-import java.time.LocalDate;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -15,8 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +42,6 @@ public class AuthorizationService {
             if (bCrypt.matches(password,user.getShainPassword())){
                 List<Long> area = user.getAffiliation().stream().map(AFFILIATIONData::getId).collect(Collectors.toList());
                 responseHeaders.add("Authorization", jwtTokenProvider.createToken(username, user.isAdmin(), area, user.getPosition().getId()));
-
                 return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);
             } else {
                 return new ResponseEntity<>("Invalid username or password", HttpStatus.UNAUTHORIZED);

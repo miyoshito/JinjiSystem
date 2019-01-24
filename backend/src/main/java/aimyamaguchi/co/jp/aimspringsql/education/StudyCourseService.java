@@ -43,11 +43,7 @@ public class StudyCourseService {
 
 
     public boolean insertSCAttempt(StudyCourseModel scm, HttpServletRequest req){
-        LocalDate now = LocalDate.now();
-
-                if(scm.getId() != null) scm.setUpdatedby(jwt.getUsername(jwt.resolveToken(req)));
                 scm.setEmployee(sf.getEmployeeData(scm.getEmployee_id()));
-                scm.setUpdated(now);
                 sci.save(scm);
                 return true;
     }

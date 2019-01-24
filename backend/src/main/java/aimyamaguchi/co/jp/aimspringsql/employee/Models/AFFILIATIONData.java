@@ -2,11 +2,7 @@ package aimyamaguchi.co.jp.aimspringsql.employee.Models;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -20,6 +16,7 @@ import lombok.ToString;
 public class AFFILIATIONData{
     
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="AFFILIATION_ID")
     private Long id;
     @Column(name="AFFILIATION_DESC")

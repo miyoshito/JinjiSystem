@@ -2,6 +2,7 @@ package aimyamaguchi.co.jp.aimspringsql.security;
 
 
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -31,8 +32,7 @@ public abstract class AuditableModel {
     private String updatedBy;
 
     @CreatedBy
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, columnDefinition = "varchar(10) default ''")
     private String createdBy;
-
 
 }
