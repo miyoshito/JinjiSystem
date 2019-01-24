@@ -41,8 +41,9 @@ export class EmployeeMasterComponent implements OnInit {
   currentRoute: string
   passwordbutton: boolean
 
-  displayRetired: Subject<boolean> = new Subject<boolean>()
-  isRetired: Subject<boolean> = new Subject<boolean>()
+  dr$: Subject<boolean> = new Subject<boolean>();
+
+  isRetired: Subject<boolean> = new Subject<boolean>();
   
   role$: Observable<any>
   isLoggedIn$: Observable<boolean>  
@@ -91,12 +92,13 @@ export class EmployeeMasterComponent implements OnInit {
   if ((this._router.url).endsWith('/edit')){
       this.selectedUser$ = this._employeeService.employee$
       this._employeeService.getShainData(this._route.snapshot.paramMap.get('id'))      
-      this.loadUserData()
+      this.loadUserData()      
       this.title = '社員マスタ編集画面'
       this.buttonLabel = '更新'
       this.displayInsertButtons = true
       this.isEditing = true
       this.passwordbutton = true
+      this.dr$.next(true)
   } else if ((this._router.url).endsWith('/profile')) {
     this.selectedUser$ = this._employeeService.employee$
       this._profileService.cachedUser$.pipe(
@@ -123,8 +125,7 @@ export class EmployeeMasterComponent implements OnInit {
       map(r =>{
     if(r) {
     this.selectedUser$ = this._employeeService.employee$
-    this.loadUserData();
-    
+    this.loadUserData();    
     this.displayInsertButtons = true
     this.buttonLabel = '更新'
     this.passwordbutton = true
@@ -137,7 +138,6 @@ export class EmployeeMasterComponent implements OnInit {
   }
   
   loadUserData(){
-    this.displayRetired.next(true)
     this.selectedUser$.pipe(takeUntil(this.unsub$))    
     .subscribe(data =>{      
       this.myPosition = data.position.desc
@@ -151,9 +151,11 @@ export class EmployeeMasterComponent implements OnInit {
       data.shainRegisterDate != null ? this.employeeForm.patchValue({shainRegisterDate: data.shainRegisterDate.slice(0,10)}) : null
       data.shainRetiredDate != null ? this.employeeForm.patchValue({shainRetiredDate: data.shainRetiredDate.slice(0,10)}) : null
       data.shainRetired && data.shainRetiredDate != '' ? this.isRetired.next(true) : this.isRetired.next(false)
+      if(!this.isProfile){
+        this.dr$.next(true)
+      }
     })
     this.iid = this.employeeForm.controls.shainId.value
-    
   }
 
   redirect(to: string){
