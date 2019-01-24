@@ -2,6 +2,11 @@
 <ng-container *ngIf="userSelected$ | async; let user">
 <div class="row">
   <div class="col-md-4">
+      <div class="row" *ngIf="user.shainRetired">
+          <div class="alert alert-danger d-flex justify-content-center" role="alert">
+              退職
+          </div>
+      </div>
   </div>
   <div class="col-md-4"><h3>履歴書詳細画面</h3></div>
   <div class="col-md-4">

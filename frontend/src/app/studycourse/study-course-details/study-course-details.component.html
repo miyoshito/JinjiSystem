@@ -5,6 +5,11 @@
         <h3>教育受講履歴一覧画面</h3>
       </div>
     </div>
+    <div class="row" *ngIf="user.shainRetired">
+        <div class="alert alert-danger d-flex justify-content-center" role="alert">
+            退職
+        </div>
+    </div>
     <div class="row">      
         <table class="table table-bordered table-hover">
           <thead>

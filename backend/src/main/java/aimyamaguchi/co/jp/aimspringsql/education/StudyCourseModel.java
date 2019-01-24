@@ -1,6 +1,7 @@
 package aimyamaguchi.co.jp.aimspringsql.education;
 
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.security.AuditableModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,10 +13,10 @@ import java.util.Set;
 @Entity
 @ToString
 @Table(name="[M_KYOIKU]", schema="[dbo]")
-public class StudyCourseModel {
+public class StudyCourseModel extends AuditableModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     private String sponsor;
@@ -38,9 +39,6 @@ public class StudyCourseModel {
 
     private boolean active;
 
-    private LocalDate updated;
-
-    private String updatedby;
 
     //for insert purposes only
     @Transient
@@ -149,22 +147,6 @@ public class StudyCourseModel {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
-
-    public LocalDate getUpdated() {
-        return updated;
-    }
-
-    public void setUpdated(LocalDate updated) {
-        this.updated = updated;
-    }
-
-    public String getUpdatedby() {
-        return updatedby;
-    }
-
-    public void setUpdatedby(String updatedby) {
-        this.updatedby = updatedby;
     }
 
     public EmployeeMaster getEmployee() {

@@ -181,6 +181,12 @@ public class CvSearchService {
                                     .collect(Collectors.toList());
                             filteredUsers.where(tools.id.in(ctl));
                             break;
+                        case "retired":
+                            if(f.getValue().equals("false")){
+                                filteredUsers.where(e.shainRetired.isFalse());
+                            }
+                            break;
+
                     }
                 });
         return filteredUsers.fetch();

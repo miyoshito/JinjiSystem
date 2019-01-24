@@ -61,7 +61,6 @@ export class ProfileComponent implements OnInit {
   }
 
   ngOnDestroy(){
-    console.log('just letting you know im unsubscribing.')
     this.sub.unsubscribe()
     this.isAlive$.next()
   }

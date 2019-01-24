@@ -2,6 +2,11 @@
   <div class="container">
     <div class="row">
       <div class="col-md-4">
+        <div *ngIf="user.shainRetired">
+            <div class="alert alert-danger d-flex justify-content-center" role="alert">
+                退職
+            </div>
+        </div>
       </div>
       <div class="col-md-4">
         <h3>職務経歴書一覧画面</h3>

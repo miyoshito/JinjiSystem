@@ -43,11 +43,7 @@ public class StudyCourseService {
 
 
     public boolean insertSCAttempt(StudyCourseModel scm, HttpServletRequest req){
-        LocalDate now = LocalDate.now();
-
-                if(scm.getId() != null) scm.setUpdatedby(jwt.getUsername(jwt.resolveToken(req)));
                 scm.setEmployee(sf.getEmployeeData(scm.getEmployee_id()));
-                scm.setUpdated(now);
                 sci.save(scm);
                 return true;
     }
@@ -86,7 +82,7 @@ public class StudyCourseService {
                 .forEach(f -> {
                     switch (f.getKey()) {
                         case "id":
-                            System.out.println(f.getValue());
+
                             filteredUsers.where(e.shainId.eq(f.getValue()));
                             break;
                         case "name":
@@ -127,6 +123,14 @@ public class StudyCourseService {
                         case "enddate":
                             LocalDate to = LocalDate.parse(f.getValue());
                             filteredUsers.where(qscm.endPeriod.loe(to));
+                            break;
+                        case "retired":
+                            if(f.getValue().equals("false")){
+                                filteredUsers.where(e.shainRetired.isFalse());
+                            }
+                            break;
+
+                        default: break;
 
                     }
                 });

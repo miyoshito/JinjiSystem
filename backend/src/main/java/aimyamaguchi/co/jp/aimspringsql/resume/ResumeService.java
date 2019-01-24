@@ -47,7 +47,7 @@ public class ResumeService {
 
 
     public void saveResume(ResumeModel resume, HttpServletRequest req) {
-        System.out.println(resume.getEmployee().getShainId());
+
         if (resume.getEmployee().getShainId() == null || resume.getEmployee().getShainId().equals("")) {
             return;
         } else {

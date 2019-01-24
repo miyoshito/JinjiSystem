@@ -14,6 +14,7 @@ import lombok.Data;
 public class TOOLSData {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="TOOLS_ID")
     private Long id;
     @Column(name="TOOLS_DESC")

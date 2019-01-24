@@ -13,7 +13,7 @@ public class Qualification {
 
     @Id
     @Column(name = "RS_NO")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long qualificationid;
 
     @Column(name = "RS_QUALIFICATION")

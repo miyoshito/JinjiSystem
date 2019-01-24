@@ -2,11 +2,7 @@ package aimyamaguchi.co.jp.aimspringsql.employee.Models;
 
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -18,6 +14,7 @@ import lombok.Data;
 public class WorkAreaData {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="WAREA_ID")
     private Long id;
     @Column(name="WAREA_DESC")

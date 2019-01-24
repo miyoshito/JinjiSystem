@@ -36,7 +36,6 @@ public class EmployeePostController {
 
     @PostMapping("/admin/add-employee")
     public ResponseEntity<String> addEmployee(@RequestBody EmployeeMaster employee, HttpServletRequest req){
-        System.out.println();
     try {
         if(authorizationService.validateRequest(req)) {
             esc.insertEmployee(employee, req);

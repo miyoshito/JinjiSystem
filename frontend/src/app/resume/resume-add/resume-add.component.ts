@@ -105,13 +105,11 @@ export class ResumeAddComponent implements OnInit {
   }
 
   buildEditView(withUser: Observable<Employee>){  
-    console.log('Resetting form...')
+    
     this.resetForms()
     withUser.pipe(
       takeUntil(this.destroySubject$),
-      map((val, index) =>{
-        console.log('Map loop 1')
-        console.log(index)
+      map((val, index) =>{        
         this.shainForm.patchValue({ shainId: val.shainId })
         if (!val.resume) {
           this.career.forEach((d: Career) => this.clearCareerRow(d))
@@ -125,9 +123,7 @@ export class ResumeAddComponent implements OnInit {
             bunri: val.resume.bunri,
             notes: val.resume.notes
           })
-          for (let i of val.resume.careers){
-            console.log(val.resume.careers.length)
-            console.log(i)
+          for (let i of val.resume.careers){            
             if (i.active) this.addCareerRow(i)
           }
           for (let j of val.resume.qualifications){

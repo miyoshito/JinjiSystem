@@ -8,6 +8,7 @@ import java.util.*;
 import javax.persistence.*;
 
 import aimyamaguchi.co.jp.aimspringsql.curriculum.models.*;
+import aimyamaguchi.co.jp.aimspringsql.security.AuditableModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
@@ -16,11 +17,11 @@ import lombok.Data;
 @Entity
 @Table(name="[M_SHOKUMUKEIREKI]", schema="[dbo]")
 @Data
-public class CurriculumModel {
+public class CurriculumModel extends AuditableModel {
 
     @Id
     @Column(name="CV_ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name="CV_START")

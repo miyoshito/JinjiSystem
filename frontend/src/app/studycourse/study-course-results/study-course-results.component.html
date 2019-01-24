@@ -12,6 +12,7 @@
             <th>社員番号</th>
             <th>氏名</th>            
             <th>所属</th>
+            <th>退職</th>
             <th></th>
           </tr>
         </thead>
@@ -20,7 +21,13 @@
             <tr [ngClass]="{'retired-bg': user.shainRetired }" *ngFor="let user of results">
                 <td>{{user.shainId}}</td>
                 <td>{{user.shainName}}<br/>{{user.shainKana}}</td>
-                <td>{{aff(user.affiliation)}}</td>                
+                <td>{{aff(user.affiliation)}}</td> 
+                <ng-container *ngIf="user.shainRetired; else notRetired">
+                    <td style="color: red">退職</td>
+                </ng-container>
+                <ng-template #notRetired>
+                    <td> </td>
+                </ng-template>            
                 <td><button class="btn btn-primary" (click)="details(user.shainId)">詳細</button></td>
               </tr>
             </ng-container>

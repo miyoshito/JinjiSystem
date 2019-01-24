@@ -61,8 +61,7 @@ export class EmployeeMasterService {
           d.next(true)
         }
       })
-    ).subscribe()   
-    d.pipe(map(r => console.log(r))).subscribe()
+    ).subscribe()       
     return d
   }
 

@@ -31,7 +31,11 @@ thead {
 }
 
 .retired-bg{
-  background-color: rgba(255, 206, 206, 0.979);
+  background-color: rgba(133, 133, 133, 0.733);
+}
+
+.ret-inc-box {
+  margin: 3px solid black;
 }
 /*
 .vertical-text{

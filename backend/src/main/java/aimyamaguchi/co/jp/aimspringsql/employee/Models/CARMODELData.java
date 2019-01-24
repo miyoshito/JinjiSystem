@@ -12,6 +12,7 @@ import java.util.List;
 public class CARMODELData {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="CAR_ID")
     private Long id;
     @Column(name="car_desc")

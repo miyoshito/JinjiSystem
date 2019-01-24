@@ -25,7 +25,7 @@ public class ResumeModel {
 
     @Id
     @Column(name="RI_ID")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long resumeId;
 
     @Column(name="RI_STUDY_AREA")
@@ -39,12 +39,6 @@ public class ResumeModel {
 
     @Column(name="RI_NOTES")
     private String notes;
-
-    @Column(name="LOG_REGISTERED")
-    private Date insertDate;
-
-    @Column(name="LOG_INSERTEDBY")
-    private String insertedBy;
 
     @LazyToOne(LazyToOneOption.NO_PROXY)
     @OneToOne(mappedBy = "resume")
@@ -95,22 +89,6 @@ public class ResumeModel {
 
     public void setBunri(String bunri) {
         this.bunri = bunri;
-    }
-
-    public Date getInsertDate() {
-        return insertDate;
-    }
-
-    public void setInsertDate(Date insertDate) {
-        this.insertDate = insertDate;
-    }
-
-    public String getInsertedBy() {
-        return insertedBy;
-    }
-
-    public void setInsertedBy(String insertedBy) {
-        this.insertedBy = insertedBy;
     }
 
     @JsonBackReference

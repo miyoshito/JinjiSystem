@@ -13,7 +13,7 @@ import java.time.LocalDate;
 public class QualificationsModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="SH_ID")
     private Long id;
 

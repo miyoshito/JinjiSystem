@@ -14,17 +14,24 @@
         <th>経験月数</th>
         <th>OS/DBMS</th>
         <th>LANG/TOOLS</th>
+        <th>退職</th>
         <th> </th>
       </thead>
       <ng-container *ngFor="let user of selectedUsers$ | async; let i = index">
       <tbody>
-        <tr>
+        <tr [ngClass]="{'retired-bg': user.shainRetired }">
           <td>{{user.shainId}}</td>
           <td>{{user.shainName}}<br/>({{user.shainKana}})</td>
           <td>{{user.shainRecruit?.desc}}</td>
           <td><span>{{ sumOf(user.curriculum) }}</span></td>
           <td>{{getOsandDb(user.curriculum)}}</td>
           <td>{{getToolsandLang(user.curriculum)}}</td>
+          <ng-container *ngIf="user.shainRetired; else notRetired">
+              <td style="color: red">退職</td>
+              </ng-container>
+              <ng-template #notRetired>
+              <td> </td>
+          </ng-template>
           <td><button class="btn btn-primary" (click)="showRirekisho(user.shainId)">詳細</button></td>        
         </tr>
       </tbody>

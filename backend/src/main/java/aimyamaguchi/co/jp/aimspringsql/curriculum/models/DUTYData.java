@@ -14,6 +14,7 @@ import lombok.Data;
 public class DUTYData {
     
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="RESPONSE_ID")
     private Long id;
     @Column(name="RESPONSE_DESC")

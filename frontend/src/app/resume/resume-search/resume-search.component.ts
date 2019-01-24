@@ -28,6 +28,10 @@ export class ResumeSearchComponent implements OnInit {
 
   age = new Array
 
+  includeRetired:boolean
+
+  displayIncludeBox: boolean
+
   map:Map<string, string> = new Map<string,string>()
 
 
@@ -36,11 +40,13 @@ export class ResumeSearchComponent implements OnInit {
               private _profileService: ProfileService,
               private _router: Router,
               private _employeeService: EmployeeMasterService,
-              private _loginService: LoginService) { }
+              private _loginService: LoginService,
+              private _broadcastService: BroadcastService) { }
 
   ngOnInit() {
     this.params$ = this._employeeService.getViewRendering()
     this.initializeForm()
+    this.checkIfSoumu()
   }
 
   resetForms(){
@@ -48,19 +54,31 @@ export class ResumeSearchComponent implements OnInit {
     this.initializeForm()
   }
 
+  includeRetiredShains(e){
+    this.includeRetired = e.target.checked
+  }   
+
+  checkIfSoumu(){
+    this._broadcastService.userGroup$.pipe(
+      takeUntil(this.active$),
+      map(groups => {
+        if (groups.find(e => e.id == 3)){
+          this.displayIncludeBox = true
+        }
+      })).subscribe()
+  }
+
   
   searchAttempt(){
     this.map.clear()
     Object.keys(this.searchForm.value)
     .filter(f => this.searchForm.value[f] != '')
-    .forEach(k => this.map.set(k,this.searchForm.value[k]))
-    
+    .forEach(k => this.map.set(k,this.searchForm.value[k]));
+
+    this.includeRetired == true ? this.map.set('retired', 'true') : this.map.set('retired', 'false');
     this._resumeService.searchResumeAttempt(this.map).pipe(
       takeUntil(this.active$))
-      .subscribe(e =>{
-        console.log(e.status)
-        console.log(e.statusText)
-        console.log(e.headers)
+      .subscribe(e =>{        
         if (e.status == 500){
         alert('許可されていません')
         return

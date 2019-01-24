@@ -40,6 +40,10 @@ export class EmployeeMasterComponent implements OnInit {
 
   currentRoute: string
   passwordbutton: boolean
+
+  dr$: Subject<boolean> = new Subject<boolean>();
+
+  isRetired: Subject<boolean> = new Subject<boolean>();
   
   role$: Observable<any>
   isLoggedIn$: Observable<boolean>  
@@ -88,12 +92,13 @@ export class EmployeeMasterComponent implements OnInit {
   if ((this._router.url).endsWith('/edit')){
       this.selectedUser$ = this._employeeService.employee$
       this._employeeService.getShainData(this._route.snapshot.paramMap.get('id'))      
-      this.loadUserData()
+      this.loadUserData()      
       this.title = '社員マスタ編集画面'
       this.buttonLabel = '更新'
       this.displayInsertButtons = true
       this.isEditing = true
       this.passwordbutton = true
+      this.dr$.next(true)
   } else if ((this._router.url).endsWith('/profile')) {
     this.selectedUser$ = this._employeeService.employee$
       this._profileService.cachedUser$.pipe(
@@ -119,9 +124,8 @@ export class EmployeeMasterComponent implements OnInit {
       takeUntil(this.unsub$),
       map(r =>{
     if(r) {
-    console.log(r)
     this.selectedUser$ = this._employeeService.employee$
-    this.loadUserData();
+    this.loadUserData();    
     this.displayInsertButtons = true
     this.buttonLabel = '更新'
     this.passwordbutton = true
@@ -132,17 +136,24 @@ export class EmployeeMasterComponent implements OnInit {
   returnToSearch(){
     this._router.navigate(['/admin/employee-search'])
   }
-
+  
   loadUserData(){
-    this.selectedUser$.pipe(takeUntil(this.unsub$))
+    this.selectedUser$.pipe(takeUntil(this.unsub$))    
     .subscribe(data =>{      
       this.myPosition = data.position.desc
       this.employeeForm.patchValue(data)
-      if(this.isProfile) this.employeeForm.controls.affiliation.disable()
+      if(this.isProfile){
+        this.employeeForm.controls.affiliation.disable()      
+        this.employeeForm.controls.shainRetiredDate.disable()
+      }
       data.shainJoinedDate != null ? this.employeeForm.patchValue({shainJoinedDate: data.shainJoinedDate.slice(0,10)}) : null
       data.shainBirthday != null ? this.employeeForm.patchValue({shainBirthday: data.shainBirthday.slice(0,10)}) : null
       data.shainRegisterDate != null ? this.employeeForm.patchValue({shainRegisterDate: data.shainRegisterDate.slice(0,10)}) : null
       data.shainRetiredDate != null ? this.employeeForm.patchValue({shainRetiredDate: data.shainRetiredDate.slice(0,10)}) : null
+      data.shainRetired && data.shainRetiredDate != '' ? this.isRetired.next(true) : this.isRetired.next(false)
+      if(!this.isProfile){
+        this.dr$.next(true)
+      }
     })
     this.iid = this.employeeForm.controls.shainId.value
   }
@@ -167,11 +178,19 @@ export class EmployeeMasterComponent implements OnInit {
 
   submitForm(){
     let employee: Employee = this.employeeForm.value
+    if (this.employeeForm.controls.shainRetired.value){
+        this.employeeForm.controls['shainRetiredDate'].setValidators([Validators.required])
+        this.employeeForm.controls['shainRetiredDate'].updateValueAndValidity()
+    } else  {
+      this.employeeForm.controls['shainRetiredDate'].clearValidators()
+      this.employeeForm.controls['shainRetiredDate'].updateValueAndValidity()
+    }
     if (this.employeeForm.invalid) {
       this.submitted = true
-      alert('必須項目が未入力です。')
+      alert('必須項目が未入力です。\n 退職フラグがマークされている場合は、退職日も必要です')
       return;
     }
+    
     try {
       this._employeeService.insertShainAttempt(employee)
 

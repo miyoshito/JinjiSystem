@@ -40,7 +40,6 @@ export class StudyCourseDetailsComponent implements OnInit {
   urlparam: string
 
   ngOnInit() {
-    console.log(this._router.url)
     if (this._router.url.includes('/details/')){      
       this.displayReturnButton = true
       this._employeeService.getShainData(this._route.snapshot.paramMap.get('uid'),false,false,true)

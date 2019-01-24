@@ -5,6 +5,11 @@
   </div>
 </div>
 <div *ngIf="loggedUser$ | async; let user">
+  <div class="row" *ngIf="user.shainRetired">
+      <div class="alert alert-danger d-flex justify-content-center" role="alert">
+          退職
+      </div>
+  </div>
   <div class="row border border-dark">
     <div class="col-md-3">
       <span>社員番号: </span><span>{{user.shainId}}</span>

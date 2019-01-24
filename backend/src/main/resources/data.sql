@@ -1,260 +1,249 @@
-INSERT INTO m_roles (roleid, roledesc) VALUES (1, N'ADMIN')
-INSERT INTO m_roles (roleid, roledesc) VALUES (2, N'USER')
-INSERT INTO m_roles (roleid, roledesc) VALUES (3, N'SOUMU')
-
-INSERT INTO m_assign (assign_id, active, assign_desc) VALUES (1, 1, N'プロジェクト管理者')
-INSERT INTO m_assign (assign_id, active, assign_desc) VALUES (2, 1, N'リーダー')
-INSERT INTO m_assign (assign_id, active, assign_desc) VALUES (3, 1, N'サブリーダー')
-INSERT INTO m_assign (assign_id, active, assign_desc) VALUES (4, 1, N'SE')
-INSERT INTO m_assign (assign_id, active, assign_desc) VALUES (5, 1, N'PG')
-INSERT INTO m_assign (assign_id, active, assign_desc) VALUES (6, 1, N'アシスタント')
-INSERT INTO m_assign (assign_id, active, assign_desc) VALUES (7, 1, N'他')
-
-INSERT INTO m_dbms (dbms_id, active, dbms_desc) VALUES (1, 1, N'Oracle')
-INSERT INTO m_dbms (dbms_id, active, dbms_desc) VALUES (2, 1, N'MongoDB')
-INSERT INTO m_dbms (dbms_id, active, dbms_desc) VALUES (3, 1, N'MySQL')
-INSERT INTO m_dbms (dbms_id, active, dbms_desc) VALUES (4, 1, N'SQL Server')
-INSERT INTO m_dbms (dbms_id, active, dbms_desc) VALUES (5, 1, N'PostgreSQL')
-INSERT INTO m_dbms (dbms_id, active, dbms_desc) VALUES (6, 1, N'その他')
-
-INSERT INTO m_kuruma (car_id, active, car_desc) VALUES (1, 1, N'ー')
-INSERT INTO m_kuruma (car_id, active, car_desc) VALUES (2, 1, N'軽自動車')
-INSERT INTO m_kuruma (car_id, active, car_desc) VALUES (3, 1, N'普通自動車')
-
-INSERT INTO m_lang (lang_id, active, lang_desc) VALUES (1, 1, N'Java')
-INSERT INTO m_lang (lang_id, active, lang_desc) VALUES (2, 1, N'JavaScript')
-INSERT INTO m_lang (lang_id, active, lang_desc) VALUES (3, 1, N'PHP')
-INSERT INTO m_lang (lang_id, active, lang_desc) VALUES (4, 1, N'Node')
-INSERT INTO m_lang (lang_id, active, lang_desc) VALUES (5, 1, N'HTML/CSS')
-INSERT INTO m_lang (lang_id, active, lang_desc) VALUES (6, 1, N'C++')
-INSERT INTO m_lang (lang_id, active, lang_desc) VALUES (7, 1, N'C#')
-
-INSERT INTO m_maker (maker_id, active, maker_desc) VALUES (1, 1, N'MAC')
-INSERT INTO m_maker (maker_id, active, maker_desc) VALUES (2, 1, N'ANDROID')
-INSERT INTO m_maker (maker_id, active, maker_desc) VALUES (3, 1, N'DOS/V')
-
-INSERT INTO m_os (os_id, active, os_desc) VALUES (1, 1, N'Windows 10')
-INSERT INTO m_os (os_id, active, os_desc) VALUES (2, 1, N'Linux')
-INSERT INTO m_os (os_id, active, os_desc) VALUES (3, 1, N'Windows 7')
-INSERT INTO m_os (os_id, active, os_desc) VALUES (4, 0, N'Ubuntu')
-INSERT INTO m_os (os_id, active, os_desc) VALUES (5, 1, N'Windows Server')
-INSERT INTO m_os (os_id, active, os_desc) VALUES (6, 1, N'Windows XP')
-INSERT INTO m_os (os_id, active, os_desc) VALUES (7, 1, N'ホスト系')
-INSERT INTO m_os (os_id, active, os_desc) VALUES (8, 1, N'UNIX')
-
-INSERT INTO m_tools (tools_id, active, tools_desc) VALUES (1, 1, N'Chrome')
-INSERT INTO m_tools (tools_id, active, tools_desc) VALUES (2, 1, N'Excel')
-INSERT INTO m_tools (tools_id, active, tools_desc) VALUES (3, 1, N'IE')
-INSERT INTO m_tools (tools_id, active, tools_desc) VALUES (4, 1, N'Safari')
-INSERT INTO m_tools (tools_id, active, tools_desc) VALUES (5, 1, N'Opera')
-INSERT INTO m_tools (tools_id, active, tools_desc) VALUES (6, 1, N'Access')
-
-INSERT INTO m_warea (warea_id, active, warea_desc) VALUES (1, 1, N'山口県')
-INSERT INTO m_warea (warea_id, active, warea_desc) VALUES (2, 1, N'福岡県')
-INSERT INTO m_warea (warea_id, active, warea_desc) VALUES (3, 1, N'島根県')
-
-INSERT INTO m_yaku (position_id, active, position_desc) VALUES (1, 1, N'代表取締役')
-INSERT INTO m_yaku (position_id, active, position_desc) VALUES (2, 1, N'取締役')
-INSERT INTO m_yaku (position_id, active, position_desc) VALUES (3, 1, N'事業部長')
-INSERT INTO m_yaku (position_id, active, position_desc) VALUES (4, 1, N'部長')
-INSERT INTO m_yaku (position_id, active, position_desc) VALUES (5, 1, N'部長代理')
-INSERT INTO m_yaku (position_id, active, position_desc) VALUES (6, 1, N'課長')
-INSERT INTO m_yaku (position_id, active, position_desc) VALUES (7, 1, N'課長代理')
-INSERT INTO m_yaku (position_id, active, position_desc) VALUES (8, 1, N'マネージャ')
-INSERT INTO m_yaku (position_id, active, position_desc) VALUES (9, 1, N'ー')
-
-INSERT INTO m_shozoku (affiliation_id, active, affiliation_desc) VALUES (1, 1, N'開発センター')
-INSERT INTO m_shozoku (affiliation_id, active, affiliation_desc) VALUES (2, 1, N'経営部門')
-INSERT INTO m_shozoku (affiliation_id, active, affiliation_desc) VALUES (3, 1, N'総務ソリューショングループ')
-INSERT INTO m_shozoku (affiliation_id, active, affiliation_desc) VALUES (4, 1, N'ビジネスソリューショングループ')
-INSERT INTO m_shozoku (affiliation_id, active, affiliation_desc) VALUES (5, 1, N'産業ソリューショングループ')
-INSERT INTO m_shozoku (affiliation_id, active, affiliation_desc) VALUES (6, 1, N'ＧＩＳソリューショングループ')
-
-INSERT INTO m_response (response_id, active, response_desc) VALUES (1, 1, N'コンサルタント')
-INSERT INTO m_response (response_id, active, response_desc) VALUES (2, 1, N'メンテナンス作業')
-INSERT INTO m_response (response_id, active, response_desc) VALUES (3, 1, N'講師')
-INSERT INTO m_response (response_id, active, response_desc) VALUES (4, 1, N'インストラクター')
-INSERT INTO m_response (response_id, active, response_desc) VALUES (5, 1, N'ＳＥサポート')
-INSERT INTO m_response (response_id, active, response_desc) VALUES (6, 1, N'システム運用管理')
-INSERT INTO m_response (response_id, active, response_desc) VALUES (7, 1, N'オペレーション')
-INSERT INTO m_response (response_id, active, response_desc) VALUES (8, 1, N'マニュアル作成')
-INSERT INTO m_response (response_id, active, response_desc) VALUES (9, 1, N'他')
-INSERT INTO m_response (response_id, active, response_desc) VALUES (10, 1, N'システム監査')
-INSERT INTO m_response (response_id, active, response_desc) VALUES (11, 1, N'調査分析')
-INSERT INTO m_response (response_id, active, response_desc) VALUES (12, 1, N'基本設計')
-INSERT INTO m_response (response_id, active, response_desc) VALUES (13, 1, N'詳細設計')
-INSERT INTO m_response (response_id, active, response_desc) VALUES (14, 1, N'プログラム設計')
-INSERT INTO m_response (response_id, active, response_desc) VALUES (15, 1, N'プログラミング')
-INSERT INTO m_response (response_id, active, response_desc) VALUES (16, 1, N'単体テスト')
-INSERT INTO m_response (response_id, active, response_desc) VALUES (17, 1, N'結合テスト')
-
-INSERT INTO m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (1, 1, N'自治体')
-INSERT INTO m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (2, 1, N'官庁')
-INSERT INTO m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (3, 1, N'文教')
-INSERT INTO m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (4, 1, N'公共')
-INSERT INTO m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (5, 1, N'金融保険')
-INSERT INTO m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (6, 1, N'医療')
-INSERT INTO m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (7, 1, N'運輸')
-INSERT INTO m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (8, 1, N'流通')
-INSERT INTO m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (9, 1, N'製造')
-INSERT INTO m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (10, 1, N'サービス')
-INSERT INTO m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (11, 1, N'ＧＩＳ')
-INSERT INTO m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (12, 1, N'その他')
-INSERT INTO m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (13, 1, N'社内')
-
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (1, 1, 1, N'収納')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (1, 2, 1, N'国民年金')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (1, 3, 1, N'e?Learning')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (1, 4, 1, N'上水道')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (1, 5, 1, N'損害保険')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (1, 6, 1, N'医療統計')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (1, 7, 1, N'物流管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (1, 8, 1, N'経理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (1, 9, 1, N'部品管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (1, 10, 1, N'福祉施設')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (1, 11, 1, N'農地情報管理システム')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (1, 12, 1, N'汎用データ管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (1, 13, 1, N'グループウェア')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (2, 1, 1, N'滞納')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (2, 2, 1, N'厚生年金')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (2, 3, 1, N'名簿管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (2, 4, 1, N'下水道')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (2, 5, 1, N'保険管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (2, 6, 1, N'入院予約')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (2, 7, 1, N'タクシー業務管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (2, 8, 1, N'販売管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (2, 9, 1, N'購買管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (2, 10, 1, N'ＰＯＳシステム')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (2, 11, 1, N'森林資源管理システム')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (2, 12, 1, N'就職支援')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (2, 13, 1, N'顧客管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (3, 1, 1, N'住民記録')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (3, 2, 1, N'特許出願')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (3, 3, 1, N'その他')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (3, 4, 1, N'河川管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (3, 5, 1, N'融資支援')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (3, 6, 1, N'退院サマリ')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (3, 7, 1, N'給与管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (3, 8, 1, N'給与管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (3, 9, 1, N'販売管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (3, 10, 1, N'受発注管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (3, 11, 1, N'エリアマーケティング')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (3, 12, 1, N'ＣＲＭ')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (3, 13, 1, N'その他')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (4, 1, 1, N'保育料')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (4, 2, 1, N'ＭＡＰ')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (4, 4, 1, N'浄水場管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (4, 5, 1, N'開発管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (4, 6, 1, N'輸血同意管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (4, 7, 1, N'予約管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (4, 8, 1, N'顧客与信管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (4, 9, 1, N'営放')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (4, 10, 1, N'物流支援')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (4, 11, 1, N'画像解析')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (4, 12, 1, N'測量設計支援')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (5, 1, 1, N'国民年金')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (5, 2, 1, N'維持販売')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (5, 4, 1, N'計量搬入')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (5, 5, 1, N'口座振替ＦＤ')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (5, 6, 1, N'ドック予約')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (5, 7, 1, N'その他')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (5, 8, 1, N'会員管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (5, 9, 1, N'電力監視')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (5, 10, 1, N'ＣＩＳ')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (5, 12, 1, N'その他')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (6, 1, 1, N'国民健康保険')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (6, 2, 1, N'その他')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (6, 4, 1, N'揚運炭管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (6, 5, 1, N'オンライン試算照会')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (6, 6, 1, N'健康管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (6, 8, 1, N'在庫管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (6, 9, 1, N'連続炉ＦＡ')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (6, 10, 1, N'申請書類ｼｽﾃﾑ')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (7, 1, 1, N'固定資産税')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (7, 4, 1, N'文書管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (7, 5, 1, N'既契約管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (7, 6, 1, N'手術室')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (7, 8, 1, N'青果卸')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (7, 9, 1, N'ＰＡ制御')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (7, 10, 1, N'見積支援ｼｽﾃﾑ')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (8, 1, 1, N'法人税')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (8, 4, 1, N'浄化槽')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (8, 5, 1, N'協同組合商品')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (8, 6, 1, N'収納管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (8, 8, 1, N'売上仕入管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (8, 9, 1, N'箔プロコン')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (8, 10, 1, N'ｺｰﾙｾﾝﾀｰｼｽﾃﾑ')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (9, 1, 1, N'住民税')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (9, 4, 1, N'その他')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (9, 5, 1, N'定期保険')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (9, 6, 1, N'パネル管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (9, 8, 1, N'在庫受払管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (9, 9, 1, N'２Ｚプロコン')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (9, 10, 1, N'船積書類作成ｼｽﾃﾑ')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (10, 1, 1, N'軽自動車税')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (10, 5, 1, N'逓増定期保険')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (10, 6, 1, N'医療事務')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (10, 8, 1, N'売掛買掛管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (10, 9, 1, N'整備ラインプロコン')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (10, 10, 1, N'設備管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (11, 1, 1, N'起債管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (11, 5, 1, N'ガン保険')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (11, 6, 1, N'固定資産')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (11, 8, 1, N'売上総利益')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (11, 9, 1, N'高炉プロコン')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (11, 10, 1, N'技術用教育')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (12, 1, 1, N'人事給与')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (12, 5, 1, N'リスクアセット算出')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (12, 6, 1, N'名簿管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (12, 8, 1, N'一般会計管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (12, 9, 1, N'厚板剪断プロコン')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (12, 10, 1, N'報告書作成承認支援')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (13, 1, 1, N'財務会計')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (13, 5, 1, N'対外接続')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (13, 6, 1, N'その他')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (13, 8, 1, N'情報検索')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (13, 9, 1, N'ブロードキャスト伝送')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (13, 10, 1, N'顧客管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (14, 1, 1, N'老人保健')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (14, 5, 1, N'その他')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (14, 8, 1, N'商品情報管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (14, 9, 1, N'ﾏｲｺﾝﾁｯﾌﾟﾊﾟﾗﾒｰﾀ測定')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (14, 10, 1, N'物件管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (15, 1, 1, N'介護保険')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (15, 8, 1, N'物流EDI')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (15, 9, 1, N'統合仕様')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (15, 10, 1, N'グロス管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (16, 1, 1, N'老人医療')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (16, 8, 1, N'受発注管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (16, 9, 1, N'運用監視')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (16, 10, 1, N'会計管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (17, 1, 1, N'高齢者医療')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (17, 8, 1, N'その他')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (17, 9, 1, N'工程管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (17, 10, 1, N'車両管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (18, 1, 1, N'福祉医療')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (18, 9, 1, N'物流統合')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (18, 10, 1, N'給与管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (19, 1, 1, N'障害者医療')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (19, 9, 1, N'計画値')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (19, 10, 1, N'店舗管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (20, 1, 1, N'市民検診')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (20, 9, 1, N'基準値')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (20, 10, 1, N'その他')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (21, 1, 1, N'生活保護')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (21, 9, 1, N'設備保全')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (22, 1, 1, N'戸籍')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (22, 9, 1, N'トラックスーケル')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (23, 1, 1, N'共済会')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (23, 9, 1, N'生産管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (24, 1, 1, N'健康管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (24, 9, 1, N'その他')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (25, 1, 1, N'市立大学')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (26, 1, 1, N'畜犬管理')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (27, 1, 1, N'在宅高齢者')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (28, 1, 1, N'児童手当')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (29, 1, 1, N'児童扶養手当')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (30, 1, 1, N'交通共済')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (31, 1, 1, N'心身障害者')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (32, 1, 1, N'支援費')
-INSERT INTO m_gykubun (industry_class_id, industry_type_id, active, industry_class_desc) VALUES (33, 1, 1, N'その他')
+INSERT m_yaku (position_id, active, position_desc) VALUES (1, 1, '');
+INSERT m_yaku (position_id, active, position_desc) VALUES (2, 1, 'マネージャ');
+INSERT m_yaku (position_id, active, position_desc) VALUES (3, 1, '課長代理');
+INSERT m_yaku (position_id, active, position_desc) VALUES (4, 1, '課長');
+INSERT m_yaku (position_id, active, position_desc) VALUES (5, 1, '部長代理');
+INSERT m_yaku (position_id, active, position_desc) VALUES (6, 1, '部長');
+INSERT m_yaku (position_id, active, position_desc) VALUES (7, 1, '事業部長');
+INSERT m_yaku (position_id, active, position_desc) VALUES (999998, 1, '取締役');
+INSERT m_yaku (position_id, active, position_desc) VALUES (999999, 1, '代表取締役');
+INSERT m_saiyoukubun (recruit_id, active, recruit_desc) VALUES (1, 1, 'ー');
+INSERT m_saiyoukubun (recruit_id, active, recruit_desc) VALUES (2, 1, '新卒');
+INSERT m_saiyoukubun (recruit_id, active, recruit_desc) VALUES (3, 1, 'キャリア');
+INSERT m_saiyoukubun (recruit_id, active, recruit_desc) VALUES (4, 1, '転籍');
+INSERT m_saiyoukubun (recruit_id, active, recruit_desc) VALUES (5, 1, '転属');
+INSERT m_warea (warea_id, active, warea_desc) VALUES (1, 1, '山口県');
+INSERT m_warea (warea_id, active, warea_desc) VALUES (2, 1, '福岡県');
+INSERT m_warea (warea_id, active, warea_desc) VALUES (3, 1, '島根県');
+INSERT m_kuruma (car_id, active, car_desc) VALUES (1, 1, 'ー');
+INSERT m_kuruma (car_id, active, car_desc) VALUES (2, 1, '軽自動車');
+INSERT m_kuruma (car_id, active, car_desc) VALUES (3, 1, '普通自動車');
+INSERT m_shozoku (affiliation_id, active, affiliation_desc) VALUES (1, 1, '開発センター');
+INSERT m_shozoku (affiliation_id, active, affiliation_desc) VALUES (2, 1, '経営部門');
+INSERT m_shozoku (affiliation_id, active, affiliation_desc) VALUES (3, 1, '総務ソリューショングループ');
+INSERT m_shozoku (affiliation_id, active, affiliation_desc) VALUES (4, 1, 'ビジネスソリューショングループ');
+INSERT m_shozoku (affiliation_id, active, affiliation_desc) VALUES (5, 1, '産業ソリューショングループ');
+INSERT m_shozoku (affiliation_id, active, affiliation_desc) VALUES (6, 1, 'ＧＩＳソリューショングループ');
+INSERT m_dbms (dbms_id, active, dbms_desc) VALUES (1, 1, 'Oracle');
+INSERT m_dbms (dbms_id, active, dbms_desc) VALUES (2, 1, 'MongoDB');
+INSERT m_dbms (dbms_id, active, dbms_desc) VALUES (3, 1, 'MySQL');
+INSERT m_dbms (dbms_id, active, dbms_desc) VALUES (4, 1, 'SQL Server');
+INSERT m_dbms (dbms_id, active, dbms_desc) VALUES (5, 1, 'PostgreSQL');
+INSERT m_dbms (dbms_id, active, dbms_desc) VALUES (6, 1, 'その他');
+INSERT m_lang (lang_id, active, lang_desc) VALUES (1, 1, 'Java');
+INSERT m_lang (lang_id, active, lang_desc) VALUES (2, 1, 'JavaScript');
+INSERT m_lang (lang_id, active, lang_desc) VALUES (3, 1, 'PHP');
+INSERT m_lang (lang_id, active, lang_desc) VALUES (4, 1, 'Node');
+INSERT m_lang (lang_id, active, lang_desc) VALUES (5, 1, 'HTML/CSS');
+INSERT m_lang (lang_id, active, lang_desc) VALUES (6, 1, 'C++');
+INSERT m_lang (lang_id, active, lang_desc) VALUES (7, 1, 'C#');
+INSERT m_maker (maker_id, active, maker_desc) VALUES (1, 1, 'MAC');
+INSERT m_maker (maker_id, active, maker_desc) VALUES (2, 1, 'ANDROID');
+INSERT m_maker (maker_id, active, maker_desc) VALUES (3, 1, 'DOS/V');
+INSERT m_os (os_id, active, os_desc) VALUES (1, 1, 'Windows 10');
+INSERT m_os (os_id, active, os_desc) VALUES (2, 1, 'Linux');
+INSERT m_os (os_id, active, os_desc) VALUES (3, 1, 'Windows 7');
+INSERT m_os (os_id, active, os_desc) VALUES (4, 0, 'Ubuntu');
+INSERT m_os (os_id, active, os_desc) VALUES (5, 1, 'Windows Server');
+INSERT m_os (os_id, active, os_desc) VALUES (6, 1, 'Windows XP');
+INSERT m_os (os_id, active, os_desc) VALUES (7, 1, 'ホスト系');
+INSERT m_os (os_id, active, os_desc) VALUES (8, 1, 'UNIX');
+INSERT m_response (response_id, active, response_desc) VALUES (1, 1, 'コンサルタント');
+INSERT m_response (response_id, active, response_desc) VALUES (2, 1, 'メンテナンス作業');
+INSERT m_response (response_id, active, response_desc) VALUES (3, 1, '講師');
+INSERT m_response (response_id, active, response_desc) VALUES (4, 1, 'インストラクター');
+INSERT m_response (response_id, active, response_desc) VALUES (5, 1, 'ＳＥサポート');
+INSERT m_response (response_id, active, response_desc) VALUES (6, 1, 'システム運用管理');
+INSERT m_response (response_id, active, response_desc) VALUES (7, 1, 'オペレーション');
+INSERT m_response (response_id, active, response_desc) VALUES (8, 1, 'マニュアル作成');
+INSERT m_response (response_id, active, response_desc) VALUES (9, 1, '他');
+INSERT m_response (response_id, active, response_desc) VALUES (10, 1, 'システム監査');
+INSERT m_response (response_id, active, response_desc) VALUES (11, 1, '調査分析');
+INSERT m_response (response_id, active, response_desc) VALUES (12, 1, '基本設計');
+INSERT m_response (response_id, active, response_desc) VALUES (13, 1, '詳細設計');
+INSERT m_response (response_id, active, response_desc) VALUES (14, 1, 'プログラム設計');
+INSERT m_response (response_id, active, response_desc) VALUES (15, 1, 'プログラミング');
+INSERT m_response (response_id, active, response_desc) VALUES (16, 1, '単体テスト');
+INSERT m_response (response_id, active, response_desc) VALUES (17, 1, '結合テスト');
+INSERT m_assign (assign_id, active, assign_desc) VALUES (1, 1, 'プロジェクト管理者');
+INSERT m_assign (assign_id, active, assign_desc) VALUES (2, 1, 'リーダー');
+INSERT m_assign (assign_id, active, assign_desc) VALUES (3, 1, 'サブリーダー');
+INSERT m_assign (assign_id, active, assign_desc) VALUES (4, 1, 'SE');
+INSERT m_assign (assign_id, active, assign_desc) VALUES (5, 1, 'PG');
+INSERT m_assign (assign_id, active, assign_desc) VALUES (6, 1, 'アシスタント');
+INSERT m_assign (assign_id, active, assign_desc) VALUES (7, 1, '他');
+INSERT m_tools (tools_id, active, tools_desc) VALUES (1, 1, 'Chrome');
+INSERT m_tools (tools_id, active, tools_desc) VALUES (2, 1, 'Excel');
+INSERT m_tools (tools_id, active, tools_desc) VALUES (3, 1, 'IE');
+INSERT m_tools (tools_id, active, tools_desc) VALUES (4, 1, 'Safari');
+INSERT m_tools (tools_id, active, tools_desc) VALUES (5, 1, 'Opera');
+INSERT m_tools (tools_id, active, tools_desc) VALUES (6, 1, 'Access');
+INSERT m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (1, 1, '自治体');
+INSERT m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (2, 1, '官庁');
+INSERT m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (3, 1, '文教');
+INSERT m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (4, 1, '公共');
+INSERT m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (5, 1, '金融保険');
+INSERT m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (6, 1, '医療');
+INSERT m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (7, 1, '運輸');
+INSERT m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (8, 1, '流通');
+INSERT m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (9, 1, '製造');
+INSERT m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (10, 1, 'サービス');
+INSERT m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (11, 1, 'ＧＩＳ');
+INSERT m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (12, 1, 'その他');
+INSERT m_gyoumu (industry_type_id, active, industry_type_desc) VALUES (13, 1, '社内');
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (1, 1, '収納', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (1, 1, '国民年金', 2);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (1, 1, 'e?Learning', 3);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (1, 1, '上水道', 4);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (1, 1, '損害保険', 5);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (1, 1, '医療統計', 6);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (1, 1, '物流管理', 7);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (1, 1, '経理', 8);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (1, 1, '部品管理', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (1, 1, '福祉施設', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (1, 1, '農地情報管理システム', 11);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (1, 1, '汎用データ管理', 12);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (1, 1, 'グループウェア', 13);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (2, 1, '滞納', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (2, 1, '厚生年金', 2);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (2, 1, '名簿管理', 3);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (2, 1, '下水道', 4);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (2, 1, '保険管理', 5);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (2, 1, '入院予約', 6);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (2, 1, 'タクシー業務管理', 7);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (2, 1, '販売管理', 8);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (2, 1, '購買管理', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (2, 1, 'ＰＯＳシステム', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (2, 1, '森林資源管理システム', 11);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (2, 1, '就職支援', 12);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (2, 1, '顧客管理', 13);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (3, 1, '住民記録', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (3, 1, '特許出願', 2);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (3, 1, 'その他', 3);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (3, 1, '河川管理', 4);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (3, 1, '融資支援', 5);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (3, 1, '退院サマリ', 6);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (3, 1, '給与管理', 7);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (3, 1, '給与管理', 8);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (3, 1, '販売管理', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (3, 1, '受発注管理', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (3, 1, 'エリアマーケティング', 11);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (3, 1, 'ＣＲＭ', 12);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (3, 1, 'その他', 13);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (4, 1, '保育料', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (4, 1, 'ＭＡＰ', 2);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (4, 1, '浄水場管理', 4);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (4, 1, '開発管理', 5);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (4, 1, '輸血同意管理', 6);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (4, 1, '予約管理', 7);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (4, 1, '顧客与信管理', 8);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (4, 1, '営放', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (4, 1, '物流支援', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (4, 1, '画像解析', 11);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (4, 1, '測量設計支援', 12);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (5, 1, '国民年金', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (5, 1, '維持販売', 2);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (5, 1, '計量搬入', 4);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (5, 1, '口座振替ＦＤ', 5);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (5, 1, 'ドック予約', 6);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (5, 1, 'その他', 7);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (5, 1, '会員管理', 8);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (5, 1, '電力監視', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (5, 1, 'ＣＩＳ', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (5, 1, 'その他', 12);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (6, 1, '国民健康保険', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (6, 1, 'その他', 2);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (6, 1, '揚運炭管理', 4);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (6, 1, 'オンライン試算照会', 5);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (6, 1, '健康管理', 6);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (6, 1, '在庫管理', 8);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (6, 1, '連続炉ＦＡ', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (6, 1, '申請書類ｼｽﾃﾑ', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (7, 1, '固定資産税', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (7, 1, '文書管理', 4);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (7, 1, '既契約管理', 5);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (7, 1, '手術室', 6);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (7, 1, '青果卸', 8);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (7, 1, 'ＰＡ制御', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (7, 1, '見積支援ｼｽﾃﾑ', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (8, 1, '法人税', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (8, 1, '浄化槽', 4);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (8, 1, '協同組合商品', 5);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (8, 1, '収納管理', 6);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (8, 1, '売上仕入管理', 8);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (8, 1, '箔プロコン', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (8, 1, 'ｺｰﾙｾﾝﾀｰｼｽﾃﾑ', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (9, 1, '住民税', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (9, 1, 'その他', 4);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (9, 1, '定期保険', 5);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (9, 1, 'パネル管理', 6);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (9, 1, '在庫受払管理', 8);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (9, 1, '２Ｚプロコン', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (9, 1, '船積書類作成ｼｽﾃﾑ', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (10, 1, '軽自動車税', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (10, 1, '逓増定期保険', 5);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (10, 1, '医療事務', 6);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (10, 1, '売掛買掛管理', 8);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (10, 1, '整備ラインプロコン', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (10, 1, '設備管理', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (11, 1, '起債管理', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (11, 1, 'ガン保険', 5);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (11, 1, '固定資産', 6);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (11, 1, '売上総利益', 8);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (11, 1, '高炉プロコン', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (11, 1, '技術用教育', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (12, 1, '人事給与', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (12, 1, 'リスクアセット算出', 5);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (12, 1, '名簿管理', 6);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (12, 1, '一般会計管理', 8);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (12, 1, '厚板剪断プロコン', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (12, 1, '報告書作成承認支援', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (13, 1, '財務会計', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (13, 1, '対外接続', 5);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (13, 1, 'その他', 6);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (13, 1, '情報検索', 8);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (13, 1, 'ブロードキャスト伝送', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (13, 1, '顧客管理', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (14, 1, '老人保健', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (14, 1, 'その他', 5);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (14, 1, '商品情報管理', 8);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (14, 1, 'ﾏｲｺﾝﾁｯﾌﾟﾊﾟﾗﾒｰﾀ測定', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (14, 1, '物件管理', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (15, 1, '介護保険', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (15, 1, '物流EDI', 8);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (15, 1, '統合仕様', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (15, 1, 'グロス管理', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (16, 1, '老人医療', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (16, 1, '受発注管理', 8);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (16, 1, '運用監視', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (16, 1, '会計管理', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (17, 1, '高齢者医療', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (17, 1, 'その他', 8);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (17, 1, '工程管理', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (17, 1, '車両管理', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (18, 1, '福祉医療', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (18, 1, '物流統合', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (18, 1, '給与管理', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (19, 1, '障害者医療', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (19, 1, '計画値', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (19, 1, '店舗管理', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (20, 1, '市民検診', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (20, 1, '基準値', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (20, 1, 'その他', 10);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (21, 1, '生活保護', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (21, 1, '設備保全', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (22, 1, '戸籍', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (22, 1, 'トラックスーケル', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (23, 1, '共済会', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (23, 1, '生産管理', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (24, 1, '健康管理', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (24, 1, 'その他', 9);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (25, 1, '市立大学', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (26, 1, '畜犬管理', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (27, 1, '在宅高齢者', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (28, 1, '児童手当', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (29, 1, '児童扶養手当', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (30, 1, '交通共済', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (31, 1, '心身障害者', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (32, 1, '支援費', 1);
+INSERT m_gykubun (industry_class_id, active, industry_class_desc, industry_type_id) VALUES (33, 1, 'その他', 1);
