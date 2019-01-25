@@ -78,9 +78,7 @@ export class StudyCourseSearchComponent implements OnInit {
     this._broadcastService.userGroup$.pipe(
       takeUntil(this.isAlive$),
       map(groups => {
-        console.log(groups)
         if (groups.find(e => e.id == 3)) {
-          console.log('aimeuzovo')
           this.displayIncludeBox = true
         }
       })).subscribe()

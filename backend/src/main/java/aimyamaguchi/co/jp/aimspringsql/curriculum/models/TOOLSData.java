@@ -10,11 +10,11 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="[M_TOOLS]", schema="[dbo]")
+@Table(name="M_TOOLS")
 public class TOOLSData {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="TOOLS_ID")
     private Long id;
     @Column(name="TOOLS_DESC")

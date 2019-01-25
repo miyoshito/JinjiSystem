@@ -15,13 +15,13 @@ import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
 import lombok.Data;
 
 @Entity
-@Table(name="[M_SHOKUMUKEIREKI]", schema="[dbo]")
+@Table(name="M_SHOKUMUKEIREKI")
 @Data
 public class CurriculumModel extends AuditableModel {
 
     @Id
     @Column(name="CV_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name="CV_START")

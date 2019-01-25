@@ -45,6 +45,7 @@
               placeholder="開始日"
               class="form-control"
               [bsConfig]="bsConfig"
+              [ngClass]="{ 'is-invalid': submitted && f.startPeriod.errors }"
               formControlName="startPeriod"
               bsDatepicker>
         <div class="input-group-prepend">
@@ -54,6 +55,7 @@
         placeholder="終了日"
         class="form-control"
         [bsConfig]="bsConfig"
+        [ngClass]="{ 'is-invalid': submitted && f.endPeriod.errors }"
         formControlName="endPeriod"
         bsDatepicker>
       </div>
@@ -90,7 +92,12 @@
     <button class="btn btn-primary" disabled>実施記録取込</button>
     <button class="btn btn-primary" (click)="insertAttempt()">{{buttonText}}</button>
     <button class="btn btn-primary" disabled>削除</button>
+    <ng-container *ngIf="returnToList; else historyback">
+        <button class="btn btn-primary" [routerLink]="[ '/public/studycourse/list']">一覧へ戻る</button>
+    </ng-container>
+    <ng-template #historyback>
     <button class="btn btn-primary" onclick="history.back(-1)">戻る</button>
+    </ng-template>
   </div>
 </ng-container>
 </form>

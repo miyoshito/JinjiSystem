@@ -1,10 +1,15 @@
 package aimyamaguchi.co.jp.aimspringsql.constants;
 
+import aimyamaguchi.co.jp.aimspringsql.curriculum.models.CurriculumModel;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.models.INDUSTRYData;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.repositories.*;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.POSITIONData;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.QPOSITIONData;
 import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.*;
+import aimyamaguchi.co.jp.aimspringsql.qualifications.QualificationsModel;
+import aimyamaguchi.co.jp.aimspringsql.qualifications.QualificationsRepository;
+import aimyamaguchi.co.jp.aimspringsql.resume.ResumeModel;
+import aimyamaguchi.co.jp.aimspringsql.resume.ResumeRepository;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +17,12 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class ConstantsViewBuilder {
@@ -50,7 +57,21 @@ public class ConstantsViewBuilder {
     private AssignRepository assignr;
     @Autowired
     private RecruitRepository recruit;
+    @Autowired
+    private QualificationsRepository qualificationsRepository;
 
+
+
+    public Map<String, List<String>> getShikakuSearchableParams(){
+
+        List<QualificationsModel> baseList = qualificationsRepository.findAll();
+        Map<String, List<String>> map = new HashMap<>();
+
+        map.put("sponsor",baseList.stream().map(QualificationsModel::getSponsor).collect(Collectors.toList()));
+        map.put("qualname",baseList.stream().map(QualificationsModel::getQName).collect(Collectors.toList()));
+
+        return map;
+    }
 
     public Map<String, Object> getEmpMasterParams(){
 

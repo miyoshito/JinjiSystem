@@ -8,11 +8,11 @@ import java.util.List;
 
 @Entity
 @Data
-@Table(name="[m_kuruma]", schema="[dbo]")
+@Table(name="m_kuruma")
 public class CARMODELData {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="CAR_ID")
     private Long id;
     @Column(name="car_desc")

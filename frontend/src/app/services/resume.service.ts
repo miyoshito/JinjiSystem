@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Resume, SearchForm } from 'src/app/interfaces/resume-details-interface';
 
-import { ADMIN_URL } from 'src/app/url-settings'
+import { ADMIN_URL, PUBLIC_URL } from 'src/app/url-settings'
 import { takeUntil, map } from 'rxjs/operators';
 import { Subject, Observable, BehaviorSubject, ReplaySubject } from 'rxjs';
 import { Router } from '@angular/router';
@@ -23,6 +23,9 @@ export class ResumeService {
 
   
 
+  getSearchableResParams(){
+    return this._httpClient.get<any[]>(ADMIN_URL + '/rirekisearchlist')
+  }
   
 
   saveResumeAttempt(resume: Resume){

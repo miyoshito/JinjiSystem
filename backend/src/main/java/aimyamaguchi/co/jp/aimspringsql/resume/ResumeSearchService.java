@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,16 +21,30 @@ public class ResumeSearchService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    private QEmployeeMaster e = QEmployeeMaster.employeeMaster;
+    private QResumeModel res = QResumeModel.resumeModel;
+    private QCommendation com = QCommendation.commendation;
+    private QQualification qlf = QQualification.qualification;
+    private QCareer crr = QCareer.career;
+    private QRecruitTypeModel qrt = QRecruitTypeModel.recruitTypeModel;
+
+    public Map<String, List<String>> getResumeSearchParams(){
+
+        Map<String, List<String>> map = new HashMap<>();
+
+        JPAQuery<String> school = new JPAQueryFactory(entityManager).select(res.universityName).from(res).where(res.universityName.isNotNull());
+        JPAQuery<String> study = new JPAQueryFactory(entityManager).select(res.formation).from(res).where(res.formation.isNotNull());
+
+        map.put("school", school.fetch());
+        map.put("study", study.fetch());
+
+        return map;
+
+    }
+
+
+
     public List<String> getResumeSearchResults(Map<String, String> map){
-
-
-
-        QEmployeeMaster e = QEmployeeMaster.employeeMaster;
-        QResumeModel res = QResumeModel.resumeModel;
-        QCommendation com = QCommendation.commendation;
-        QQualification qlf = QQualification.qualification;
-        QCareer crr = QCareer.career;
-        QRecruitTypeModel qrt = QRecruitTypeModel.recruitTypeModel;
 
         JPAQuery<String> filteredUsers = new JPAQueryFactory(entityManager).selectDistinct(e.shainId);
 

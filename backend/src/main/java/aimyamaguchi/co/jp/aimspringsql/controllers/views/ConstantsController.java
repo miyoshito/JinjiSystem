@@ -7,6 +7,7 @@ import aimyamaguchi.co.jp.aimspringsql.constants.ConstantsViewBuilder;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.models.INDUSTRYData;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.services.CvSearchService;
 import aimyamaguchi.co.jp.aimspringsql.employee.Services.AuthorizationService;
+import aimyamaguchi.co.jp.aimspringsql.resume.ResumeSearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,9 @@ public class ConstantsController {
     private CvSearchService cv;
 
     @Autowired
+    private ResumeSearchService resumeSearchService;
+
+    @Autowired
     private AuthorizationService es;
 
     @GetMapping("/public/cvparams")
@@ -35,27 +39,21 @@ public class ConstantsController {
     @GetMapping("/public/industry-params")
     public List<INDUSTRYData>  getIndustryList() { return builder.getIndustryList(); }
 
-/*    @GetMapping("/se/skillmapbuilder")
-    public ResponseEntity<List<SkillMap>> skillMapSearch(
-            @RequestParam(value = "id", required = false) String id,
-            @RequestParam(value = "nm", required = false) String name,
-            @RequestParam(value = "kt", required = false) String katakana,
-            @RequestParam(value = "sh", required = false) Integer affiliation,
-            @RequestParam(value = "lang", required = true) boolean lang,
-            @RequestParam(value = "os", required = true) boolean os,
-            @RequestParam(value = "dbms", required = true) boolean dbms,
-            @RequestParam(value = "tool", required = true) boolean tool,
-            @RequestParam(value = "make", required = true) boolean make,
-            @RequestParam(value = "duty", required = true) boolean duty,
-            @RequestParam(value = "ind", required = false) List<Integer> inds
-    )
-    {
-        try {
-            List<String> ids = cv.skillMapSearchParams(id, name, katakana, affiliation);
-            return new ResponseEntity<>(cv.getSkillMap(ids, lang, os, dbms, tool, make, duty, inds), HttpStatus.OK);
-        } catch (CustomException e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    @GetMapping("/admin/rirekisearchlist")
+    public Map<String, List<String>> getRirekishoSearchParams(){
+        return resumeSearchService.getResumeSearchParams();
+    }
 
-    }*/
+    @GetMapping("/public/shokurirekisearchlist")
+    public Map<String, List<String>> getShokuRirekiSearchParams(){
+        return cv.getCvSearchParams();
+    }
+
+    @GetMapping("/public/shikakusearchlist")
+    public Map<String, List<String>> getShikakuSearchParams(){
+        return builder.getShikakuSearchableParams();
+    }
+
+
+
 }

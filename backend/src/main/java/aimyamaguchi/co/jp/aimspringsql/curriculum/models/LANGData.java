@@ -9,11 +9,11 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="[M_LANG]", schema="[dbo]")
+@Table(name="M_LANG")
 public class LANGData{
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="LANG_ID")
     private Long id;
     @Column(name="LANG_DESC")

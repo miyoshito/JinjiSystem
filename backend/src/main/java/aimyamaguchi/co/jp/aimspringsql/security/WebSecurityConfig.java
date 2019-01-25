@@ -56,10 +56,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and()
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                    .authorizeRequests()
-                    .anyRequest().permitAll()
+                    .apply(new JwtTokenFilterConfigurer(jwtTokenProvider))
                 .and()
-                .apply(new JwtTokenFilterConfigurer(jwtTokenProvider));
+                    .authorizeRequests()
+                .anyRequest().permitAll();
     }
 
     @Override

@@ -8,13 +8,13 @@ import java.util.List;
 
 
 @Entity
-@Table(name="[M_GYOUMU]",schema ="[dbo]")
+@Table(name="M_GYOUMU")
 @Data
 public class INDUSTRYData {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="INDUSTRY_TYPE_ID")
     private Long id;
     @Column(name="INDUSTRY_TYPE_DESC")

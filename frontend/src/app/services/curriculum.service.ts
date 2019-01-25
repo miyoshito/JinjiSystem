@@ -26,6 +26,9 @@ export class CurriculumService {
   selectedUser$ = this.userSource_.asObservable()
 
   //get necessary information for building the insert and search screens.
+  getSearchableParams(){
+    return this._http.get<any[]>(PUBLIC_URL + '/shokurirekisearchlist')
+  }
   getPropertiesList(){
     return this._http.get<any[]>(PUBLIC_URL + '/cvparams')
   }

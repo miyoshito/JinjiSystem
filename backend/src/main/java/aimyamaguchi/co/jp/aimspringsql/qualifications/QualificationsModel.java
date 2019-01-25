@@ -9,11 +9,11 @@ import java.time.LocalDate;
 
 @Entity
 @Data
-@Table(name="[M_SHIKAKU]", schema = "[DBO]")
+@Table(name="M_SHIKAKU")
 public class QualificationsModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="SH_ID")
     private Long id;
 

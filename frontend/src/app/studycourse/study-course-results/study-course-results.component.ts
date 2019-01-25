@@ -25,13 +25,17 @@ export class StudyCourseResultsComponent implements OnInit {
   //results$: Observable<Employee[]> = new Observable<Employee[]>()
   isAlive$: Subject<boolean> = new Subject<boolean>()
 
+  p: number = 1
 
   usersResult$: Observable<Employee[]> = new Observable<Employee[]>()
 
   ngOnInit() {
-   if (this._router.url.endsWith('/list')) {
       this.usersResult$ = this._scService.searchResults$
-    }
+  }
+
+  async edit(uid: number, scid: number){
+    await this._employeeService.getShainData(uid.toString(),false,false,true)
+      this._router.navigate(['/public/studycourse/'+uid+'/'+scid+'/edit'])
   }
 
   details(uid: string){

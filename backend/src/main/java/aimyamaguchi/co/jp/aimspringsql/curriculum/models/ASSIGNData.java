@@ -8,11 +8,11 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name="[M_ASSIGN]", schema="[dbo]")
+@Table(name="M_ASSIGN")
 public class ASSIGNData {
 
         @Id
-        @GeneratedValue(strategy = GenerationType.SEQUENCE)
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @Column(name="ASSIGN_ID")
         private Long id;
         @Column(name="ASSIGN_DESC")

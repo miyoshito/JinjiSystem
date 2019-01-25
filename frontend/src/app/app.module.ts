@@ -13,6 +13,7 @@ import {
   MatPaginatorModule, MatDialogModule
 } from '@angular/material'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginService } from 'src/app/services/login.service';
 import { HomeComponent } from './home/home.component';
@@ -58,6 +59,7 @@ import { QualificationsAddComponent } from './qualifications/qualifications-add/
 import { QualificationsDetailsComponent } from './qualifications/qualifications-details/qualifications-details.component';
 import { SoumuHeaderComponent } from './header/soumu-header/soumu-header.component';
 import { DisplaydateComponent } from './utils/displaydate/displaydate.component';
+
 
 export function tokenGetter() {
   return localStorage.getItem('currentUser');
@@ -139,7 +141,8 @@ defineLocale('ja',jaLocale)
     FileUploadModule,
     MatDialogModule,
     MomentModule,
-    BsDatepickerModule.forRoot()
+    BsDatepickerModule.forRoot(),
+    NgxPaginationModule
   ],
   exports: [
     [BooleanPipe]

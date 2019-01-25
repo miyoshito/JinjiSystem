@@ -12,11 +12,11 @@ import java.util.Set;
 
 @Entity
 @ToString
-@Table(name="[M_KYOIKU]", schema="[dbo]")
+@Table(name="M_KYOIKU")
 public class StudyCourseModel extends AuditableModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String sponsor;
