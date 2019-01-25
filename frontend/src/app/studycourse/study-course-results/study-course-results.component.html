@@ -14,18 +14,25 @@
             <th>受講者</th>
             <th>期間</th>
             <th>費用</th>
+            <th>退職</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
             <ng-container *ngFor="let user of results">            
-              <tr *ngFor="let sc of user.educations | paginate: { itemsPerPage: 5, currentPage: p }">
+              <tr *ngFor="let sc of user.educations | paginate: { itemsPerPage: 5, currentPage: p }"　[ngClass]="{'retired-bg': user.shainRetired }">
                 <ng-container *ngIf="sc.active">
                 <td>{{sc.sponsor}}</td>
                 <td>{{sc.educationName}}</td>
                 <td>{{user.shainName}}</td>
                 <td>{{sc.startPeriod}}~<br />{{sc.endPeriod}}</td>
                 <td>{{sc.totalExpenses}}</td>
+                <ng-container *ngIf="user.shainRetired; else notRetired">
+                    <td style="color: red">退職</td>
+                    </ng-container>
+                    <ng-template #notRetired>
+                    <td> </td>
+                </ng-template>
                 <td><button class="btn btn-primary" (click)="edit(user.shainId,sc.id)">詳細</button></td>
                 </ng-container>
               </tr>
@@ -40,6 +47,6 @@
   </div>
 
   <div class="row d-flex justify-content-around">
-    <button class="btn btn-primary" onclick="history.back(-1)">検索へ戻る</button>
+    <button class="btn btn-primary" [routerLink]="['/public/studycourse/search']">検索へ戻る</button>
   </div>
 </div>
