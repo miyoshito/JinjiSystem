@@ -18,7 +18,7 @@
         <th> </th>
       </thead>
       <tbody>        
-        <tr *ngFor="let user of results$ | async; let i = index" [ngClass]="{'retired-bg': user.shainRetired }">
+        <tr *ngFor="let user of results$ | async | paginate: { itemsPerPage: 5, currentPage: p }" [ngClass]="{'retired-bg': user.shainRetired }">
           <td>{{user.shainId}}</td>
           <td>{{user.shainName}}({{user.shainKana}})</td>
           <td>{{user.shainRecruit?.desc}}</td>
@@ -38,6 +38,9 @@
         </tr>        
       </tbody>
     </table>
+    <div class="row d-flex justify-content-center">
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
    </div>
 </div>
 <div class="row">

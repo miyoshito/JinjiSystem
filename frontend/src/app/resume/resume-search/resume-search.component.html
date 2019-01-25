@@ -1,9 +1,9 @@
 <div class="container">
   <form [formGroup]="searchForm" (ngSubmit)="searchAttempt()">
     <div class="row">
-        <div class="col-md-12 d-flex justify-content-center">
-            <h3>履歴書検索画面</h3>
-          </div>
+      <div class="col-md-12 d-flex justify-content-center">
+        <h3>履歴書検索画面</h3>
+      </div>
     </div>
 
     <div class="row">
@@ -18,15 +18,15 @@
       <div class="col-md-3">
         <span>フリガナ: </span>
         <input type="text" class="form-control" formControlName="kana">
-      </div>      
+      </div>
       <ng-container *ngIf="params$ | async; let data">
-          <div class="col-md-3">
-            <span>採用区分: </span>
-            <select class="custom-select custom-select" formControlName="recruit">
-              <option *ngFor="let rec of data.RECRUIT" value="{{rec.id}}">{{rec.desc}}</option>
-            </select>
-          </div>
-        </ng-container>      
+        <div class="col-md-3">
+          <span>採用区分: </span>
+          <select class="custom-select custom-select" formControlName="recruit">
+            <option *ngFor="let rec of data.RECRUIT" value="{{rec.id}}">{{rec.desc}}</option>
+          </select>
+        </div>
+      </ng-container>
     </div>
 
     <div class="row">
@@ -44,14 +44,24 @@
     </div>
 
     <div class="row">
-    <div class="col-md-4">
-        <span>出身校</span>
-        <input type="text" class="form-control" formControlName="school">
-    </div>
-    <div class="col-md-4">
-        <span>出身学部・学科</span>        
-        <input type="text" class="form-control" formControlName="study">
-    </div>
+      <ng-container *ngIf="searchable$ | async let ssparam">
+        <div class="col-md-4">
+          <span>出身校</span>
+          <select class="custom-select" formControlName="school">
+            <option value=""> </option>
+            <option *ngFor="let school of ssparam.school" value="{{school}}">{{school}}</option>
+          </select>
+          <!--<input type="text" class="form-control" formControlName="school">-->
+        </div>
+        <div class="col-md-4">
+          <span>出身学部・学科</span>
+          <select class="custom-select" formControlName="study">
+            <option value=""> </option>
+            <option *ngFor="let study of ssparam.study" value="{{study}}">{{study}}</option>
+          </select>
+          <!--<input type="text" class="form-control" formControlName="study">    -->
+        </div>
+      </ng-container>
       <div class="col-md-4">
         <span>文理</span>
         <select class="custom-select" formControlName="bunri">
@@ -61,6 +71,7 @@
           <option value="理系">理系</option>
         </select>
       </div>
+
     </div>
 
     <div class="row">
@@ -77,12 +88,12 @@
       </div>
     </div>
     <div class="row d-flex justify-content-end">
-        <div class="col-md-2 d-flex align-items-end justify-content-end border border-dark">
-            <div class="custom-control custom-checkbox">
-                <input type="checkbox" (change)="includeRetiredShains($event)" class="custom-control-input" id="customCheck1">
-                <label class="custom-control-label" for="customCheck1">退職者を含む</label>
-            </div>
+      <div class="col-md-2 d-flex align-items-end justify-content-end border border-dark">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" (change)="includeRetiredShains($event)" class="custom-control-input" id="customCheck1">
+          <label class="custom-control-label" for="customCheck1">退職者を含む</label>
         </div>
+      </div>
     </div>
 
     <div class="row">

@@ -33,6 +33,7 @@ export class StudyCourseEditComponent implements OnInit {
   submitted: boolean
   buttonText: string
   displayButton: boolean
+  returnToList: boolean
 
   isAlive$: Subject<boolean> = new Subject<boolean>()
 
@@ -49,6 +50,7 @@ export class StudyCourseEditComponent implements OnInit {
     if (this._router.url.endsWith('/edit')){
     this.title = "教育受講履歴編集画面"
     this.buttonText = '編集'
+    this.returnToList = true
     this.selectedUser$ = this._employeeService.employee$
     this.patchData(this.selectedUser$)
     }
@@ -63,7 +65,8 @@ export class StudyCourseEditComponent implements OnInit {
   insertAttempt(){
     this.submitted = true
     if(!this.studyForm.valid){
-      return      
+      alert('必須項目が未入力です。')    
+      return 
     } else {
       this._studyCourseService.insertAttempt(this.studyForm.value).pipe(takeUntil(this.isAlive$),
       map(res =>{
@@ -75,7 +78,6 @@ export class StudyCourseEditComponent implements OnInit {
     }
     
   }
-
   ngOnDestroy(): void {
     this.isAlive$.next()
   }
@@ -87,15 +89,25 @@ export class StudyCourseEditComponent implements OnInit {
       this._router.navigate(['/public/studycourse/details/'+this._route.snapshot.paramMap.get('uid')])    
       else
       this._router.navigate(['/public/studycourse'])
-    
   }
 
   patchData(e: Observable<Employee>){
+    let fedu: any
+    let id: string
     e.pipe(takeUntil(this.isAlive$),
     map(em =>{
-      this.studyForm.patchValue(em.educations.find(id => this._route.snapshot.paramMap.get('scid') == id.id))
-      this.studyForm.get('employee_id').patchValue(em.shainId)
+     fedu = em.educations.find(id => this._route.snapshot.paramMap.get('scid') == id.id)
+     id = em.shainId
+
+     try {
+      this.studyForm.patchValue(fedu)
+      this.studyForm.get('employee_id').patchValue(id)
+    } catch (e) {
+      console.log(e)
+    }
     })).subscribe()
+
+
   }
 
   buildForm(){
@@ -103,16 +115,14 @@ export class StudyCourseEditComponent implements OnInit {
       id: [''],
       sponsor: [''],
       educationName: [''],
-      startPeriod: [''],
-      endPeriod: [''],
+      startPeriod: ['', Validators.required],
+      endPeriod: ['', Validators.required],
       venue: [''],
       tuitionFee: [0, Validators.required],
       transportExpenses: [0, Validators.required],
       hotelExpenses: [0, Validators.required],
       overview: [''],
-      active: true,
-      updated: [''],
-      updatedBy: [''],
+      active: true,      
       employee_id: ['']
     })
   }

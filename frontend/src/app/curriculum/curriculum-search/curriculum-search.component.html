@@ -60,7 +60,13 @@
       <div class="row">
         <div class="col-md-6">
           <span>顧客名</span>
-          <input type="text" class="form-control" formControlName="customerName">
+          <ng-container *ngIf="cubusiness$ | async; let cub">
+          <select class="custom-select" formControlName="customerName">
+            <option value=""></option>
+            <option *ngFor="let c of cub.customers" value ="{{c}}">{{c}}</option>
+          </select>
+          </ng-container>
+          <!--<input type="text" class="form-control" formControlName="customerName">-->
         </div>
         <div class="col-md-6">
           <span>業種</span>
@@ -75,7 +81,13 @@
       <div class="row">
         <div class="col-md-6">
           <span>対象業務</span>
-          <input type="text" class="form-control" formControlName="targetBusiness">
+          <ng-container *ngIf="cubusiness$ | async; let bus">
+          <select class="custom-select" formControlName="targetBusiness">
+              <option value=""></option>
+              <option *ngFor="let b of bus.business" value ="{{b}}">{{b}}</option>
+          </select>
+          <!--<input type="text" class="form-control" formControlName="targetBusiness">-->
+          </ng-container>
         </div>
       </div>
       <div class="row">
@@ -129,7 +141,7 @@
           </select>
         </div>
       </div>
-      <div class="row d-flex justify-content-end" *ngIf="includeRetired">
+      <div class="row d-flex justify-content-end" *ngIf="displayIncludeBox">
         <div class="col-md-2 d-flex align-items-end justify-content-end border border-dark">
           <div class="custom-control custom-checkbox">
             <input type="checkbox" (change)="includeRetiredShains($event)" class="custom-control-input" id="customCheck1">

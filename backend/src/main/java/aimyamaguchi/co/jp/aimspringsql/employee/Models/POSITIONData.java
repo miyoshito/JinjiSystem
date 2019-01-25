@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name="[M_YAKU]", schema="[DBO]")
+@Table(name="M_YAKU")
 public class POSITIONData {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="POSITION_ID")
     private Long id;
     @Column(name="POSITION_DESC")

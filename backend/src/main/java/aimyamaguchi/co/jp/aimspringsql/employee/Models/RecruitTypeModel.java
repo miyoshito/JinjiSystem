@@ -7,11 +7,11 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "[m_saiyoukubun]", schema="[DBO]")
+@Table(name = "[m_saiyoukubun]")
 public class RecruitTypeModel {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RECRUIT_ID")
     private Long id;
 

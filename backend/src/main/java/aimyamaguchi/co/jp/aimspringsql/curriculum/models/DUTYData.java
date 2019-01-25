@@ -10,11 +10,11 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="[M_RESPONSE]", schema="[dbo]")
+@Table(name="M_RESPONSE")
 public class DUTYData {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="RESPONSE_ID")
     private Long id;
     @Column(name="RESPONSE_DESC")

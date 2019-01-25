@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name="[M_GYKUBUN]", schema="[dbo]")
+@Table(name="M_GYKUBUN")
 public class INDCLASSIFICATIONData implements Serializable {
 
 

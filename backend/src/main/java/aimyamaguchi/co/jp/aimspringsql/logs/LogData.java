@@ -12,7 +12,7 @@ public class LogData {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LOG_ID")
     private Long id;
 

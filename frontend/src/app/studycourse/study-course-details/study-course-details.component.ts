@@ -33,21 +33,20 @@ export class StudyCourseDetailsComponent implements OnInit {
   education: studyCourse
   education$: Observable<studyCourse>
   studyForm: FormGroup
-  displayReturnButton: boolean
-
-  title: string = "教育履歴詳細画面"
+    title: string = "教育履歴詳細画面"
+  returnToList: boolean
 
   urlparam: string
 
   ngOnInit() {
     if (this._router.url.includes('/details/')){      
-      this.displayReturnButton = true
+      this.returnToList = true
       this._employeeService.getShainData(this._route.snapshot.paramMap.get('uid'),false,false,true)
       this.user$ = this._employeeService.employee$
     }
 
     if(this._router.url.endsWith('/studycourse')){
-      this.displayReturnButton = false
+      this.returnToList = false
       this._profileService.cachedUser$.pipe(takeUntil(this.isAlive$),
       map(e => {
         this._employeeService.getShainData(e.id,false,false,true)

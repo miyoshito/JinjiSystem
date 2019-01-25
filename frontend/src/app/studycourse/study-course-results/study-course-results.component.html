@@ -5,37 +5,48 @@
     </div>
   </div>
   <div class="row">
-    <div class=col-md-12>
+    <ng-container *ngIf="usersResult$ | async; let results">
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <th>社員番号</th>
-            <th>氏名</th>            
-            <th>所属</th>
+            <th>主催</th>
+            <th>教育名</th>
+            <th>受講者</th>
+            <th>期間</th>
+            <th>費用</th>
             <th>退職</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <ng-container *ngIf="usersResult$ | async; let results">
-            <tr [ngClass]="{'retired-bg': user.shainRetired }" *ngFor="let user of results">
-                <td>{{user.shainId}}</td>
-                <td>{{user.shainName}}<br/>{{user.shainKana}}</td>
-                <td>{{aff(user.affiliation)}}</td> 
+            <ng-container *ngFor="let user of results">            
+              <tr *ngFor="let sc of user.educations | paginate: { itemsPerPage: 5, currentPage: p }"　[ngClass]="{'retired-bg': user.shainRetired }">
+                <ng-container *ngIf="sc.active">
+                <td>{{sc.sponsor}}</td>
+                <td>{{sc.educationName}}</td>
+                <td>{{user.shainName}}</td>
+                <td>{{sc.startPeriod}}~<br />{{sc.endPeriod}}</td>
+                <td>{{sc.totalExpenses}}</td>
                 <ng-container *ngIf="user.shainRetired; else notRetired">
                     <td style="color: red">退職</td>
-                </ng-container>
-                <ng-template #notRetired>
+                    </ng-container>
+                    <ng-template #notRetired>
                     <td> </td>
-                </ng-template>            
-                <td><button class="btn btn-primary" (click)="details(user.shainId)">詳細</button></td>
+                </ng-template>
+                <td><button class="btn btn-primary" (click)="edit(user.shainId,sc.id)">詳細</button></td>
+                </ng-container>
               </tr>
             </ng-container>
         </tbody>
       </table>
-    </div>
+    </ng-container>
   </div>
+
+  <div class="row d-flex justify-content-center">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+  </div>
+
   <div class="row d-flex justify-content-around">
-      <button class="btn btn-primary" onclick="history.back(-1)">検索へ戻る</button>
-    </div>
+    <button class="btn btn-primary" [routerLink]="['/public/studycourse/search']">検索へ戻る</button>
+  </div>
 </div>

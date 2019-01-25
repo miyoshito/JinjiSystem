@@ -10,11 +10,11 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="[M_WAREA]", schema="[dbo]")
+@Table(name="M_WAREA")
 public class WorkAreaData {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="WAREA_ID")
     private Long id;
     @Column(name="WAREA_DESC")

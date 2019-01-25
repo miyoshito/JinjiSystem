@@ -17,6 +17,7 @@ export class CurriculumSearchComponent implements OnInit {
 
   data$: Observable<any>
   industry$: Observable<any>
+  cubusiness$: Observable<any>
 
   searchForm: FormGroup
   age = new Array
@@ -39,6 +40,7 @@ export class CurriculumSearchComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.cubusiness$ = this.curriculumService.getSearchableParams()
     this.params$ = this._employeeService.getViewRendering()
     this.buildSearchForm()
     this.checkIfSoumu()

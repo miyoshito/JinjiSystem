@@ -12,11 +12,11 @@ import lombok.ToString;
 @Data
 @Entity
 @ToString
-@Table(name="[M_SHOZOKU]", schema="[dbo]")
+@Table(name="M_SHOZOKU")
 public class AFFILIATIONData{
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="AFFILIATION_ID")
     private Long id;
     @Column(name="AFFILIATION_DESC")

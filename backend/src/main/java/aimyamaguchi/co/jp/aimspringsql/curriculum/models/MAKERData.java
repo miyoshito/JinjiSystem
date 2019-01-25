@@ -10,11 +10,11 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="[M_MAKER]", schema="[dbo]")
+@Table(name="M_MAKER")
 public class MAKERData{
     
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="MAKER_ID")
     private Long id;
     @Column(name="MAKER_DESC")

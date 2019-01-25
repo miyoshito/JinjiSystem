@@ -94,6 +94,9 @@ public class StudyCourseService {
                         case "sponsor":
                             filteredUsers.where(qscm.sponsor.eq(f.getValue()));
                             break;
+                        case "educationName":
+                            filteredUsers.where(qscm.educationName.eq(f.getValue()));
+                            break;
                         case "expenses":
                             switch(f.getValue().substring(0,2)) {
                                 case "gt":

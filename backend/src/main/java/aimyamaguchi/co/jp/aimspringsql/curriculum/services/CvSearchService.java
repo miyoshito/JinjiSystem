@@ -42,21 +42,37 @@ public class CvSearchService {
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
+    private QEmployeeMaster e = QEmployeeMaster.employeeMaster;
+    private QRecruitTypeModel qrt = QRecruitTypeModel.recruitTypeModel;
+    private QCurriculumModel c = QCurriculumModel.curriculumModel;
+    private QINDUSTRYData indt = QINDUSTRYData.iNDUSTRYData;        //tem a list<>
+    private QINDCLASSIFICATIONData indc = QINDCLASSIFICATIONData.iNDCLASSIFICATIONData; //tem a ck
+
+    private QDBMSData dbms = QDBMSData.dBMSData;
+    private QOSData os = QOSData.oSData;
+    private QASSIGNData assign = QASSIGNData.aSSIGNData;
+    private QDUTYData duty = QDUTYData.dUTYData;
+    private QLANGData lang = QLANGData.lANGData;
+    private QMAKERData maker = QMAKERData.mAKERData;
+    private QTOOLSData tools = QTOOLSData.tOOLSData;
+
+    public Map<String, List<String>> getCvSearchParams(){
+
+        Map<String, List<String>> map = new HashMap<>();
+
+        JPAQuery<String> customers = new JPAQueryFactory(entityManager).select(c.customer).from(c);
+        JPAQuery<String> business = new JPAQueryFactory(entityManager).select(c.targetbusiness).from(c);
+
+        map.put("customers", customers.fetch());
+        map.put("business", business.fetch());
+
+        return map;
+
+    }
+
     public List<String> getCvSearchResults(Map<String, String> map, String token) {
 
-        QEmployeeMaster e = QEmployeeMaster.employeeMaster;
-        QRecruitTypeModel qrt = QRecruitTypeModel.recruitTypeModel;
-        QCurriculumModel c = QCurriculumModel.curriculumModel;
-        QINDUSTRYData indt = QINDUSTRYData.iNDUSTRYData;        //tem a list<>
-        QINDCLASSIFICATIONData indc = QINDCLASSIFICATIONData.iNDCLASSIFICATIONData; //tem a ck
 
-        QDBMSData dbms = QDBMSData.dBMSData;
-        QOSData os = QOSData.oSData;
-        QASSIGNData assign = QASSIGNData.aSSIGNData;
-        QDUTYData duty = QDUTYData.dUTYData;
-        QLANGData lang = QLANGData.lANGData;
-        QMAKERData maker = QMAKERData.mAKERData;
-        QTOOLSData tools = QTOOLSData.tOOLSData;
 
 
 

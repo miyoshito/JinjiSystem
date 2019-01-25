@@ -26,6 +26,8 @@ export class ResumeSearchComponent implements OnInit {
 
   params$: Observable<any>
 
+  searchable$: Observable<any>
+
   age = new Array
 
   includeRetired:boolean
@@ -44,6 +46,7 @@ export class ResumeSearchComponent implements OnInit {
               private _broadcastService: BroadcastService) { }
 
   ngOnInit() {
+    this.searchable$ = this._resumeService.getSearchableResParams()
     this.params$ = this._employeeService.getViewRendering()
     this.initializeForm()
     this.checkIfSoumu()

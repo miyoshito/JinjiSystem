@@ -14,7 +14,7 @@ public class Commendation {
 
     @Id
     @Column(name = "RH_NO")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commendationid;
 
     @Column(name = "RH_CONTENTS")

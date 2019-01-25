@@ -43,6 +43,7 @@ export class StudyCourseSearchComponent implements OnInit {
   map: Map<string, string> = new Map<string, string>()
 
   ngOnInit() {
+    this.checkIfSoumu()
     this.title = "教育受講履歴検索画面"
     this.bsConfig = Object.assign(
       { containerClass: "theme-red" },

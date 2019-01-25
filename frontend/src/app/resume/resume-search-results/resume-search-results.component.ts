@@ -13,6 +13,8 @@ import { Qualifications, Career } from 'src/app/interfaces/resume-details-interf
 })
 export class ResumeSearchResultsComponent implements OnInit {
 
+  p: number = 1;
+  
   constructor(private _resumeService: ResumeService,
               private _router: Router) { }
 

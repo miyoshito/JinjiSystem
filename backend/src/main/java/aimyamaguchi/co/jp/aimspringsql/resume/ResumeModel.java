@@ -10,6 +10,7 @@ import javax.persistence.*;
 import aimyamaguchi.co.jp.aimspringsql.files.ResumeFileDetails;
 
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.security.AuditableModel;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -20,12 +21,12 @@ import org.hibernate.annotations.LazyToOneOption;
 
 
 @Entity
-@Table(name="[M_RIREKISHO]", schema="[DBO]")
-public class ResumeModel {
+@Table(name="M_RIREKISHO")
+public class ResumeModel extends AuditableModel  {
 
     @Id
     @Column(name="RI_ID")
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long resumeId;
 
     @Column(name="RI_STUDY_AREA")
