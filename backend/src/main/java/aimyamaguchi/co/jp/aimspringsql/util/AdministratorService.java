@@ -26,10 +26,27 @@ public class AdministratorService {
 
         List<AdministratorModel> admin = new ArrayList<>();
 
-        users.stream().forEach(user ->{
+        for (EmployeeMaster e : users) {
+            for(AFFILIATIONData af: e.getAffiliation()) {
+                if (af.getDesc().contains("総務")) {
+                    admin.add(new AdministratorModel(e.getShainId(), e.getShainName(), af.getDesc(), e.isAdmin()));
+                }
+            }
+
+        }
+
+
+        /*
+                    .collect(Collectors.collectingAndThen(Collectors.toList()));*/
+
+
+
+
+        /*users.stream()
+                .forEach(user -> {
             String aff = user.getAffiliation().stream().map(AFFILIATIONData::getDesc).collect(Collectors.joining("/"));
             admin.add(new AdministratorModel(user.getShainId(), user.getShainName(), aff, user.isAdmin()));
-        });
+        });*/
 
         return admin;
     }
@@ -39,8 +56,11 @@ public class AdministratorService {
         EmployeeMaster user = sf.getEmployeeData(id);
         List<AdministratorModel> admin = new ArrayList<>();
         if(user != null) {
-
-            String aff = user.getAffiliation().stream().map(AFFILIATIONData::getDesc).collect(Collectors.joining("/"));
+            String aff = user
+                    .getAffiliation()
+                    .stream()
+                    .map(AFFILIATIONData::getDesc)
+                    .collect(Collectors.joining("/"));
             admin.add(new AdministratorModel(user.getShainId(), user.getShainName(), aff, user.isAdmin()));
 
         }

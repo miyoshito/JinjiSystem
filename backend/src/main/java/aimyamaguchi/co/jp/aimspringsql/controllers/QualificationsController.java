@@ -1,15 +1,15 @@
 package aimyamaguchi.co.jp.aimspringsql.controllers;
 
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
 import aimyamaguchi.co.jp.aimspringsql.qualifications.QualificationsService;
 import aimyamaguchi.co.jp.aimspringsql.util.SearchFilters;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -23,12 +23,13 @@ public class QualificationsController {
     @Autowired
     QualificationsService qualificationsService;
 
-    @GetMapping("/se/qualifications/search")
-    public ResponseEntity<T> searchForQualifications(Map<String, String> allParams, HttpServletRequest req){
+    @GetMapping("/public/qualifications/search")
+    public ResponseEntity<List<EmployeeMaster>> searchForQualifications(@RequestParam Map<String, String> allParams, HttpServletRequest req){
         if (allParams.isEmpty()){
-            return new ResponseEntity<T>(searchFilters.getAllEmployeesWithQualifications());
+            System.out.println("etacarai");
+            return new ResponseEntity<List<EmployeeMaster>>(searchFilters.getAllEmployeesWithQualifications(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<T>(searchFilters.getEmployeesWithQualifications(qualificationsService.qualificationSearch(allParams)));
+            return new ResponseEntity<List<EmployeeMaster>>(searchFilters.getEmployeesWithQualifications(qualificationsService.qualificationSearch(allParams)), HttpStatus.OK);
         }
 
     }

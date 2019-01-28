@@ -21,7 +21,6 @@
         <tbody>
             <ng-container *ngFor="let user of results">            
               <tr *ngFor="let sc of user.educations | paginate: { itemsPerPage: 5, currentPage: p }" [ngClass]="{'retired-bg': user.shainRetired }">
-                <ng-container *ngIf="sc.active">
                 <td>{{sc.sponsor}}</td>
                 <td>{{sc.educationName}}</td>
                 <td>{{user.shainName}}</td>
@@ -39,7 +38,6 @@
         </tbody>
       </table>
     </ng-container>
-    
   </div>
 
   <div class="row d-flex justify-content-center">
