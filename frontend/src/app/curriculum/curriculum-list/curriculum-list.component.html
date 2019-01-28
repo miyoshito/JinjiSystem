@@ -17,7 +17,7 @@
         <th>退職</th>
         <th> </th>
       </thead>
-      <ng-container *ngFor="let user of selectedUsers$ | async; let i = index">
+      <ng-container *ngFor="let user of selectedUsers$ | async | paginate: { itemsPerPage: 5, currentPage: p }">
       <tbody>
         <tr [ngClass]="{'retired-bg': user.shainRetired }">
           <td>{{user.shainId}}</td>
@@ -37,6 +37,9 @@
       </tbody>
     </ng-container>
     </table>
+    <div class="row d-flex justify-content-center">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
   </div>
 </div>
 <div class="row d-flex justify-content-end">  

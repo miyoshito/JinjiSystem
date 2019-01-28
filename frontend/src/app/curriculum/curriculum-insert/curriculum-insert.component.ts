@@ -67,7 +67,7 @@ export class CurriculumInsertComponent implements OnInit {
       this._profileService.cachedUser$.pipe(
         takeUntil(this.isAlive$),
         map(e => {
-          this._employeeService.getShainData(e.id,true,false,false)
+          this._employeeService.getShainData(e.id,"cv")
         })
       ).subscribe()
       this.loggedUser$ = this._employeeService.employee$
@@ -83,7 +83,7 @@ export class CurriculumInsertComponent implements OnInit {
         this.title = '職務経歴書編集画面'
         //verifica se o edit eh de alguem ou meu
         if (this._route.snapshot.paramMap.get('uid') != null) {
-          this._employeeService.getShainData(this._route.snapshot.paramMap.get('uid'), true, false, false)
+          this._employeeService.getShainData(this._route.snapshot.paramMap.get('uid'), "cv")
           this.loggedUser$ = this._employeeService.employee$
           this.userid = this._route.snapshot.paramMap.get('uid')
         }
@@ -91,7 +91,7 @@ export class CurriculumInsertComponent implements OnInit {
           this._profileService.cachedUser$.pipe(
             takeUntil(this.isAlive$),
             map(e => {
-              this._employeeService.getShainData(e.id,true,false,false)
+              this._employeeService.getShainData(e.id,"cv")
             })
           ).subscribe()
           this.loggedUser$ = this._employeeService.employee$
@@ -120,7 +120,7 @@ export class CurriculumInsertComponent implements OnInit {
       } else { //termina com /id/add
       this.title = '職務経歴書登録画面'
       this.button = '登録'
-      this._employeeService.getShainData(this._route.snapshot.paramMap.get('uid'), true)
+      this._employeeService.getShainData(this._route.snapshot.paramMap.get('uid'), "cv")
       this.loggedUser$ = this._employeeService.employee$
       this.userid = this._route.snapshot.paramMap.get('uid')
       this.generateForm()
@@ -167,7 +167,7 @@ export class CurriculumInsertComponent implements OnInit {
   redirect() {
     this._broadcastService.userAuthorization$.pipe((takeUntil(this.isAlive$)), map(auth => {
       if (auth) {
-        this._employeeService.getShainData(this.userid, true)
+        this._employeeService.getShainData(this.userid, "cv")
         this._router.navigate(['public/shokumurirekisho/details/' + this.userid])
       } else this._router.navigate(['home'])
     })).subscribe()

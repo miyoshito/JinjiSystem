@@ -42,13 +42,15 @@ public class EmployeeGetController {
         return sf.getEmployeesWithStudy();
     }
 
-    @GetMapping("/se/data/{id}")
+    @GetMapping("/se/data")
     public ResponseEntity<EmployeeMaster> getEmployeeData(
             HttpServletRequest req,
-            @PathVariable String id,
+            @RequestParam(value = "id") String id,
             @RequestParam(value = "cv", required = false) boolean cv,
-            @RequestParam(value = "rs", required = false) boolean resume,
-            @RequestParam(value = "ed", required = false) boolean education)
+            @RequestParam(value = "res", required = false) boolean resume,
+            @RequestParam(value = "edu", required = false) boolean education,
+            @RequestParam(value = "qua", required = false) boolean qualification
+    )
     {
         /*
         considerando um cenario onde soh os soumu/admins podem acessar a tela de insert e buscarem pelo ID...
@@ -61,6 +63,9 @@ public class EmployeeGetController {
             if (education) emp.getEducations().size();
             if (resume && jwtValidator.getAreas(jwtValidator.resolveToken(req)).contains(3)) {
                 sf.getResumeById(emp.getResume().getResumeId());
+            }
+            if(qualification){
+                emp.getQualifications().size();
             }
             return new ResponseEntity<>(sf.getEmployeeData(id), HttpStatus.OK);
         } catch (AuthenticationException e) {
@@ -85,12 +90,13 @@ public class EmployeeGetController {
             }
     }
 
-    @GetMapping("/admin/getprofile/{id}")
+    @GetMapping("/admin/getprofile")
     public ResponseEntity<EmployeeMaster> getProfile(
-            @PathVariable String id,
+            @RequestParam(value = "id") String id,
             @RequestParam(value = "cv", required = false) boolean cv,
-            @RequestParam(value = "rs", required = false) boolean resume,
-            @RequestParam(value = "ed", required = false) boolean education,
+            @RequestParam(value = "res", required = false) boolean resume,
+            @RequestParam(value = "edu", required = false) boolean education,
+            @RequestParam(value = "qua", required = false) boolean qualification,
             HttpServletRequest req
     ){
         try {
@@ -103,6 +109,9 @@ public class EmployeeGetController {
             }
             if (education) {
                 e.getEducations().size();
+            }
+            if(qualification){
+                e.getQualifications().size();
             }
             return new ResponseEntity<>(e, HttpStatus.OK);
         } catch (AuthenticationException ex) {

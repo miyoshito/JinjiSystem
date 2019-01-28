@@ -13,6 +13,8 @@ import { Data } from 'src/app/interfaces/data';
   templateUrl: './study-course-results.component.html',
   styleUrls: ['./study-course-results.component.css']
 })
+
+
 export class StudyCourseResultsComponent implements OnInit {
 
   constructor(private _scService: StudycourseService,
@@ -26,6 +28,7 @@ export class StudyCourseResultsComponent implements OnInit {
   isAlive$: Subject<boolean> = new Subject<boolean>()
 
   p: number = 1
+  i: number = 0
 
   usersResult$: Observable<Employee[]> = new Observable<Employee[]>()
 
@@ -33,8 +36,14 @@ export class StudyCourseResultsComponent implements OnInit {
       this.usersResult$ = this._scService.searchResults$
   }
 
+  increment(){
+    this.i++
+    let next = this.i
+    return next
+  }
+
   async edit(uid: number, scid: number){
-    await this._employeeService.getShainData(uid.toString(),false,false,true)
+    await this._employeeService.getShainData(uid.toString(), "edu")
       this._router.navigate(['/public/studycourse/'+uid+'/'+scid+'/edit'])
   }
 

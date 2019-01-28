@@ -18,6 +18,8 @@ export class CurriculumListComponent implements OnInit {
 
   experienceTimeDisplay = new Array
 
+  p: number = 1
+
   ngOnInit() {
     this.selectedUsers$ = this._curriculumService.selectedUser$
   }
