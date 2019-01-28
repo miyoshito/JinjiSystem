@@ -14,7 +14,7 @@ import { Qualifications, Career } from 'src/app/interfaces/resume-details-interf
 export class ResumeSearchResultsComponent implements OnInit {
 
   p: number = 1;
-  i: number = 0
+  ipp: number = 5
   
   constructor(private _resumeService: ResumeService,
               private _router: Router) { }
@@ -27,12 +27,6 @@ export class ResumeSearchResultsComponent implements OnInit {
 
   ngOnInit() {
     this.results$ = this._resumeService.resumeSearchResult$
-  }
-
-  increment(){
-    this.i++
-    let next = this.i
-    return next
   }
 
   editRirekisho(id: number){

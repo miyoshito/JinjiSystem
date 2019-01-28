@@ -5,7 +5,7 @@ import { StudycourseService } from 'src/app/services/studycourse.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EmployeeMasterService } from 'src/app/services/employee-master.service';
 import { ProfileService } from 'src/app/services/profile.service';
-import { takeUntil, map } from 'rxjs/operators';
+import { takeUntil, map, flatMap } from 'rxjs/operators';
 import { Data } from 'src/app/interfaces/data';
 
 @Component({
@@ -28,18 +28,19 @@ export class StudyCourseResultsComponent implements OnInit {
   isAlive$: Subject<boolean> = new Subject<boolean>()
 
   p: number = 1
-  i: number = 0
-
+  inc: number = 0
+  ipp: number = 5
+  totaledu: number = 0
   usersResult$: Observable<Employee[]> = new Observable<Employee[]>()
 
+  teste = new Array(new Array(new Array()));
+
   ngOnInit() {
-      this.usersResult$ = this._scService.searchResults$
+      this.usersResult$ = this._scService.searchResults$          
+
   }
 
-  increment(){
-    this.i++
-    let next = this.i
-    return next
+  increment(userindex: number, educationindex: number){
   }
 
   async edit(uid: number, scid: number){

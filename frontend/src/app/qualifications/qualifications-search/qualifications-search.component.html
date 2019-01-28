@@ -10,8 +10,8 @@
         <div class="col-md-6">
           <span>主催</span>
           <select class="custom-select" formControlName="sponsor">
-            <option></option>
-            <option *ngFor="let sponsor of list.sponsor">{{sponsor}}</option>
+            <option value = "">ー</option>
+            <option *ngFor="let sponsor of list.sponsor" value ="{{sponsor}}">{{sponsor}}</option>
           </select>
           <!-- <input type="text" class="form-control" formControlName="sponsor"> -->
         </div>
@@ -19,7 +19,11 @@
       <div class="row">
         <div class="col-md-6">
           <span>資格名</span>
-          <input type="text" class="form-control" formControlName="qName">
+          <option value = "">ー</option>
+          <select class="custom-select" formControlName="qName">
+              <option *ngFor="let qname of list.qualname" value = "{{qname}}">{{qname}}</option>
+          </select>          
+          <!-- <input type="text" class="form-control" formControlName="qName"> -->
         </div>
       </div>
     </ng-container>

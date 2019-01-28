@@ -17,7 +17,7 @@ import * as url_config from 'src/app/url-settings';
 export class EmployeeListComponent implements OnInit {
 
   p: number = 1
-  
+  ipp: number = 5
   employees$ = new Observable<Employee[]>();
 
   constructor(private employeeService: EmployeeMasterService,

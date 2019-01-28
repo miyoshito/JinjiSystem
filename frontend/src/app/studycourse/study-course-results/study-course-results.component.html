@@ -19,9 +19,8 @@
           </tr>
         </thead>
         <tbody>
-            <ng-container *ngFor="let user of results">            
-              <tr *ngFor="let sc of user.educations | paginate: { itemsPerPage: 5, currentPage: p }" [ngClass]="{'retired-bg': user.shainRetired }">
-                <ng-container *ngIf="sc.active">
+            <ng-container *ngFor="let user of results; let uindex = index">            
+              <tr *ngFor="let sc of user.educations | paginate: { itemsPerPage: ipp, currentPage: p }; let eindex = index;" [ngClass]="{'retired-bg': user.shainRetired }">                
                 <td>{{sc.sponsor}}</td>
                 <td>{{sc.educationName}}</td>
                 <td>{{user.shainName}}</td>
@@ -34,7 +33,6 @@
                     <td> </td>
                 </ng-template>
                 <td><button class="btn btn-primary" (click)="edit(user.shainId,sc.id)">詳細</button></td>
-                </ng-container>
               </tr>
             </ng-container>
         </tbody>
