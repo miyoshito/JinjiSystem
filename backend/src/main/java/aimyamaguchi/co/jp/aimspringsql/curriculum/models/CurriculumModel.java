@@ -44,7 +44,6 @@ public class CurriculumModel extends AuditableModel {
     @Transient
     public Integer getExperienceTime(){
 
-
         Period period = Period.between(this.startdate.withDayOfMonth(1).toLocalDate(), this.enddate.withDayOfMonth(1).toLocalDate());
         if (period.getDays() >= 30 && period.getMonths() < 1){
             return 1;

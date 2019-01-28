@@ -28,6 +28,9 @@ import { StudyCourseDetailsComponent } from './studycourse/study-course-details/
 import { SoumuGuardService } from './services/guards/soumu-guard.service';
 import { AdminGuardService } from './services/guards/admin-guard.service';
 import { QualificationsSearchComponent } from './qualifications/qualifications-search/qualifications-search.component';
+import { QualificationsDetailsComponent } from './qualifications/qualifications-details/qualifications-details.component';
+import { QualificationsAddComponent } from './qualifications/qualifications-add/qualifications-add.component';
+import { QualificationsResultsComponent } from './qualifications/qualifications-results/qualifications-results.component';
 
 const routes: Routes = [
   // Login routes
@@ -41,9 +44,6 @@ const routes: Routes = [
   {path: 'public', children:[
     {path: 'skillmap', component: SkillMapDetailsComponent},
     {path: 'profile', component: EmployeeMasterComponent},
-    {path: 'qualifications', children:[
-      {path: 'search', component: QualificationsSearchComponent}
-    ]},
     {path: 'shokumurirekisho', children:[
       {path: '', component: CurriculumDetailsComponent},
       {path: 'add', component: CurriculumInsertComponent},
@@ -63,6 +63,17 @@ const routes: Routes = [
       {path: 'list', component: StudyCourseResultsComponent, canActivate: [RoleGuardService]},
       {path: ':uid/:scid/edit', component: StudyCourseEditComponent, canActivate: [RoleGuardService]},
       {path: ':uid/add', component: StudyCourseEditComponent, canActivate: [RoleGuardService]}
+    ]},
+
+    {path: 'qualifications', children:[
+      {path: '', component: QualificationsDetailsComponent},
+      {path: 'add', component: QualificationsAddComponent},
+      {path: ':scid/edit', component: QualificationsAddComponent},
+      {path: 'search', component: QualificationsSearchComponent, canActivate: [RoleGuardService]},          
+      {path: 'details/:uid', component: QualificationsDetailsComponent, canActivate: [RoleGuardService]},
+      {path: 'list', component: QualificationsResultsComponent, canActivate: [RoleGuardService]},
+      {path: ':uid/:scid/edit', component: QualificationsAddComponent, canActivate: [RoleGuardService]},
+      {path: ':uid/add', component: QualificationsAddComponent, canActivate: [RoleGuardService]}
     ]},
   ]},
 

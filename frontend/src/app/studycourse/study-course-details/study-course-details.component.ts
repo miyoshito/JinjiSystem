@@ -41,7 +41,7 @@ export class StudyCourseDetailsComponent implements OnInit {
   ngOnInit() {
     if (this._router.url.includes('/details/')){      
       this.returnToList = true
-      this._employeeService.getShainData(this._route.snapshot.paramMap.get('uid'),false,false,true)
+      this._employeeService.getShainData(this._route.snapshot.paramMap.get('uid'),"edu")
       this.user$ = this._employeeService.employee$
     }
 
@@ -49,7 +49,7 @@ export class StudyCourseDetailsComponent implements OnInit {
       this.returnToList = false
       this._profileService.cachedUser$.pipe(takeUntil(this.isAlive$),
       map(e => {
-        this._employeeService.getShainData(e.id,false,false,true)
+        this._employeeService.getShainData(e.id,"edu")
       })).subscribe()
       this.user$ = this._employeeService.employee$
     }

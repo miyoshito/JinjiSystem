@@ -143,6 +143,21 @@ public class SearchFilters {
         return le;
     }
 
+    public List<EmployeeMaster> getAllEmployeesWithQualifications(){
+        List<EmployeeMaster> le = er.findAll();
+        for (EmployeeMaster e: le){
+            e.getQualifications().size();
+        }
+        return le;
+    }
+    public List<EmployeeMaster> getEmployeesWithQualifications(List<String> list){
+        List<EmployeeMaster> le = er.findByShainIdIn(list);
+        for (EmployeeMaster e: le){
+            e.getQualifications().size();
+        }
+        return le;
+    }
+
     public List<EmployeeMaster> getAllEmployees(){
         return er.findAll();
     }

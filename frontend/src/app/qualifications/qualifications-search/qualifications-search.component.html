@@ -1,50 +1,58 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12 d-flex justify-content-center">
-        <h3>{{title}}</h3>
-      </div>
+      <h3>{{title}}</h3>
+    </div>
   </div>
-
-    <div class="row">
-      <div class="col-md-6">
-        <span>主催</span>
-        <input type="text" class="form-control" name="sponsor">
+  <ng-container [formGroup]="searchForm">
+    <ng-container *ngIf="pullDownSLists$ | async; let list">
+      <div class="row">
+        <div class="col-md-6">
+          <span>主催</span>
+          <select class="custom-select" formControlName="sponsor">
+            <option value = "">ー</option>
+            <option *ngFor="let sponsor of list.sponsor" value ="{{sponsor}}">{{sponsor}}</option>
+          </select>
+          <!-- <input type="text" class="form-control" formControlName="sponsor"> -->
+        </div>
       </div>
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-        <span>資格名</span>
-        <input type="text" class="form-control" name="qname">
+      <div class="row">
+        <div class="col-md-6">
+          <span>資格名</span>
+          <select class="custom-select" formControlName="qName">
+              <option value = "">ー</option>
+              <option *ngFor="let qname of list.qualname" value = "{{qname}}">{{qname}}</option>
+          </select>          
+          <!-- <input type="text" class="form-control" formControlName="qName"> -->
+        </div>
       </div>
-    </div>
+    </ng-container>
     <div class="row">
       <div class="col-md-4">
         <span>受験日</span>
         <div>
-          <input type="text" 
-          placeholder="年/月/日"
-          class="form-control"
-          [bsConfig]="bsConfig"
-          value=""
-          bsDatepicker>
+          <input type="text" placeholder="年/月/日" class="form-control" [bsConfig]="bsConfig" value="" formControlName="examDate"
+            bsDatepicker>
         </div>
       </div>
       <div class="col-md-3">
-          <span>受験結果</span>
-          <select class="custom-select">
-            <option>合格</option>
-          </select>
+        <span>受験結果</span>
+        <select class="custom-select" formControlName="results">
+          <option value=""></option>
+          <option>合格</option>
+          <option>取得</option>
+        </select>
       </div>
     </div>
     <div class="row">
       <div class="col-md-6">
         <span>費用</span>
         <div class="input-group">
-          <input type="text" class="form-control" name="expenses">
+          <input type="text" class="form-control" formControlName="costs">
           <div class="input-group-prepend">
             <span class="input-group-text">円</span>
           </div>
-          <select class="custom-select" name="op">
+          <select class="custom-select" formControlName="op">
             <option value="" selected></option>
             <option value="gt" selected>以上</option>
             <option value="lt">以下</option>
@@ -53,28 +61,31 @@
       </div>
     </div>
     <div class="row">
-        <div class="col-md-3">
-          <span>社員番号</span>
-          <input type="text" class="form-control" name="id">
-        </div>
-        <div class="col-md-3">
-          <span>氏名</span>
-          <input type="text" class="form-control" name="name">
-        </div>
-        <div class="col-md-3">
-          <span>フリガナ</span>
-          <input type="text" class="form-control" name="kana">
-        </div>
-    </div>
-
-  <!--  <div class="row d-flex justify-content-end">
-      <div class="col-md-2 d-flex align-items-end justify-content-end border border-dark">
-          <div class="custom-control custom-checkbox">
-              <input type="checkbox" (change)="includeRetiredShains($event)" class="custom-control-input" id="customCheck1">
-              <label class="custom-control-label" for="customCheck1">退職者を含む</label>
-          </div>
+      <div class="col-md-3">
+        <span>社員番号</span>
+        <input type="text" class="form-control" formControlName="id">
       </div>
-  </div> -->
+      <div class="col-md-3">
+        <span>氏名</span>
+        <input type="text" class="form-control" formControlName="name">
+      </div>
+      <div class="col-md-3">
+        <span>フリガナ</span>
+        <input type="text" class="form-control" formControlName="kana">
+      </div>
+    </div>
+    <div class="row d-flex justify-content-end">
+      <div class="col-md-2 d-flex align-items-end justify-content-end border border-dark">
+        <div class="custom-control custom-checkbox">
+          <input type="checkbox" (change)="includeRetiredShains($event)" class="custom-control-input" id="customCheck1">
+          <label class="custom-control-label" for="customCheck1">退職者を含む</label>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <pre> {{searchForm.value | json}}</pre>
+
 
   <div class="row d-flex justify-content-around">
     <button class="btn btn-primary" (click)="doSearch()">検索</button>

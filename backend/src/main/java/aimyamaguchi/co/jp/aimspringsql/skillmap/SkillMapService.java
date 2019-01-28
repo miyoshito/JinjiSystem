@@ -1,5 +1,6 @@
 package aimyamaguchi.co.jp.aimspringsql.skillmap;
 
+import aimyamaguchi.co.jp.aimspringsql.authfilters.CustomException;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.models.CurriculumModel;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.models.*;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.repositories.IndustryDataRepository;
@@ -34,7 +35,33 @@ public class SkillMapService {
     @Autowired
     private SearchFilters sf;
 
-    public List<String> skillMapSearchParams(Map<String, String> map) {
+    /*public List<String> skillMapSearchParams(Map<String, String> map) {
+
+        String ids = map.get("id");
+
+        EmployeeMaster u = sf.getEmployeeWithCv(ids);
+
+
+        List<CurriculumModel> cvs = u.getCurriculum();
+
+        if (cvs.size() > 0)
+            buildSkillMap(cvs);
+
+
+        map.entrySet().stream()
+                .forEach(f -> {
+                    switch(f.getKey()){
+                        case "lang":
+
+
+
+                    }
+                });
+
+
+
+
+
         return null;
     }
 
@@ -42,22 +69,9 @@ public class SkillMapService {
         return null;
     }
 
+    */
+
     /*private Map<String, List<SkillMapUtil>> buildSkillMapList(EmployeeMaster e, Map<String, Boolean> map) {
-
-
-        map.entrySet()
-                .stream().forEach(k -> {
-                    switch(k.getKey()){
-                        case "lang":
-                            Map<String, e.getCurriculum().stream()
-
-
-
-
-
-                    }
-                });
-
 
 
       Map<String, List<SkillMapUtil>> fml = new HashMap<>();

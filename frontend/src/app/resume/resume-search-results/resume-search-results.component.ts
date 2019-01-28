@@ -14,6 +14,7 @@ import { Qualifications, Career } from 'src/app/interfaces/resume-details-interf
 export class ResumeSearchResultsComponent implements OnInit {
 
   p: number = 1;
+  ipp: number = 5
   
   constructor(private _resumeService: ResumeService,
               private _router: Router) { }
@@ -21,6 +22,8 @@ export class ResumeSearchResultsComponent implements OnInit {
   results$ = new Observable<Employee[]>()
 
   displayQualifications: Qualifications[]
+
+
 
   ngOnInit() {
     this.results$ = this._resumeService.resumeSearchResult$

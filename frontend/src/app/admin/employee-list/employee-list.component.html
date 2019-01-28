@@ -8,6 +8,7 @@
     <div class="col-md-12">
         <table class="table table-bordered">
             <thead>
+                <th>#</th>
                 <th>社員番号</th>
                 <th>社員氏名</th>
                 <th>所属</th>
@@ -15,7 +16,8 @@
                 <th> </th>
             </thead>
             <tbody>
-                <tr [ngClass]="{'retired-bg': employees.shainRetired }" *ngFor="let employees of employees$ | async; let i = index">
+                <tr [ngClass]="{'retired-bg': employees.shainRetired }" *ngFor="let employees of employees$ | async | paginate: { itemsPerPage: ipp, currentPage: p }; let i = index">
+                    <td>{{ipp * (p - 1) + i + 1}}</td>
                     <td>{{employees.shainId}}</td>
                     <td>{{employees.shainName}}<br/>{{employees.shainKana}}</td>                    
                     <td><span *ngFor="let affs of employees.affiliation">{{affs.desc}}<br/></span></td>
@@ -31,6 +33,9 @@
                 </tr>
             </tbody>
         </table>
+        <div class="row d-flex justify-content-center">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                </div>
     </div>
 </div>
 </div>

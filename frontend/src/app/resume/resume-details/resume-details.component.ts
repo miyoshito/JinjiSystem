@@ -20,7 +20,7 @@ export class ResumeDetailsComponent implements OnInit {
   userSelected$: Observable<Employee>
 
   ngOnInit() {
-    this._employeeService.getShainData(this._route.snapshot.paramMap.get('id'),false,true,false)
+    this._employeeService.getShainData(this._route.snapshot.paramMap.get('id'),"res")
     this.userSelected$ = this._employeeService.employee$
   }
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmployeeMasterService } from 'src/app/services/employee-master.service';
 import { Observable } from 'rxjs';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-system-settings',
@@ -16,8 +17,7 @@ export class SystemSettingsComponent implements OnInit {
   users$: Observable<userXAuth[]> = new Observable<userXAuth[]>()
   changedUsers: userXAuth[] = []
 
-  ngOnInit() {
-    
+  ngOnInit() {    
     this._employeeMasterService.getUserAuthorities();
     this.users$ = this._employeeMasterService.userAuthSettings$
   }

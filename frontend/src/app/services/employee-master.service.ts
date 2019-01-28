@@ -30,16 +30,14 @@ export class EmployeeMasterService {
   userAuthSettings$ = this.usrAuthSettingsSource.asObservable();
 
   
-  getShainData(id: string, cv?: boolean, rs?:boolean, edu?: boolean){
+  getShainData(id: string, pa1?: string, pa2?: string, pa3?: string, pa4?: string){
     let param: HttpParams = new HttpParams()
-    if(cv == undefined || cv == null) cv = false
-    if(rs == undefined || rs == null) rs = false
-    if(edu == undefined || edu == null) edu = false  
-    
-    return this._http.get<Employee>(API_URL + '/se/data/' + id
-    +'?cv='+cv
-    +'&rs='+rs
-    +'&ed='+edu, {observe: 'response'}).pipe(
+    let params = new Array<string>(pa1, pa2, pa3, pa4)
+    param = param.append("id", id)
+    params.forEach(e =>{
+      if (e != null && e != undefined) param = param.append(e,"true")
+    })
+    return this._http.get<Employee>(API_URL + '/se/data', {params: param, observe: 'response'}).pipe(
       map(res => {
         if (!res.body || res.body == null){
           return

@@ -36,7 +36,7 @@ export class CurriculumDetailsComponent implements OnInit {
       this.shainid = this._route.snapshot.paramMap.get('id')
       this.admin$ = true
       this.displayButton = true
-      this._employeeService.getShainData(this.shainid,true,false,true)
+      this._employeeService.getShainData(this.shainid,'cv', 'edu')
       this.profileSelected$ = this._employeeService.employee$            
     } else {
       this.admin$ = false
@@ -46,7 +46,7 @@ export class CurriculumDetailsComponent implements OnInit {
       this._profileService.cachedUser$.pipe(
         takeUntil(this.isAlive$),
         map(e => {
-          this._employeeService.getShainData(e.id, true, false, true)
+          this._employeeService.getShainData(e.id, 'cv', 'edu')
         })
       ).subscribe()
       this.profileSelected$.pipe(takeUntil(this.isAlive$), map(usr =>{

@@ -1,3 +1,50 @@
-<p>
-  qualifications-results works!
-</p>
+<!-- <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12 d-flex justify-content-center">
+        <h3>教育受講履歴一覧画面</h3>
+      </div>
+    </div>
+    <div class="row">
+      <ng-container *ngIf="usersResult$ | async; let results">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>主催</th>
+              <th>資格名</th>
+              <th>受講者</th>
+              <th>期間</th>
+              <th>費用</th>
+              <th>退職</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+              <ng-container *ngFor="let user of results">            
+                <tr *ngFor="let sc of user.educations | paginate: { itemsPerPage: 5, currentPage: p }" [ngClass]="{'retired-bg': user.shainRetired }">
+                  <td>{{sc.sponsor}}</td>
+                  <td>{{sc.qname}}</td>
+                  <td>{{user.shainName}}</td>
+                  <td>{{sc.examDate}}</td>
+                  <td>{{sc.totalExpenses}}</td>
+                  <ng-container *ngIf="user.shainRetired; else notRetired">
+                      <td style="color: red">退職</td>
+                      </ng-container>
+                      <ng-template #notRetired>
+                      <td> </td>
+                  </ng-template>
+                  <td><button class="btn btn-primary" (click)="edit(user.shainId,sc.id)">詳細</button></td>
+                </tr>
+              </ng-container>
+          </tbody>
+        </table>
+      </ng-container>
+    </div>
+  
+    <div class="row d-flex justify-content-center">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+  
+    <div class="row d-flex justify-content-around">
+      <button class="btn btn-primary" [routerLink]="['/public/studycourse/search']">検索へ戻る</button>
+    </div>
+  </div> -->

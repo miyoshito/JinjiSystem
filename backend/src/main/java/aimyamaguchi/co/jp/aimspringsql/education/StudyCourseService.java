@@ -82,7 +82,6 @@ public class StudyCourseService {
                 .forEach(f -> {
                     switch (f.getKey()) {
                         case "id":
-
                             filteredUsers.where(e.shainId.eq(f.getValue()));
                             break;
                         case "name":

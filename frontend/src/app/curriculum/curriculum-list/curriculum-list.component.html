@@ -8,6 +8,7 @@
   <div class="col-md-12">
     <table class="table table-bordered table-hover">
       <thead>
+        <th>#</th>
         <th>社員番号</th>
         <th>氏名</th>
         <th>採用区分</th>
@@ -17,9 +18,10 @@
         <th>退職</th>
         <th> </th>
       </thead>
-      <ng-container *ngFor="let user of selectedUsers$ | async; let i = index">
+      <ng-container *ngFor="let user of selectedUsers$ | async | paginate: { itemsPerPage: ipp, currentPage: p }; let i = index">
       <tbody>
         <tr [ngClass]="{'retired-bg': user.shainRetired }">
+          <td>{{ipp * (p - 1) + i + 1}}</td>
           <td>{{user.shainId}}</td>
           <td>{{user.shainName}}<br/>({{user.shainKana}})</td>
           <td>{{user.shainRecruit?.desc}}</td>
@@ -37,6 +39,9 @@
       </tbody>
     </ng-container>
     </table>
+    <div class="row d-flex justify-content-center">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
   </div>
 </div>
 <div class="row d-flex justify-content-end">  
