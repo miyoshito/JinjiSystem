@@ -6,7 +6,7 @@ export interface Resume {
     formation: string
     bunri: string
     careers: Career[]
-    qualifications: Qualifications[]
+    qualifications: rQualifications[]
     commendations: Commendations[]
     employee: miniEmployee
     notes: string
@@ -23,7 +23,7 @@ export class Resume {
         bunri: string,
         employee: miniEmployee,
         @Optional() careers: Career[],
-        @Optional() qualifications: Qualifications[],
+        @Optional() qualifications: rQualifications[],
         @Optional() commendations: Commendations[],
         notes: string
     ){
@@ -68,7 +68,7 @@ export class Career {
     }
 }
 
-export interface Qualifications{
+export interface rQualifications{
     qualificationid: number,
     qualification_year: number,
     qualification_month: number,

@@ -19,11 +19,11 @@ export class EmployeeMasterService {
               private _router: Router) { }
 
   //resultado da busca na tela de pesquisa => retorna um Array com os usuarios que batem com os params.
-  searchSource: ReplaySubject<Employee[]> = new ReplaySubject<Employee[]>(1)
+  private searchSource: ReplaySubject<Employee[]> = new ReplaySubject<Employee[]>(1)
   searchResults$ = this.searchSource.asObservable()
 
   //resultado da busca por ID, retorna o user em um Observavel que pode ser lido por qualquer tela.
-  usrSource: ReplaySubject<Employee> = new ReplaySubject<Employee>(1)
+  private usrSource: ReplaySubject<Employee> = new ReplaySubject<Employee>(1)
   employee$ = this.usrSource.asObservable()
 
   private usrAuthSettingsSource: ReplaySubject<userXAuth[]> = new ReplaySubject<userXAuth[]>()
@@ -43,10 +43,22 @@ export class EmployeeMasterService {
           return
         } else {
           this.usrSource.next(res.body)
+          return
         }
       })
     ).subscribe()
   }
+
+  getShainDatav2(id: string, pa1?: string, pa2?: string, pa3?: string, pa4?: string){
+    let param: HttpParams = new HttpParams()
+    let params = new Array<string>(pa1, pa2, pa3, pa4)
+    param = param.append("id", id)
+    params.forEach(e =>{
+      if (e != null && e != undefined) param = param.append(e,"true")
+    })
+    return this._http.get<Employee>(API_URL + '/se/data', {params: param, observe: 'response'})
+  }
+
   
   checkIfShainExists(id: string): Observable<boolean>{
   let d: Subject<boolean> = new Subject<boolean>()

@@ -68,7 +68,7 @@ public class ConstantsViewBuilder {
         Map<String, List<String>> map = new HashMap<>();
 
         map.put("sponsor",baseList.stream().map(QualificationsModel::getSponsor).collect(Collectors.toList()));
-        map.put("qualname",baseList.stream().map(QualificationsModel::getQName).collect(Collectors.toList()));
+        map.put("qualname",baseList.stream().map(QualificationsModel::getqName).collect(Collectors.toList()));
 
         return map;
     }

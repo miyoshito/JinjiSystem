@@ -1,3 +1,98 @@
-<p>
-  qualifications-add works!
-</p>
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <h3>{{title}}</h3>
+    </div>
+  </div>
+  <form [formGroup]="studyForm">
+    <ng-container *ngIf="selectedUser$ | async; let user">
+      <div class="row" *ngIf="user.shainRetired">
+        <div class="alert alert-danger d-flex justify-content-center" role="alert">
+          退職
+        </div>
+      </div>
+      <div class="row color-violet">
+        <div class="col-md-3">
+          <span style="font-weight: 600"><b>社員番号:</b></span><span> {{user.shainId}}</span>
+        </div>
+        <div class="col-md-3">
+          <span style="font-weight: 600"><b>社員氏名:</b></span><span> {{user.shainName}}</span>
+        </div>
+        <div class="col-md-3">
+          <span style="font-weight: 600"><b>社員カナ: </b></span><span>{{user.shainKana}}</span>
+        </div>
+        <div class="col-md-3">
+          <span style="font-weight: 600"><b>採用区分: </b></span><span>{{user.shainRecruit?.desc}}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-9">
+          <span>主催</span>
+          <input type="text" class="form-control" formControlName="sponsor">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-9">
+          <span>資格名</span>
+          <input type="text" class="form-control" formControlName="qName" [ngClass]="{ 'is-invalid': submitted && f.qName.errors }">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <span>受験日</span>          
+            <input type="text"
+            placeholder="開始日"
+            class="form-control"
+            [bsConfig]="bsConfig"
+            [ngClass]="{ 'is-invalid': submitted && f.examDate.errors }"
+            formControlName="examDate" bsDatepicker>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-9">
+          <span>受験場所</span>
+          <input type="text" class="form-control" formControlName="examPlace">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <span>受験料</span>
+          <input type="text" class="form-control" formControlName="examFee" [ngClass]="{ 'is-invalid': submitted && f.examFee.errors }">
+        </div>
+        <div class="col-md-3">
+          <span>その他</span>
+          <input type="text" class="form-control" formControlName="extraFee" [ngClass]="{ 'is-invalid': submitted && f.extraFee.errors }">
+        </div>
+        <div class="col-md-3">
+          <span>会社負担費</span>
+          <input type="text" class="form-control" formControlName="coveredFee" [ngClass]="{ 'is-invalid': submitted && f.coveredFee.errors }">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <span>受験結果</span>
+          <select class="custom-select" formControlName="results">
+              <option value="">ー</option>
+              <option value = "合格">合格</option>
+              <option value = "取得">取得</option>
+          </select>
+        </div>
+        <div class="col-md-4">
+          <span>報奨金</span>
+          <input type="text" class="form-control" formControlName="reward">
+        </div>
+      </div>
+      <div class="row d-flex justify-content-around">
+        <button class="btn btn-primary" disabled>実施記録取込</button>
+        <button class="btn btn-primary" (click)="insertAttempt()">{{buttonText}}</button>
+        <button class="btn btn-primary" disabled>削除</button>
+        <ng-container *ngIf="returnToList; else historyback">
+          <button class="btn btn-primary" [routerLink]="[ '/public/qualifications/list']">一覧へ戻る</button>
+        </ng-container>
+        <ng-template #historyback>
+          <button class="btn btn-primary" onclick="history.back(-1)">戻る</button>
+        </ng-template>
+      </div>
+    </ng-container>
+  </form>
+</div>

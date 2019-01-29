@@ -1,10 +1,15 @@
 package aimyamaguchi.co.jp.aimspringsql.employee.Services;
 
+import aimyamaguchi.co.jp.aimspringsql.curriculum.models.QCurriculumModel;
+import aimyamaguchi.co.jp.aimspringsql.education.QStudyCourseModel;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.QAFFILIATIONData;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.QEmployeeMaster;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.QPOSITIONData;
 import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.EmployeeRepository;
+import aimyamaguchi.co.jp.aimspringsql.qualifications.QQualificationsModel;
+import aimyamaguchi.co.jp.aimspringsql.resume.QQualification;
+import aimyamaguchi.co.jp.aimspringsql.resume.QResumeModel;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +32,40 @@ public class EmployeeSearchFunctions {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+
+    public List<EmployeeMaster> employeeLazyData(Map<String, String> map){
+
+        QEmployeeMaster e = QEmployeeMaster.employeeMaster;
+        QResumeModel r = QResumeModel.resumeModel;
+        QCurriculumModel c = QCurriculumModel.curriculumModel;
+        QStudyCourseModel s = QStudyCourseModel.studyCourseModel;
+        QQualificationsModel q = QQualificationsModel.qualificationsModel;
+
+        JPAQuery<EmployeeMaster> query = new JPAQueryFactory(entityManager).selectDistinct(e).from(e);
+
+        query.where(e.shainId.eq(map.get("id")));
+
+        map.entrySet().stream()
+                .forEach(param -> {
+                    switch(param.getKey()) {
+                        case "cv":
+                            query.leftJoin(e.curriculum, c).fetchJoin();
+                            break;
+                        case "res":
+                            query.leftJoin(e.resume, r).fetchJoin();
+                            break;
+                        case "qua":
+                            query.leftJoin(e.qualifications, q).fetchJoin();
+                            break;
+                        case "edu":
+                            query.leftJoin(e.educations, s).fetchJoin();
+                            break;
+                        default: break;
+                    }
+                });
+
+        return query.fetch();
+    }
     public List<String> searchResults(Map<String, String> map) {
 
         QEmployeeMaster e = QEmployeeMaster.employeeMaster;
@@ -35,8 +74,8 @@ public class EmployeeSearchFunctions {
         JPAQuery<String> filteredUsers = new JPAQueryFactory(entityManager).selectDistinct(e.shainId).from(e);
 
         map.entrySet().stream()
-                .forEach(param -> {
-                    switch (param.getKey()) {
+                            .forEach(param -> {
+                                switch (param.getKey()) {
                         case "id":
                             filteredUsers.where(e.shainId.eq(param.getValue()));
                             break;

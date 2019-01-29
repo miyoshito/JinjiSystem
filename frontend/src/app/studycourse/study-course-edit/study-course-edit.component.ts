@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StudycourseService } from 'src/app/services/studycourse.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, of } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
 import { ProfileService } from 'src/app/services/profile.service';
 import { EmployeeMasterService } from 'src/app/services/employee-master.service';
 import { takeUntil, map } from 'rxjs/operators';
 import { BsDatepickerConfig, BsDatepickerViewMode, BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { studyCourse } from 'src/app/interfaces/study-course';
 
 @Component({
   selector: 'app-study-course-edit',
@@ -17,14 +18,14 @@ import { BsDatepickerConfig, BsDatepickerViewMode, BsLocaleService } from 'ngx-b
 export class StudyCourseEditComponent implements OnInit {
 
   constructor(private _fb: FormBuilder,
-              private _studyCourseService: StudycourseService,
-              private _router: Router,
-              private _route: ActivatedRoute,
-              private _profileService: ProfileService,
-              private _employeeService: EmployeeMasterService,
-              private localeService: BsLocaleService) {
-                localeService.use('ja')
-               }
+    private _studyCourseService: StudycourseService,
+    private _router: Router,
+    private _route: ActivatedRoute,
+    private _profileService: ProfileService,
+    private _employeeService: EmployeeMasterService,
+    private localeService: BsLocaleService) {
+    localeService.use('ja')
+  }
 
   studyForm: FormGroup
 
@@ -37,80 +38,70 @@ export class StudyCourseEditComponent implements OnInit {
 
   isAlive$: Subject<boolean> = new Subject<boolean>()
 
-  selectedUser$: Observable<Employee>
+  selectedUser$: Observable<Employee> = new Observable<Employee>()
   bsConfig: Partial<BsDatepickerConfig>;
 
   ngOnInit() {
+    
     this.buildForm()
     this.bsConfig = Object.assign(
       { containerClass: "theme-red" },
       { dateInputFormat: 'YYYY/MM/DD' },
-      { dateRangeFormat: 'YYYY/MM/DD'});
+      { dateRangeFormat: 'YYYY/MM/DD' });
 
-    if (this._router.url.endsWith('/edit')){
-    this.title = "教育受講履歴編集画面"
-    this.buttonText = '編集'
-    this.returnToList = true
-    this.selectedUser$ = this._employeeService.employee$
-    this.patchData(this.selectedUser$)
+    if (this._router.url.endsWith('/edit')) {
+      this.title = "教育受講履歴編集画面"
+      this.buttonText = '編集'
+      this.returnToList = true      
+      this._employeeService.getShainDatav2(this._route.snapshot.paramMap.get('uid'), "edu").subscribe(e => {
+        this.selectedUser$ = of(e.body)
+          this.patchData(e.body.educations.find(f => f.id == this._route.snapshot.paramMap.get('scid')))
+        this.studyForm.get('employee_id').patchValue(e.body.shainId)
+      })
     }
-    else if(this._router.url.endsWith('/add')){
-    this.title = "教育受講履歴登録画面"
-    this.buttonText = '登録'
+
+    else if (this._router.url.endsWith('/add')) {
+      this.title = "教育受講履歴登録画面"
       this.selectedUser$ = this._employeeService.employee$
-      this.selectedUser$.pipe(takeUntil(this.isAlive$),map(u => this.studyForm.get('employee_id').patchValue(u.shainId))).subscribe()
+      this.buttonText = '登録'
+      this.selectedUser$.pipe(takeUntil(this.isAlive$), map(u => this.studyForm.get('employee_id').patchValue(u.shainId))).subscribe()
     }
   }
 
-  insertAttempt(){
+  insertAttempt() {
     this.submitted = true
-    if(!this.studyForm.valid){
-      alert('必須項目が未入力です。')    
-      return 
+    if (!this.studyForm.valid) {
+      alert('必須項目が未入力です。')
+      return
     } else {
       this._studyCourseService.insertAttempt(this.studyForm.value).pipe(takeUntil(this.isAlive$),
-      map(res =>{
-        if (res.status === 200){
-          alert(this.buttonText+'しました')
-          this.redirect()
-        }
-      })).subscribe()
+        map(res => {
+          if (res.status === 200) {
+            alert(this.buttonText + 'しました')
+            this.redirect()
+          }
+        })).subscribe()
     }
-    
+
   }
   ngOnDestroy(): void {
     this.isAlive$.next()
   }
 
-  get f(){return this.studyForm.controls}
+  get f() { return this.studyForm.controls }
 
-  redirect(){
-    if(this._router.url.includes(this._route.snapshot.paramMap.get('uid')))
-      this._router.navigate(['/public/studycourse/details/'+this._route.snapshot.paramMap.get('uid')])    
-      else
+  redirect() {
+    if (this._router.url.includes(this._route.snapshot.paramMap.get('uid')))
+      this._router.navigate(['/public/studycourse/details/' + this._route.snapshot.paramMap.get('uid')])
+    else
       this._router.navigate(['/public/studycourse'])
   }
 
-  patchData(e: Observable<Employee>){
-    let fedu: any
-    let id: string
-    e.pipe(takeUntil(this.isAlive$),
-    map(em =>{
-     fedu = em.educations.find(id => this._route.snapshot.paramMap.get('scid') == id.id)
-     id = em.shainId
-
-     try {
-      this.studyForm.patchValue(fedu)
-      this.studyForm.get('employee_id').patchValue(id)
-    } catch (e) {
-      console.log(e)
-    }
-    })).subscribe()
-
-
+  patchData(e: studyCourse) {
+    this.studyForm.patchValue(e)
   }
 
-  buildForm(){
+  buildForm() {
     this.studyForm = this._fb.group({
       id: [''],
       sponsor: [''],
@@ -122,7 +113,7 @@ export class StudyCourseEditComponent implements OnInit {
       transportExpenses: [0, Validators.required],
       hotelExpenses: [0, Validators.required],
       overview: [''],
-      active: true,      
+      active: true,
       employee_id: ['']
     })
   }

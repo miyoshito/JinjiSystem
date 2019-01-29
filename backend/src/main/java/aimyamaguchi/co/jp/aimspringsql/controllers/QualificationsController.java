@@ -1,6 +1,8 @@
 package aimyamaguchi.co.jp.aimspringsql.controllers;
 
+import aimyamaguchi.co.jp.aimspringsql.authfilters.CustomException;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.qualifications.QualificationsModel;
 import aimyamaguchi.co.jp.aimspringsql.qualifications.QualificationsService;
 import aimyamaguchi.co.jp.aimspringsql.util.SearchFilters;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,15 +25,23 @@ public class QualificationsController {
     @Autowired
     QualificationsService qualificationsService;
 
-    @GetMapping("/public/qualifications/search")
-    public ResponseEntity<List<EmployeeMaster>> searchForQualifications(@RequestParam Map<String, String> allParams, HttpServletRequest req){
+    @GetMapping("/se/qualifications/search")
+    public ResponseEntity<List<QualificationsModel>> searchForQualifications(@RequestParam Map<String, String> allParams, HttpServletRequest req){
         if (allParams.isEmpty()){
-            System.out.println("etacarai");
-            return new ResponseEntity<List<EmployeeMaster>>(searchFilters.getAllEmployeesWithQualifications(), HttpStatus.OK);
+            return new ResponseEntity<List<QualificationsModel>>(searchFilters.getAllQualifications(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<List<EmployeeMaster>>(searchFilters.getEmployeesWithQualifications(qualificationsService.qualificationSearch(allParams)), HttpStatus.OK);
+            return new ResponseEntity<List<QualificationsModel>>(qualificationsService.qualificationSearchv2(allParams), HttpStatus.OK);
         }
+    }
 
+    @PostMapping("/se/qualifications/add")
+    public ResponseEntity<String> addQualification(@RequestBody QualificationsModel qm, HttpServletRequest req){
+        try {
+            qualificationsService.insertAttempt(qm, req);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (CustomException e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

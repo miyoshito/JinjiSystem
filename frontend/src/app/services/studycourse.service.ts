@@ -14,7 +14,7 @@ export class StudycourseService {
 
   constructor(private _http: HttpClient) { }
 
-  private _searchResultsSource: ReplaySubject<Employee[]> = new ReplaySubject<Employee[]>(1)
+  private _searchResultsSource: ReplaySubject<studyCourse[]> = new ReplaySubject<studyCourse[]>(1)
   searchResults$ = this._searchResultsSource.asObservable();
 
   private _detailsSource: ReplaySubject<studyCourse> = new ReplaySubject<studyCourse>(1)
@@ -40,10 +40,10 @@ export class StudycourseService {
     map.forEach((k,v) =>{
       param = param.append(v,k)
     })
-    return this._http.get<Employee[]>(ADMIN_URL+'/studycourse/search',{params: param, observe: 'response'})
+    return this._http.get<studyCourse[]>(ADMIN_URL+'/studycourse/search',{params: param, observe: 'response'})
   }
 
-  pushSearchResults(emp: Employee[]){
+  pushSearchResults(emp: studyCourse[]){
     this._searchResultsSource.next(emp)
   }
 

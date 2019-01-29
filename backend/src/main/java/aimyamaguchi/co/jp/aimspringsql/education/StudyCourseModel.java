@@ -3,6 +3,9 @@ package aimyamaguchi.co.jp.aimspringsql.education;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
 import aimyamaguchi.co.jp.aimspringsql.security.AuditableModel;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -11,8 +14,10 @@ import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@ToString
 @Table(name="M_KYOIKU")
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
 public class StudyCourseModel extends AuditableModel {
 
     @Id
@@ -43,6 +48,15 @@ public class StudyCourseModel extends AuditableModel {
     //for insert purposes only
     @Transient
     private String employee_id;
+
+    @Transient
+    private String employee_name;
+
+    @Transient
+    private boolean shainRetired;
+
+
+
 
     @Transient
     private Integer totalExpenses = 0;
@@ -163,6 +177,22 @@ public class StudyCourseModel extends AuditableModel {
 
     public void setEmployee_id(String employee_id) {
         this.employee_id = employee_id;
+    }
+
+    public String getEmployee_name() {
+        return employee_name;
+    }
+
+    public void setEmployee_name(String employee_name) {
+        this.employee_name = employee_name;
+    }
+
+    public boolean getShainRetired() {
+        return shainRetired;
+    }
+
+    public void setShainRetired(boolean shainRetired) {
+        this.shainRetired = shainRetired;
     }
 }
 

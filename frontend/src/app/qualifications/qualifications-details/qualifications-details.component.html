@@ -1,3 +1,47 @@
-<p>
-  qualifications-details works!
-</p>
+<div class="container-fluid">
+    <ng-container *ngIf="user$ | async; let user">
+    <div class="row">
+      <div class="col-md-4">
+        <h3>資格詳細一覧画面</h3>
+      </div>
+    </div>
+    <div class="row" *ngIf="user.shainRetired">
+        <div class="alert alert-danger d-flex justify-content-center" role="alert">
+            退職
+        </div>
+    </div>
+    <div class="row">      
+        <table class="table table-bordered table-hover">
+          <thead>
+              <tr>
+                  <th>主催</th>
+                  <th>資格名</th>
+                  <th>受講者</th>
+                  <th>受験日</th>
+                  <th>費用</th>
+                  <th>合否</th>
+                  <th></th>
+                </tr>
+          </thead>
+          <tbody>            
+              <tr *ngFor="let sc of user.qualifications | paginate: { itemsPerPage: ipp, currentPage: p }" [ngClass]="{'retired-bg': sc.shainRetired }">
+                  <td>{{sc.sponsor}}</td>
+                  <td>{{sc.qName}}</td>
+                  <td>{{sc.employee_name}}</td>
+                  <td>{{sc.examDate}}</td>
+                  <td>{{sc.examFee}}</td>
+                  <td>{{sc.results}}</td>
+                  <td><button class="btn btn-primary" (click)="edit(sc.employee_id,sc.id)">詳細</button></td>
+                </tr>       
+          </tbody>
+        </table>      
+    </div>
+    <div class="row d-flex justify-content-around">
+      <button  *ngIf="returnToList; else historyback" class="btn btn-primary" [routerLink]="[ '/public/qualifications/search']">検索へ戻る</button>
+      <ng-template #historyback>
+          <button class="btn btn-primary" (click)="add(user.shainId)">新教育履歴を登録</button>
+      </ng-template>
+      
+    </div>
+  </ng-container>
+  </div>

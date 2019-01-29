@@ -73,9 +73,8 @@ export class QualificationsSearchComponent implements OnInit {
             alert('データーが見つかりません')
             return
           } else if (res.body.length == 1) {
-            console.log('1 caboclo encontrado')
-            this._employeeService.getShainData(res.body[0].shainId, "qua")
-            this._router.navigate(['/public/qualifications/details/' + res.body[0].shainId])
+            this._employeeService.getShainData(res.body[0].employee_id, "qua")
+            this._router.navigate(['/public/qualifications/details/' + res.body[0].employee_id])
           } else {
             this._qualificationsService.pushSearchResults(res.body)
             this._router.navigate(['/public/qualifications/list'])
@@ -93,7 +92,7 @@ export class QualificationsSearchComponent implements OnInit {
       qName: [''],
       examDate: [''],
       results: [''],
-      costs: [''],
+      examFee: [''],
       id: [''],
       name: [''],
       kana: [''],
