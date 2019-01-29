@@ -68,6 +68,87 @@ public class StudyCourseService {
         } else return false;
     }
 
+    public List<StudyCourseModel> StudyCourseSearchResultsv2(Map<String, String> map){
+
+        QEmployeeMaster e = QEmployeeMaster.employeeMaster;
+        QStudyCourseModel qscm = QStudyCourseModel.studyCourseModel;
+
+        JPAQuery<StudyCourseModel> filteredUsers = new JPAQueryFactory(entityManager).select(qscm).from(qscm);
+        filteredUsers.leftJoin(qscm.employee, e);
+
+        List<StudyCourseModel> finalList = new ArrayList<>();
+
+        map.entrySet().stream()
+                .forEach(f -> {
+                    switch (f.getKey()) {
+                        case "id":
+                            filteredUsers.where(e.shainId.eq(f.getValue()));
+                            break;
+                        case "name":
+                            filteredUsers.where(e.shainName.contains(f.getValue()));
+                            break;
+                        case "kana":
+                            filteredUsers.where(e.shainKana.contains(f.getValue()));
+                            break;
+                        case "sponsor":
+                            filteredUsers.where(qscm.sponsor.eq(f.getValue()));
+                            break;
+                        case "educationName":
+                            filteredUsers.where(qscm.educationName.eq(f.getValue()));
+                            break;
+                        case "expenses":
+                            switch(f.getValue().substring(0,2)) {
+                                case "gt":
+                                    filteredUsers
+                                            .where(
+                                                    qscm.hotelExpenses
+                                                            .add(qscm.tuitionFee)
+                                                            .add(qscm.transportExpenses)
+                                                            .goe(Integer.parseInt(f.getValue().substring(2))));
+                                    break;
+                                case "lt":
+                                    filteredUsers
+                                            .where(
+                                                    qscm.hotelExpenses
+                                                            .add(qscm.tuitionFee)
+                                                            .add(qscm.transportExpenses)
+                                                            .loe(Integer.parseInt(f.getValue().substring(2))));
+                                    break;
+                                default:
+                                    break;
+                            }
+                            break;
+                        case "stdate":
+                            LocalDate from = LocalDate.parse(f.getValue());
+                            filteredUsers.where(qscm.startPeriod.goe(from));
+                            break;
+                        case "enddate":
+                            LocalDate to = LocalDate.parse(f.getValue());
+                            filteredUsers.where(qscm.endPeriod.loe(to));
+                            break;
+                        case "retired":
+                            if(f.getValue().equals("false")){
+                                filteredUsers.where(e.shainRetired.isFalse());
+                            }
+                            break;
+
+                        default: break;
+
+                    }
+                });
+
+                filteredUsers.fetch().stream().forEach(r ->{
+                    r.setEmployee_id(r.getEmployee().getShainId());
+                    r.setEmployee_name(r.getEmployee().getShainName());
+                    r.setShainRetired(r.getEmployee().isShainRetired());
+                    finalList.add(r);
+                });
+
+                return finalList;
+
+    }
+
+    @Deprecated
     public List<String> StudyCourseSearchResults(Map<String, String> map){
 
         QEmployeeMaster e = QEmployeeMaster.employeeMaster;

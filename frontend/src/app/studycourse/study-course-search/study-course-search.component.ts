@@ -113,8 +113,8 @@ export class StudyCourseSearchComponent implements OnInit {
           alert('データーが見つかりません')
           return
         } else if (res.body.length == 1) {
-          this._employeeService.getShainData(res.body[0].shainId, "edu")
-          this._router.navigate(['/public/studycourse/details/' + res.body[0].shainId])
+          this._employeeService.getShainData(res.body[0].employee_id, "edu")
+          this._router.navigate(['/public/studycourse/details/' + res.body[0].employee_id])
         } else {
           this._scService.pushSearchResults(res.body)
           this._router.navigate(['/public/studycourse/list'])

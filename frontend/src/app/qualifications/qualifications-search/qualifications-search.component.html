@@ -38,7 +38,7 @@
       <div class="col-md-3">
         <span>受験結果</span>
         <select class="custom-select" formControlName="results">
-          <option value=""></option>
+          <option value="">ー</option>
           <option>合格</option>
           <option>取得</option>
         </select>
@@ -48,7 +48,7 @@
       <div class="col-md-6">
         <span>費用</span>
         <div class="input-group">
-          <input type="text" class="form-control" formControlName="costs">
+          <input type="text" class="form-control" formControlName="examFee">
           <div class="input-group-prepend">
             <span class="input-group-text">円</span>
           </div>
@@ -83,9 +83,6 @@
       </div>
     </div>
   </ng-container>
-
-  <pre> {{searchForm.value | json}}</pre>
-
 
   <div class="row d-flex justify-content-around">
     <button class="btn btn-primary" (click)="doSearch()">検索</button>

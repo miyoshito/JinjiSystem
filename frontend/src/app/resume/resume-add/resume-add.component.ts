@@ -7,7 +7,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { Employee } from 'src/app/interfaces/employee';
 import { Observable, BehaviorSubject, Subscription, Subject } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup, AbstractControl } from '@angular/forms';
-import { Qualifications, Career, Commendations } from 'src/app/interfaces/resume-details-interface';
+import { rQualifications, Career, Commendations } from 'src/app/interfaces/resume-details-interface';
 import { map, takeUntil, flatMap } from 'rxjs/operators';
 import { ResumeService } from 'src/app/services/resume.service';
 import { MatDialog, MatDialogConfig } from '@angular/material';
@@ -49,7 +49,7 @@ export class ResumeAddComponent implements OnInit {
   commendationForm: FormGroup = this._fb.group({ 'commendations': this.commendationRows });
   shainForm: FormGroup = this._fb.group({ shainId: [''] })
 
-  qualifications: Qualifications[] =
+  qualifications: rQualifications[] =
     [{
       qualificationid: null,
       qualification_year: null,
@@ -113,7 +113,7 @@ export class ResumeAddComponent implements OnInit {
         this.shainForm.patchValue({ shainId: val.shainId })
         if (!val.resume) {
           this.career.forEach((d: Career) => this.clearCareerRow(d))
-          this.qualifications.forEach((d: Qualifications) => this.clearQualificationRow(d))
+          this.qualifications.forEach((d: rQualifications) => this.clearQualificationRow(d))
           this.commendations.forEach((d: Commendations) => this.clearCommendationRow(d))
         } else {
           this.resumeForm.patchValue({
@@ -199,7 +199,7 @@ export class ResumeAddComponent implements OnInit {
     this.careerRows.push(row)
   }
 
-  clearQualificationRow(d: Qualifications) {
+  clearQualificationRow(d: rQualifications) {
     const row = this._fb.group({
       qualificationid: null,
       qualification_year: null,
@@ -211,7 +211,7 @@ export class ResumeAddComponent implements OnInit {
     this.qualificationRows.push(row)
   }
 
-  addQualificationRow(d: Qualifications) {
+  addQualificationRow(d: rQualifications) {
     const row = this._fb.group({
       qualificationid: d.qualificationid,
       qualification_year: d.qualification_year,
@@ -271,7 +271,7 @@ export class ResumeAddComponent implements OnInit {
     }
   }
   async removeQualificationRow(index: number) {
-    let q: Qualifications = this.qualificationRows.at(index).value
+    let q: rQualifications = this.qualificationRows.at(index).value
 
     if (q.qualificationid == null) this.qualificationRows.removeAt(index)
     else {

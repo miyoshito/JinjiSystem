@@ -13,4 +13,6 @@ export interface studyCourse{
     lastUpdated: Date
     updatedBy: string
     employee_id: string
+    employee_name: string
+    shainRetired: boolean
 }

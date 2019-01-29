@@ -9,6 +9,8 @@ import aimyamaguchi.co.jp.aimspringsql.employee.Models.QAFFILIATIONData;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.QEmployeeMaster;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.QPOSITIONData;
 import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.EmployeeRepository;
+import aimyamaguchi.co.jp.aimspringsql.qualifications.QualificationsModel;
+import aimyamaguchi.co.jp.aimspringsql.qualifications.QualificationsRepository;
 import aimyamaguchi.co.jp.aimspringsql.resume.QResumeModel;
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeModel;
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeRepository;
@@ -38,6 +40,9 @@ public class SearchFilters {
 
     @Autowired
     private StudyCourseInterface sr;
+
+    @Autowired
+    private QualificationsRepository qr;
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
@@ -161,6 +166,12 @@ public class SearchFilters {
     public List<EmployeeMaster> getAllEmployees(){
         return er.findAll();
     }
+
+    public List<QualificationsModel> getAllQualifications(){
+        return qr.findAll();
+    }
+
+    public List<StudyCourseModel> getAllStudyCourses(){ return sr.findAll(); }
 
 
 

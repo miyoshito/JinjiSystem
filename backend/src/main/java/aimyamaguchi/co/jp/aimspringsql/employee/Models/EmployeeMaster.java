@@ -16,7 +16,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import aimyamaguchi.co.jp.aimspringsql.curriculum.models.CurriculumModel;
 import aimyamaguchi.co.jp.aimspringsql.resume.ResumeModel;
-
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 
 @Entity
@@ -119,10 +120,10 @@ public class EmployeeMaster extends AuditableModel implements Serializable{
     private List<CurriculumModel> curriculum;
 
     @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY)
-    private Set<QualificationsModel> qualifications;
+    private Set<QualificationsModel> qualifications = new HashSet<>();
 
     @OneToMany(mappedBy ="employee", fetch = FetchType.LAZY)
-    private Set<StudyCourseModel> educations;
+    private Set<StudyCourseModel> educations  = new HashSet<>();
 
     @Column(name = "SHA_EXPERIENCETIME")
     private Integer totalExperienceTime;
@@ -390,7 +391,7 @@ public class EmployeeMaster extends AuditableModel implements Serializable{
     }
 
     public Set<StudyCourseModel> getEducations() {
-        return educations;
+        return this.educations;
     }
 
     public void setEducations(Set<StudyCourseModel> educations) {

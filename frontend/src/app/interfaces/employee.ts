@@ -2,6 +2,7 @@ import { Data } from "./data";
 import { Resume } from "src/app/interfaces/resume-details-interface";
 import { studyCourse } from "./study-course"
 import { affiliation } from "../admin/employee-master/employee-master.component";
+import { Qualifications } from "./qualifications";
 
 
 export interface MinEmployee {
@@ -48,6 +49,7 @@ export interface Employee {
     resume: Resume
     curriculum: Curriculum[]
     educations: studyCourse[]
+    qualifications: Qualifications[]
 }
 
 export interface Roles{

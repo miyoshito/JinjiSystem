@@ -71,18 +71,11 @@ public class StudyCourseController {
     }
 
     @GetMapping("/admin/studycourse/search")
-    public ResponseEntity<List<EmployeeMaster>> searchSC(@RequestParam Map<String, String> allParams){
-
-        if (allParams.size() == 0)
-            return new ResponseEntity<>(sf.getEmployeesWithStudy(),HttpStatus.OK);
-        try {
-            List<String> results = scs.StudyCourseSearchResults(allParams);
-            if (results.size() < 1) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(sf.getEmployeesWithStudy(results), HttpStatus.OK);
-        } catch (CustomException e) {
-            throw e;
+    public ResponseEntity<List<StudyCourseModel>> searchSC(@RequestParam Map<String, String> allParams, HttpServletRequest req){
+        if (allParams.isEmpty()){
+            return new ResponseEntity<List<StudyCourseModel>>(sf.getAllStudyCourses(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<List<StudyCourseModel>>(scs.StudyCourseSearchResultsv2(allParams), HttpStatus.OK);
         }
     }
 

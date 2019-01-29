@@ -7,6 +7,7 @@ import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMin;
 import aimyamaguchi.co.jp.aimspringsql.employee.Services.EmployeeSearchFunctions;
 import aimyamaguchi.co.jp.aimspringsql.util.SearchFilters;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +46,7 @@ public class EmployeeGetController {
     @GetMapping("/se/data")
     public ResponseEntity<EmployeeMaster> getEmployeeData(
             HttpServletRequest req,
+            //@RequestParam Map<String, String> allParams,
             @RequestParam(value = "id") String id,
             @RequestParam(value = "cv", required = false) boolean cv,
             @RequestParam(value = "res", required = false) boolean resume,
@@ -52,22 +54,24 @@ public class EmployeeGetController {
             @RequestParam(value = "qua", required = false) boolean qualification
     )
     {
-        /*
-        considerando um cenario onde soh os soumu/admins podem acessar a tela de insert e buscarem pelo ID...
-         */
         try {
-            jwtValidator.validateToken(jwtValidator.resolveToken(req));
-            EmployeeMaster emp = sf.getEmployeeData(id);
+            //jwtValidator.validateToken(jwtValidator.resolveToken(req));
+
+            //EmployeeMaster emp = sf.getEmployeeData(id);
             //as 3 funcoes servem soh pra eu forcar o load, ja que os 2 sao lazy.
+            //EmployeeMaster emp = esr.employeeLazyData(allParams).get(0);
+            EmployeeMaster emp = sf.getEmployeeData(id);
+
             if (cv) emp.getCurriculum().size();
-            if (education) emp.getEducations().size();
+            if (education) Hibernate.initialize(emp.getEducations());
             if (resume && jwtValidator.getAreas(jwtValidator.resolveToken(req)).contains(3)) {
                 sf.getResumeById(emp.getResume().getResumeId());
             }
             if(qualification){
                 emp.getQualifications().size();
             }
-            return new ResponseEntity<>(sf.getEmployeeData(id), HttpStatus.OK);
+
+            return new ResponseEntity<>(emp, HttpStatus.OK);
         } catch (AuthenticationException e) {
            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

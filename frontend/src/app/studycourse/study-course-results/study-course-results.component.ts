@@ -7,6 +7,7 @@ import { EmployeeMasterService } from 'src/app/services/employee-master.service'
 import { ProfileService } from 'src/app/services/profile.service';
 import { takeUntil, map, flatMap } from 'rxjs/operators';
 import { Data } from 'src/app/interfaces/data';
+import { studyCourse } from 'src/app/interfaces/study-course';
 
 @Component({
   selector: 'app-study-course-results',
@@ -31,21 +32,16 @@ export class StudyCourseResultsComponent implements OnInit {
   inc: number = 0
   ipp: number = 5
   totaledu: number = 0
-  usersResult$: Observable<Employee[]> = new Observable<Employee[]>()
+  usersResult$: Observable<studyCourse[]> = new Observable<studyCourse[]>()
 
   teste = new Array(new Array(new Array()));
 
   ngOnInit() {
       this.usersResult$ = this._scService.searchResults$          
-
   }
-
-  increment(userindex: number, educationindex: number){
-  }
-
-  async edit(uid: number, scid: number){
-    await this._employeeService.getShainData(uid.toString(), "edu")
-      this._router.navigate(['/public/studycourse/'+uid+'/'+scid+'/edit'])
+  
+  async edit(uid: string, scid: number){
+    this._router.navigate(['/public/studycourse/'+uid+'/'+scid+'/edit'])
   }
 
   details(uid: string){
