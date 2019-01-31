@@ -4,8 +4,10 @@ import aimyamaguchi.co.jp.aimspringsql.authfilters.CustomException;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.models.CurriculumModel;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.models.*;
 import aimyamaguchi.co.jp.aimspringsql.curriculum.repositories.IndustryDataRepository;
+import aimyamaguchi.co.jp.aimspringsql.curriculum.repositories.LangRepository;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.AFFILIATIONData;
 import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMaster;
+import aimyamaguchi.co.jp.aimspringsql.employee.Models.EmployeeMin;
 import aimyamaguchi.co.jp.aimspringsql.employee.Repositories.EmployeeRepository;
 import aimyamaguchi.co.jp.aimspringsql.util.CustomValidators;
 import aimyamaguchi.co.jp.aimspringsql.util.SearchFilters;
@@ -16,7 +18,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.util.stream.Collectors.reducing;
 
@@ -35,54 +39,73 @@ public class SkillMapService {
     @Autowired
     private SearchFilters sf;
 
-    /*public List<String> skillMapSearchParams(Map<String, String> map) {
+    public List<String> skillMapSearchParams(String id) {
 
-        String ids = map.get("id");
+        Map<EmployeeMin, List<Map<String,Integer>>> f = new HashMap<>(); //mapa final que vai ser liberado no post.
+        List<Map<String,Integer>> eee = new ArrayList<>();
+        Map<String, Integer> azaz = new HashMap<>();
 
-        EmployeeMaster u = sf.getEmployeeWithCv(ids);
+        List<SkillMapUtil> listHolder = new ArrayList<>();
 
+        //fazer o stream do mapa pra ver quais params ele pede, essa funcao precisa receber um ID e o que precisar.
 
-        List<CurriculumModel> cvs = u.getCurriculum();
+        //adicionando o usuario no mapa
+        EmployeeMaster u = sf.getEmployeeWithCv(id);
+        EmployeeMin rapidao = new EmployeeMin(
+                u.getShainId(),
+                u.getShainName(),
+                u.getAffiliation(),
+                u.isAdmin());
 
-        if (cvs.size() > 0)
-            buildSkillMap(cvs);
+        //buildando o mapa
 
+        for (CurriculumModel cv : u.getCurriculum()) {
+            if (!cv.isDeleted()) {
 
-        map.entrySet().stream()
-                .forEach(f -> {
-                    switch(f.getKey()){
-                        case "lang":
+                    cv.getLangData()
+                            .stream()
+                            .map(LANGData::getDesc)
+                            .forEach(l -> listHolder
+                                    .add(new SkillMapUtil(l, cv.getExperienceTime())));
 
+                    azaz = listHolder.stream()
+                            .collect(Collectors.groupingBy(
+                                    SkillMapUtil::getDescription,
+                                    Collectors.summingInt(
+                                            SkillMapUtil::getExperience)));
 
+                    /*cv.getMakerData().stream().map(MAKERData::getDesc).forEach(m -> listHolder.add(new SkillMapUtil(m, cv.getExperienceTime())));
 
-                    }
-                });
+                    cv.getOsData().stream().map(OSData::getDesc).forEach(os -> listHolder.add(new SkillMapUtil(os, cv.getExperienceTime())));
 
+                    cv.getDbmsData().stream().map(DBMSData::getDesc).forEach(db -> listHolder.add(new SkillMapUtil(db, cv.getExperienceTime())));
 
+                    cv.getResponseData().stream().map(DUTYData::getDesc).forEach(db -> listHolder.add(new SkillMapUtil(db, cv.getExperienceTime())));
 
+                    cv.getToolsData().stream().map(TOOLSData::getDesc).forEach(db -> listHolder.add(new SkillMapUtil(db, cv.getExperienceTime())));*/
 
+                /*if (validator.isNullValidator(inds.size())) {
+                    inds.forEach(id -> {
+                        Optional<INDUSTRYData> tempInd = industry.findById(id.longValue());
+                        List<SkillMapUtil> mapSet = new ArrayList<>();
+                        for (INDCLASSIFICATIONData industryClass : tempInd.get().getIndustryClass()) {
+                            mapSet.add(new SkillMapUtil(industryClass.getDesc(), cv.getExperienceTime()));
+                        }
+                        fml.put(tempInd.get().getTdesc(), mapSet);
+                    });
+                }*/
+            }
+        }
+        eee.add(azaz);
+        f.put(rapidao,eee);
+
+        System.out.println(f);
 
         return null;
     }
 
-    public List<SkillMap> getSkillMap() {
-        return null;
-    }
 
-    */
-
-    /*private Map<String, List<SkillMapUtil>> buildSkillMapList(EmployeeMaster e, Map<String, Boolean> map) {
-
-
-      Map<String, List<SkillMapUtil>> fml = new HashMap<>();
-        List<SkillMapUtil> langMap = new ArrayList<>();
-        List<SkillMapUtil> makerMap = new ArrayList<>();
-        List<SkillMapUtil> osMap = new ArrayList<>();
-        List<SkillMapUtil> dbmsMap = new ArrayList<>();
-        List<SkillMapUtil> respMap = new ArrayList<>();
-        List<SkillMapUtil> toolsMap = new ArrayList<>();
-        //Map<String, List<SkillMapUtil>> industryMap = new HashMap<>();
-
+    /*
         for (CurriculumModel cv : em.getCurriculum()) {
             if (!cv.isDeleted()) {
                 if (lang)

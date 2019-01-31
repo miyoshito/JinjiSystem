@@ -14,6 +14,7 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
+              <th>#</th>
               <th>主催</th>
               <th>教育名</th>
               <th>受講者</th>
@@ -23,8 +24,9 @@
             </tr>
           </thead>
           <tbody>            
-            <tr *ngFor="let sc of user.educations">
+            <tr *ngFor="let sc of user.educations | paginate: { itemsPerPage: ipp, currentPage: p }; let i = index">
               <ng-container *ngIf="sc.active">
+              <td>{{ipp * (p - 1) + i + 1}}</td>
               <td>{{sc.sponsor}}</td>
               <td>{{sc.educationName}}</td>
               <td>{{user.shainName}}</td>
@@ -35,6 +37,9 @@
           </tr>        
           </tbody>
         </table>      
+    </div>
+    <div class="row d-flex justify-content-center">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
     <div class="row d-flex justify-content-around">
       <button  *ngIf="returnToList; else historyback" class="btn btn-primary" [routerLink]="[ '/public/studycourse/search']">検索へ戻る</button>

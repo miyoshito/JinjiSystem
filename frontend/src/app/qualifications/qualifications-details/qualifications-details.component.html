@@ -14,6 +14,7 @@
         <table class="table table-bordered table-hover">
           <thead>
               <tr>
+                  <th>#</th>
                   <th>主催</th>
                   <th>資格名</th>
                   <th>受講者</th>
@@ -24,14 +25,15 @@
                 </tr>
           </thead>
           <tbody>            
-              <tr *ngFor="let sc of user.qualifications | paginate: { itemsPerPage: ipp, currentPage: p }" [ngClass]="{'retired-bg': sc.shainRetired }">
+              <tr *ngFor="let sc of user.qualifications | paginate: { itemsPerPage: ipp, currentPage: p }; let i = index" [ngClass]="{'retired-bg': user.shainRetired }">
+                  <td>{{ipp * (p - 1) + i + 1}}</td>
                   <td>{{sc.sponsor}}</td>
                   <td>{{sc.qName}}</td>
-                  <td>{{sc.employee_name}}</td>
+                  <td>{{user.shainId}}</td>
                   <td>{{sc.examDate}}</td>
                   <td>{{sc.examFee}}</td>
                   <td>{{sc.results}}</td>
-                  <td><button class="btn btn-primary" (click)="edit(sc.employee_id,sc.id)">詳細</button></td>
+                  <td><button class="btn btn-primary" (click)="edit(user.shainId,sc.id)">詳細</button></td>
                 </tr>       
           </tbody>
         </table>      

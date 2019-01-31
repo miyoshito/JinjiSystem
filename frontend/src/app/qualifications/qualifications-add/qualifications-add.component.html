@@ -85,7 +85,7 @@
       <div class="row d-flex justify-content-around">
         <button class="btn btn-primary" disabled>実施記録取込</button>
         <button class="btn btn-primary" (click)="insertAttempt()">{{buttonText}}</button>
-        <button class="btn btn-primary" disabled>削除</button>
+        <button *ngIf="displayButton" class="btn btn-primary" disabled>削除</button>
         <ng-container *ngIf="returnToList; else historyback">
           <button class="btn btn-primary" [routerLink]="[ '/public/qualifications/list']">一覧へ戻る</button>
         </ng-container>

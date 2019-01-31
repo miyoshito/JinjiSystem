@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { AuthService } from 'src/app/services/guards/auth.service';
 import { RoleGuardService } from 'src/app/services/guards/role-guard.service';
 import { BroadcastService } from 'src/app/services/broadcast.service';
@@ -18,6 +18,11 @@ export class AppComponent implements OnInit{
   loggedUser$: Observable<Employee>
   isLoggedIn$: boolean
   authorities$: Observable<String>
+
+  @HostListener("window:beforeunload",["$event"])
+  clearLocalStorage(event){
+      localStorage.clear();
+  }
   
   constructor(private _broadcastService: BroadcastService,
               private _router: Router,

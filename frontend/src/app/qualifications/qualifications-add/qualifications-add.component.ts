@@ -38,6 +38,8 @@ export class QualificationsAddComponent implements OnInit {
   displayButton: boolean
   returnToList: boolean
 
+  userid: string
+
   isAlive$: Subject<boolean> = new Subject<boolean>()
 
   selectedUser$: Observable<Employee> = new Observable<Employee>()
@@ -51,15 +53,39 @@ export class QualificationsAddComponent implements OnInit {
       { dateRangeFormat: 'YYYY/MM/DD' });
 
       if (this._router.url.endsWith('/edit')) {
-        this.title = "資格情報歴編集画面"
+        this.title = "教育受講履歴編集画面"
         this.buttonText = '編集'
-        this.returnToList = true      
-        this._employeeService.getShainDatav2(this._route.snapshot.paramMap.get('uid'), "qua").subscribe(e => {
+        if (this._route.snapshot.paramMap.get('uid') == null){
+          this._profileService.cachedUser$.pipe(takeUntil(this.isAlive$),map(e => this.userid = e.id)).subscribe()
+          this.returnToList = false
+        } else {
+          this.userid = this._route.snapshot.paramMap.get('uid')
+          this.displayButton = true
+          this.returnToList = true          
+        }
+        this._employeeService.getShainDatav2(this.userid, "qua").subscribe(e => {
           this.selectedUser$ = of(e.body)
             this.patchData(e.body.qualifications.find(f => f.id == this._route.snapshot.paramMap.get('scid')))
           this.studyForm.get('employee_id').patchValue(e.body.shainId)
         })
       }
+
+      // if (this._router.url.endsWith('/edit')) {
+      //   this.title = "資格情報歴編集画面"
+      //   this.buttonText = '編集'        
+      //   if (this._route.snapshot.paramMap.get('uid') == null){
+      //     this._profileService.cachedUser$.pipe(takeUntil(this.isAlive$),map(e => this.userid = e.id)).subscribe()
+      //     this.returnToList = false
+      //   } else {
+      //     this.userid = this._route.snapshot.paramMap.get('uid')
+      //     this.returnToList = true
+      //   }
+      //   this._employeeService.getShainDatav2(this.userid, "qua").subscribe(e => {
+      //     this.selectedUser$ = of(e.body)
+      //       this.patchData(e.body.qualifications.find(f => f.id == this._route.snapshot.paramMap.get('scid')))
+      //     this.studyForm.get('employee_id').patchValue(e.body.shainId)
+      //   })
+      // }
       
     else if (this._router.url.endsWith('/add')) {
       this.title = "資格情報登録画面"

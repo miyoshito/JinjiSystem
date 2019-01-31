@@ -74,7 +74,7 @@ public class StudyCourseService {
         QStudyCourseModel qscm = QStudyCourseModel.studyCourseModel;
 
         JPAQuery<StudyCourseModel> filteredUsers = new JPAQueryFactory(entityManager).select(qscm).from(qscm);
-        filteredUsers.leftJoin(qscm.employee, e);
+        filteredUsers.join(qscm.employee, e);
 
         List<StudyCourseModel> finalList = new ArrayList<>();
 
@@ -131,14 +131,11 @@ public class StudyCourseService {
                                 filteredUsers.where(e.shainRetired.isFalse());
                             }
                             break;
-
-                        default: break;
-
                     }
                 });
 
                 filteredUsers.fetch().stream().forEach(r ->{
-                    r.setEmployee_id(r.getEmployee().getShainId());
+                    r.setEmployee_id(Optional.of(r.getEmployee().getShainId()).orElse(null));
                     r.setEmployee_name(r.getEmployee().getShainName());
                     r.setShainRetired(r.getEmployee().isShainRetired());
                     finalList.add(r);

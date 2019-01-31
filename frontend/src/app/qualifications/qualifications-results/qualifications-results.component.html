@@ -9,6 +9,7 @@
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
+              <th>#</th>
               <th>主催</th>
               <th>資格名</th>
               <th>受講者</th>
@@ -21,7 +22,8 @@
           </thead>
           <tbody>
               <!-- <ng-container *ngFor="let sc of results">             -->
-                <tr *ngFor="let sc of results | paginate: { itemsPerPage: ipp, currentPage: p }" [ngClass]="{'retired-bg': sc.shainRetired }">
+                <tr *ngFor="let sc of results | paginate: { itemsPerPage: ipp, currentPage: p }; let i = index" [ngClass]="{'retired-bg': sc.shainRetired }">
+                  <td>{{ipp * (p - 1) + i + 1}}</td>
                   <td>{{sc.sponsor}}</td>
                   <td>{{sc.qName}}</td>
                   <td>{{sc.employee_name}}</td>
