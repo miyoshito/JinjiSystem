@@ -25,6 +25,7 @@ public class LANGData{
     private Integer experienceTime;
 
 
+
     @ManyToMany(mappedBy="langData")
     @JsonIgnore
     private List<CurriculumModel> curriculum;

@@ -41,6 +41,8 @@ export class StudyCourseEditComponent implements OnInit {
   selectedUser$: Observable<Employee> = new Observable<Employee>()
   bsConfig: Partial<BsDatepickerConfig>;
 
+  userid: string
+
   ngOnInit() {
     
     this.buildForm()
@@ -52,8 +54,15 @@ export class StudyCourseEditComponent implements OnInit {
     if (this._router.url.endsWith('/edit')) {
       this.title = "教育受講履歴編集画面"
       this.buttonText = '編集'
-      this.returnToList = true      
-      this._employeeService.getShainDatav2(this._route.snapshot.paramMap.get('uid'), "edu").subscribe(e => {
+      if (this._route.snapshot.paramMap.get('uid') == null){
+        this._profileService.cachedUser$.pipe(takeUntil(this.isAlive$),map(e => this.userid = e.id)).subscribe()
+        this.returnToList = false
+      } else {
+        this.userid = this._route.snapshot.paramMap.get('uid')
+        this.returnToList = true
+        this.displayButton = true
+      }
+      this._employeeService.getShainDatav2(this.userid, "edu").subscribe(e => {
         this.selectedUser$ = of(e.body)
           this.patchData(e.body.educations.find(f => f.id == this._route.snapshot.paramMap.get('scid')))
         this.studyForm.get('employee_id').patchValue(e.body.shainId)

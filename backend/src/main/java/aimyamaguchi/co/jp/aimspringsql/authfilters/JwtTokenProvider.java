@@ -28,7 +28,7 @@ public class JwtTokenProvider {
   private Algorithm kee = Algorithm.HMAC256("secret");
 
   public String createToken(String username, boolean isadmin, List<Long> areas, Long level) {
-    long validityInMilliseconds = 259200000;
+    long validityInMilliseconds = 3600000;
     Date now = new Date();
     Date validity = new Date(now.getTime() + validityInMilliseconds);
     Long[] arr = areas.toArray(new Long[0]);
