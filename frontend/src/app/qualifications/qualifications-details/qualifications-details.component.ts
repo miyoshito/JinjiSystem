@@ -33,6 +33,9 @@ export class QualificationsDetailsComponent implements OnInit {
   title: string = "教育履歴詳細画面"
   returnToList: boolean
 
+  p: number = 1
+  ipp: number = 5
+
   urlparam: string
 
   ngOnInit() {

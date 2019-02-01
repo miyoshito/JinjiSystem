@@ -39,11 +39,13 @@ public class SkillMapService {
     @Autowired
     private SearchFilters sf;
 
-    public List<String> skillMapSearchParams(String id) {
+    public List<SkillMapUser> skillMapSearchParams(String id) {
 
-        Map<EmployeeMin, List<Map<String,Integer>>> f = new HashMap<>(); //mapa final que vai ser liberado no post.
+        List<SkillMapUser> finalist = new ArrayList<>(); //mapa final que vai ser liberado no post.
+
+
         List<Map<String,Integer>> eee = new ArrayList<>();
-        Map<String, Integer> azaz = new HashMap<>();
+
 
         List<SkillMapUtil> listHolder = new ArrayList<>();
 
@@ -51,57 +53,21 @@ public class SkillMapService {
 
         //adicionando o usuario no mapa
         EmployeeMaster u = sf.getEmployeeWithCv(id);
-        EmployeeMin rapidao = new EmployeeMin(
-                u.getShainId(),
-                u.getShainName(),
-                u.getAffiliation(),
-                u.isAdmin());
 
         //buildando o mapa
 
         for (CurriculumModel cv : u.getCurriculum()) {
-            if (!cv.isDeleted()) {
 
+            if (!cv.isDeleted()) {
                     cv.getLangData()
                             .stream()
                             .map(LANGData::getDesc)
-                            .forEach(l -> listHolder
-                                    .add(new SkillMapUtil(l, cv.getExperienceTime())));
-
-                    azaz = listHolder.stream()
-                            .collect(Collectors.groupingBy(
-                                    SkillMapUtil::getDescription,
-                                    Collectors.summingInt(
-                                            SkillMapUtil::getExperience)));
-
-                    /*cv.getMakerData().stream().map(MAKERData::getDesc).forEach(m -> listHolder.add(new SkillMapUtil(m, cv.getExperienceTime())));
-
-                    cv.getOsData().stream().map(OSData::getDesc).forEach(os -> listHolder.add(new SkillMapUtil(os, cv.getExperienceTime())));
-
-                    cv.getDbmsData().stream().map(DBMSData::getDesc).forEach(db -> listHolder.add(new SkillMapUtil(db, cv.getExperienceTime())));
-
-                    cv.getResponseData().stream().map(DUTYData::getDesc).forEach(db -> listHolder.add(new SkillMapUtil(db, cv.getExperienceTime())));
-
-                    cv.getToolsData().stream().map(TOOLSData::getDesc).forEach(db -> listHolder.add(new SkillMapUtil(db, cv.getExperienceTime())));*/
-
-                /*if (validator.isNullValidator(inds.size())) {
-                    inds.forEach(id -> {
-                        Optional<INDUSTRYData> tempInd = industry.findById(id.longValue());
-                        List<SkillMapUtil> mapSet = new ArrayList<>();
-                        for (INDCLASSIFICATIONData industryClass : tempInd.get().getIndustryClass()) {
-                            mapSet.add(new SkillMapUtil(industryClass.getDesc(), cv.getExperienceTime()));
-                        }
-                        fml.put(tempInd.get().getTdesc(), mapSet);
-                    });
-                }*/
+                            .forEach(l -> listHolder.add(new SkillMapUtil(l, cv.getExperienceTime())));
             }
         }
-        eee.add(azaz);
-        f.put(rapidao,eee);
+        finalist.add(new SkillMapUser(u.getShainId(),u.getShainName(),"temp",listHolder));
 
-        System.out.println(f);
-
-        return null;
+        return finalist;
     }
 
 

@@ -9,7 +9,7 @@
       <table class="table table-bordered table-hover">
         <thead>
           <tr>
-            <th>#</th>
+            <th>No.</th>
             <th>主催</th>
             <th>教育名</th>
             <th>受講者</th>
@@ -27,7 +27,7 @@
                 <td>{{sc.educationName}}</td>
                 <td>{{sc.employee_name}}</td>
                 <td>{{sc.startPeriod}}~<br />{{sc.endPeriod}}</td>
-                <td>{{sc.totalExpenses}}</td>
+                <td>{{sc.totalExpenses | currency:'JPY'}}</td>
                 <ng-container *ngIf="sc.shainRetired; else notRetired">
                     <td style="color: red">退職</td>
                     </ng-container>

@@ -14,7 +14,7 @@
         <table class="table table-bordered table-hover">
           <thead>
               <tr>
-                  <th>#</th>
+                  <th>No.</th>
                   <th>主催</th>
                   <th>資格名</th>
                   <th>受講者</th>
@@ -31,7 +31,7 @@
                   <td>{{sc.qName}}</td>
                   <td>{{user.shainId}}</td>
                   <td>{{sc.examDate}}</td>
-                  <td>{{sc.examFee}}</td>
+                  <td>{{sc.examFee | currency:'JPY'}}</td>
                   <td>{{sc.results}}</td>
                   <td><button class="btn btn-primary" (click)="edit(user.shainId,sc.id)">詳細</button></td>
                 </tr>       

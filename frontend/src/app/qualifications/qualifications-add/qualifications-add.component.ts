@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StudycourseService } from 'src/app/services/studycourse.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, Subject, of, Subscription } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
 import { ProfileService } from 'src/app/services/profile.service';
 import { EmployeeMasterService } from 'src/app/services/employee-master.service';
@@ -10,6 +11,8 @@ import { takeUntil, map } from 'rxjs/operators';
 import { BsDatepickerConfig, BsDatepickerViewMode, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { QualificationsService } from 'src/app/services/qualifications.service';
 import { Qualifications } from 'src/app/interfaces/qualifications';
+import { formatCurrency } from '@angular/common';
+import { CurrencyFormatterService } from 'src/app/pipes/currency-formatter.service';
 
 
 @Component({
@@ -25,7 +28,8 @@ export class QualificationsAddComponent implements OnInit {
     private _route: ActivatedRoute,
     private _profileService: ProfileService,
     private _employeeService: EmployeeMasterService,
-    private localeService: BsLocaleService) {
+    private localeService: BsLocaleService,
+    private currFormat: CurrencyFormatterService) {
     localeService.use('ja')
   }
 
@@ -40,20 +44,45 @@ export class QualificationsAddComponent implements OnInit {
 
   userid: string
 
+  testevalue: string
+
   isAlive$: Subject<boolean> = new Subject<boolean>()
 
   selectedUser$: Observable<Employee> = new Observable<Employee>()
   bsConfig: Partial<BsDatepickerConfig>;
 
+  formSubscriber: Subscription
+
   ngOnInit() {
     this.buildForm()
+
+    this.formSubscriber = this.studyForm.get('examFee').valueChanges.subscribe(value =>{      
+        if (value != this.currFormat.currencyFormat(value))
+        this.studyForm.get('examFee').patchValue(this.currFormat.currencyFormat(value))
+    })
+
+    this.formSubscriber = this.studyForm.get('extraFee').valueChanges.subscribe(value =>{      
+      if (value != this.currFormat.currencyFormat(value))
+      this.studyForm.get('extraFee').patchValue(this.currFormat.currencyFormat(value))
+    })
+
+    this.formSubscriber = this.studyForm.get('coveredFee').valueChanges.subscribe(value =>{      
+      if (value != this.currFormat.currencyFormat(value))
+      this.studyForm.get('coveredFee').patchValue(this.currFormat.currencyFormat(value))
+    })
+
+    this.formSubscriber = this.studyForm.get('reward').valueChanges.subscribe(value =>{      
+      if (value != this.currFormat.currencyFormat(value))
+      this.studyForm.get('reward').patchValue(this.currFormat.currencyFormat(value))
+    })
+    
     this.bsConfig = Object.assign(
       { containerClass: "theme-red" },
       { dateInputFormat: 'YYYY/MM/DD' },
       { dateRangeFormat: 'YYYY/MM/DD' });
 
       if (this._router.url.endsWith('/edit')) {
-        this.title = "教育受講履歴編集画面"
+        this.title = "資格情報編集画面"
         this.buttonText = '編集'
         if (this._route.snapshot.paramMap.get('uid') == null){
           this._profileService.cachedUser$.pipe(takeUntil(this.isAlive$),map(e => this.userid = e.id)).subscribe()
@@ -69,23 +98,6 @@ export class QualificationsAddComponent implements OnInit {
           this.studyForm.get('employee_id').patchValue(e.body.shainId)
         })
       }
-
-      // if (this._router.url.endsWith('/edit')) {
-      //   this.title = "資格情報歴編集画面"
-      //   this.buttonText = '編集'        
-      //   if (this._route.snapshot.paramMap.get('uid') == null){
-      //     this._profileService.cachedUser$.pipe(takeUntil(this.isAlive$),map(e => this.userid = e.id)).subscribe()
-      //     this.returnToList = false
-      //   } else {
-      //     this.userid = this._route.snapshot.paramMap.get('uid')
-      //     this.returnToList = true
-      //   }
-      //   this._employeeService.getShainDatav2(this.userid, "qua").subscribe(e => {
-      //     this.selectedUser$ = of(e.body)
-      //       this.patchData(e.body.qualifications.find(f => f.id == this._route.snapshot.paramMap.get('scid')))
-      //     this.studyForm.get('employee_id').patchValue(e.body.shainId)
-      //   })
-      // }
       
     else if (this._router.url.endsWith('/add')) {
       this.title = "資格情報登録画面"
@@ -93,6 +105,8 @@ export class QualificationsAddComponent implements OnInit {
       this.selectedUser$ = this._employeeService.employee$
       this.selectedUser$.pipe(takeUntil(this.isAlive$), map(u => this.studyForm.get('employee_id').patchValue(u.shainId))).subscribe()
     }
+
+    
   }
 
   insertAttempt() {
@@ -101,7 +115,19 @@ export class QualificationsAddComponent implements OnInit {
       alert('必須項目が未入力です。')
       return
     } else {
-      this._qualificationService.insertAttempt(this.studyForm.value).pipe(takeUntil(this.isAlive$),
+
+      let qua: Qualifications
+      qua = this.studyForm.value
+      qua.examFee = this.currFormat.spRemove(this.studyForm.get('examFee').value)
+      qua.extraFee = this.currFormat.spRemove(this.studyForm.get('extraFee').value)
+      qua.coveredFee = this.currFormat.spRemove(this.studyForm.get('coveredFee').value)
+      qua.reward = this.currFormat.spRemove(this.studyForm.get('reward').value)
+
+      console.log(qua)
+
+      this._qualificationService.insertAttempt(qua).pipe(takeUntil(this.isAlive$),
+
+
         map(res => {
           if (res.status === 200) {
             alert(this.buttonText + 'しました')
@@ -113,6 +139,7 @@ export class QualificationsAddComponent implements OnInit {
   }
   ngOnDestroy(): void {
     this.isAlive$.next()
+    this.formSubscriber.unsubscribe()
   }
 
   get f() { return this.studyForm.controls }
@@ -128,6 +155,7 @@ export class QualificationsAddComponent implements OnInit {
    this.studyForm.patchValue(e)
   }
 
+
   buildForm() {
     this.studyForm = this._fb.group({
       id: [''],
@@ -136,10 +164,10 @@ export class QualificationsAddComponent implements OnInit {
       examDate: ['', Validators.required],
       examPlace: [''],
       results: [''],
-      examFee: [0, Validators.required],
-      extraFee: [0, Validators.required],
-      coveredFee: [0, Validators.required],
-      reward: [0, Validators.required],
+      examFee: [0, {validators: Validators.required, updateOn: 'blur'}],
+      extraFee: [0, {validators: Validators.required, updateOn: 'blur'}],
+      coveredFee: [0, {validators: Validators.required, updateOn: 'blur'}],
+      reward: [0, {validators: Validators.required, updateOn: 'blur'}],
       active: true,
       employee_id: ['']
     })

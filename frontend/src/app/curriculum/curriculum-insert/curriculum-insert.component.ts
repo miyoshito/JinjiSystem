@@ -169,7 +169,7 @@ export class CurriculumInsertComponent implements OnInit {
       if (auth) {
         this._employeeService.getShainData(this.userid, "cv")
         this._router.navigate(['public/shokumurirekisho/details/' + this.userid])
-      } else this._router.navigate(['home'])
+      } else this._router.navigate(['public/shokumurirekisho/'])
     })).subscribe()
   }
 

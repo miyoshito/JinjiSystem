@@ -31,6 +31,7 @@ import { QualificationsSearchComponent } from './qualifications/qualifications-s
 import { QualificationsDetailsComponent } from './qualifications/qualifications-details/qualifications-details.component';
 import { QualificationsAddComponent } from './qualifications/qualifications-add/qualifications-add.component';
 import { QualificationsResultsComponent } from './qualifications/qualifications-results/qualifications-results.component';
+import { SkillMapSearchComponent } from './skill-map/skill-map-search/skill-map-search.component';
 
 const routes: Routes = [
   // Login routes
@@ -42,7 +43,11 @@ const routes: Routes = [
   // User parent routes
 
   {path: 'public', children:[
-    {path: 'skillmap', component: SkillMapDetailsComponent},
+    {path: 'skillmap', children:[
+      {path: '', component: SkillMapDetailsComponent},
+      {path: 'skillmap/search', component: SkillMapSearchComponent},
+      {path: 'skillmap/:id/', component: SkillMapDetailsComponent}
+    ]},    
     {path: 'profile', component: EmployeeMasterComponent},
     {path: 'shokumurirekisho', children:[
       {path: '', component: CurriculumDetailsComponent},

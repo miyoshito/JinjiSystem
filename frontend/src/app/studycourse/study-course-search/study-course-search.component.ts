@@ -91,6 +91,7 @@ export class StudyCourseSearchComponent implements OnInit {
       .forEach(k => {
         this.map.set(k, this.searchForm.value[k])
       })
+      
     this.includeRetired ? this.map.set('retired', 'true') : this.map.set('retired', 'false');
     if (this.map.get("stdate")) this.map.set("stdate", this.stValue.toISOString().substring(0, 10))
     if (this.map.get("enddate")) this.map.set("enddate", this.edValue.toISOString().substring(0, 10))
