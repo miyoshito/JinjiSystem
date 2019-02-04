@@ -59,6 +59,7 @@ import { QualificationsAddComponent } from './qualifications/qualifications-add/
 import { QualificationsDetailsComponent } from './qualifications/qualifications-details/qualifications-details.component';
 import { SoumuHeaderComponent } from './header/soumu-header/soumu-header.component';
 import { DisplaydateComponent } from './utils/displaydate/displaydate.component';
+import { ChangePasswordDialogComponent } from './admin/change-password-dialog/change-password-dialog.component';
 
 
 export function tokenGetter() {
@@ -106,7 +107,8 @@ defineLocale('ja',jaLocale)
     QualificationsAddComponent,
     QualificationsDetailsComponent,
     SoumuHeaderComponent,
-    DisplaydateComponent
+    DisplaydateComponent,
+    ChangePasswordDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -160,6 +162,6 @@ defineLocale('ja',jaLocale)
     DifferencePipe
   ],
   bootstrap: [AppComponent],
-  entryComponents: [CustomDialogComponent]
+  entryComponents: [CustomDialogComponent, ChangePasswordDialogComponent]
 })
 export class AppModule { }

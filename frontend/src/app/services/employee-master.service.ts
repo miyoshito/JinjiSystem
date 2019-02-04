@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpInterceptor, HttpParams } from '@angular/common/http';
 import { Observable, Subject, ReplaySubject } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
-import { API_URL, PUBLIC_URL, ADMIN_URL } from 'src/app/url-settings'
+import { API_URL, PUBLIC_URL, ADMIN_URL, AUTH_URL } from 'src/app/url-settings'
 import { catchError, map } from 'rxjs/operators';
 import { TokenInterceptorService } from 'src/app/services/guards/token-interceptor.service';
 import { Router } from '@angular/router';
@@ -62,7 +62,7 @@ export class EmployeeMasterService {
   
   checkIfShainExists(id: string): Observable<boolean>{
   let d: Subject<boolean> = new Subject<boolean>()
-    this._http.get<Employee>(API_URL +'/se/data/'+id, {observe: 'response'}).pipe(
+    this._http.get<Employee>(API_URL +'/se/data?id='+id, {observe: 'response'}).pipe(
       map(res =>{
         if (!res.body || res.body == null){
           d.next(false)
@@ -139,6 +139,28 @@ export class EmployeeMasterService {
         else this.usrAuthSettingsSource.next(m.body)
       })
     ).subscribe()
+  }
+
+
+  resetPassword(id: string){
+
+    let params: HttpParams = new HttpParams()
+
+    params = params.append("id", id)
+    return this._http.put(AUTH_URL + '/resetpassword', null, {params: params, observe: 'response'})
+  }
+
+  changePassword(id: string, oldpassword: string, newpassord: string)
+  {
+    //THIS IS NOT SAFE, ITS JUST A TEMPORARY SOLUTION, CHANGES NEDDED.
+    let params: HttpParams = new HttpParams()
+
+    params = params.append('id',id)
+    params = params.append('npw', newpassord)
+    params = params.append ('opw', oldpassword)
+
+    return this._http.put(AUTH_URL + '/changepassword', null, {params: params, observe: 'response'})
+
   }
 
 

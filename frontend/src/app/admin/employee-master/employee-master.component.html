@@ -209,7 +209,8 @@
         <div class="input-group" *ngIf="passwordbutton">
           <input type="password" class="form-control" id="pwd" aria-describedby="button-addon2" formControlName="shainPassword" readonly>
           <div class="input-group-append">
-            <button class="btn btn-outline-danger" type="button" id="button-addon2" (click)="changePassword()">チェンジ</button>
+            <button *ngIf="!isProfile" class="btn btn-outline-danger" type="button" (click)="resetPassword(f.shainId.value)">リセット</button>
+            <button *ngIf="isProfile" class="btn btn-outline-danger" type="button" id="button-addon2" (click)="changePassword(f.shainId.value)">チェンジ</button>
           </div>
         </div>
 
