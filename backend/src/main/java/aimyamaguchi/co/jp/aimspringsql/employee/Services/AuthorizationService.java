@@ -39,7 +39,7 @@ public class AuthorizationService {
         HttpHeaders responseHeaders = new HttpHeaders();
         try {
             EmployeeMaster user = sf.getEmployeeData(username);
-            if (bCrypt.matches(password,user.getShainPassword())){
+            if (bCrypt.matches(password,user.getShainPassword()) && !user.isShainRetired()){
                 List<Long> area = user.getAffiliation().stream().map(AFFILIATIONData::getId).collect(Collectors.toList());
                 responseHeaders.add("Authorization", jwtTokenProvider.createToken(username, user.isAdmin(), area, user.getPosition().getId()));
                 return new ResponseEntity<>(responseHeaders, HttpStatus.CREATED);

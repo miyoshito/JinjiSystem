@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EmployeeMasterService } from 'src/app/services/employee-master.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { FormBuilder, FormGroup, FormArray } from '@angular/forms';
-import { filter, map } from 'rxjs/operators';
+import { filter, map, take, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-system-settings',
@@ -16,6 +16,7 @@ export class SystemSettingsComponent implements OnInit {
 
   users$: Observable<userXAuth[]> = new Observable<userXAuth[]>()
   changedUsers: userXAuth[] = []
+  isAlive$: Subject<any> = new Subject<any>()
 
   ngOnInit() {    
     this._employeeMasterService.getUserAuthorities();
@@ -33,6 +34,7 @@ export class SystemSettingsComponent implements OnInit {
   saveSettings(){
     this._employeeMasterService.saveUserAuthoritiesChanges(this.changedUsers)
   }
+
   
 }
 export interface userXAuth{

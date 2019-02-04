@@ -54,11 +54,12 @@ public class AuthenticationController {
             @RequestParam(value = "opw", required = true) String oldp,
             @RequestParam(value = "npw", required = true) String newp,
             HttpServletRequest req){
-        if (jwtTokenProvider.getUsername(jwtTokenProvider.resolveToken(req)).equals(id)){
-            return euf.changePassword(id, oldp, newp);
-        } else {
-            return new ResponseEntity<>("NULL", HttpStatus.UNAUTHORIZED);
-        }
+    	if(euf.changePassword(id, oldp, newp)) {
+    		return new ResponseEntity<>(HttpStatus.OK);
+    	}
+    	else {
+    		return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
     }
 
     @GetMapping("/loaduserpermissions")

@@ -11,6 +11,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from 'src/app/services/login.service';
 import { BsDatepickerConfig, BsDatepickerViewMode, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import * as url from 'src/app/url-settings';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { CustomDialogComponent } from 'src/app/resume/custom-dialog/custom-dialog.component';
+import { ChangePasswordDialogComponent } from '../change-password-dialog/change-password-dialog.component';
 
 @Component({
   selector: 'app-employee-master',
@@ -66,7 +69,8 @@ export class EmployeeMasterComponent implements OnInit {
               private _route: ActivatedRoute,
               private _router: Router,
               private _loginService: LoginService,
-              private localeService: BsLocaleService,) { 
+              private localeService: BsLocaleService,
+              private _matDialog: MatDialog) { 
                 localeService.use('ja')
                 this.passwordbutton = false
                 this.isInserting = false
@@ -80,6 +84,8 @@ export class EmployeeMasterComponent implements OnInit {
   }
 
   ngOnInit() {
+
+  
   this.initializeForm()
   this.params$ = this._employeeService.getViewRendering()
   this.isLoggedIn$ = this._broadcastService.userAuthenticated$
@@ -172,8 +178,30 @@ export class EmployeeMasterComponent implements OnInit {
   showPassword() {
     this.show = !this.show;
   }
-  changePassword(){
-    alert('開発中です')
+  
+  resetPassword(id: string){
+    this._employeeService.resetPassword(id).pipe(takeUntil(this.unsub$)).subscribe(e =>{
+      if (e.status == 200) {
+        alert ('パスワードリセットしました。\n新しパスワードは「aim123456」')
+      }
+    }, err => {
+      alert ('無許可、システムアドミンを連濁してください。')
+    })
+  }
+
+
+  changePassword(id: string){
+    console.log(id)
+    const dialogRef = this._matDialog.open(ChangePasswordDialogComponent, {
+      data: {
+        title: 'パスワード変更画面',
+        message: '変更しますよろしいでしょうか？',
+        anything: id
+      },
+      width: '350px',
+      height: '700px',
+    })
+    
   }
 
   submitForm(){
