@@ -36,7 +36,6 @@ export class StudycourseService {
 
   searchAttempt(map: Map<string, string>){
     let param: HttpParams = new HttpParams()
-
     map.forEach((k,v) =>{
       param = param.append(v,k)
     })

@@ -6,8 +6,8 @@ export interface studyCourse{
     endPeriod: Date
     venue: string
     tuitionFee: number
-    transportExpenses: string
-    hotelExpenses: string
+    transportExpenses: number
+    hotelExpenses: number
     overview: string
     active: boolean
     lastUpdated: Date

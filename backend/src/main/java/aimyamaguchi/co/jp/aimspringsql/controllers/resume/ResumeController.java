@@ -61,7 +61,7 @@ public class ResumeController {
 
     @PostMapping("/resume/save")
     public ResponseEntity<String> saveResume(@RequestBody ResumeModel resume, HttpServletRequest req) {
-        if (!jwt.isAdmin(jwt.resolveToken(req))) {
+        if (!jwt.getAreas(jwt.resolveToken(req)).contains(3)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } else {
             try {

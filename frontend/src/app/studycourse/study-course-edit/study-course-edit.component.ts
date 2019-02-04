@@ -2,13 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { StudycourseService } from 'src/app/services/studycourse.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, Subject, of, Subscription } from 'rxjs';
 import { Employee } from 'src/app/interfaces/employee';
 import { ProfileService } from 'src/app/services/profile.service';
 import { EmployeeMasterService } from 'src/app/services/employee-master.service';
 import { takeUntil, map } from 'rxjs/operators';
 import { BsDatepickerConfig, BsDatepickerViewMode, BsLocaleService } from 'ngx-bootstrap/datepicker';
 import { studyCourse } from 'src/app/interfaces/study-course';
+import { CurrencyFormatterService } from 'src/app/pipes/currency-formatter.service';
 
 @Component({
   selector: 'app-study-course-edit',
@@ -23,7 +24,8 @@ export class StudyCourseEditComponent implements OnInit {
     private _route: ActivatedRoute,
     private _profileService: ProfileService,
     private _employeeService: EmployeeMasterService,
-    private localeService: BsLocaleService) {
+    private localeService: BsLocaleService,
+    private currFormat: CurrencyFormatterService) {
     localeService.use('ja')
   }
 
@@ -41,11 +43,29 @@ export class StudyCourseEditComponent implements OnInit {
   selectedUser$: Observable<Employee> = new Observable<Employee>()
   bsConfig: Partial<BsDatepickerConfig>;
 
+  formSubscriber: Subscription
+
   userid: string
 
   ngOnInit() {
-    
     this.buildForm()
+
+    this.formSubscriber = this.studyForm.get('tuitionFee').valueChanges.subscribe(value =>{      
+      if (value != this.currFormat.currencyFormat(value))
+      this.studyForm.get('tuitionFee').patchValue(this.currFormat.currencyFormat(value))
+    })
+    this.formSubscriber = this.studyForm.get('transportExpenses').valueChanges.subscribe(value =>{      
+      if (value != this.currFormat.currencyFormat(value))
+      this.studyForm.get('transportExpenses').patchValue(this.currFormat.currencyFormat(value))
+    })
+    this.formSubscriber = this.studyForm.get('hotelExpenses').valueChanges.subscribe(value =>{      
+      if (value != this.currFormat.currencyFormat(value))
+      this.studyForm.get('hotelExpenses').patchValue(this.currFormat.currencyFormat(value))
+    })
+
+
+
+
     this.bsConfig = Object.assign(
       { containerClass: "theme-red" },
       { dateInputFormat: 'YYYY/MM/DD' },
@@ -83,7 +103,14 @@ export class StudyCourseEditComponent implements OnInit {
       alert('必須項目が未入力です。')
       return
     } else {
-      this._studyCourseService.insertAttempt(this.studyForm.value).pipe(takeUntil(this.isAlive$),
+
+      let scm: studyCourse
+      scm = this.studyForm.value
+      scm.tuitionFee = this.currFormat.spRemove(this.studyForm.get('tuitionFee').value)
+      scm.transportExpenses = this.currFormat.spRemove(this.studyForm.get('transportExpenses').value)
+      scm.hotelExpenses = this.currFormat.spRemove(this.studyForm.get('hotelExpenses').value)
+      
+      this._studyCourseService.insertAttempt(scm).pipe(takeUntil(this.isAlive$),
         map(res => {
           if (res.status === 200) {
             alert(this.buttonText + 'しました')
@@ -95,6 +122,7 @@ export class StudyCourseEditComponent implements OnInit {
   }
   ngOnDestroy(): void {
     this.isAlive$.next()
+    this.formSubscriber.unsubscribe()
   }
 
   get f() { return this.studyForm.controls }
@@ -118,9 +146,9 @@ export class StudyCourseEditComponent implements OnInit {
       startPeriod: ['', Validators.required],
       endPeriod: ['', Validators.required],
       venue: [''],
-      tuitionFee: [0, Validators.required],
-      transportExpenses: [0, Validators.required],
-      hotelExpenses: [0, Validators.required],
+      tuitionFee: [0, {validators: Validators.required, updateOn: 'blur'}],
+      transportExpenses: [0, {validators: Validators.required, updateOn: 'blur'}],
+      hotelExpenses: [0, {validators: Validators.required, updateOn: 'blur'}],
       overview: [''],
       active: true,
       employee_id: ['']

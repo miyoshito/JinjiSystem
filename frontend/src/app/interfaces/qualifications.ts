@@ -5,10 +5,10 @@ export interface Qualifications {
         examDate: Date
         examPlace: string
         results: string
-        examFee: string
-        extraFee: string
-        coveredFee: string
-        reward: string
+        examFee: number
+        extraFee: number
+        coveredFee: number
+        reward: number
         active: boolean
         employee_id: string
         employee_name: string
@@ -23,10 +23,10 @@ export class Qualifications {
         examDate: Date,
         examPlace: string,
         results: string,
-        examFee: string,
-        extraFee: string,
-        coveredFee: string,
-        reward: string,
+        examFee: number,
+        extraFee: number,
+        coveredFee: number,
+        reward: number,
         active: boolean,
         employee_id: string,
         employee_name: string

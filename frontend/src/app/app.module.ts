@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { MomentModule, DifferencePipe } from 'ngx-moment';
 import { AppComponent } from './app.component';
@@ -152,7 +152,7 @@ defineLocale('ja',jaLocale)
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptorService,
       multi: true
-    },
+    },    
     LoginService,
     AuthGuardService,
     LoginGuardService,
