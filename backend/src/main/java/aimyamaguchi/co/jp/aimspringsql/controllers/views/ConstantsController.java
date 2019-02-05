@@ -44,6 +44,9 @@ public class ConstantsController {
         return resumeSearchService.getResumeSearchParams();
     }
 
+    @GetMapping("/admin/rirekishikakulist")
+    public Map<String, List<String>> getRirekishoShikakuList() { return resumeSearchService.getResumeQualificationParams();}
+
     @GetMapping("/public/shokurirekisearchlist")
     public Map<String, List<String>> getShokuRirekiSearchParams(){
         return cv.getCvSearchParams();

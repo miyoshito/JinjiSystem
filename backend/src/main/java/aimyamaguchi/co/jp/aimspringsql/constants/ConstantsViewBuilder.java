@@ -65,6 +65,8 @@ public class ConstantsViewBuilder {
     public Map<String, List<String>> getShikakuSearchableParams(){
 
         List<QualificationsModel> baseList = qualificationsRepository.findAll();
+
+
         Map<String, List<String>> map = new HashMap<>();
 
         map.put("sponsor",baseList.stream().map(QualificationsModel::getSponsor).collect(Collectors.toList()));

@@ -84,14 +84,22 @@
   </div>
 
 <ng-container [formGroup]="resumeForm">
-  <div class="row">
-    <div class="col-md-4">
-      <span>出身校</span>
-      <input type="text" class="form-control" value="{{user?.resume?.universityName}}" formControlName="universityName">
-    </div>
+  
+  <ng-container *ngIf="searchable$ | async let ssparam">
+    <div class="row">
+      <div class="col-md-4">
+        <span>出身校</span>
+        <input type="text" list="university" class="form-control" value="{{user?.resume?.universityName}}" formControlName="universityName">
+        <datalist id="university">
+            <option *ngFor="let school of ssparam.school" value="{{school}}">{{school}}</option>
+        </datalist>
+      </div>
     <div class="col-md-4">
       <span>出身学部・学科</span>
-      <input type="text" class="form-control" value="{{user?.resume?.formation}}" formControlName="formation">
+      <input type="text" list="study" class="form-control" value="{{user?.resume?.formation}}" formControlName="formation">
+      <datalist id="study">
+          <option *ngFor="let study of ssparam.study" value="{{study}}">{{study}}</option>
+      </datalist>
     </div>
     <div class="col-md-4">
       <span>文理</span>
@@ -102,6 +110,7 @@
       </select>
     </div>
   </div>
+</ng-container>
   </ng-container>
 
   <div class="row">
@@ -164,7 +173,14 @@
               <ng-container [formGroupName]="i">
                 <td><input maxlength="4" type="tel" class="form-control" formControlName="qualification_year"></td>
                 <td><input maxlength="2" type="tel" class="form-control" formControlName="qualification_month"></td>
-                <td><input type="text" class="form-control" formControlName="qualification_name"></td>
+                <td>
+                  <ng-container *ngIf="qualificationList$ | async let qlist">
+                  <input type="text" list="qualifications" class="form-control" formControlName="qualification_name">                  
+                  <datalist id ="qualifications">
+                    <option *ngFor="let item of qlist.body.qualifications" value="{{item}}">{{item}}</option>
+                  </datalist>
+                  </ng-container>
+                </td>
                 <td><select class="custom-select" formControlName="qualification_result">
                     <option value="合格">合格</option>
                     <option value="取得">取得</option>
@@ -227,4 +243,6 @@
       <button type="button" class="btn btn-primary"   onclick="history.back(-1)">詳細へ戻る</button>  
   </div>
 </div>
+
+<pre> {{resumeForm.value | json}}</pre>
 </div>

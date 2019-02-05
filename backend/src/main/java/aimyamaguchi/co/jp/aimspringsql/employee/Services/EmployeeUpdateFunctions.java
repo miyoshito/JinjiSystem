@@ -26,10 +26,15 @@ public class EmployeeUpdateFunctions {
         }
     }
 
-    public void resetPassword(String id){
+    public void resetPassword(String id) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         EmployeeMaster user = employeeRepository.findByShainId(id);
-        user.setShainPassword(passwordEncoder.encode("aim123456"));
-        employeeRepository.save(user);
+        if (user.getAffiliation().stream().anyMatch(e -> e.getDesc().contains("総務"))) {
+            user.setShainPassword(passwordEncoder.encode("aim654321"));
+            employeeRepository.save(user);
+        } else {
+            user.setShainPassword(passwordEncoder.encode("aim123456"));
+            employeeRepository.save(user);
+        }
     }
 }

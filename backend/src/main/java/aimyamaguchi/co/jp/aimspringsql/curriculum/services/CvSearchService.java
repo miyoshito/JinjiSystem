@@ -60,8 +60,8 @@ public class CvSearchService {
 
         Map<String, List<String>> map = new HashMap<>();
 
-        JPAQuery<String> customers = new JPAQueryFactory(entityManager).select(c.customer).from(c);
-        JPAQuery<String> business = new JPAQueryFactory(entityManager).select(c.targetbusiness).from(c);
+        JPAQuery<String> customers = new JPAQueryFactory(entityManager).selectDistinct(c.customer).from(c);
+        JPAQuery<String> business = new JPAQueryFactory(entityManager).selectDistinct(c.targetbusiness).from(c);
 
         map.put("customers", customers.fetch());
         map.put("business", business.fetch());
