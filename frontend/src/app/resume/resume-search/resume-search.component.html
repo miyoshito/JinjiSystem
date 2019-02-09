@@ -47,18 +47,23 @@
       <ng-container *ngIf="searchable$ | async let ssparam">
         <div class="col-md-4">
           <span>出身校</span>
-          <select class="custom-select" formControlName="school">
-            <option value=""> </option>
+          <input list="school" type="text" class="form-control" formControlName="school">
+          <!-- <select class="custom-select" formControlName="school"> -->
+          <datalist id="school">            
             <option *ngFor="let school of ssparam.school" value="{{school}}">{{school}}</option>
-          </select>
+          </datalist>
           <!--<input type="text" class="form-control" formControlName="school">-->
         </div>
         <div class="col-md-4">
           <span>出身学部・学科</span>
-          <select class="custom-select" formControlName="study">
+          <input list="study" type="text" class="form-control" formControlName="study">
+          <datalist id="study">              
+              <option *ngFor="let study of ssparam.study" value="{{study}}">{{study}}</option>
+          </datalist>
+          <!-- <select class="custom-select" formControlName="study">
             <option value=""> </option>
             <option *ngFor="let study of ssparam.study" value="{{study}}">{{study}}</option>
-          </select>
+          </select> -->
           <!--<input type="text" class="form-control" formControlName="study">    -->
         </div>
       </ng-container>

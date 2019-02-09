@@ -78,7 +78,12 @@ export class ResumeAddComponent implements OnInit {
     active: null
   }]
 
+  searchable$: Observable<any>
+  qualificationList$: Observable<any>
+
   ngOnInit() {
+    this.searchable$ = this._resumeService.getSearchableResParams()
+    this.qualificationList$ = this._resumeService.getQualificationNameList()
     this.buildResumeForm()
     if ((this._router.url).endsWith('/add')){
       this.idsearchbox = true

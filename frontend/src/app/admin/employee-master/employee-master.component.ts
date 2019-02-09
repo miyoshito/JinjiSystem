@@ -182,7 +182,7 @@ export class EmployeeMasterComponent implements OnInit {
   resetPassword(id: string){
     this._employeeService.resetPassword(id).pipe(takeUntil(this.unsub$)).subscribe(e =>{
       if (e.status == 200) {
-        alert ('パスワードリセットしました。\n新しパスワードは「aim123456」')
+        alert ('パスワードリセットしました。')
       }
     }, err => {
       alert ('無許可、システムアドミンを連濁してください。')

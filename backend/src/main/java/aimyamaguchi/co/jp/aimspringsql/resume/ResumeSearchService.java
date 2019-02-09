@@ -32,8 +32,8 @@ public class ResumeSearchService {
 
         Map<String, List<String>> map = new HashMap<>();
 
-        JPAQuery<String> school = new JPAQueryFactory(entityManager).select(res.universityName).from(res).where(res.universityName.isNotNull());
-        JPAQuery<String> study = new JPAQueryFactory(entityManager).select(res.formation).from(res).where(res.formation.isNotNull());
+        JPAQuery<String> school = new JPAQueryFactory(entityManager).selectDistinct(res.universityName).from(res).where(res.universityName.isNotNull());
+        JPAQuery<String> study = new JPAQueryFactory(entityManager).selectDistinct(res.formation).from(res).where(res.formation.isNotNull());
 
         map.put("school", school.fetch());
         map.put("study", study.fetch());
@@ -41,6 +41,20 @@ public class ResumeSearchService {
         return map;
 
     }
+    public Map<String, List<String>> getResumeQualificationParams(){
+
+        Map<String, List<String>> map = new HashMap<>();
+
+        QQualification qqa = QQualification.qualification;
+
+        JPAQuery<String> qualifications = new JPAQueryFactory(entityManager).selectDistinct(qqa.qualification_name).from(qqa).where(qqa.active.isTrue());
+
+        map.put("qualifications", qualifications.fetch());
+
+        return map;
+
+    }
+
 
 
 

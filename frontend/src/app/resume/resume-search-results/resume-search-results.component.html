@@ -22,7 +22,7 @@
         <tr *ngFor="let user of results$ | async | paginate: { itemsPerPage: ipp, currentPage: p }; let i = index" [ngClass]="{'retired-bg': user.shainRetired }">
           <td>{{ipp * (p - 1) + i + 1}}</td>
           <td>{{user.shainId}}</td>
-          <td>{{user.shainName}}({{user.shainKana}})</td>
+          <td>{{user.shainName}}<br/>{{user.shainKana}}</td>
           <td>{{user.shainRecruit?.desc}}</td>
           <td>{{user.resume?.universityName}}<br/>{{user.resume?.formation}}</td>
           <td><ng-container *ngFor="let qualifications of user.resume?.qualifications">

@@ -58,4 +58,8 @@ export class ResumeService {
     this.searchSource_.next(list)
   }
 
+  getQualificationNameList(){
+    return this._httpClient.get<any[]>(ADMIN_URL + '/rirekishikakulist', {observe: 'response'})
+  }
+
 }
